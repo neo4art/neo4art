@@ -1,8 +1,11 @@
 # Neo4Art Traversing Art Through Its Connections
 
-A warm welcome from "LARUS Business Automation":http://www.larus-ba.it stuff, an software company based in Venice - ITALY, *the cradle of art*!
+A warm welcome from [LARUS Business Automation](http://www.larus-ba.it) stuff!
+We're a software company based in Venice, where we build amazing web applications based on the [Spring Framework](http://spring.io),
+following principles behind [Agile Manifesto](http://www.agilemanifesto.org).
+*ITALY, the cradle of art!*
 
-We're developing this "crowfounded":https://www.indiegogo.com/projects/neo4art-traversing-art-through-its-connections open-source art project.
+We're developing this [crowfounded](https://www.indiegogo.com/projects/neo4art-traversing-art-through-its-connections) open-source art project.
 
 ## The Arts
 
@@ -38,7 +41,7 @@ By connecting our system to the social networks, we could understand what people
 For example, if people that `like` D'Orsay Museum as you do, also `like` Marmottan Monet Museum, we could recommend another museum that you may not have ever heard. 
 These are all examples of what we consider connections! A really powerful tool that can help us to explore art, by traversing it from different perspectives.
 
-The underlying technology we're going to use is "Neo4j":http://www.neo4j.org, an open-source graph database,
+The underlying technology we're going to use is [Neo4j](http://www.neo4j.org), an open-source graph database,
 which is ideal for managing interconnected data. And the amazing thing is that Neo4j does that at incredible speed!
 You might have already heard about graph databases because social networks such as Facebook and Twitter are built on top of them to manage connections between you and your friends,
 you and groups that you follow and things that you `like`.
