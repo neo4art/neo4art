@@ -10,7 +10,7 @@ following principles behind [Agile Manifesto](http://www.agilemanifesto.org).
 
 THE ARTS are a manifestation of our creative impulse, finally meant to make the observer feels emotions.
 
-Think for example of the emotions you feel when you receive a drawing from your children, when you listen to a song of your favourite artist or when you visit towns such as Venice, Paris, London or Berlin.
+> Think for example of the emotions you feel when you receive a drawing from your children, when you listen to a song of your favourite artist or when you visit towns such as Venice, Paris, London or Berlin.
 
 That's the reason why we have decided to realise this project: **helping you to get in touch with THE ARTS to let you finally experiment new emotions**. 
 
