@@ -4,7 +4,7 @@ A warm welcome from [LARUS Business Automation](http://www.larus-ba.it) stuff!
 We're a software company based in Venice, where we build amazing web applications based on the [Spring Framework](http://spring.io),
 following principles behind [Agile Manifesto](http://www.agilemanifesto.org).
 
-*ITALY, the cradle of art!*
+**ITALY, the cradle of art!**
 
 ## The Arts
 
@@ -12,7 +12,7 @@ THE ARTS are a manifestation of our creative impulse, finally meant to make the 
 
 Think for example of the emotions you feel when you receive a drawing from your children, when you listen to a song of your favourite artist or when you visit towns such as Venice, Paris, London or Berlin.
 
-That's the reason why we have decided to realise this project: *helping you to get in touch with THE ARTS to let you finally experiment new emotions*. 
+That's the reason why we have decided to realise this project: **helping you to get in touch with THE ARTS to let you finally experiment new emotions**. 
 
 ## A web project for the community
 
@@ -28,9 +28,9 @@ But what do we mean by connected information and why are we so interested in the
 
 Well, every time you click a link on whatever internet page you are indeed declaring your interest in a connected information.
 
-The same way, what we want to achieve by our project is to discover automatically new topics you're interested in, *by traversing art through its connections*. 
+The same way, what we want to achieve by our project is to discover automatically new topics you're interested in, **by traversing art through its connections**. 
 
-Let us just take an example. Suppose you're planning your holiday in Paris.
+> Let us just take an example. Suppose you're planning your holiday in Paris.
 If you love the famous `post-impressionist` painter `VAN GOGH` you probably won't miss his masterpieces from the D'Orsay Museum for no reason at all.
 Among the others, you can admire his `LA SIESTA`.
 Did you know that it's a copy of one of his biggest influencers `JUAN-FRANCOIS MILLET`, who was indeed a `realist`?
@@ -58,7 +58,7 @@ Neo4j is the solution that best supports our purpose of improving knowledge abou
 
 ## Bold Thanks!
 
-_If you like our idea, please consider to become one contributor of this project!_
+**If you like our idea, please consider to become one contributor of this project!**
 
 
 Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
