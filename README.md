@@ -43,12 +43,12 @@ Well, those are basic samples that demonstrate how topics are so strictly connec
 
 Luckily, technology can help us to do more complex analysis, such as sentiment analysis or colour analysis through which we can discover amazing stuff hidden behind every artwork. 
 
-By connecting our system to the social networks, we could understand what people are discussing on the web.
+> By connecting our system to the social networks, we could understand what people are discussing on the web.
 For example, if people that `like` D'Orsay Museum as you do, also `like` Marmottan Monet Museum, we could recommend another museum that you may not have ever heard. 
 These are all examples of what we consider connections! A really powerful tool that can help us to explore art, by traversing it from different perspectives.
 
-The underlying technology we're going to use is [Neo4j](http://www.neo4j.org), an open-source graph database,
-which is ideal for managing interconnected data. And the amazing thing is that Neo4j does that at incredible speed!
+**The underlying technology we're going to use is [Neo4j](http://www.neo4j.org), the world's leading open-source graph database, which is ideal for managing interconnected data**.
+And the amazing thing is that Neo4j does that at incredible speed!
 
 You might have already heard about graph databases because social networks such as Facebook and Twitter are built on top of them to manage connections between you and your friends,
 you and groups that you follow and things that you `like`.
