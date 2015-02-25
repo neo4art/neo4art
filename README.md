@@ -30,14 +30,14 @@ Well, every time you click a link on whatever internet page you are indeed decla
 
 The same way, what we want to achieve by our project is to discover automatically new topics you're interested in, **by traversing art through its connections**. 
 
-> Let us just take an example. Suppose you're planning your holiday in Paris.
+> _Let us just take an example. Suppose you're planning your holiday in Paris.
 If you love the famous `post-impressionist` painter `VAN GOGH` you probably won't miss his masterpieces from the D'Orsay Museum for no reason at all.
 Among the others, you can admire his `LA SIESTA`.
 Did you know that it's a copy of one of his biggest influencers `JUAN-FRANCOIS MILLET`, who was indeed a `realist`?
 Did you know it's exposed at the Boston Museum of Fine Arts?
 Once again, did you know that in the same museum you can also see Millet's artwork `THE ANGELUS`, which became an obsession for the Spanish `surrealist` painter `SALVADOR DALI`,
 who performed various re-interpretations of the same topic and also wrote an essay entitled `THE TRAGIC MITH OF MILLET'S ANGELUS`? 
-Well, those are basic samples that demonstrate how topics are so strictly connected and how much we can learn from that.
+Well, those are basic samples that demonstrate how topics are so strictly connected and how much we can learn from that._
 
 ## Technology
 
