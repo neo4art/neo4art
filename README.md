@@ -10,7 +10,7 @@ following principles behind [Agile Manifesto](http://www.agilemanifesto.org).
 
 THE ARTS are a manifestation of our creative impulse, finally meant to make the observer feels emotions.
 
-> Think for example of the emotions you feel when you receive a drawing from your children, when you listen to a song of your favourite artist or when you visit towns such as Venice, Paris, London or Berlin.
+> _Think for example of the emotions you feel when you receive a drawing from your children, when you listen to a song of your favourite artist or when you visit towns such as Venice, Paris, London or Berlin._
 
 That's the reason why we have decided to realise this project: **helping you to get in touch with THE ARTS to let you finally experiment new emotions**. 
 
@@ -43,9 +43,9 @@ Well, those are basic samples that demonstrate how topics are so strictly connec
 
 Luckily, technology can help us to do more complex analysis, such as sentiment analysis or colour analysis through which we can discover amazing stuff hidden behind every artwork. 
 
-> By connecting our system to the social networks, we could understand what people are discussing on the web.
+> _By connecting our system to the social networks, we could understand what people are discussing on the web.
 For example, if people that `like` D'Orsay Museum as you do, also `like` Marmottan Monet Museum, we could recommend another museum that you may not have ever heard. 
-These are all examples of what we consider connections! A really powerful tool that can help us to explore art, by traversing it from different perspectives.
+These are all examples of what we consider connections! A really powerful tool that can help us to explore art, by traversing it from different perspectives._
 
 **The underlying technology we're going to use is [Neo4j](http://www.neo4j.org), the world's leading open-source graph database, which is ideal for managing interconnected data**.
 
