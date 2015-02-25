@@ -48,6 +48,7 @@ For example, if people that `like` D'Orsay Museum as you do, also `like` Marmott
 These are all examples of what we consider connections! A really powerful tool that can help us to explore art, by traversing it from different perspectives.
 
 **The underlying technology we're going to use is [Neo4j](http://www.neo4j.org), the world's leading open-source graph database, which is ideal for managing interconnected data**.
+
 And the amazing thing is that Neo4j does that at incredible speed!
 
 You might have already heard about graph databases because social networks such as Facebook and Twitter are built on top of them to manage connections between you and your friends,
