@@ -6,9 +6,6 @@ following principles behind [Agile Manifesto](http://www.agilemanifesto.org).
 
 *ITALY, the cradle of art!*
 
-
-We're developing this [crowfounded](https://www.indiegogo.com/projects/neo4art-traversing-art-through-its-connections) open-source art project.
-
 ## The Arts
 
 THE ARTS are a manifestation of our creative impulse, finally meant to make the observer feels emotions.
@@ -21,7 +18,7 @@ That's the reason why we have decided to realise this project: *helping you to g
 
 Our enthusiasm for computer science led us to believe that Internet is the perfect place to make `THE ARTS` accessible to everyone and powerful technologies can help us to discover new facts impossible to be found out before.
 
-For example, think about the Google Arts Project or the huge amount of information in Wikipedia. 
+That's why, we have dediced to start developing this new [crowfounded](https://www.indiegogo.com/projects/neo4art-traversing-art-through-its-connections) open-source art project.
 
 ## Connecting art topics
 
