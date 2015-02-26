@@ -1,6 +1,6 @@
 # Neo4Art - Traversing Art Through Its Connections
 
-![alt tag](https://github.com/neo4art/neo4art/blob/master/neo4art-contents/logo/logo-neo4art-rounded-265px.png)
+<div style="text-align:center"><img src ="https://github.com/neo4art/neo4art/blob/master/neo4art-contents/logo/logo-neo4art-rounded-265px.png"></div>
 
 A warm welcome from [LARUS Business Automation](http://www.larus-ba.it) stuff!
 We're a software company based in Venice, where we build amazing web applications based on the [Spring Framework](http://spring.io),
