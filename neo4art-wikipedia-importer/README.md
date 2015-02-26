@@ -7,11 +7,22 @@ It manages uncompresses xml dump files which adhere to this XSD schema: http://w
 ## Dependencies
 
 We strongly use [bliki](https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home) library for parsing xml dumps, then we persist nodes through [Spring-Boot Neo4j JDBC](https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc),
-even our plan is to adopt to the new [Spring Data Neo4j](https://github.com/spring-projects/spring-data-neo4j/tree/4.0) version 4 once ready.
+even if our plan is to adopt to the new [Spring Data Neo4j](https://github.com/spring-projects/spring-data-neo4j/tree/4.0) version 4 once ready.
 
 ## Main class
 
-The core service is [WikipediaDumpImporter](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/main/java/org/neo4art/importer/wikipedia/core/WikipediaDumpImporter.java)
+The starting point for this library is the core service [WikipediaDumpImporter](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/main/java/org/neo4art/importer/wikipedia/core/WikipediaDumpImporter.java).
+
+## Testing locally
+
+Start your local Neo4j Server version 2.2 [Learn more](http://neo4j.com/blog/neo4j-2-2-milestone-1-release/)
+and open the [Neo4j Browser](http://localhost:7474) and setup your username `neo4j` and password to `neo4art`.
+
+Then run the unit test [WikipediaServiceTest.java](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/test/java/org/neo4art/importer/wikipedia/service/WikipediaServiceTest.java).
+
+## Run locally
+
+TODO...
  
 ## Resulting Neo4j database
 
