@@ -6,7 +6,7 @@ It manages uncompresses xml dump files which adhere to this XSD schema: http://w
 
 ## Dependencies
 
-We strongly use [bliki](https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home) library for parsing xml dumps, then we persist nodes through [Spring-Boot Neo4j JDBC](https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc),
+We strongly use [Bliki](https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home) library for parsing xml dumps, then we persist nodes through [Spring-Boot Neo4j JDBC](https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc),
 even if our plan is to adopt to the new [Spring Data Neo4j](https://github.com/spring-projects/spring-data-neo4j/tree/4.0) version 4 once ready.
 
 ## Main class
