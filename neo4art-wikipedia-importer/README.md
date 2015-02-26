@@ -38,6 +38,10 @@ Other kinds of Wikipedia articles (Templates, Projects, Books, Files, etc) are c
 
 ## Example (with 300K pages imported =~ 15K pages/categories)
 
+Question: "_Hey Neo4j! Please, tell me the 19th century French painters!_"
+
+Answer: "_Sure! Claude Monet, Berther Morisot and his husband Edouard Manet, Camille Pissaro and other..._"
+
 ![alt tag](https://github.com/neo4art/neo4art/blob/master/neo4art-journal/2015-02-25/19th-century-French-painters.png)
 
 
