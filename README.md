@@ -1,4 +1,4 @@
-# Neo4Art Traversing Art Through Its Connections
+# Neo4Art - Traversing Art Through Its Connections
 
 A warm welcome from [LARUS Business Automation](http://www.larus-ba.it) stuff!
 We're a software company based in Venice, where we build amazing web applications based on the [Spring Framework](http://spring.io),
