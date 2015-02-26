@@ -1,12 +1,13 @@
 # Neo4Art - Wikipedia Importer
 
-This library imports [Wikimedia Dump Files](https://dumps.wikimedia.org).
+This library imports [Wikimedia Dump Files](https://dumps.wikimedia.org) into [Neo4j](http://www.neo4j.com).
 
 It manages uncompresses xml dump files which adhere to this XSD schema: http://www.mediawiki.org/xml/export-0.10.xsd as well as compressed (.gz and .bz2) files.
 
 ## Dependencies
 
-We strongly use [bliki](https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home) library for parsing xml dumps, then we persist nodes through Spring-Boot JDBC.
+We strongly use [bliki](https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home) library for parsing xml dumps, then we persist nodes through [Spring-Boot Neo4j JDBC](https://github.com/neo4j-contrib/developer-resources/tree/gh-pages/language-guides/java/spring-boot-jdbc),
+even our plan is to adopt to the new [Spring Data Neo4j](https://github.com/spring-projects/spring-data-neo4j/tree/4.0) version 4 once ready.
 
 ## Main class
 
