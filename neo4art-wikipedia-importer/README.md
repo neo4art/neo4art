@@ -11,11 +11,11 @@ even if our plan is to adopt to the new [Spring Data Neo4j](https://github.com/s
 
 ## Main class
 
-The starting point for this library is the core service [WikipediaDumpImporter](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/main/java/org/neo4art/importer/wikipedia/core/WikipediaDumpImporter.java).
+The starting point for this library is the core service [WikipediaDumpImporter.java](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/main/java/org/neo4art/importer/wikipedia/core/WikipediaDumpImporter.java).
 
 ## Testing locally
 
-Start your local Neo4j Server version 2.2 [Learn more](http://neo4j.com/blog/neo4j-2-2-milestone-1-release/)
+Start your local Neo4j Server version 2.2 [(Learn more)](http://neo4j.com/blog/neo4j-2-2-milestone-1-release/)
 and open the [Neo4j Browser](http://localhost:7474) and setup your username `neo4j` and password to `neo4art`.
 
 Then run the unit test [WikipediaServiceTest.java](https://github.com/neo4art/neo4art/blob/master/neo4art-wikipedia-importer/src/test/java/org/neo4art/importer/wikipedia/service/WikipediaServiceTest.java).
