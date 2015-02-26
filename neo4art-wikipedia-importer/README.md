@@ -36,6 +36,9 @@ Other kinds of Wikipedia articles (Templates, Projects, Books, Files, etc) are c
 
 >(page:Wikipedia:WikipediaPage)-[:REFERS]->(otherTypologies:Wikipedia:WikipediaGeneric)
 
+## Example (with 300K pages imported =~ 15K pages/categories)
+
+![alt tag](https://github.com/neo4art/neo4art/blob/master/neo4art-journal/2015-02-25/19th-century-French-painters.png)
 
 
 
