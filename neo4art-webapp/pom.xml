@@ -5,7 +5,7 @@
 
 	<artifactId>neo4art-webapp</artifactId>
 
-	<description>neo4art web application</description>
+	<description>Neo4Art Web Application Module</description>
 	<packaging>war</packaging>
 
 	<parent>
@@ -18,7 +18,7 @@
 		<dependency>
 	        <groupId>org.springframework.boot</groupId>
     	    <artifactId>spring-boot-starter-tomcat</artifactId>
-        	<scope>provided</scope>
+        	<scope>${spring.boot.starter.tomcat.scope}</scope>
 	    </dependency>
 	</dependencies>
 
