@@ -44,19 +44,19 @@ public class WikipediaJdbcRepository implements WikipediaRepository {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public long addPage(WikipediaPage wikipediaPage) {
-		return mergeNodeWithLabel(wikipediaPage,	WikipediaLabel.WIKIPEDIA_PAGE);
+		return mergeNodeWithLabel(wikipediaPage, WikipediaLabel.WIKIPEDIA_PAGE);
 	}		
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public long addCategory(WikipediaPage wikipediaPage) {
-		return mergeNodeWithLabel(wikipediaPage,	WikipediaLabel.WIKIPEDIA_CATEGORY);
+		return mergeNodeWithLabel(wikipediaPage, WikipediaLabel.WIKIPEDIA_CATEGORY);
 	}		
 	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public long addGeneric(WikipediaPage wikipediaPage) {
-		return mergeNodeWithLabel(wikipediaPage,	WikipediaLabel.WIKIPEDIA_GENERIC);
+		return mergeNodeWithLabel(wikipediaPage, WikipediaLabel.WIKIPEDIA_GENERIC);
 	}		
 	
 	private long mergeNodeWithLabel(WikipediaPage wikipediaPage, String label) {
@@ -103,7 +103,7 @@ public class WikipediaJdbcRepository implements WikipediaRepository {
 		String cql =
 			"MATCH (page:" + WikipediaLabel.WIKIPEDIA + " {title:{1}}) " +
 			"MERGE (link:" + WikipediaLabel.WIKIPEDIA + " {title:{2}}) " +
-			"MERGE (page)-[:REFERS]->(link)";
+			"MERGE (page)-[:REFER]->(link)";
 		
 		long newNodes = template.update(cql, wikipediaPage.getTitle(), link);
 
@@ -127,7 +127,7 @@ public class WikipediaJdbcRepository implements WikipediaRepository {
 		String cql =
 			"MERGE (page:" + WikipediaLabel.WIKIPEDIA + " {title:{1}}) " +
 			"MERGE (category:" + WikipediaLabel.WIKIPEDIA + ":" + WikipediaLabel.WIKIPEDIA_CATEGORY + " {title:{2}}) " +
-			"MERGE (page)-[:BELONGS_TO]->(category)";
+			"MERGE (page)-[:BELONG_TO]->(category)";
 
 		long newNodes = template.update(cql, wikipediaPage.getTitle(), category);
 		

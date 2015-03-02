@@ -74,7 +74,7 @@ public class WikipediaPageHandler implements WikipediaDumpElementHandler {
 
 		long end = Calendar.getInstance().getTimeInMillis();
 		
-		logger.debug("Creation of node for page " + wikipediaPage.getTitle() + " took " + (end - start) + " ms: " 
+		logger.trace("Creation of node for page " + wikipediaPage.getTitle() + " took " + (end - start) + " ms: " 
 		                                          + ((wikipediaPage.getLinks() != null) ? wikipediaPage.getLinks().size() : 0) + " lynks in " + (links - node) + " ms, "
 		                                          + ((wikipediaPage.getCategories() != null) ? wikipediaPage.getCategories().size() : 0) + " categories in " + (end - links) + " ms.");
 		
