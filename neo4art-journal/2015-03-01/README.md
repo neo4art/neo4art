@@ -7,7 +7,7 @@ Today we spent some hours trying to populate some interesting entities:
 * Animals
 
 Those entities are of course common themes for every artist and art in general,
-and Neo4Art search engine will use these entities to find topics you could be interested in.
+and `Neo4Art search engine` will use these entities to find topics you could be interested in.
 
 ## Todo
 
