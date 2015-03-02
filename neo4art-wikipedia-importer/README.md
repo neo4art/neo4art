@@ -46,7 +46,7 @@ Answer: "_Sure! Claude Monet, Berther Morisot and his husband Edouard Manet, Cam
 
 ## Bold Thanks!
 
-**If you like our idea, please consider to become one contributor of this project!**
+**If you like our idea, please consider to become a contributor of this project!**
 
 
 Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
