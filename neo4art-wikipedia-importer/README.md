@@ -44,6 +44,14 @@ Answer: "_Sure! Claude Monet, Berther Morisot and his husband Edouard Manet, Cam
 
 ![alt tag](https://github.com/neo4art/neo4art/blob/master/neo4art-journal/2015-02-25/19th-century-French-painters.png)
 
+## Bold Thanks!
+
+**If you like our idea, please consider to become one contributor of this project!**
+
+
+Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
+
+www.neo4art.org / team@neo4art.org
 
 
  

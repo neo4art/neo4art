@@ -7,6 +7,11 @@ This component exposes business logic as REST-services.
 [TODO]
 
 
+## Bold Thanks!
+
+**If you like our idea, please consider to become one contributor of this project!**
 
 
- 
+Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
+
+www.neo4art.org / team@neo4art.org

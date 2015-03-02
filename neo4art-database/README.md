@@ -12,5 +12,12 @@ Scripts and data files to be loaded on the neo4art database.
 - _colours-wikipedia-mapping.cql_: connecting `colours` its related `wikipedia page`
 - _emotions_: list of emotions, taken from the wikipedia page [Emotions](http://en.wikipedia.org/wiki/Emotion)
 
+## Bold Thanks!
 
+**If you like our idea, please consider to become one contributor of this project!**
+
+
+Lorenzo, Olimpia, Enrico, Mattia and all stuff @ LARUS Business Automation
+
+www.neo4art.org / team@neo4art.org
  
