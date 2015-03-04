@@ -8,8 +8,8 @@ As a very basic approach, wikipedia categories could become http://neo4j.com/doc
 Another interesting structure element of a wikipedia page are `templates`.
 As you can read, http://en.wikipedia.org/wiki/Wikipedia:Templates[templates]
 _are pages that are embedded (transcluded) into other pages to allow for the repetition of information_,
-but from our point of view, template are really useful to find specific information regarding the topic presented in a specific page.
-For example the http://en.wikipedia.org/wiki/Template:Infobox_person[Infobox person] template contains really useful information about people: _birth_name_, _birth_date_, _birth_place,
+but from our point of view template are really useful to find specific information regarding the topic presented in a specific page.
+For example the http://en.wikipedia.org/wiki/Template:Infobox_person[Infobox person] template contains really useful information about people: _birth_name_, _birth_date_, _birth_place_,
 while the http://en.wikipedia.org/wiki/Template:Infobox_settlement[Infobox settlement] template contains information about cities
 and http://en.wikipedia.org/wiki/Template:Coord[Coord] template contains geospatial data.
 From our point of view, wikipedia templates will become http://neo4j.com/docs/stable/rest-api-node-properties.html[neo4j node properties].
