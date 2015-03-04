@@ -16,10 +16,30 @@ From our point of view, wikipedia templates will become http://neo4j.com/docs/st
 
 ## Categories
 
+### Art
 
+* http://en.wikipedia.org/wiki/Category:Arts
+* http://en.wikipedia.org/wiki/Category:Performing_arts
+* http://en.wikipedia.org/wiki/Category:Visual_arts
+
+### Literature
+
+* http://en.wikipedia.org/wiki/Category:Literature
+
+### Artist
+
+* http://en.wikipedia.org/wiki/Category:Artists
+* http://en.wikipedia.org/wiki/Category:Artists_by_century
+* http://en.wikipedia.org/wiki/Category:Artists_by_genre
+* http://en.wikipedia.org/wiki/Category:Artists_by_medium
+* http://en.wikipedia.org/wiki/Category:Artists_by_nationality
+* http://en.wikipedia.org/wiki/Category:Artists_by_period
 
 ## Templates
 
-### Arts and culture infobox templates
-### History and event infobox templates
-### People infobox templates
+### Infobox Templates
+
+* Arts and culture infobox templates: http://en.wikipedia.org/wiki/Category:Arts_and_culture_infobox_templates
+* Geography and place infobox templates: http://en.wikipedia.org/wiki/Category:Geography_and_place_infobox_templates
+* History and event infobox templates: http://en.wikipedia.org/wiki/Category:History_and_events_infobox_templates
+* People infobox templates: http://en.wikipedia.org/wiki/Category:People_infobox_templates
