@@ -1,7 +1,7 @@
 # Wikipedia Structures
 
 As you may know wikipedia pages are grouped into `categories` and
-The category we are most interested in is of course [Category:Arts](http://en.wikipedia.org/wiki/Category:Arts)
+The category we are most interested in is of course http://en.wikipedia.org/wiki/Category:Arts[Category:Arts]
 and some of its sub-categories are really useful for `neo4art`.
 As a very basic approach, wikipedia categories could become [neo4j labels](http://neo4j.com/docs/stable/graphdb-neo4j-labels.html).
 
