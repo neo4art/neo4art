@@ -39,7 +39,7 @@ From our point of view, wikipedia templates will become http://neo4j.com/docs/st
 
 ### Infobox Templates
 
-* http://en.wikipedia.org/wiki/Category:Arts_and_culture_infobox_templates
+* http://en.wikipedia.org/wiki/Category:Arts_and_culture_infobox_templates[^]
 * http://en.wikipedia.org/wiki/Category:Geography_and_place_infobox_templates
 * http://en.wikipedia.org/wiki/Category:History_and_events_infobox_templates
 * http://en.wikipedia.org/wiki/Category:People_infobox_templates
