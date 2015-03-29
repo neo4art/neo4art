@@ -42,8 +42,7 @@ public class WikipediaServiceTest {
 		  
 		  FileUtils.deleteRecursively(new File(Neo4ArtGraphDatabaseConnectionFactory.NEO4J_STORE_DIR));
 		  
-			//File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
-			File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+			File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
 			
 			long newNodesAndRelationships = new WikipediaDefaultImporter().importOrUpdateDump(dumpFile);
 			
@@ -56,6 +55,8 @@ public class WikipediaServiceTest {
 			  System.out.println(newNodesAndRelationships);
 			  
 			  tx.success();
+			  
+			  FileUtils.deleteRecursively(new File(Neo4ArtGraphDatabaseConnectionFactory.NEO4J_STORE_DIR));
 			}
 			
 		} catch (Exception e) {
