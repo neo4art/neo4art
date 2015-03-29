@@ -13,33 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.neo4art.importer.wikipedia.core;
 
-package org.neo4art.importer.wikipedia.domain;
-
-import org.neo4art.graph.WikipediaLabel;
-
-import info.bliki.wiki.dump.WikiArticle;
+import info.bliki.wiki.dump.IArticleFilter;
 
 /**
+ * Listener of the Wikipedia Dump importer.
+ * 
+ * {@link IArticleFilter#process(WikiArticle, Siteinfo) } is called whenever parsing of a 'page' tag is completed.
+ * 
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 25.02.2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
+public interface WikipediaImporterListener extends IArticleFilter {
 
-  public WikipediaPage() {
-  }
-
-  public WikipediaPage(WikiArticle article) {
-    from(article);
-  }
+  void setBatchSize(long size);
   
-  @Override
-  public WikipediaType getType() {
-    return WikipediaType.PAGE;
-  }
-
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
-  }
+	long getPageCount();
+  long getGraphCount();
+  
+  void flush();
 }

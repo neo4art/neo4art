@@ -20,26 +20,31 @@ import org.neo4art.graph.WikipediaLabel;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+
 /**
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaCategory extends WikipediaGeneric implements WikipediaElement {
 
-  public WikipediaPage() {
+  public WikipediaCategory() {
   }
-
-  public WikipediaPage(WikiArticle article) {
+  
+  public WikipediaCategory(String title) {
+    setTitle(title);
+  }
+  
+  public WikipediaCategory(WikiArticle article) {
     from(article);
   }
   
   @Override
   public WikipediaType getType() {
-    return WikipediaType.PAGE;
+    return WikipediaType.CATEGORY;
   }
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
+    return WikipediaLabel.WIKIPEDIA_CATEGORY;
   }
 }

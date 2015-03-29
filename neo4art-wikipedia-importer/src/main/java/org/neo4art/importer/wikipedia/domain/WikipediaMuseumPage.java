@@ -16,30 +16,48 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
-
 import info.bliki.wiki.dump.WikiArticle;
+
+import org.neo4art.domain.Museum;
+import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
+import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 4 Mar 2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaMuseumPage extends WikipediaPage implements WikipediaElement {
 
-  public WikipediaPage() {
+  private Museum museum;
+
+  public WikipediaMuseumPage() {
   }
-
-  public WikipediaPage(WikiArticle article) {
+  
+  public WikipediaMuseumPage(WikiArticle article) {
     from(article);
   }
   
   @Override
   public WikipediaType getType() {
-    return WikipediaType.PAGE;
+    return WikipediaType.MUSEUM_PAGE;
   }
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
+    return WikipediaLabel.WIKIPEDIA_MUSEUM_PAGE;
+  }
+
+  public Museum getMuseum() {
+    return museum;
+  }
+
+  public WikipediaElement from(WikiArticle article) {
+    
+    WikipediaElementTransformer.toWikipediaElement(this, article);
+    
+    this.museum = WikipediaMuseumInfoboxParser.parse(article.getText());
+    
+    return this;
   }
 }

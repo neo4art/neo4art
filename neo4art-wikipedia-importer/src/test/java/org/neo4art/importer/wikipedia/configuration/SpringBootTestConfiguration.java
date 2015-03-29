@@ -15,6 +15,7 @@
  */
 package org.neo4art.importer.wikipedia.configuration;
 
+import org.neo4art.graph.util.Neo4ArtGraphDatabaseConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,7 +29,7 @@ import org.springframework.context.annotation.Import;
  */
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"org.neo4art"})
-@Import(DatabaseConfiguration.class)
+@Import(Neo4ArtGraphDatabaseConnectionFactory.class)
 public class SpringBootTestConfiguration {
 
     public static void main(String[] args) {

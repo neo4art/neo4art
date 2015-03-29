@@ -16,30 +16,48 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
-
 import info.bliki.wiki.dump.WikiArticle;
+
+import org.neo4art.domain.Artist;
+import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
+import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 4 Mar 2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaArtistPage extends WikipediaPage implements WikipediaElement {
 
-  public WikipediaPage() {
+  private Artist artist;
+
+  public WikipediaArtistPage() {
   }
-
-  public WikipediaPage(WikiArticle article) {
+  
+  public WikipediaArtistPage(WikiArticle article) {
     from(article);
   }
   
   @Override
   public WikipediaType getType() {
-    return WikipediaType.PAGE;
+    return WikipediaType.ARTIST_PAGE;
   }
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
+    return WikipediaLabel.WIKIPEDIA_ARTIST_PAGE;
+  }
+
+  public Artist getArtist() {
+    return artist;
+  }
+  
+  public WikipediaElement from(WikiArticle article) {
+    
+    WikipediaElementTransformer.toWikipediaElement(this, article);
+    
+    this.artist = WikipediaArtistInfoboxParser.parse(article.getText());
+    
+    return this;
   }
 }

@@ -3,6 +3,8 @@ package org.neo4art.importer.wikipedia.domain;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.neo4art.domain.Artist;
+import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
 
 public class WikipediaArtistInfoboxTest {
 
@@ -26,12 +28,12 @@ public class WikipediaArtistInfoboxTest {
 	
 	@Test
 	public void shouldParseArtistInfobox() {
-		WikipediaArtistInfobox artistInfobox = (WikipediaArtistInfobox) new WikipediaArtistInfoboxParser().parseInfobox(INFOBOX);
+		Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
 		
-		Assert.assertEquals("Vincent van Gogh", artistInfobox.getName());
-		Assert.assertEquals("30 March 1853", artistInfobox.getBirthDate());
-		Assert.assertEquals("[[Zundert]], [[Netherlands]]", artistInfobox.getBirthPlace());
-		Assert.assertEquals("{{Death date and age|df=yes|1890|7|29|1853|3|30}}", artistInfobox.getDeathDate());
-		Assert.assertEquals("[[Auvers-sur-Oise]], [[French Third Republic|France]]", artistInfobox.getDeathPlace());
+		Assert.assertEquals("Vincent van Gogh", artist.getName());
+		Assert.assertEquals("30 March 1853", artist.getBirthDate());
+		Assert.assertEquals("[[Zundert]], [[Netherlands]]", artist.getBirthPlace());
+		Assert.assertEquals("{{Death date and age|df=yes|1890|7|29|1853|3|30}}", artist.getDeathDate());
+		Assert.assertEquals("[[Auvers-sur-Oise]], [[French Third Republic|France]]", artist.getDeathPlace());
 	}
 }

@@ -13,33 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.neo4art.importer.wikipedia.core;
 
-package org.neo4art.importer.wikipedia.domain;
+import java.io.File;
+import java.io.IOException;
 
-import org.neo4art.graph.WikipediaLabel;
+import javax.xml.parsers.ParserConfigurationException;
 
-import info.bliki.wiki.dump.WikiArticle;
+import org.xml.sax.SAXException;
 
 /**
+ * This interfare represents the point for this library.
+ * 
+ * It imports into neo4j the provided wikipedia dump file (both in xml and gzip as well as bz2). 
+ * 
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 25.02.2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
-
-  public WikipediaPage() {
-  }
-
-  public WikipediaPage(WikiArticle article) {
-    from(article);
-  }
-  
-  @Override
-  public WikipediaType getType() {
-    return WikipediaType.PAGE;
-  }
-
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
-  }
+public interface WikipediaImporter {
+	
+	long importOrUpdateDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException;
 }

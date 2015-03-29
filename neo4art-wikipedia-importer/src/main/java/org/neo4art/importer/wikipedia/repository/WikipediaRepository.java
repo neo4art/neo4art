@@ -15,7 +15,17 @@
  */
 package org.neo4art.importer.wikipedia.repository;
 
+import org.neo4art.graph.WikipediaRelationship;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
+import org.neo4art.importer.wikipedia.domain.WikipediaElement;
+import org.neo4art.importer.wikipedia.domain.WikipediaFile;
+import org.neo4art.importer.wikipedia.domain.WikipediaGeneric;
+import org.neo4art.importer.wikipedia.domain.WikipediaMuseumPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaProject;
+import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 
 /**
  * 
@@ -23,15 +33,20 @@ import org.neo4art.importer.wikipedia.domain.WikipediaPage;
  * @since 25.02.2015
  */
 public interface WikipediaRepository {
-	
-	long addPage(WikipediaPage wikipediaPage);
 
-	long addCategory(WikipediaPage wikipediaPage);
+  long addNode(WikipediaElement wikipediaElement);
+  long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship);
+  
+  long addArtistPage(WikipediaArtistPage wikipediaElement);
+  long addArtworkPage(WikipediaArtworkPage wikipediaElement);
+  long addMuseumPage(WikipediaMuseumPage wikipediaMuseumPage);
 
-	long addGeneric(WikipediaPage wikipediaPage);
-
-	long addLink(WikipediaPage wikipediaPage, String link);
-
-	long addCategory(WikipediaPage wikipediaPage, String category);
-
+  long addPage(WikipediaPage wikipediaPage);
+  long addCategory(WikipediaCategory wikipediaElement);
+  long addFile(WikipediaFile wikipediaElement);
+  long addProject(WikipediaProject wikipediaProject);
+  long addTemplate(WikipediaTemplate wikipediaTemplate);
+  long addGeneric(WikipediaGeneric wikipediaElement);
+  
+  void createConstraints();
 }

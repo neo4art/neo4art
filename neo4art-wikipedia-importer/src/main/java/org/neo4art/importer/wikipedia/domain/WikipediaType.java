@@ -13,33 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
-
-import info.bliki.wiki.dump.WikiArticle;
-
 /**
+ * Different kind of Wikipedia Pages
+ * 
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 25.02.2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
-
-  public WikipediaPage() {
-  }
-
-  public WikipediaPage(WikiArticle article) {
-    from(article);
-  }
+public enum WikipediaType {
+	
+  PAGE,
   
-  @Override
-  public WikipediaType getType() {
-    return WikipediaType.PAGE;
-  }
-
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
-  }
+	ARTIST_PAGE,
+	ARTWORK_PAGE,
+	MUSEUM_PAGE,
+	ART_MOVEMENT_PAGE,
+	CITY_PAGE,
+	
+	CATEGORY, 
+	
+	FILE, 
+	PROJECT, 
+	TEMPLATE, 
+	
+	GENERIC
 }

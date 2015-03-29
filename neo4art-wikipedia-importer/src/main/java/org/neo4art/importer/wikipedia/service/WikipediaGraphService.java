@@ -14,32 +14,14 @@
  * limitations under the License.
  */
 
-package org.neo4art.importer.wikipedia.domain;
+package org.neo4art.importer.wikipedia.service;
 
-import org.neo4art.graph.WikipediaLabel;
-
-import info.bliki.wiki.dump.WikiArticle;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 19 Mar 2015
+ * @since 29 Mar 2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
-
-  public WikipediaPage() {
-  }
-
-  public WikipediaPage(WikiArticle article) {
-    from(article);
-  }
+public interface WikipediaGraphService {
   
-  @Override
-  public WikipediaType getType() {
-    return WikipediaType.PAGE;
-  }
-
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
-  }
+  void createConstraints();
 }

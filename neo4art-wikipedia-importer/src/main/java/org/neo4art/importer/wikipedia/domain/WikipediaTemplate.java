@@ -24,22 +24,22 @@ import info.bliki.wiki.dump.WikiArticle;
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public class WikipediaPage extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaTemplate extends WikipediaGeneric implements WikipediaElement {
 
-  public WikipediaPage() {
+  public WikipediaTemplate() {
   }
-
-  public WikipediaPage(WikiArticle article) {
+  
+  public WikipediaTemplate(WikiArticle article) {
     from(article);
   }
   
   @Override
   public WikipediaType getType() {
-    return WikipediaType.PAGE;
+    return WikipediaType.TEMPLATE;
   }
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
+    return WikipediaLabel.WIKIPEDIA_TEMPLATE;
   }
 }

@@ -19,15 +19,11 @@ import java.io.File;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.neo4art.importer.wikipedia.configuration.SpringBootConfiguration;
-import org.neo4art.importer.wikipedia.core.WikipediaDumpImporter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+import org.neo4art.graph.util.Neo4ArtGraphDatabaseConnectionFactory;
+import org.neo4art.importer.wikipedia.core.WikipediaDefaultImporter;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.io.fs.FileUtils;
 
 /**
  * It tests the import of a Wikimedia Dump.
@@ -37,28 +33,35 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootConfiguration.class)
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
 public class WikipediaServiceTest {
 
-	@Autowired
-	private WikipediaDumpImporter wikipediaService;
-	
-	@Autowired
-	private JdbcTemplate template;
-	
 	@Test
 	public void shouldParseWikipediaDumpFile() {
+	  
 		try {
-			Assert.assertNotNull(this.wikipediaService);
-			File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
-			long pageCount = this.wikipediaService.importOrUpdateDump(dumpFile);
-			Assert.assertEquals(pageCount, template.queryForObject("match (n) where has(n.id) return count(n)", Long.class).longValue());
-			System.out.println(pageCount);
+		  
+		  FileUtils.deleteRecursively(new File(Neo4ArtGraphDatabaseConnectionFactory.NEO4J_STORE_DIR));
+		  
+			//File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+			File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+			
+			long newNodesAndRelationships = new WikipediaDefaultImporter().importOrUpdateDump(dumpFile);
+			
+			GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseConnectionFactory.getInstance();
+			
+			try (Transaction tx = graphDatabaseService.beginTx()) {
+			  
+			  Assert.assertEquals(newNodesAndRelationships, graphDatabaseService.execute("match (n) optional match (n)-[r]->(m) return count(n) + count(r) as tot").next().get("tot"));
+			  
+			  System.out.println(newNodesAndRelationships);
+			  
+			  tx.success();
+			}
+			
 		} catch (Exception e) {
+		  
 			e.printStackTrace();
+			
 			Assert.fail(e.getMessage());
 		}
 	}
