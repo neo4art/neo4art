@@ -18,6 +18,7 @@ package org.neo4art.importer.wikipedia.core;
 import info.bliki.wiki.dump.WikiXMLParser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -57,7 +58,7 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
       wikipediaNodesImporterListener.flush();
       long parserForNodesEndDate = Calendar.getInstance().getTimeInMillis();
       newNodes = wikipediaNodesImporterListener.getGraphCount();
-      logger.debug("Done! Created " + newNodes + " nodes in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
+      logger.info("Done! Created " + newNodes + " nodes in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
     }
     
     {
@@ -65,7 +66,7 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaGraphService.createConstraints();
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.debug("Done! Contraints created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");
+      logger.info("Done! Contraints created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");
     }
     
     {
@@ -77,11 +78,30 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
       wikipediaRelationshipsImporterListener.flush();
       long parserForRelationshipsEndDate = Calendar.getInstance().getTimeInMillis();
       newRelationships = wikipediaRelationshipsImporterListener.getGraphCount();
-      logger.debug("Done! Created " + newRelationships + " relationships in " + (parserForRelationshipsEndDate - parserForRelationshipsStartDate) + " ms.");
+      logger.info("Done! Created " + newRelationships + " relationships in " + (parserForRelationshipsEndDate - parserForRelationshipsStartDate) + " ms.");
     }
     
-    logger.debug("Wikipedia dump file import completed.");
+    logger.info("Wikipedia dump file import completed.");
     
     return newNodes + newRelationships;
+  }
+  
+  public static void main(String[] args) {
+    
+    if (args.length != 1) {
+      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar /path/to/wikipedia-dump.xml.bz2");
+    }
+    
+    File wikipediaDump = new File(args[0]);
+    
+    if (!wikipediaDump.exists()) {
+      throw new RuntimeException(new FileNotFoundException("File " + wikipediaDump.getAbsolutePath() + " not found."));
+    }
+    
+    try {
+      new WikipediaDefaultImporter().importOrUpdateDump(wikipediaDump);
+    } catch (Exception e) {
+      throw new RuntimeException("Import failed: " + e.getMessage() + ".", e);
+    }
   }
 }

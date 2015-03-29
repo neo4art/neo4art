@@ -24,10 +24,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 29 Mar 2015
  */
 @SpringBootApplication
-public class Application {
+public class SpringBootConfiguration {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SpringBootConfiguration.class, args);
     }
 
 }
