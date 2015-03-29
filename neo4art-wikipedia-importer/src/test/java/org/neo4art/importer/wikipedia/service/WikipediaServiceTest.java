@@ -16,6 +16,7 @@
 package org.neo4art.importer.wikipedia.service;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,7 +37,9 @@ import org.neo4j.io.fs.FileUtils;
 public class WikipediaServiceTest {
 
 	@Test
-	public void shouldParseWikipediaDumpFile() {
+	public void shouldParseWikipediaDumpFile() throws IOException {
+	  
+	  GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseConnectionFactory.getInstance();
 	  
 		try {
 		  
@@ -46,8 +49,6 @@ public class WikipediaServiceTest {
 			
 			long newNodesAndRelationships = new WikipediaDefaultImporter().importOrUpdateDump(dumpFile);
 			
-			GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseConnectionFactory.getInstance();
-			
 			try (Transaction tx = graphDatabaseService.beginTx()) {
 			  
 			  Assert.assertEquals(newNodesAndRelationships, graphDatabaseService.execute("match (n) optional match (n)-[r]->(m) return count(n) + count(r) as tot").next().get("tot"));
@@ -56,9 +57,7 @@ public class WikipediaServiceTest {
 			  
 			  tx.success();
 			  
-			  FileUtils.deleteRecursively(new File(Neo4ArtGraphDatabaseConnectionFactory.NEO4J_STORE_DIR));
 			}
-			
 		} catch (Exception e) {
 		  
 			e.printStackTrace();
