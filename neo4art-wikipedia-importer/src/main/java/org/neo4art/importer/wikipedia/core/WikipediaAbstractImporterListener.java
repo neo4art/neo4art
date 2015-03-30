@@ -68,7 +68,7 @@ abstract class WikipediaAbstractImporterListener implements WikipediaImporterLis
 	    
   		long currentPageCount = pageCount.incrementAndGet();
   		
-      if (currentPageCount % 50000 == 0)
+      if (currentPageCount % 2500 == 0)
   		  logger.trace("Parsed " + currentPageCount + " pages so far...");
   		
   		if (this.wikipediaElementBuffer.size() == this.batchSize)
