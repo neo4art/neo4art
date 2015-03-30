@@ -46,12 +46,14 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
     
     logger.info("Wikipedia dump file import started...");
     
+    long dumpImportStartDate = Calendar.getInstance().getTimeInMillis();
+    
     long newNodes = 0;
     long newRelationships = 0;
     
     {
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesImporterListener();
-      wikipediaNodesImporterListener.setBatchSize(5000);
+      wikipediaNodesImporterListener.setBatchSize(10000);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile.getAbsolutePath(), wikipediaNodesImporterListener);
       parserForNodes.parse();
@@ -63,16 +65,20 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
     
     {
       WikipediaGraphService wikipediaGraphService = new WikipediaDefaultGraphService();
-      long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
+      long duplicatesRemovalStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaGraphService.removeDuplicates();
+      long duplicatesRemovalEndDate = Calendar.getInstance().getTimeInMillis();
+      logger.info("Done! Duplicates removed in " + (duplicatesRemovalEndDate - duplicatesRemovalStartDate) + " ms.");
+
+      long constraintsCreationStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaGraphService.createConstraints();
-      long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Contraints created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");
+      long constraintsCreationEndDate = Calendar.getInstance().getTimeInMillis();
+      logger.info("Done! Contraints created in " + (constraintsCreationEndDate - constraintsCreationStartDate) + " ms.");
     }
     
     {
       WikipediaImporterListener wikipediaRelationshipsImporterListener = new WikipediaRelationshipsImporterListener();
-      wikipediaRelationshipsImporterListener.setBatchSize(5000);
+      wikipediaRelationshipsImporterListener.setBatchSize(10000);
       long parserForRelationshipsStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForRelationships = new WikiXMLParser(dumpFile.getAbsolutePath(), wikipediaRelationshipsImporterListener);
       parserForRelationships.parse();
@@ -82,7 +88,9 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
       logger.info("Done! Created " + newRelationships + " relationships in " + (parserForRelationshipsEndDate - parserForRelationshipsStartDate) + " ms.");
     }
     
-    logger.info("Wikipedia dump file import completed.");
+    long dumpImportEndDate = Calendar.getInstance().getTimeInMillis();
+    
+    logger.info("Wikipedia dump file import completed in " + (dumpImportEndDate - dumpImportStartDate) + " ms.");
     
     return newNodes + newRelationships;
   }
