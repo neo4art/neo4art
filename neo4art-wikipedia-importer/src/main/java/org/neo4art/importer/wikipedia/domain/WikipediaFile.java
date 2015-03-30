@@ -41,6 +41,6 @@ public class WikipediaFile extends WikipediaGeneric implements WikipediaElement 
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_FILE;
+    return WikipediaLabel.WikipediaFile;
   }
 }

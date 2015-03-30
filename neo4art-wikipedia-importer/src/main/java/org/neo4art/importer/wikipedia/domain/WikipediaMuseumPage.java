@@ -45,7 +45,7 @@ public class WikipediaMuseumPage extends WikipediaPage implements WikipediaEleme
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_MUSEUM_PAGE;
+    return WikipediaLabel.WikipediaMuseumPage;
   }
 
   public Museum getMuseum() {

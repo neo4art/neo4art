@@ -40,7 +40,7 @@ public class WikipediaArtworkPage extends WikipediaPage implements WikipediaElem
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_ARTWORK_PAGE;
+    return WikipediaLabel.WikipediaArtworkPage;
   }
   
   @Override

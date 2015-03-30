@@ -21,6 +21,6 @@ package org.neo4art.graph;
  * @since 29 Mar 2015
  */
 public enum WikipediaRelationship {
-  REFERS, BELONGS_TO
+  REFERS, BELONGS_TO, REDIRECTS_TO
 
 }

@@ -23,5 +23,10 @@ package org.neo4art.importer.wikipedia.service;
  */
 public interface WikipediaGraphService {
   
+  /**
+   * Strange to say but it seems that wikipedia dumps contain more than one &lt;page&gt; with the same &lt;title&gt;.
+   */
+  void removeDuplicates();
+  
   void createConstraints();
 }

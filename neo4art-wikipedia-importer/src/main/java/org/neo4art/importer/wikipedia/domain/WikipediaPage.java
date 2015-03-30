@@ -40,6 +40,6 @@ public class WikipediaPage extends WikipediaGeneric implements WikipediaElement 
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PAGE;
+    return WikipediaLabel.WikipediaPage;
   }
 }

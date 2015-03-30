@@ -56,7 +56,7 @@ public class WikipediaNodesImporterListener extends WikipediaAbstractImporterLis
       this.graphCount.addAndGet(newNodes);
       
       this.wikipediaElementBuffer.clear();
-      
+        
       logger.debug(newNodes + " new nodes created.");
     }
   }

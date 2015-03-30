@@ -16,7 +16,6 @@
 package org.neo4art.importer.wikipedia.repository;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.neo4art.graph.WikipediaLabel;
@@ -33,7 +32,6 @@ import org.neo4art.importer.wikipedia.domain.WikipediaProject;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.schema.Schema;
 
@@ -54,7 +52,7 @@ public class WikipediaGraphDatabaseServiceRepository implements WikipediaReposit
   @Override
   public long addNode(WikipediaElement wikipediaElement) {
     
-    Node newWikipediaNode = graphDatabaseService.createNode(wikipediaElement.getLabel(), WikipediaLabel.WIKIPEDIA);
+    Node newWikipediaNode = graphDatabaseService.createNode(wikipediaElement.getLabel(), WikipediaLabel.Wikipedia);
     
     newWikipediaNode.setProperty("id"       , wikipediaElement.getId());
     newWikipediaNode.setProperty("title"    , wikipediaElement.getTitle());
@@ -79,42 +77,8 @@ public class WikipediaGraphDatabaseServiceRepository implements WikipediaReposit
     Result result = graphDatabaseService.execute(cql, parameters);
     
     return result.hasNext() ? (long) result.columnAs("relationId").next() : -1;
-
-    /*
-    Node wikipediaNodeFrom = graphDatabaseService.findNode(wikipediaElementFrom.getLabel(), "title", wikipediaElementFrom.getTitle());
-    Node wikipediaNodeTo   = graphDatabaseService.findNode(wikipediaElementTo  .getLabel(), "title", wikipediaElementTo  .getTitle());
-  
-    long relationshipId = -1;
-
-    if (createRelationshipBetween(wikipediaNodeFrom, wikipediaNodeTo)) {
-        relationshipId = wikipediaNodeFrom.createRelationshipTo(wikipediaNodeTo, wikipediaRelationship).getId();
-    }
-    
-    return relationshipId;
-    */
   }
   
-  private boolean createRelationshipBetween(Node wikipediaNodeFrom, Node wikipediaNodeTo) {
-    
-    if (wikipediaNodeFrom != null && wikipediaNodeTo != null) {
-      if (!wikipediaNodeFrom.hasRelationship()) {
-        return true;
-      }
-      else {
-
-        Iterator<Relationship> relationships = wikipediaNodeFrom.getRelationships().iterator();
-        
-        while (relationships.hasNext()) {
-          if (relationships.next().getEndNode().getProperty("title").equals(wikipediaNodeTo.getProperty("title"))) {
-            return false;
-          }
-        }
-      }
-    }
-    
-    return false;
-  }
-
   @Override
   public long addArtistPage(WikipediaArtistPage wikipediaArtistPage) {
     return addNode(wikipediaArtistPage);
@@ -168,5 +132,17 @@ public class WikipediaGraphDatabaseServiceRepository implements WikipediaReposit
     for (WikipediaLabel wikipediaLabel : WikipediaLabel.values()) {
       schema.constraintFor(wikipediaLabel).assertPropertyIsUnique("title").create();
     }
+  }
+
+  @Override
+  public void removeDuplicates() {
+    
+    String cql = "MATCH (n) " +
+                 "WITH distinct(n.title) AS title, collect(id(n)) AS ids WHERE length(ids) > 1 " +
+                 "MATCH (m) " +
+                 "WHERE id(m) in ids " +
+                 "DELETE m";
+
+    graphDatabaseService.execute(cql);
   }
 }

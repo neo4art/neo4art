@@ -40,6 +40,6 @@ public class WikipediaTemplate extends WikipediaGeneric implements WikipediaElem
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_TEMPLATE;
+    return WikipediaLabel.WikipediaTemplate;
   }
 }

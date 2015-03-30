@@ -1,7 +1,7 @@
 /**
  * Copyright 2015 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License;
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -24,15 +24,16 @@ import org.neo4j.graphdb.Label;
  */
 public enum WikipediaLabel implements Label {
 
-  WIKIPEDIA_ARTIST_PAGE,
-  WIKIPEDIA_ARTWORK_PAGE,
-  WIKIPEDIA_CATEGORY,
-  WIKIPEDIA_FILE,
-  WIKIPEDIA_GENERIC,
-  WIKIPEDIA_MUSEUM_PAGE,
-  WIKIPEDIA,
-  WIKIPEDIA_PAGE,
-  WIKIPEDIA_PROJECT,
-  WIKIPEDIA_TEMPLATE
-
+  Wikipedia,
+  
+  WikipediaArtistPage,
+  WikipediaArtworkPage,
+  WikipediaMuseumPage,
+  
+  WikipediaPage,
+  WikipediaCategory,
+  WikipediaFile,
+  WikipediaProject,
+  WikipediaTemplate,
+  WikipediaGeneric
 }

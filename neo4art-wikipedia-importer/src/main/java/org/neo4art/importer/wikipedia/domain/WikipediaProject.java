@@ -40,6 +40,6 @@ public class WikipediaProject extends WikipediaGeneric implements WikipediaEleme
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_PROJECT;
+    return WikipediaLabel.WikipediaProject;
   }
 }

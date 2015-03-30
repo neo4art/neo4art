@@ -49,6 +49,9 @@ public interface WikipediaElement {
    * @param wikipediaElement
    * @return
    */
+  WikipediaElement getRedirect();
+  void setRedirect(WikipediaElement redirectText);
+
   List<WikipediaElement> getLinks();
   List<WikipediaCategory> getCategories();
   

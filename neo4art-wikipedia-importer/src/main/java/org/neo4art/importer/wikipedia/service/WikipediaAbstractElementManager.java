@@ -39,7 +39,12 @@ abstract class WikipediaAbstractElementManager implements WikipediaElementManage
     long newRelationships = 0;
     
     WikipediaRepository wikipediaRepository = new WikipediaGraphDatabaseServiceRepository(graphDatabaseService);
-  
+
+    if (wikipediaElement.getRedirect() != null) {
+      if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaElement.getRedirect(), WikipediaRelationship.REDIRECTS_TO) >= 0)
+        newRelationships++;
+    }
+    
     if (CollectionUtils.isNotEmpty(wikipediaElement.getLinks())) {
       for (WikipediaElement wikipediaReferencedElement : wikipediaElement.getLinks()) {
         if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaReferencedElement, WikipediaRelationship.REFERS) >= 0)

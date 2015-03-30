@@ -45,7 +45,7 @@ public class WikipediaArtistPage extends WikipediaPage implements WikipediaEleme
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_ARTIST_PAGE;
+    return WikipediaLabel.WikipediaArtistPage;
   }
 
   public Artist getArtist() {

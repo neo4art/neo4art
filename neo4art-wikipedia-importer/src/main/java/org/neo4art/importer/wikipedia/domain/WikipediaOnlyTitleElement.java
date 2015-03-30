@@ -38,6 +38,6 @@ public class WikipediaOnlyTitleElement extends WikipediaGeneric implements Wikip
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA;
+    return WikipediaLabel.Wikipedia;
   }
 }

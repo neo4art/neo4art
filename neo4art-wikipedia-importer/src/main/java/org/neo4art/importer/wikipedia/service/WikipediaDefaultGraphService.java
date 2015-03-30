@@ -18,7 +18,6 @@ package org.neo4art.importer.wikipedia.service;
 
 import org.neo4art.graph.util.Neo4ArtGraphDatabaseConnectionFactory;
 import org.neo4art.importer.wikipedia.repository.WikipediaGraphDatabaseServiceRepository;
-import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 
@@ -35,9 +34,20 @@ public class WikipediaDefaultGraphService implements WikipediaGraphService {
     
     try (Transaction tx = graphDatabaseService.beginTx()) {
     
-      WikipediaRepository wikipediaRepository = new WikipediaGraphDatabaseServiceRepository(graphDatabaseService);
+      new WikipediaGraphDatabaseServiceRepository(graphDatabaseService).createConstraints();
       
-      wikipediaRepository.createConstraints();
+      tx.success();
+    }
+  }
+
+  @Override
+  public void removeDuplicates() {
+    
+    GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseConnectionFactory.getInstance();
+    
+    try (Transaction tx = graphDatabaseService.beginTx()) {
+      
+      new WikipediaGraphDatabaseServiceRepository(graphDatabaseService).removeDuplicates();
       
       tx.success();
     }

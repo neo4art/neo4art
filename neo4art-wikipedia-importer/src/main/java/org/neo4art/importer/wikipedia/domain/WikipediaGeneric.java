@@ -39,6 +39,8 @@ public class WikipediaGeneric implements WikipediaElement {
 	private String text;
 	private long timestamp;
 
+	private WikipediaElement redirect;
+	
 	private List<WikipediaElement> links;
 	private List<WikipediaCategory> categories;
 
@@ -89,7 +91,15 @@ public class WikipediaGeneric implements WikipediaElement {
 		this.revision = revision;
 	}
 
-	@Override
+	public WikipediaElement getRedirect() {
+    return redirect;
+  }
+
+  public void setRedirect(WikipediaElement redirect) {
+    this.redirect = redirect;
+  }
+
+  @Override
 	public String getText() {
 		return text;
 	}
@@ -155,7 +165,7 @@ public class WikipediaGeneric implements WikipediaElement {
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_GENERIC;
+    return WikipediaLabel.WikipediaGeneric;
   }
 
   public WikipediaElement from(WikiArticle article) {

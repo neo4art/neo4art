@@ -24,6 +24,7 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
@@ -91,26 +92,35 @@ public class WikipediaElementTransformer {
      wikipediaElement.setText(article.getText());
      wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
      
-     WikiPatternMatcher textParser = new WikiPatternMatcher(article.getText());
-     
-     // ----- CATEGORIES -----
-     
-     List<String> categories = textParser.getCategories();
-     if (CollectionUtils.isNotEmpty(categories)) {
-       for (String category : categories) {
-         wikipediaElement.addCategory(new WikipediaCategory(category));
+     if (StringUtils.isNotEmpty(article.getText())) {
+
+       WikiPatternMatcher textParser = new WikiPatternMatcher(article.getText());
+       
+       // ----- REDIRECT -----
+       
+       if (textParser.isRedirect()) {
+         wikipediaElement.setRedirect(new WikipediaOnlyTitleElement(textParser.getRedirectText()));
+       }
+       
+       // ----- CATEGORIES -----
+       
+       List<String> categories = textParser.getCategories();
+       if (CollectionUtils.isNotEmpty(categories)) {
+         for (String category : categories) {
+           wikipediaElement.addCategory(new WikipediaCategory(category));
+         }
+       }
+       
+       // ----- LINKS -----
+       
+       List<String> links = textParser.getLinks();
+       if (CollectionUtils.isNotEmpty(links)) {
+         for (String link : links) {
+           wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
+         }
        }
      }
-     
-     // ----- LINKS -----
-     
-     List<String> links = textParser.getLinks();
-     if (CollectionUtils.isNotEmpty(links)) {
-       for (String link : links) {
-         wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
-       }
-     }
-     
+          
      // WikiArticle data not yet managed
      //
      // +++ textParser.getInfoBox();

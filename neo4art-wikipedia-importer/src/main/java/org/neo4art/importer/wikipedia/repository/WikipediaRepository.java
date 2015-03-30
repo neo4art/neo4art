@@ -49,4 +49,5 @@ public interface WikipediaRepository {
   long addGeneric(WikipediaGeneric wikipediaElement);
   
   void createConstraints();
+  void removeDuplicates();
 }

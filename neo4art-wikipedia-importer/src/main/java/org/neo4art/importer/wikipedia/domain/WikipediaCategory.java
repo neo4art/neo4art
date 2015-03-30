@@ -45,6 +45,6 @@ public class WikipediaCategory extends WikipediaGeneric implements WikipediaElem
 
   @Override
   public WikipediaLabel getLabel() {
-    return WikipediaLabel.WIKIPEDIA_CATEGORY;
+    return WikipediaLabel.WikipediaCategory;
   }
 }

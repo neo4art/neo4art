@@ -64,6 +64,7 @@ public class WikipediaDefaultImporter implements WikipediaImporter {
     {
       WikipediaGraphService wikipediaGraphService = new WikipediaDefaultGraphService();
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
+      wikipediaGraphService.removeDuplicates();
       wikipediaGraphService.createConstraints();
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Contraints created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");

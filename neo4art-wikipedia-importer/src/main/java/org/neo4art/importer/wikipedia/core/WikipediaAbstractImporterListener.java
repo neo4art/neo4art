@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
@@ -63,15 +64,18 @@ abstract class WikipediaAbstractImporterListener implements WikipediaImporterLis
 	@Override
 	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
 
-		long currentPageCount = pageCount.incrementAndGet();
-		
-    if (currentPageCount % 1000 == 0)
-		  logger.info("Parsed " + currentPageCount + " pages so far...");
-		
-		if (this.wikipediaElementBuffer.size() == this.batchSize)
-		  flush();
-		
-		this.wikipediaElementBuffer.add(WikipediaElementTransformer.toWikipediaElement(article));
+	  if (StringUtils.isNotEmpty(article.getTitle())) {
+	    
+  		long currentPageCount = pageCount.incrementAndGet();
+  		
+      if (currentPageCount % 1000 == 0)
+  		  logger.info("Parsed " + currentPageCount + " pages so far...");
+  		
+  		if (this.wikipediaElementBuffer.size() == this.batchSize)
+  		  flush();
+  		
+  		this.wikipediaElementBuffer.add(WikipediaElementTransformer.toWikipediaElement(article));
+	  }
 	}
 
 	@Override
