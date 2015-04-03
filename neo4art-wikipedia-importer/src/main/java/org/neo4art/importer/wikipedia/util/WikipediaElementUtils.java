@@ -28,30 +28,6 @@ import org.neo4art.importer.wikipedia.domain.WikipediaType;
 public class WikipediaElementUtils {
 
   /**
-   * @param text
-   * @return
-   */
-  public static boolean isArtist(String text) {
-    return text.indexOf("{{Infobox artist") != -1;
-  }
-
-  /**
-   * @param text
-   * @return
-   */
-  public static boolean isArtwork(String text) {
-    return text.indexOf("{{Infobox artwork") != -1;
-  }
-  
-  /**
-   * @param text
-   * @return
-   */
-  public static boolean isMuseum(String text) {
-    return text.indexOf("{{Infobox museum") != -1;
-  }
-  
-  /**
    * 
    * @param article
    * @return
@@ -59,11 +35,11 @@ public class WikipediaElementUtils {
   public static WikipediaType getWikipediaElementType(WikiArticle article) {
 
     if (article.isMain()) {
-      if (WikipediaElementUtils.isArtist(article.getText())) {
+      if (WikipediaInfoboxUtils.isArtist(article.getText())) {
         return WikipediaType.ARTIST_PAGE;
-      } else if (WikipediaElementUtils.isArtwork(article.getText())) {
+      } else if (WikipediaInfoboxUtils.isArtwork(article.getText())) {
         return WikipediaType.ARTWORK_PAGE;
-      } else if (WikipediaElementUtils.isMuseum(article.getText())) {
+      } else if (WikipediaInfoboxUtils.isMuseum(article.getText())) {
         return WikipediaType.MUSEUM_PAGE;
       } else {
         return WikipediaType.PAGE;

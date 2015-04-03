@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.importer.wikipedia.service;
+package org.neo4art.importer.wikipedia.core;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.neo4art.graph.util.Neo4ArtGraphDatabaseConnectionFactory;
-import org.neo4art.importer.wikipedia.core.WikipediaDefaultImporter;
+import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.graph.util.Neo4ArtGraphDatabaseServiceSingleton;
+import org.neo4art.importer.wikipedia.core.WikipediaBatchImporter;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.io.fs.FileUtils;
 
 /**
  * It tests the import of a Wikimedia Dump.
@@ -34,29 +36,35 @@ import org.neo4j.io.fs.FileUtils;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaServiceTest {
+public class WikipediaImporterTest {
 
+  @Before
+  public void cleanDatabase() throws IOException {
+    
+    FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabaseServiceSingleton.NEO4J_STORE_DIR));
+  }
+  
 	@Test
 	public void shouldParseWikipediaDumpFile() throws IOException {
 	  
-	  GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseConnectionFactory.getInstance();
-	  
 		try {
 		  
-		  FileUtils.deleteRecursively(new File(Neo4ArtGraphDatabaseConnectionFactory.NEO4J_STORE_DIR));
-		  
-			File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
+			//File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
+			File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
 			
-			long newNodesAndRelationships = new WikipediaDefaultImporter().importOrUpdateDump(dumpFile);
+			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
+      
+			GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getInstance();
 			
 			try (Transaction tx = graphDatabaseService.beginTx()) {
 			  
-			  Assert.assertEquals(newNodesAndRelationships, graphDatabaseService.execute("match (n) optional match (n)-[r]->(m) return count(n) + count(r) as tot").next().get("tot"));
+			  Object newNodesAndRelationshipsOnDB = graphDatabaseService.execute("match (n:" + WikipediaLabel.Wikipedia + ") optional match (n)-[r]-(m) return count(distinct(id(n))) + count(distinct(id(r))) as tot").next().get("tot");
+			  
+			  Assert.assertEquals(newNodesAndRelationships, newNodesAndRelationshipsOnDB);
 			  
 			  System.out.println(newNodesAndRelationships);
 			  
 			  tx.success();
-			  
 			}
 		} catch (Exception e) {
 		  

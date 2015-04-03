@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.neo4art.importer.wikipedia.repository;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import org.neo4art.graph.WikipediaLabel;
 import org.neo4art.graph.WikipediaRelationship;
+import org.neo4art.graph.util.Neo4ArtBatchInserterSingleton;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
@@ -30,55 +32,16 @@ import org.neo4art.importer.wikipedia.domain.WikipediaMuseumPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Result;
-import org.neo4j.graphdb.schema.Schema;
+import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
 
 /**
- * It stores Wikipedia data into neo4j via <a href="http://neo4j.com/docs/stable/tutorials-java-embedded-setup.html">GraphDatabaseService</a>.
- * 
  * @author Lorenzo Speranzoni
- * @since 25.02.2015
+ * @since 3 Apr 2015
  */
-public class WikipediaGraphDatabaseServiceRepository implements WikipediaRepository {
+public class WikipediaBatchInserterRepository implements WikipediaRepository {
 
-  private GraphDatabaseService graphDatabaseService;
-
-  public WikipediaGraphDatabaseServiceRepository(GraphDatabaseService graphDatabaseService) {
-    this.graphDatabaseService = graphDatabaseService;
-  }
-  
-  @Override
-  public long addNode(WikipediaElement wikipediaElement) {
-    
-    Node newWikipediaNode = graphDatabaseService.createNode(wikipediaElement.getLabel(), WikipediaLabel.Wikipedia);
-    
-    newWikipediaNode.setProperty("id"       , wikipediaElement.getId());
-    newWikipediaNode.setProperty("title"    , wikipediaElement.getTitle());
-    newWikipediaNode.setProperty("revision" , wikipediaElement.getRevision());
-    newWikipediaNode.setProperty("timestamp", wikipediaElement.getTimestamp());
-      
-    return newWikipediaNode.getId();
-  }
-  
-  @Override
-  public long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship) {
-    
-    String cql = "MATCH (from:" + wikipediaElementFrom.getLabel() + "{title:{1}}), (to:" + wikipediaElementTo.getLabel() + "{title:{2}}) " +
-                 "MERGE (from)-[r:" + wikipediaRelationship + "]->(to) " +
-                 "RETURN id(r) AS relationId";
-    
-    Map<String, Object> parameters = new HashMap<String, Object>();
-    
-    parameters.put("1", wikipediaElementFrom.getTitle());
-    parameters.put("2", wikipediaElementTo.getTitle());
-    
-    Result result = graphDatabaseService.execute(cql, parameters);
-    
-    return result.hasNext() ? (long) result.columnAs("relationId").next() : -1;
-  }
-  
   @Override
   public long addArtistPage(WikipediaArtistPage wikipediaArtistPage) {
     return addNode(wikipediaArtistPage);
@@ -125,24 +88,49 @@ public class WikipediaGraphDatabaseServiceRepository implements WikipediaReposit
   }
 
   @Override
-  public void createConstraints() {
+  public long addNode(WikipediaElement wikipediaElement) {
     
-    Schema schema = graphDatabaseService.schema();
-
-    for (WikipediaLabel wikipediaLabel : WikipediaLabel.values()) {
-      schema.constraintFor(wikipediaLabel).assertPropertyIsUnique("title").create();
-    }
+    BatchInserter      batchInserter      = Neo4ArtBatchInserterSingleton.getBatchInserterInstance();
+    BatchInserterIndex batchInserterIndex = Neo4ArtBatchInserterSingleton.getWikipediaBatchInserterIndexInstance();
+    
+    Map<String, Object> properties = new HashMap<String, Object>();
+    
+    properties.put("id"       , wikipediaElement.getId());
+    properties.put("title"    , wikipediaElement.getTitle());
+    properties.put("revision" , wikipediaElement.getRevision());
+    properties.put("timestamp", wikipediaElement.getTimestamp());
+    
+    long node = batchInserter.createNode(properties, WikipediaLabel.Wikipedia, wikipediaElement.getLabel());
+    
+    batchInserterIndex.add(node, properties);
+    
+    return 1;
   }
 
   @Override
-  public void removeDuplicates() {
+  public long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship) {
     
-    String cql = "MATCH (n) " +
-                 "WITH distinct(n.title) AS title, collect(id(n)) AS ids WHERE length(ids) > 1 " +
-                 "MATCH (m) " +
-                 "WHERE id(m) in ids " +
-                 "DELETE m";
+    BatchInserter      batchInserter      = Neo4ArtBatchInserterSingleton.getBatchInserterInstance();
+    BatchInserterIndex batchInserterIndex = Neo4ArtBatchInserterSingleton.getWikipediaBatchInserterIndexInstance();
+    
+    IndexHits<Long> nodeIdFrom = batchInserterIndex.get("title", wikipediaElementFrom.getTitle());
+    IndexHits<Long> nodeIdTo   = batchInserterIndex.get("title", wikipediaElementTo  .getTitle());
+    
+    if (nodeIdFrom.hasNext() && nodeIdTo.hasNext()) {
+      batchInserter.createRelationship(nodeIdFrom.next(), nodeIdTo.next(), wikipediaRelationship, null);
+      return 1;
+    }
+    
+    return 0;
+  }
 
-    graphDatabaseService.execute(cql);
+  @Override
+  public void createIndexes() {
+    
+    BatchInserter batchInserter = Neo4ArtBatchInserterSingleton.getBatchInserterInstance();
+
+    for (WikipediaLabel wikipediaLabel : WikipediaLabel.values()) {
+      batchInserter.createDeferredSchemaIndex(wikipediaLabel);
+    }
   }
 }

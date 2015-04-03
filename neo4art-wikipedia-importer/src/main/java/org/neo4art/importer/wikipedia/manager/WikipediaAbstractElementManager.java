@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package org.neo4art.importer.wikipedia.service;
+package org.neo4art.importer.wikipedia.manager;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.graph.WikipediaRelationship;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
-import org.neo4art.importer.wikipedia.repository.WikipediaGraphDatabaseServiceRepository;
+import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
 import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
-import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  * @author Lorenzo Speranzoni
@@ -34,27 +33,27 @@ abstract class WikipediaAbstractElementManager implements WikipediaElementManage
   }
   
   @Override
-  public long createRelationships(GraphDatabaseService graphDatabaseService, WikipediaElement wikipediaElement) {
+  public long createRelationships(WikipediaElement wikipediaElement) {
 
     long newRelationships = 0;
     
-    WikipediaRepository wikipediaRepository = new WikipediaGraphDatabaseServiceRepository(graphDatabaseService);
+    WikipediaRepository wikipediaRepository = new WikipediaBatchInserterRepository();
 
     if (wikipediaElement.getRedirect() != null) {
-      if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaElement.getRedirect(), WikipediaRelationship.REDIRECTS_TO) >= 0)
+      if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaElement.getRedirect(), WikipediaRelationship.REDIRECTS_TO) > 0)
         newRelationships++;
     }
     
     if (CollectionUtils.isNotEmpty(wikipediaElement.getLinks())) {
       for (WikipediaElement wikipediaReferencedElement : wikipediaElement.getLinks()) {
-        if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaReferencedElement, WikipediaRelationship.REFERS) >= 0)
+        if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaReferencedElement, WikipediaRelationship.REFERS) > 0)
           newRelationships++;
       }
     }
     
     if (CollectionUtils.isNotEmpty(wikipediaElement.getCategories())) {
       for (WikipediaCategory wikipediaCategory : wikipediaElement.getCategories()) {
-        if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaCategory, WikipediaRelationship.BELONGS_TO) >= 0)
+        if (wikipediaRepository.addRelationship(wikipediaElement, wikipediaCategory, WikipediaRelationship.BELONGS_TO) > 0)
           newRelationships++;
       }
     }

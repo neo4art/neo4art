@@ -16,7 +16,7 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import java.util.List;
+import java.util.Set;
 
 import org.neo4art.graph.WikipediaLabel;
 
@@ -52,12 +52,15 @@ public interface WikipediaElement {
   WikipediaElement getRedirect();
   void setRedirect(WikipediaElement redirectText);
 
-  List<WikipediaElement> getLinks();
-  List<WikipediaCategory> getCategories();
+  Set<WikipediaElement> getLinks();
+  Set<WikipediaCategory> getCategories();
   
   boolean addLink(WikipediaElement link);
   boolean addCategory(WikipediaCategory category);
 
-  void setLinks(List<WikipediaElement> links);
-  void setCategories(List<WikipediaCategory> categories);
+  void setLinks(Set<WikipediaElement> links);
+  void setCategories(Set<WikipediaCategory> categories);
+  
+  String[] getLinksAsArray();
+  String[] getCategoriesAsArray();
 }

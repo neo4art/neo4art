@@ -1,4 +1,4 @@
-package org.neo4art.importer.wikipedia.domain;
+package org.neo4art.importer.wikipedia.domain.infobox;
 
 import org.apache.commons.lang3.StringUtils;
 

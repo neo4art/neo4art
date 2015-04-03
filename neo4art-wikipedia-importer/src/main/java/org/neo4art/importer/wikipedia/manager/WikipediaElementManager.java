@@ -1,4 +1,5 @@
 /**
+/**
  * Copyright 2015 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,21 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.importer.wikipedia.core;
+package org.neo4art.importer.wikipedia.manager;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
+import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 
 /**
+ * Implementers of this interface are meant to store specific kind of Wikipedia Pages into neo4j.
  * 
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public interface WikipediaDumpImporter {
-	
-	long importOrUpdateDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException;
+public interface WikipediaElementManager {
+
+	long createNodes        (WikipediaElement wikipediaElement);
+	long createRelationships(WikipediaElement wikipediaElement);
 }

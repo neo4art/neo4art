@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.importer.wikipedia.core;
+package org.neo4art.importer.wikipedia.core.listener;
 
 import info.bliki.wiki.dump.Siteinfo;
 import info.bliki.wiki.dump.WikiArticle;
@@ -68,7 +68,7 @@ abstract class WikipediaAbstractImporterListener implements WikipediaImporterLis
 	    
   		long currentPageCount = pageCount.incrementAndGet();
   		
-      if (currentPageCount % 2500 == 0)
+      if (currentPageCount % this.batchSize == 0)
   		  logger.debug("Parsed " + currentPageCount + " pages so far...");
   		
   		if (this.wikipediaElementBuffer.size() == this.batchSize)

@@ -18,7 +18,10 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.graph.WikipediaLabel;
@@ -41,8 +44,8 @@ public class WikipediaGeneric implements WikipediaElement {
 
 	private WikipediaElement redirect;
 	
-	private List<WikipediaElement> links;
-	private List<WikipediaCategory> categories;
+	private Set<WikipediaElement> links;
+	private Set<WikipediaCategory> categories;
 
 	public WikipediaGeneric() {
 	}
@@ -120,7 +123,7 @@ public class WikipediaGeneric implements WikipediaElement {
 	}
 
 	@Override
-	public List<WikipediaElement> getLinks() {
+	public Set<WikipediaElement> getLinks() {
 		return links;
 	}
 
@@ -128,19 +131,19 @@ public class WikipediaGeneric implements WikipediaElement {
   public boolean addLink(WikipediaElement wikipediaElement) {
     
     if (CollectionUtils.isEmpty(this.links)) {
-      this.links = new ArrayList<WikipediaElement>();
+      this.links = new HashSet<WikipediaElement>();
     }
     
     return this.links.add(wikipediaElement);
   }
 
 	@Override
-	public void setLinks(List<WikipediaElement> links) {
+	public void setLinks(Set<WikipediaElement> links) {
 		this.links = links;
 	}
 
 	@Override
-	public List<WikipediaCategory> getCategories() {
+	public Set<WikipediaCategory> getCategories() {
 		return categories;
 	}
 
@@ -148,14 +151,14 @@ public class WikipediaGeneric implements WikipediaElement {
   public boolean addCategory(WikipediaCategory wikipediaCategory) {
 
     if (CollectionUtils.isEmpty(categories)) {
-      this.categories = new ArrayList<WikipediaCategory>();
+      this.categories = new HashSet<WikipediaCategory>();
     }
     
     return this.categories.add(wikipediaCategory);
   }
 
   @Override
-	public void setCategories(List<WikipediaCategory> categories) {
+	public void setCategories(Set<WikipediaCategory> categories) {
 		this.categories = categories;
 	}
 	
@@ -173,5 +176,42 @@ public class WikipediaGeneric implements WikipediaElement {
     WikipediaElementTransformer.toWikipediaElement(this, article);
     
     return this;
+  }
+
+  @Override
+  public String[] getLinksAsArray() {
+    
+    if (CollectionUtils.isNotEmpty(this.links)) {
+      List<String> result = new ArrayList<String>();
+      
+      Iterator<WikipediaElement> iterator = this.links.iterator();
+      
+      while (iterator.hasNext()) {
+        result.add(iterator.next().getTitle());
+      }
+      
+      return result.toArray(new String[result.size()]);
+    }
+    
+    return null;
+  }
+
+  @Override
+  public String[] getCategoriesAsArray() {
+    
+    if (CollectionUtils.isNotEmpty(this.categories)) {
+      
+      List<String> result = new ArrayList<String>();
+      
+      Iterator<WikipediaCategory> iterator = this.categories.iterator();
+      
+      while (iterator.hasNext()) {
+        result.add(iterator.next().getTitle());
+      }
+      
+      return result.toArray(new String[result.size()]);
+    }
+    
+    return null;
   }
 }

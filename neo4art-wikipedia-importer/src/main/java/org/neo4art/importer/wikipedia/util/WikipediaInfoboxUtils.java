@@ -27,6 +27,34 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class WikipediaInfoboxUtils {
 
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isArtist(String text) {
+    return text.indexOf("{{Infobox artist") != -1;
+  }
+
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isArtwork(String text) {
+    return text.indexOf("{{Infobox artwork") != -1;
+  }
+
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isMuseum(String text) {
+    return text.indexOf("{{Infobox museum") != -1;
+  }
+
+  /**
+   * @param text
+   * @return
+   */
   public static Map<String, String> asMap(String text) {
 
     Map<String, String> map = new HashMap<String, String>();

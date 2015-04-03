@@ -16,11 +16,13 @@
 
 package org.neo4art.graph;
 
+import org.neo4j.graphdb.RelationshipType;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum WikipediaRelationship {
+public enum WikipediaRelationship implements RelationshipType {
+  
   REFERS, BELONGS_TO, REDIRECTS_TO
-
 }

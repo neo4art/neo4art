@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.importer.wikipedia.service;
+package org.neo4art.importer.wikipedia.manager;
 
-import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaType;
-import org.neo4art.importer.wikipedia.repository.WikipediaGraphDatabaseServiceRepository;
+import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
 import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
-import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  * Service for storing Wikipedia Categories into neo4j.
@@ -28,19 +27,25 @@ import org.neo4j.graphdb.GraphDatabaseService;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaArtworkPageManager extends WikipediaAbstractElementManager implements WikipediaElementManager {
+public class WikipediaArtistPageManager extends WikipediaAbstractElementManager implements WikipediaElementManager {
 
 	@Override
-	public long createNodes(GraphDatabaseService graphDatabaseService, WikipediaElement wikipediaElement) {
+	public long createNodes(WikipediaElement wikipediaElement) {
 	  
-	  if (wikipediaElement.getType() != WikipediaType.ARTWORK_PAGE) {
-	    throw new IllegalArgumentException("This method work only with wikipedia artwork pages but you called it with " + wikipediaElement.getType());
+	  if (wikipediaElement.getType() != WikipediaType.ARTIST_PAGE) {
+	    throw new IllegalArgumentException("This method work only with wikipedia artist pages but you called it with " + wikipediaElement.getType());
 	  }
+
+	  WikipediaRepository wikipediaRepository = new WikipediaBatchInserterRepository();
 	  
-	  WikipediaRepository wikipediaRepository = new WikipediaGraphDatabaseServiceRepository(graphDatabaseService);
-	  
-	  wikipediaRepository.addArtworkPage((WikipediaArtworkPage) wikipediaElement);
-		
-		return 1;
+	  return wikipediaRepository.addArtistPage((WikipediaArtistPage) wikipediaElement);
 	}
+	
+  @Override
+  public long createRelationships(WikipediaElement wikipediaElement) {
+    
+    long newRelationships = super.createRelationships(wikipediaElement);
+    
+    return newRelationships;
+  }
 }

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.importer.wikipedia.service;
+package org.neo4art.importer.wikipedia.manager;
 
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
 import org.neo4art.importer.wikipedia.domain.WikipediaType;
-import org.neo4art.importer.wikipedia.repository.WikipediaGraphDatabaseServiceRepository;
+import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
 import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
-import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  * Service for storing Wikipedia Categories into neo4j.
@@ -31,16 +30,14 @@ import org.neo4j.graphdb.GraphDatabaseService;
 public class WikipediaProjectManager extends WikipediaAbstractElementManager implements WikipediaElementManager {
 
 	@Override
-	public long createNodes(GraphDatabaseService graphDatabaseService, WikipediaElement wikipediaElement) {
+	public long createNodes(WikipediaElement wikipediaElement) {
 	  
 	  if (wikipediaElement.getType() != WikipediaType.PROJECT) {
 	    throw new IllegalArgumentException("This method work only with wikipedia projects but you called it with " + wikipediaElement.getType());
 	  }
 
-	  WikipediaRepository wikipediaRepository = new WikipediaGraphDatabaseServiceRepository(graphDatabaseService);
+	  WikipediaRepository wikipediaRepository = new WikipediaBatchInserterRepository();
 	  
-	  wikipediaRepository.addProject((WikipediaProject) wikipediaElement);
-		
-		return 1;
+	  return wikipediaRepository.addProject((WikipediaProject) wikipediaElement);
 	}
 }

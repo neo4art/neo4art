@@ -48,6 +48,5 @@ public interface WikipediaRepository {
   long addTemplate(WikipediaTemplate wikipediaTemplate);
   long addGeneric(WikipediaGeneric wikipediaElement);
   
-  void createConstraints();
-  void removeDuplicates();
+  void createIndexes();
 }
