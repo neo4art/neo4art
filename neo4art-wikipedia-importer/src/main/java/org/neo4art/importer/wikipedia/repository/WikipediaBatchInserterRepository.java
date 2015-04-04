@@ -125,12 +125,12 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository {
   }
 
   @Override
-  public void createIndexes() {
+  public void createDeferredIndexes() {
     
     BatchInserter batchInserter = Neo4ArtBatchInserterSingleton.getBatchInserterInstance();
 
     for (WikipediaLabel wikipediaLabel : WikipediaLabel.values()) {
-      batchInserter.createDeferredSchemaIndex(wikipediaLabel);
+      batchInserter.createDeferredSchemaIndex(wikipediaLabel).on("title").create();
     }
   }
 }

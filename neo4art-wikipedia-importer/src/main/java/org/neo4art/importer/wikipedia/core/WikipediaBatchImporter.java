@@ -30,6 +30,8 @@ import org.neo4art.graph.util.Neo4ArtBatchInserterSingleton;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaNodesBatchImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaRelsBatchImporterListener;
+import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
+import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
 import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
@@ -61,6 +63,14 @@ public class WikipediaBatchImporter implements WikipediaImporter {
     logger.info("Store directory is " + batchInserter.getStoreDir());
     
     {
+      WikipediaRepository wikipediaBatchInserterRepository = new WikipediaBatchInserterRepository();
+      long createDeferredIndexStartDate = Calendar.getInstance().getTimeInMillis();
+      wikipediaBatchInserterRepository.createDeferredIndexes();
+      long createDeferredIndexEndDate = Calendar.getInstance().getTimeInMillis();
+      logger.info("Done! Deferred indexes created in " + (createDeferredIndexEndDate - createDeferredIndexStartDate) + " ms.");
+    }
+    
+    {
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
       wikipediaNodesImporterListener.setBatchSize(10000);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
@@ -69,7 +79,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
       long parserForNodesEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();    
       newNodes = wikipediaNodesImporterListener.getGraphCount();
-      logger.info("Done! Created " + newNodes + " nodes in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
+      logger.info("Done! " + newNodes + " nodes created in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
     }
 
     {
@@ -88,7 +98,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
       long parserForRelsEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaRelsImporterListener.flush();    
       newRelationships = wikipediaRelsImporterListener.getGraphCount();
-      logger.info("Done! Created " + newRelationships + " relationships in " + (parserForRelsEndDate - parserForRelsStartDate) + " ms.");
+      logger.info("Done! " + newRelationships + " relationships created in " + (parserForRelsEndDate - parserForRelsStartDate) + " ms.");
     }
     
     {
