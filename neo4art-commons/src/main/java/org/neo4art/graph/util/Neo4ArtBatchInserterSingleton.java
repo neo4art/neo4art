@@ -16,6 +16,9 @@
 
 package org.neo4art.graph.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
@@ -40,7 +43,11 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase {
   public static BatchInserter getBatchInserterInstance() {
   
     if (batchInserter == null) {
-      batchInserter = BatchInserters.inserter(NEO4J_STORE_DIR);
+      
+      Map<String, String> config = new HashMap<>();
+      config.put("dbms.pagecache.memory", "16G" );
+      
+      batchInserter = BatchInserters.inserter(NEO4J_STORE_DIR, config);
     }
     
     return batchInserter;

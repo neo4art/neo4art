@@ -23,8 +23,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.graph.util.Neo4ArtGraphDatabase;
 import org.neo4art.graph.util.Neo4ArtGraphDatabaseServiceSingleton;
-import org.neo4art.importer.wikipedia.core.WikipediaBatchImporter;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 
@@ -41,7 +41,7 @@ public class WikipediaImporterTest {
   @Before
   public void cleanDatabase() throws IOException {
     
-    FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabaseServiceSingleton.NEO4J_STORE_DIR));
+    FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabase.NEO4J_STORE_DIR));
   }
   
 	@Test
@@ -50,6 +50,7 @@ public class WikipediaImporterTest {
 		try {
 		  
 			File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
+			//File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
 			
 			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
       
