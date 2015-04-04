@@ -22,6 +22,10 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * We use <a href="http://en.wikipedia.org/wiki/Template:Infobox">infobox</a> to classify art contents. 
+ * 
+ * Here you can see <a href="http://en.wikipedia.org/wiki/Wikipedia:List_of_infoboxes">list of infoboxes</a>.
+ * 
  * @author Lorenzo Speranzoni
  * @since 21 Mar 2015
  */
@@ -32,7 +36,7 @@ public class WikipediaInfoboxUtils {
    * @return
    */
   public static boolean isArtist(String text) {
-    return text.indexOf("{{Infobox artist") != -1;
+    return StringUtils.contains(text, "{{Infobox artist");
   }
 
   /**
@@ -40,17 +44,57 @@ public class WikipediaInfoboxUtils {
    * @return
    */
   public static boolean isArtwork(String text) {
-    return text.indexOf("{{Infobox artwork") != -1;
+    return StringUtils.contains(text, "{{Infobox artwork");
   }
 
   /**
    * @param text
    * @return
    */
+  public static boolean isArtMovement(String text) {
+    return StringUtils.contains(text, "{{Infobox art movement");
+  }
+  
+  /**
+   * @param text
+   * @return
+   */
   public static boolean isMuseum(String text) {
-    return text.indexOf("{{Infobox museum") != -1;
+    return StringUtils.contains(text, "{{Infobox museum");
   }
 
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isMonument(String text) {
+    return StringUtils.contains(text, "{{Infobox monument");
+  }
+  
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isReligiousBuilding(String text) {
+    return StringUtils.contains(text, "{{Infobox religious building");
+  }
+  
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isSettlement(String text) {
+    return StringUtils.contains(text, "{{Infobox settlement");
+  }
+  
+  /**
+   * @param text
+   * @return
+   */
+  public static boolean isCountry(String text) {
+    return StringUtils.contains(text, "{{Infobox country");
+  }
+  
   /**
    * @param text
    * @return

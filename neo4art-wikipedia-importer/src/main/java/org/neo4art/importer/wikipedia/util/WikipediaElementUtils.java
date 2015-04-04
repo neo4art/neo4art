@@ -35,23 +35,48 @@ public class WikipediaElementUtils {
   public static WikipediaType getWikipediaElementType(WikiArticle article) {
 
     if (article.isMain()) {
-      if (WikipediaInfoboxUtils.isArtist(article.getText())) {
+      
+      if (WikipediaInfoboxUtils.isArtist(article.getText())){
         return WikipediaType.ARTIST_PAGE;
+        
       } else if (WikipediaInfoboxUtils.isArtwork(article.getText())) {
         return WikipediaType.ARTWORK_PAGE;
+        
+      } else if (WikipediaInfoboxUtils.isArtMovement(article.getText())) {
+        return WikipediaType.ART_MOVEMENT_PAGE;
+        
       } else if (WikipediaInfoboxUtils.isMuseum(article.getText())) {
         return WikipediaType.MUSEUM_PAGE;
+        
+      } else if (WikipediaInfoboxUtils.isMonument(article.getText())) {
+        return WikipediaType.MONUMENT_PAGE;
+        
+      } else if (WikipediaInfoboxUtils.isReligiousBuilding(article.getText())) {
+        return WikipediaType.RELIGIOUS_BUILDING_PAGE;
+        
+        
+      } else if (WikipediaInfoboxUtils.isSettlement(article.getText())) {
+        return WikipediaType.SETTLEMENT_PAGE;
+        
+      } else if (WikipediaInfoboxUtils.isCountry(article.getText())) {
+        return WikipediaType.COUNTRY_PAGE;
+        
+        
       } else {
         return WikipediaType.PAGE;
       }
     } else if (article.isCategory()) {
       return WikipediaType.CATEGORY;
+      
     } else if (article.isTemplate()) {
       return WikipediaType.TEMPLATE;
+      
     } else if (article.isFile()) {
       return WikipediaType.FILE;
+      
     } else if (article.isProject()) {
       return WikipediaType.PROJECT;
+      
     } else {
       return WikipediaType.GENERIC;
     }

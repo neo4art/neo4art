@@ -36,10 +36,8 @@ import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
 public class WikipediaGeneric implements WikipediaElement {
 
 	private long id;
-	private String namespace;
 	private String title;
 	private long revision;
-	private String text;
 	private long timestamp;
 
 	private WikipediaElement redirect;
@@ -64,16 +62,6 @@ public class WikipediaGeneric implements WikipediaElement {
 	  this.id = id;
 	}
 	
-	@Override
-	public String getNamespace() {
-		return namespace;
-	}
-
-	@Override
-	public void setNamespace(String namespace) {
-		this.namespace = namespace;
-	}
-
 	@Override
 	public String getTitle() {
 		return title;
@@ -101,16 +89,6 @@ public class WikipediaGeneric implements WikipediaElement {
   public void setRedirect(WikipediaElement redirect) {
     this.redirect = redirect;
   }
-
-  @Override
-	public String getText() {
-		return text;
-	}
-
-	@Override
-	public void setText(String text) {
-		this.text = text;
-	}
 
 	@Override
 	public long getTimestamp() {
@@ -213,5 +191,13 @@ public class WikipediaGeneric implements WikipediaElement {
     }
     
     return null;
+  }
+
+  @Override
+  public int getHashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + title.toLowerCase().hashCode();
+    return result;
   }
 }

@@ -33,7 +33,7 @@ public class WikipediaPageManager extends WikipediaAbstractElementManager implem
 	public long createNodes(WikipediaElement wikipediaElement) {
 		
     if (wikipediaElement.getType() != WikipediaType.PAGE) {
-      throw new IllegalArgumentException("This method work only with wikipedia categories but you called it with " + wikipediaElement.getType());
+      throw new IllegalArgumentException("This method work only with wikipedia pages but you called it with " + wikipediaElement.getType());
     }
 
     WikipediaRepository wikipediaRepository = new WikipediaBatchInserterRepository();

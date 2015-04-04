@@ -33,7 +33,7 @@ public class WikipediaGenericManager extends WikipediaAbstractElementManager imp
 	public long createNodes(WikipediaElement wikipediaElement) {
 
     if (wikipediaElement.getType() != WikipediaType.GENERIC) {
-      throw new IllegalArgumentException("This method work only with wikipedia categories but you called it with " + wikipediaElement.getType());
+      throw new IllegalArgumentException("This method work only with wikipedia generic pages but you called it with " + wikipediaElement.getType());
     }
     
     WikipediaRepository wikipediaRepository = new WikipediaBatchInserterRepository();

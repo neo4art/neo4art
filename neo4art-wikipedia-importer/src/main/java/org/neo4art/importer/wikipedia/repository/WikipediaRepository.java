@@ -16,15 +16,20 @@
 package org.neo4art.importer.wikipedia.repository;
 
 import org.neo4art.graph.WikipediaRelationship;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtMovementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
+import org.neo4art.importer.wikipedia.domain.WikipediaCountryPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaFile;
 import org.neo4art.importer.wikipedia.domain.WikipediaGeneric;
+import org.neo4art.importer.wikipedia.domain.WikipediaMonumentPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaMuseumPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
+import org.neo4art.importer.wikipedia.domain.WikipediaReligiousBuildingPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaSettlementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 
 /**
@@ -34,12 +39,15 @@ import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
  */
 public interface WikipediaRepository {
 
-  long addNode(WikipediaElement wikipediaElement);
-  long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship);
-  
   long addArtistPage(WikipediaArtistPage wikipediaElement);
   long addArtworkPage(WikipediaArtworkPage wikipediaElement);
+  long addArtMovementPage(WikipediaArtMovementPage wikipediaElement);
   long addMuseumPage(WikipediaMuseumPage wikipediaMuseumPage);
+  long addMonumentPage(WikipediaMonumentPage wikipediaElement);
+  long addReligiousBuildingPage(WikipediaReligiousBuildingPage wikipediaElement);
+
+  long addSettlementPage(WikipediaSettlementPage wikipediaElement);
+  long addCountryPage(WikipediaCountryPage wikipediaElement);
 
   long addPage(WikipediaPage wikipediaPage);
   long addCategory(WikipediaCategory wikipediaElement);
@@ -48,5 +56,7 @@ public interface WikipediaRepository {
   long addTemplate(WikipediaTemplate wikipediaTemplate);
   long addGeneric(WikipediaGeneric wikipediaElement);
   
+  long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship);
+
   void createDeferredIndexes();
 }

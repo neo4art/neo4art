@@ -36,10 +36,22 @@ public class WikipediaElementManagerFactory {
 	      return new WikipediaArtistPageManager();
 	    case ARTWORK_PAGE:
 	      return new WikipediaArtworkPageManager();
+	    case ART_MOVEMENT_PAGE:
+	      return new WikipediaArtMovementPageManager();
 	    case MUSEUM_PAGE:
 	      return new WikipediaMuseumPageManager();
+	    case MONUMENT_PAGE:
+	      return new WikipediaMonumentPageManager();
+	    case RELIGIOUS_BUILDING_PAGE:
+	      return new WikipediaReligiousBuildingPageManager();
+	      
+	    case SETTLEMENT_PAGE:
+	      return new WikipediaSettlementPageManager();
+	    case COUNTRY_PAGE:
+	      return new WikipediaCountryPageManager();
+	      
 	    case CATEGORY:
-	    return new WikipediaCategoryManager();
+	      return new WikipediaCategoryManager();
 	    case FILE:
 	      return new WikipediaFileManager();
 	    case PROJECT:

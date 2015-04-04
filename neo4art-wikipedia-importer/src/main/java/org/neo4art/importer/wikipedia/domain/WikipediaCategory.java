@@ -16,9 +16,11 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.neo4art.graph.WikipediaLabel;
 
 import info.bliki.wiki.dump.WikiArticle;
+import info.bliki.wiki.namespaces.Namespace;
 
 
 /**
@@ -36,6 +38,13 @@ public class WikipediaCategory extends WikipediaGeneric implements WikipediaElem
   
   public WikipediaCategory(WikiArticle article) {
     from(article);
+  }
+  
+  @Override
+  public void setTitle(String title) {
+    if (!StringUtils.startsWith(title, new Namespace().CATEGORY.getCanonicalName()))
+      title = new Namespace().CATEGORY.getCanonicalName() + ":" + title;
+    super.setTitle(title);
   }
   
   @Override

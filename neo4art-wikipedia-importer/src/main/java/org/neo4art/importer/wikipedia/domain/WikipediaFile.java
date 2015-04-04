@@ -16,9 +16,9 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
-
 import info.bliki.wiki.dump.WikiArticle;
+
+import org.neo4art.graph.WikipediaLabel;
 
 
 /**

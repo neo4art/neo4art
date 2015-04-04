@@ -28,12 +28,18 @@ public enum WikipediaLabel implements Label {
   
   WikipediaArtistPage,
   WikipediaArtworkPage,
+  WikipediaArtMovementPage,
   WikipediaMuseumPage,
+  WikipediaMonumentPage,
+  WikipediaReligiousBuildingPage,
+  
+  WikipediaSettlementPage,
+  WikipediaCountryPage,
   
   WikipediaPage,
   WikipediaCategory,
   WikipediaFile,
   WikipediaProject,
   WikipediaTemplate,
-  WikipediaGeneric,
+  WikipediaGeneric
 }

@@ -22,15 +22,20 @@ import java.util.Map;
 import org.neo4art.graph.WikipediaLabel;
 import org.neo4art.graph.WikipediaRelationship;
 import org.neo4art.graph.util.Neo4ArtBatchInserterSingleton;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtMovementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
+import org.neo4art.importer.wikipedia.domain.WikipediaCountryPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaFile;
 import org.neo4art.importer.wikipedia.domain.WikipediaGeneric;
+import org.neo4art.importer.wikipedia.domain.WikipediaMonumentPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaMuseumPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
+import org.neo4art.importer.wikipedia.domain.WikipediaReligiousBuildingPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaSettlementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
@@ -53,10 +58,35 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository {
   }
 
   @Override
+  public long addArtMovementPage(WikipediaArtMovementPage wikipediaArtMovementPage) {
+    return addNode(wikipediaArtMovementPage);
+  }
+  
+  @Override
+  public long addMonumentPage(WikipediaMonumentPage wikipediaMonumentPage) {
+    return addNode(wikipediaMonumentPage);
+  }
+
+  @Override
   public long addMuseumPage(WikipediaMuseumPage wikipediaMuseumPage) {
     return addNode(wikipediaMuseumPage);
   }
+  
+  @Override
+  public long addReligiousBuildingPage(WikipediaReligiousBuildingPage wikipediaReligiousBuildingPage) {
+    return addNode(wikipediaReligiousBuildingPage);
+  }
 
+  @Override
+  public long addSettlementPage(WikipediaSettlementPage wikipediaSettlementPage) {
+    return addNode(wikipediaSettlementPage);
+  }
+  
+  @Override
+  public long addCountryPage(WikipediaCountryPage wikipediaCountryPage) {
+    return addNode(wikipediaCountryPage);
+  }
+  
   @Override
   public long addPage(WikipediaPage wikipediaPage) {
     return addNode(wikipediaPage);
@@ -87,8 +117,7 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository {
     return addNode(wikipediaGeneric);
   }
 
-  @Override
-  public long addNode(WikipediaElement wikipediaElement) {
+  private long addNode(WikipediaElement wikipediaElement) {
     
     BatchInserter      batchInserter      = Neo4ArtBatchInserterSingleton.getBatchInserterInstance();
     BatchInserterIndex batchInserterIndex = Neo4ArtBatchInserterSingleton.getWikipediaBatchInserterIndexInstance();
@@ -99,6 +128,9 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository {
     properties.put("title"    , wikipediaElement.getTitle());
     properties.put("revision" , wikipediaElement.getRevision());
     properties.put("timestamp", wikipediaElement.getTimestamp());
+    properties.put("hashcode" , wikipediaElement.getHashCode());
+    
+    System.out.println(properties.get("hashcode"));
     
     long node = batchInserter.createNode(properties, WikipediaLabel.Wikipedia, wikipediaElement.getLabel());
     

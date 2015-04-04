@@ -86,7 +86,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase {
       }
       
       wikipediaBatchInserterIndex = batchInserterIndexProvider.nodeIndex("wikipedia-title", MapUtil.stringMap("type", "exact"));
-      wikipediaBatchInserterIndex.setCacheCapacity("title", 20_000_000);
+      wikipediaBatchInserterIndex.setCacheCapacity("hashcode", 20_000_000);
     }
     
     return wikipediaBatchInserterIndex;

@@ -27,17 +27,15 @@ import org.neo4art.graph.WikipediaLabel;
 public interface WikipediaElement {
 
   long getId();
-  String getNamespace();
   String getTitle();
   long getRevision();
-  String getText();
   long getTimestamp();
 
+  int getHashCode();
+  
   void setId(long id);
-  void setNamespace(String namespace);
   void setTitle(String title);
   void setRevision(long revision);
-  void setText(String text);
   void setTimestamp(long timestamp);
 
   WikipediaType getType();

@@ -40,12 +40,4 @@ public class WikipediaArtistPageManager extends WikipediaAbstractElementManager 
 	  
 	  return wikipediaRepository.addArtistPage((WikipediaArtistPage) wikipediaElement);
 	}
-	
-  @Override
-  public long createRelationships(WikipediaElement wikipediaElement) {
-    
-    long newRelationships = super.createRelationships(wikipediaElement);
-    
-    return newRelationships;
-  }
 }

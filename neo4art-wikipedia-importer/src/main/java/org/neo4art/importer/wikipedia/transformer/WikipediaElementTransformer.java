@@ -17,7 +17,6 @@ package org.neo4art.importer.wikipedia.transformer;
 
 import info.bliki.wiki.dump.WikiArticle;
 import info.bliki.wiki.dump.WikiPatternMatcher;
-import info.bliki.wiki.namespaces.Namespace;
 
 import java.util.List;
 
@@ -25,16 +24,21 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.neo4art.importer.wikipedia.domain.WikipediaArtMovementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
+import org.neo4art.importer.wikipedia.domain.WikipediaCountryPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaFile;
 import org.neo4art.importer.wikipedia.domain.WikipediaGeneric;
+import org.neo4art.importer.wikipedia.domain.WikipediaMonumentPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaMuseumPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaOnlyTitleElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
+import org.neo4art.importer.wikipedia.domain.WikipediaReligiousBuildingPage;
+import org.neo4art.importer.wikipedia.domain.WikipediaSettlementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 import org.neo4art.importer.wikipedia.util.WikipediaElementUtils;
 
@@ -56,12 +60,25 @@ public class WikipediaElementTransformer {
   public static WikipediaElement toWikipediaElement(WikiArticle article) {
 
     switch (WikipediaElementUtils.getWikipediaElementType(article)) {
+      
       case ARTIST_PAGE:
         return new WikipediaArtistPage().from(article);
       case ARTWORK_PAGE:
         return new WikipediaArtworkPage().from(article);
+      case ART_MOVEMENT_PAGE:
+        return new WikipediaArtMovementPage().from(article);
       case MUSEUM_PAGE:
         return new WikipediaMuseumPage().from(article);
+      case MONUMENT_PAGE:
+        return new WikipediaMonumentPage().from(article);
+      case RELIGIOUS_BUILDING_PAGE:
+        return new WikipediaReligiousBuildingPage().from(article);
+        
+      case SETTLEMENT_PAGE:
+        return new WikipediaSettlementPage().from(article);
+      case COUNTRY_PAGE:
+        return new WikipediaCountryPage().from(article);
+        
       case PAGE:
         return new WikipediaPage().from(article);
       case CATEGORY:
@@ -86,49 +103,49 @@ public class WikipediaElementTransformer {
   public static void toWikipediaElement(WikipediaElement wikipediaElement, WikiArticle article) {
      
      wikipediaElement.setId(Long.parseLong(article.getId()));
-     wikipediaElement.setNamespace(new Namespace().getNamespaceByNumber(article.getIntegerNamespace()).getCanonicalName());
      wikipediaElement.setTitle(article.getTitle());
      wikipediaElement.setRevision(Long.parseLong(article.getRevisionId()));
-     wikipediaElement.setText(article.getText());
      wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
      
      if (StringUtils.isNotEmpty(article.getText())) {
 
        WikiPatternMatcher textParser = new WikiPatternMatcher(article.getText());
        
-       // ----- REDIRECT -----
+       // ----- DISAMBIGUATION PAGES are ignored -----
+       
+       if (textParser.isDisambiguationPage()) {
+       }
+
+       // ----- STUB PAGES are ignored -----
+       
+       if (textParser.isStub()) {
+       }
+
+       // ----- REDIRECT PAGE -----
        
        if (textParser.isRedirect()) {
          wikipediaElement.setRedirect(new WikipediaOnlyTitleElement(textParser.getRedirectText()));
        }
-       
-       // ----- CATEGORIES -----
-       
-       List<String> categories = textParser.getCategories();
-       if (CollectionUtils.isNotEmpty(categories)) {
-         for (String category : categories) {
-           wikipediaElement.addCategory(new WikipediaCategory(category));
+       else {
+         
+         // ----- LINKS -----
+         
+         List<String> links = textParser.getLinks();
+         if (CollectionUtils.isNotEmpty(links)) {
+           for (String link : links) {
+             wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
+           }
          }
-       }
-       
-       // ----- LINKS -----
-       
-       List<String> links = textParser.getLinks();
-       if (CollectionUtils.isNotEmpty(links)) {
-         for (String link : links) {
-           wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
+         
+         // ----- CATEGORIES -----
+         
+         List<String> categories =  textParser.getCategories();
+         if (CollectionUtils.isNotEmpty(categories)) {
+           for (String category : categories) {
+             wikipediaElement.addCategory(new WikipediaCategory(category));
+           }
          }
        }
      }
-          
-     // WikiArticle data not yet managed
-     //
-     // +++ textParser.getInfoBox();
-     // --- textParser.getPlainText();
-     // +   textParser.getRedirectText();
-     // +++ textParser.getText();
-     // +   textParser.isDisambiguationPage();
-     // +   textParser.isRedirect();
-     // +   textParser.isStub();
    }
 }
