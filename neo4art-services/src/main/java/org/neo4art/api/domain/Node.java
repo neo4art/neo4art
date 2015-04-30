@@ -17,7 +17,7 @@ package org.neo4art.api.domain;
 
 /**
  * @author Enrico De Benetti
- * @since 29 Apr 2015
+ * @since 29 Apr 2015 
  *
  */
 public class Node {
