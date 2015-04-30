@@ -42,14 +42,14 @@ public class BuildTimeLineMock {
 		TimelineEvent event2= new TimelineEvent();
 		event2.setAverageRgb("0487D5");
 		event2.setDescription("Farmhouses Among Trees");
-		event2.setEmotion("mah");
+		event2.setEmotion("meh");
 		event2.setStart("15-sep-1883 00:00");
 		event2.setThumbnail("http://www.vggallery.com/painting/f_0018.jpg");
 		
 		TimelineEvent event3= new TimelineEvent();
 		event3.setAverageRgb("4DD312");
 		event3.setDescription("Plaster Statuette of a Female Torso");
-		event3.setEmotion("fraun");
+		event3.setEmotion("frown");
 		event3.setStart("10-mar-1886 00:00");
 		event3.setThumbnail("http://www.vggallery.com/painting/f_0216i.jpg");
 		
@@ -63,14 +63,14 @@ public class BuildTimeLineMock {
 		TimelineEvent event5= new TimelineEvent();
 		event5.setAverageRgb("9D5F66");
 		event5.setDescription("Still Life: Potatoes in a Yellow Dish");
-		event5.setEmotion("mah");
+		event5.setEmotion("meh");
 		event5.setStart("10-mar-1888 00:00");
 		event5.setThumbnail("http://www.vggallery.com/painting/f_0386.jpg");
 		
 		TimelineEvent event6= new TimelineEvent();
 		event6.setAverageRgb("23D56F");
 		event6.setDescription("Langlois Bridge at Arles, The");
-		event6.setEmotion("fraun");
+		event6.setEmotion("frown");
 		event6.setStart("5-apr-1888 00:00");
 		event6.setThumbnail("http://www.vggallery.com/painting/f_0571.jpg");
 		
@@ -84,14 +84,14 @@ public class BuildTimeLineMock {
 		TimelineEvent event8= new TimelineEvent();
 		event8.setAverageRgb("65F1A3");
 		event8.setDescription("Seated Zouave, The");
-		event8.setEmotion("mah");
+		event8.setEmotion("meh");
 		event8.setStart("10-jun-1888 00:00");
 		event8.setThumbnail("http://www.vggallery.com/painting/f_0424.jpg");
 		
 		TimelineEvent event9= new TimelineEvent();
 		event9.setAverageRgb("34F7E2");
 		event9.setDescription("La Mousmé, Sitting");
-		event9.setEmotion("fraun");
+		event9.setEmotion("frown");
 		event9.setStart("10-jul-1888 00:00");
 		event9.setThumbnail("http://www.vggallery.com/painting/f_0431.jpg");
 		
