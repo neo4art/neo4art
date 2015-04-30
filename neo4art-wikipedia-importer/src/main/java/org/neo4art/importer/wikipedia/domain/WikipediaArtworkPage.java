@@ -18,46 +18,69 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artwork;
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtworkInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaArtworkPage extends WikipediaPage implements WikipediaElement {
+public class WikipediaArtworkPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaArtworkPage.class);
+  
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtworkPage };
 
   private Artwork artwork;
 
-  public WikipediaArtworkPage() {
+  public WikipediaArtworkPage()
+  {
   }
-  
-  public WikipediaArtworkPage(WikiArticle article) {
+
+  public WikipediaArtworkPage(WikiArticle article)
+  {
     from(article);
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaArtworkPage;
-  }
-  
-  @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.ARTWORK_PAGE;
   }
 
-  public Artwork getArtwork() {
+  public Artwork getArtwork()
+  {
     return artwork;
   }
 
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.artwork = WikipediaArtworkInfoboxParser.parse(article.getText());
-    
+  public WikipediaElement from(WikiArticle article)
+  {
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.artwork = WikipediaArtworkInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing Artwork infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

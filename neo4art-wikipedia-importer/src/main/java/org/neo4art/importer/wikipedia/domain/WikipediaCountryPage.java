@@ -18,46 +18,69 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Country;
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaCountryInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaCountryPage extends WikipediaPage implements WikipediaElement {
+public class WikipediaCountryPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaCountryPage.class);
+
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCountryPage };
 
   private Country country;
 
-  public WikipediaCountryPage() {
+  public WikipediaCountryPage()
+  {
   }
-  
-  public WikipediaCountryPage(WikiArticle article) {
+
+  public WikipediaCountryPage(WikiArticle article)
+  {
     from(article);
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaCountryPage;
-  }
-  
-  @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.COUNTRY_PAGE;
   }
 
-  public Country getCountry() {
+  public Country getCountry()
+  {
     return country;
   }
 
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.country = WikipediaCountryInfoboxParser.parse(article.getText());
-    
+  public WikipediaElement from(WikiArticle article)
+  {
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.country = WikipediaCountryInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing Country infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

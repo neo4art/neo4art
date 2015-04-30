@@ -16,292 +16,327 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.neo4art.graphdb.Neo4ArtLabel;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4j.graphdb.Label;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Apr 2015
  */
-public class Monument {
+public class Monument implements Neo4ArtNode
+{
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Monument };
 
-  public String monumentName; 
-  public String nativeName;   
-  public String image;         
-  public String caption;       
-  public String coordinates;   
-  public String location;      
-  public String designer;      
-  public String type;          
-  public String material;      
-  public String length;        
-  public String width;         
-  public String height;        
-  public String begin;         
-  public String complete;      
-  public String open;          
-  public String dedicatedTo;  
-  public String mapImage;     
-  public String mapText;      
-  public String mapWidth;     
-  public String relief;        
-  public String latD;          
-  public String latM;          
-  public String latS;          
-  public String latNS;         
-  public String longD;         
-  public String longM;         
-  public String longS;         
-  public String longEW;        
-  public String lat;           
-  public String lon;          
-  public String extra;
-  
-  public Monument() {
+  private Long                 nodeId;
+
+  public String                monumentName;
+  public String                nativeName;
+  public URL                   image;
+  public String                caption;
+  public Coordinate            coordinates;
+  public String                location;
+  public String                designer;
+  public String                type;
+  public String                material;
+  public String                length;
+  public String                width;
+  public String                height;
+  public String                begin;
+  public String                complete;
+  public String                open;
+  public String                dedicatedTo;
+  public String                mapImage;
+  public String                mapText;
+  public String                mapWidth;
+  public String                relief;
+  public Coordinate            coordinate;
+  public String                lat;
+  public String                lon;
+  public String                extra;
+
+  public Monument()
+  {
   }
 
-  public String getMonumentName() {
+  public String getMonumentName()
+  {
     return monumentName;
   }
 
-  public void setMonumentName(String monumentName) {
+  public void setMonumentName(String monumentName)
+  {
     this.monumentName = monumentName;
   }
 
-  public String getNativeName() {
+  public String getNativeName()
+  {
     return nativeName;
   }
 
-  public void setNativeName(String nativeName) {
+  public void setNativeName(String nativeName)
+  {
     this.nativeName = nativeName;
   }
 
-  public String getImage() {
+  public URL getImage()
+  {
     return image;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  public void setImage(URL url)
+  {
+    this.image = url;
   }
 
-  public String getCaption() {
+  public String getCaption()
+  {
     return caption;
   }
 
-  public void setCaption(String caption) {
+  public void setCaption(String caption)
+  {
     this.caption = caption;
   }
 
-  public String getCoordinates() {
+  public Coordinate getCoordinates()
+  {
     return coordinates;
   }
 
-  public void setCoordinates(String coordinates) {
-    this.coordinates = coordinates;
+  public void setCoordinates(Coordinate coordinate)
+  {
+    this.coordinates = coordinate;
   }
 
-  public String getLocation() {
+  public String getLocation()
+  {
     return location;
   }
 
-  public void setLocation(String location) {
+  public void setLocation(String location)
+  {
     this.location = location;
   }
 
-  public String getDesigner() {
+  public String getDesigner()
+  {
     return designer;
   }
 
-  public void setDesigner(String designer) {
+  public void setDesigner(String designer)
+  {
     this.designer = designer;
   }
 
-  public String getType() {
+  public String getType()
+  {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(String type)
+  {
     this.type = type;
   }
 
-  public String getMaterial() {
+  public String getMaterial()
+  {
     return material;
   }
 
-  public void setMaterial(String material) {
+  public void setMaterial(String material)
+  {
     this.material = material;
   }
 
-  public String getLength() {
+  public String getLength()
+  {
     return length;
   }
 
-  public void setLength(String length) {
+  public void setLength(String length)
+  {
     this.length = length;
   }
 
-  public String getWidth() {
+  public String getWidth()
+  {
     return width;
   }
 
-  public void setWidth(String width) {
+  public void setWidth(String width)
+  {
     this.width = width;
   }
 
-  public String getHeight() {
+  public String getHeight()
+  {
     return height;
   }
 
-  public void setHeight(String height) {
+  public void setHeight(String height)
+  {
     this.height = height;
   }
 
-  public String getBegin() {
+  public String getBegin()
+  {
     return begin;
   }
 
-  public void setBegin(String begin) {
+  public void setBegin(String begin)
+  {
     this.begin = begin;
   }
 
-  public String getComplete() {
+  public String getComplete()
+  {
     return complete;
   }
 
-  public void setComplete(String complete) {
+  public void setComplete(String complete)
+  {
     this.complete = complete;
   }
 
-  public String getOpen() {
+  public String getOpen()
+  {
     return open;
   }
 
-  public void setOpen(String open) {
+  public void setOpen(String open)
+  {
     this.open = open;
   }
 
-  public String getDedicatedTo() {
+  public String getDedicatedTo()
+  {
     return dedicatedTo;
   }
 
-  public void setDedicatedTo(String dedicatedTo) {
+  public void setDedicatedTo(String dedicatedTo)
+  {
     this.dedicatedTo = dedicatedTo;
   }
 
-  public String getMapImage() {
+  public String getMapImage()
+  {
     return mapImage;
   }
 
-  public void setMapImage(String mapImage) {
+  public void setMapImage(String mapImage)
+  {
     this.mapImage = mapImage;
   }
 
-  public String getMapText() {
+  public String getMapText()
+  {
     return mapText;
   }
 
-  public void setMapText(String mapText) {
+  public void setMapText(String mapText)
+  {
     this.mapText = mapText;
   }
 
-  public String getMapWidth() {
+  public String getMapWidth()
+  {
     return mapWidth;
   }
 
-  public void setMapWidth(String mapWidth) {
+  public void setMapWidth(String mapWidth)
+  {
     this.mapWidth = mapWidth;
   }
 
-  public String getRelief() {
+  public String getRelief()
+  {
     return relief;
   }
 
-  public void setRelief(String relief) {
+  public void setRelief(String relief)
+  {
     this.relief = relief;
   }
 
-  public String getLatD() {
-    return latD;
+  public Coordinate getCoordinate()
+  {
+    return coordinate;
   }
 
-  public void setLatD(String latD) {
-    this.latD = latD;
+  public void setCoordinate(Coordinate coordinate)
+  {
+    this.coordinate = coordinate;
   }
 
-  public String getLatM() {
-    return latM;
-  }
-
-  public void setLatM(String latM) {
-    this.latM = latM;
-  }
-
-  public String getLatS() {
-    return latS;
-  }
-
-  public void setLatS(String latS) {
-    this.latS = latS;
-  }
-
-  public String getLatNS() {
-    return latNS;
-  }
-
-  public void setLatNS(String latNS) {
-    this.latNS = latNS;
-  }
-
-  public String getLongD() {
-    return longD;
-  }
-
-  public void setLongD(String longD) {
-    this.longD = longD;
-  }
-
-  public String getLongM() {
-    return longM;
-  }
-
-  public void setLongM(String longM) {
-    this.longM = longM;
-  }
-
-  public String getLongS() {
-    return longS;
-  }
-
-  public void setLongS(String longS) {
-    this.longS = longS;
-  }
-
-  public String getLongEW() {
-    return longEW;
-  }
-
-  public void setLongEW(String longEW) {
-    this.longEW = longEW;
-  }
-
-  public String getLat() {
+  public String getLat()
+  {
     return lat;
   }
 
-  public void setLat(String lat) {
+  public void setLat(String lat)
+  {
     this.lat = lat;
   }
 
-  public String getLon() {
+  public String getLon()
+  {
     return lon;
   }
 
-  public void setLon(String lon) {
+  public void setLon(String lon)
+  {
     this.lon = lon;
   }
 
-  public String getExtra() {
+  public String getExtra()
+  {
     return extra;
   }
 
-  public void setExtra(String extra) {
+  public void setExtra(String extra)
+  {
     this.extra = extra;
+  }
+
+  @Override
+  public Long getNodeId()
+  {
+    return this.nodeId;
+  }
+
+  @Override
+  public void setNodeId(long nodeId)
+  {
+    this.nodeId = nodeId;
+  }
+
+  @Override
+  public Map<String, Object> getProperties()
+  {
+    Map<String, Object> properties = new HashMap<String, Object>();
+
+    if (this.monumentName != null)
+    {
+      properties.put("monumentName", this.monumentName);
+    }
+    
+    if (this.coordinate != null)
+    {
+      properties.put("lat", this.coordinate.getLatitude());
+      properties.put("lon", this.coordinate.getLongitude());
+    }
+    
+    return properties;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

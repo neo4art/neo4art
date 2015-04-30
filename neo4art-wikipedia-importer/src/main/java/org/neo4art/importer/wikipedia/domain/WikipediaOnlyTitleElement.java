@@ -15,29 +15,36 @@
  */
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
+import org.neo4j.graphdb.Label;
 
 /**
  * 
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaOnlyTitleElement extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaOnlyTitleElement extends WikipediaGeneric implements WikipediaElement
+{
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia };
 
-	public WikipediaOnlyTitleElement() {
-	}
+  public WikipediaOnlyTitleElement()
+  {
+  }
 
-	public WikipediaOnlyTitleElement(String title) {
-	 setTitle(title);
-	}
-	
-	@Override
-  public WikipediaType getType() {
+  public WikipediaOnlyTitleElement(String title)
+  {
+    setTitle(title);
+  }
+
+  @Override
+  public WikipediaType getType()
+  {
     return null;
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.Wikipedia;
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }
