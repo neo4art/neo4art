@@ -67,8 +67,6 @@ public class RedundancyCounterAggregatorTreeRepository implements RedundancyCoun
                  "ON CREATE SET redundancyNode." + RedundancyCounter.REDUNDANCY_COUNTER_PROPERTY_NAME + " = 1 " +
                  "ON MATCH SET redundancyNode." + RedundancyCounter.REDUNDANCY_COUNTER_PROPERTY_NAME + "=redundancyNode." + RedundancyCounter.REDUNDANCY_COUNTER_PROPERTY_NAME + " + 1";
     
-    System.out.println(cql);
-    
     graphDatabaseService.execute(cql);
   }
 

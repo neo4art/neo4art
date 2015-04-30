@@ -62,8 +62,6 @@ public class WikipediaImporterTest {
 			  
 			  Assert.assertEquals(newNodesAndRelationships, newNodesAndRelationshipsOnDB);
 			  
-			  System.out.println(newNodesAndRelationships);
-			  
 			  tx.success();
 			}
 		} catch (Exception e) {

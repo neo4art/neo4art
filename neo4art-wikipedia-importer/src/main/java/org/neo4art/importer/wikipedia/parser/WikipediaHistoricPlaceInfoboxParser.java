@@ -71,67 +71,51 @@ public class WikipediaHistoricPlaceInfoboxParser
           break;
         case LATITUDE:
           coordinate.setLatD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGITUDE:
           coordinate.setLongD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATM:
           coordinate.setLatM(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATS:
           coordinate.setLatS(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATDEG:
           coordinate.setLatD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATMIN:
           coordinate.setLatM(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATSEC:
           coordinate.setLatS(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LATNS:
           coordinate.setLatNS(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGD:
           coordinate.setLongD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGM:
           coordinate.setLongM(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGS:
           coordinate.setLongS(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGDEG:
           coordinate.setLongD(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGMIN:
           coordinate.setLongM(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGSEC:
           coordinate.setLongS(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case LONGEW:
           coordinate.setLongEW(map.get(key));
-          historicPlace.setCoordinate(coordinate);
           break;
         case WEB:
           historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
@@ -140,6 +124,8 @@ public class WikipediaHistoricPlaceInfoboxParser
           historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
           break;
       }
+      
+      historicPlace.setCoordinate(coordinate);
     }
 
     return historicPlace;

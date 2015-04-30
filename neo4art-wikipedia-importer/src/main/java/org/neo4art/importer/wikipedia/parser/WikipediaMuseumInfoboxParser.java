@@ -147,43 +147,33 @@ public class WikipediaMuseumInfoboxParser
           break;
         case LATITUDE:
           coordinate.setLatD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LONGITUDE:
           coordinate.setLongD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_DEG:
           coordinate.setLatD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_MIN:
           coordinate.setLatM(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_SEC:
           coordinate.setLatS(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_DIR:
           coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          museum.setCoordinate(coordinate);
           break;
         case LON_DEG:
           coordinate.setLongD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_MIN:
           coordinate.setLongM(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_SEC:
           coordinate.setLongS(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_DIR:
           coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          museum.setCoordinate(coordinate);
           break;
         case COORDINATES_TYPE:
           museum.setCoordinatesType(map.get(key));
@@ -199,7 +189,6 @@ public class WikipediaMuseumInfoboxParser
           break;
         case COORDINATES:
           infoboxRestingPlaceCoordinates(map.get(key));
-          museum.setCoordinates(coordinate);
           break;
         case FORMER_NAME:
           museum.setFormerName(map.get(key));
@@ -271,6 +260,8 @@ public class WikipediaMuseumInfoboxParser
           museum.setEmbedded(map.get(key));
           break;
       }
+      
+      museum.setCoordinates(coordinate);
     }
 
     return museum;

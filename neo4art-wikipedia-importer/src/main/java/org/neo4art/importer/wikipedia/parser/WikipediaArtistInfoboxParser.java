@@ -136,8 +136,7 @@ public class WikipediaArtistInfoboxParser
           artist.setBirthPlace(infoboxPlaceBirth(map.get(key)));
           break;
         case DEATH_DATE:
-          Calendar date = parseInfoboxDateDeath(map.get(key));
-          artist.setDeathDate(date);
+          artist.setDeathDate(parseInfoboxDateDeath(map.get(key)));
           break;
         case DEATH_PLACE:
           artist.setDeathPlace(infoboxPlaceDeath(map.get(key)));
@@ -147,10 +146,8 @@ public class WikipediaArtistInfoboxParser
           artist.setRestingPlace(coordinate);
           break;
         case RESTING_PLACE_COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(c[1]);
-          coordinate.setLongD(c[2]);
-          artist.setRestingPlaceCoordinates(coordinate);
+            infoboxRestingPlaceCoordinates(coordinate, map.get(key));
+            artist.setRestingPlaceCoordinates(coordinate);
           break;
         case NATIONALITY:
           country.setCommonName(map.get(key));
@@ -173,13 +170,16 @@ public class WikipediaArtistInfoboxParser
           break;
         case MOVEMENT:
           String[] work = infoboxMovement(map.get(key));
-          for (int i = 0; i < work.length; i++)
+          if (work != null)
           {
-            artMovement = new ArtMovement();
-            artMovement.setName(work[i]);
-            artworks.add(artMovement);
+            for (int i = 0; i < work.length; i++)
+            {
+              artMovement = new ArtMovement();
+              artMovement.setName(work[i]);
+              artworks.add(artMovement);
+            }
+            artist.setMovement(artworks);
           }
-          artist.setMovement(artworks);
           break;
         case SPOUSE:
           artist.setSpouse(map.get(key));
@@ -356,11 +356,14 @@ public class WikipediaArtistInfoboxParser
     return null;
   }
 
-  public static String[] infoboxRestingPlaceCoordinates(String coor)
+  public static String[] infoboxRestingPlaceCoordinates(Coordinate coordinate, String coor)
   {
     try
     {
       String[] c = StringUtils.split(coor, "|");
+
+      coordinate.setLatD(c[1]);
+      coordinate.setLongD(c[2]);
 
       return c;
     }
@@ -540,8 +543,6 @@ public class WikipediaArtistInfoboxParser
   {
     try
     {
-      System.out.println(name);
-  
       if (name != null && name.indexOf("<") != -1)
       {
         String[] field = StringUtils.split(name, "<");

@@ -94,15 +94,7 @@ public class WikipediaMonumentInfoboxParser
           monument.setCaption(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-//          coordinate.setLatD(Double.parseDouble(c[1]));
-//          coordinate.setLatM(Double.parseDouble(c[2]));
-//          coordinate.setLatS(Double.parseDouble(c[3]));
-//          coordinate.setLatNS(c[4]);
-//          coordinate.setLongD(Double.parseDouble(c[5]));
-//          coordinate.setLongM(Double.parseDouble(c[6]));
-//          coordinate.setLongS(Double.parseDouble(c[7]));
-          coordinate.setLongEW(c[8]);
+          infoboxRestingPlaceCoordinates(coordinate, map.get(key));
           monument.setCoordinates(coordinate);
           break;
         case LOCATION:
@@ -152,35 +144,27 @@ public class WikipediaMonumentInfoboxParser
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LATM:
           coordinate.setLatM(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LATS:
           coordinate.setLatS(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LATNS:
           coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          monument.setCoordinate(coordinate);
           break;
         case LONGD:
           coordinate.setLongD(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LONGM:
           coordinate.setLongM(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LONGS:
           coordinate.setLongS(map.get(key));
-          monument.setCoordinate(coordinate);
           break;
         case LONGEW:
           coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          monument.setCoordinate(coordinate);
           break;
         case LAT:
           monument.setLat(map.get(key));
@@ -192,16 +176,28 @@ public class WikipediaMonumentInfoboxParser
           monument.setExtra(map.get(key));
           break;
       }
+      
+      monument.setCoordinate(coordinate);
     }
 
     return monument;
   }
 
-  public static String[] infoboxRestingPlaceCoordinates(String coor)
+  public static String[] infoboxRestingPlaceCoordinates(Coordinate coordinate, String coor)
   {
     try
     {
-      return StringUtils.split(coor, "|");
+      String c[] = StringUtils.split(coor, "|");
+      
+//    coordinate.setLatD(Double.parseDouble(c[1]));
+//    coordinate.setLatM(Double.parseDouble(c[2]));
+//    coordinate.setLatS(Double.parseDouble(c[3]));
+//    coordinate.setLatNS(c[4]);
+//    coordinate.setLongD(Double.parseDouble(c[5]));
+//    coordinate.setLongM(Double.parseDouble(c[6]));
+//    coordinate.setLongS(Double.parseDouble(c[7]));
+      coordinate.setLongEW(c[8]);
+
     }
     catch (Exception e)
     {
