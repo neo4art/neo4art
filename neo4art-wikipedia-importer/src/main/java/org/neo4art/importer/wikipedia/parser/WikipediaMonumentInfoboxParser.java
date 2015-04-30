@@ -18,6 +18,8 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Monument;
 import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
@@ -30,6 +32,8 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaMonumentInfoboxParser
 {
+  private static Log         logger    = LogFactory.getLog(WikipediaMonumentInfoboxParser.class);
+  
   public static final String MONUMENT_NAME = "monument_name";
   public static final String NATIVE_NAME   = "native_name";
   public static final String IMAGE         = "image";
@@ -75,10 +79,8 @@ public class WikipediaMonumentInfoboxParser
 
     for (String key : map.keySet())
     {
-
       switch (key)
       {
-
         case MONUMENT_NAME:
           monument.setMonumentName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
@@ -149,42 +151,34 @@ public class WikipediaMonumentInfoboxParser
           monument.setRelief(map.get(key));
           break;
         case LATD:
-
           coordinate.setLatD(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LATM:
-
           coordinate.setLatM(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LATS:
-
           coordinate.setLatS(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LATNS:
-
           coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           monument.setCoordinate(coordinate);
           break;
         case LONGD:
-
           coordinate.setLongD(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LONGM:
-
           coordinate.setLongM(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LONGS:
-
           coordinate.setLongS(map.get(key));
           monument.setCoordinate(coordinate);
           break;
         case LONGEW:
-
           coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           monument.setCoordinate(coordinate);
           break;
@@ -205,18 +199,30 @@ public class WikipediaMonumentInfoboxParser
 
   public static String[] infoboxRestingPlaceCoordinates(String coor)
   {
-
-    String[] c = StringUtils.split(coor, "|");
-
-    return c;
+    try
+    {
+      return StringUtils.split(coor, "|");
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Monument infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String[] infoboxLocation(String coor)
   {
-
-    String[] c = StringUtils.split(coor, ",");
-
-    return c;
+    try
+    {
+      return StringUtils.split(coor, ",");
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Monument infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
 }

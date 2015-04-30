@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -50,7 +49,7 @@ public class WikipediaHistoricSiteInfoboxParser
   public static final String CAPTION = "caption";
   public static final String STYLE   = "infobox";
 
-  public static HistoricSite parse(String text) throws MalformedURLException
+  public static HistoricSite parse(String text)
   {
     HistoricSite historicSite = new HistoricSite();
     Coordinate coordinate = new Coordinate();
@@ -139,6 +138,7 @@ public class WikipediaHistoricSiteInfoboxParser
           break;
       }
     }
+    
     return historicSite;
   }
 }

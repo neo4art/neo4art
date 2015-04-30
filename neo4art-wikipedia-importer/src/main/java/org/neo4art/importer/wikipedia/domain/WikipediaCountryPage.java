@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Country;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaCountryInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaCountryPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaCountryPage.class);
-
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCountryPage };
 
   private Country country;
@@ -65,14 +61,7 @@ public class WikipediaCountryPage extends WikipediaPage implements WikipediaElem
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.country = WikipediaCountryInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing Country infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.country = WikipediaCountryInfoboxParser.parse(infobox);
     }
 
     return this;

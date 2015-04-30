@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -24,7 +23,6 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
 
 public class WikipediaHistoricPlaceInfoboxParser
 {
-
   public static final String NAME      = "name";
   public static final String IMAGE     = "image";
   public static final String LATD      = "lat_degrees";
@@ -51,9 +49,8 @@ public class WikipediaHistoricPlaceInfoboxParser
   {
   }
 
-  public static HistoricPlace parse(String text) throws MalformedURLException
+  public static HistoricPlace parse(String text)
   {
-
     Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
 
     HistoricPlace historicPlace = new HistoricPlace();
@@ -61,10 +58,8 @@ public class WikipediaHistoricPlaceInfoboxParser
 
     for (String key : map.keySet())
     {
-
       switch (key)
       {
-
         case NAME:
           historicPlace.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
@@ -75,89 +70,66 @@ public class WikipediaHistoricPlaceInfoboxParser
           historicPlace.setType(WikipediaInfoboxUtils.getType(map.get(key)));
           break;
         case LATITUDE:
-
           coordinate.setLatD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGITUDE:
-
-
           coordinate.setLongD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATD:
-
           coordinate.setLatD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATM:
-
-
           coordinate.setLatM(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATS:
-
-
           coordinate.setLatS(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATDEG:
-
-
           coordinate.setLatD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATMIN:
-
           coordinate.setLatM(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATSEC:
-
           coordinate.setLatS(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LATNS:
-
           coordinate.setLatNS(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGD:
-
-
           coordinate.setLongD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGM:
-
           coordinate.setLongM(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGS:
-
           coordinate.setLongS(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGDEG:
-
           coordinate.setLongD(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGMIN:
-
-
           coordinate.setLongM(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGSEC:
-
-
           coordinate.setLongS(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
         case LONGEW:
-
           coordinate.setLongEW(map.get(key));
           historicPlace.setCoordinate(coordinate);
           break;
@@ -168,10 +140,8 @@ public class WikipediaHistoricPlaceInfoboxParser
           historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
           break;
       }
-
     }
 
     return historicPlace;
   }
-
 }

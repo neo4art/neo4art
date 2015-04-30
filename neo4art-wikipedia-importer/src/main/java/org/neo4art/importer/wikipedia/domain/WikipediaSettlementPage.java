@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Settlement;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.settlement.WikipediaSettlementInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaSettlementPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaSettlementPage.class);
-  
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaSettlementPage };
 
   private Settlement settlement;
@@ -65,14 +61,7 @@ public class WikipediaSettlementPage extends WikipediaPage implements WikipediaE
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.settlement = WikipediaSettlementInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing Settlement infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.settlement = WikipediaSettlementInfoboxParser.parse(infobox);
     }
 
     return this;
