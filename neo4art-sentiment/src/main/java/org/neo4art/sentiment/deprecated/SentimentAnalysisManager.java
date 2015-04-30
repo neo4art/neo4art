@@ -18,9 +18,7 @@ package org.neo4art.sentiment.deprecated;
 
 import java.util.Locale;
 
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.service.DictionaryBasicService;
-import org.neo4art.sentiment.vangoghletters.VanGoghLetter001;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 
 /**
