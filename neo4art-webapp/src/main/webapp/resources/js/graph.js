@@ -20,6 +20,15 @@ $(document).ready(function() {
 	} else {
 		console.log("non faccio niente");
 	}
+	$("#dialog").dialog({
+		autoOpen : false,
+		title:"Legend",
+		width: 500,
+		resizable: false
+	});
+	$("#legendOpener").click(function() {
+		$("#dialog").dialog("open");
+	});
 });
 
 function wantsTimeline() {
@@ -69,9 +78,9 @@ function theGraph() {
 			"name" : nodeToAdd.name,
 			"group" : nodeToAdd.group,
 			"thumbnail" : nodeToAdd.thumbnail,
-			"type":nodeToAdd.type,
-			"link":nodeToAdd.link,
-			"description":nodeToAdd.description
+			"type" : nodeToAdd.type,
+			"link" : nodeToAdd.link,
+			"description" : nodeToAdd.description
 		});
 	}
 	addLink = function(linkToAdd) {
@@ -148,8 +157,8 @@ function theGraph() {
 
 		$.ajax({
 			method : 'get',
-			url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/search-results.json?searchInput="
-					+ p.query.toString().replace(/\+/g, " "),
+			url : window.location.protocol + '//' + window.location.host
+					+ "/neo4art-services/api/services/search/search-results.json?searchInput=" + p.query.toString().replace(/\+/g, " "),
 			dataType : 'json',
 			success : function(graph) {
 				// d3.json("miserables.json", function(error, graph) {
@@ -269,8 +278,7 @@ function theGraph() {
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 1.5).attr("y", -d.radius * 1.5)
 								.attr("width", (d.radius * 2) * 1.5).attr("height", (d.radius * 2) * 1.5);
 					}
-				})
-		.on(
+				}).on(
 				"mouseout",
 				function(d) {
 					if (!d.clicked) {
@@ -330,8 +338,8 @@ function theGraph() {
 		nodeEnter.on("dblclick", function(d) {
 			$.ajax({
 				method : 'get',
-				url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/node-explode.json?nodeId="
-						+ d.id,
+				url : window.location.protocol + '//' + window.location.host
+						+ "/neo4art-services/api/services/search/node-explode.json?nodeId=" + d.id,
 				dataType : 'json',
 				success : function(graphExp) {
 					// d3.json("explode.json", function(error, graphExp) {
@@ -382,32 +390,32 @@ function theGraph() {
 	}
 
 	function generateWindow() {
-	    clearDiv("floating");
-	    var float = d3.select("#floating");
-	    $("#floating").resizable({
-	      handles : "w"
-	    });
-	    var bttX = float.append("div").attr("class", "ics").text("X");
-	    bttX.on("click", closeWindow);
-	    float.append("div").attr("id", "data");
-	    float.append("iframe").attr("width","100%");
-	  }
+		clearDiv("floating");
+		var float = d3.select("#floating");
+		$("#floating").resizable({
+			handles : "w"
+		});
+		var bttX = float.append("div").attr("class", "ics").text("X");
+		bttX.on("click", closeWindow);
+		float.append("div").attr("id", "data");
+		float.append("iframe").attr("width", "100%");
+	}
 
-	  function openWindow(d) {
-	    clearDiv("data");
-	    var float = d3.select("#floating").attr("class", "visible").attr("style", null);
-	    var data = float.select("#data");
-	    data.append("div").attr("class", "title").append("h1").text(d.name);
-	    data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
-	    data.append("div").attr("class", "description").text(d.description);
-	    data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
-	    var frame = float.select("iframe");
-	    frame.attr("src",d.link);
-	    $("#floating").perfectScrollbar();
-	    $("#floating").perfectScrollbar('update');
-	    $("iframe").perfectScrollbar();
-	    $("iframe").perfectScrollbar('update');
-	  }
+	function openWindow(d) {
+		clearDiv("data");
+		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
+		var data = float.select("#data");
+		data.append("div").attr("class", "title").append("h1").text(d.name);
+		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
+		data.append("div").attr("class", "description").text(d.description);
+		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+		var frame = float.select("iframe");
+		frame.attr("src", d.link);
+		$("#floating").perfectScrollbar();
+		$("#floating").perfectScrollbar('update');
+		$("iframe").perfectScrollbar();
+		$("iframe").perfectScrollbar('update');
+	}
 
 	function closeWindow() {
 		d3.select("#floating").attr("class", null).style("left", null);
