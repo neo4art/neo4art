@@ -27,12 +27,8 @@ public class WikipediaCountryAustriaInfoboxTest {
 			
 			Assert.assertEquals("Republik Österreich",country.getNativeName());
 			Assert.assertEquals("Republic of Austria",country.getConventionalLongName());
-			Assert.assertEquals("48.0",""+country.getCoordinate().getLatD());
-			Assert.assertEquals("12.0",""+country.getCoordinate().getLatM());
-			Assert.assertEquals("N",country.getCoordinate().getLatNS());
-			Assert.assertEquals("16.0",""+country.getCoordinate().getLongD());
-			Assert.assertEquals("21.0",""+country.getCoordinate().getLongM());
-			Assert.assertEquals("E",country.getCoordinate().getLongEW());	
+			Assert.assertEquals("48.2",""+country.getCoordinate().getLatitude());
+			Assert.assertEquals("16.35",""+country.getCoordinate().getLongitude());
 
 		}
 	

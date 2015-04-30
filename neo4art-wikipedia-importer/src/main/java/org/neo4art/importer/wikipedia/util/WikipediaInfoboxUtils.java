@@ -147,7 +147,14 @@ public class WikipediaInfoboxUtils
     nameImage = nameImage.replaceAll(" ", "_");
     nameImage = nameImage.replace("|", "");
     nameImage = nameImage.replace("\n", "");
-    nameImage = "http://en.wikipedia.org/wiki/File:" + nameImage;
+    if (nameImage.contains("File:"))
+    {
+      nameImage = "http://en.wikipedia.org/wiki/" + nameImage;
+    }
+    else
+    {
+      nameImage = "http://en.wikipedia.org/wiki/File:" + nameImage;
+    }
 
     URL url = null;
     

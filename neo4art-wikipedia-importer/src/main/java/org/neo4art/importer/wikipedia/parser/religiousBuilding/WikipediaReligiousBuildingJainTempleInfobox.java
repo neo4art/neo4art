@@ -40,15 +40,15 @@ public class WikipediaReligiousBuildingJainTempleInfobox {
 				jainTemple.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
 				break;
 			case LATD:
-				coordinate.setLatD(Double.parseDouble(map.get(key)));
+				coordinate.setLatD(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LATM:
-				coordinate.setLatM(Double.parseDouble(map.get(key)));
+				coordinate.setLatM(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LATS:
-				coordinate.setLatS(Double.parseDouble(map.get(key)));
+				coordinate.setLatS(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LATNS:
@@ -56,15 +56,15 @@ public class WikipediaReligiousBuildingJainTempleInfobox {
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LONGD:
-				coordinate.setLongD(Double.parseDouble(map.get(key)));
+				coordinate.setLongD(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LONGM:
-				coordinate.setLongM(Double.parseDouble(map.get(key)));
+				coordinate.setLongM(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LONGS:
-				coordinate.setLongS(Double.parseDouble(map.get(key)));
+				coordinate.setLongS(map.get(key));
 				jainTemple.setCoordinates(coordinate);
 				break;
 			case LONGEW:

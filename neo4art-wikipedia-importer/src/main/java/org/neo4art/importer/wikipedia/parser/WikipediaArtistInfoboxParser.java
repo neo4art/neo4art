@@ -15,8 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -105,7 +103,7 @@ public class WikipediaArtistInfoboxParser
           artist.setTrainer(infoboxTraining(map.get(key)));
           break;
         case IMAGE:
-          artist.setImage(infoboxImageUrl(map.get(key)));
+          artist.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
           break;
         case IMAGE_SIZE:
           artist.setImageSize(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
@@ -144,9 +142,8 @@ public class WikipediaArtistInfoboxParser
           break;
         case RESTING_PLACE_COORDINATES:
           String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLongD(Double.parseDouble(c[2]));
-          coordinate.setMap(c[3]);
+          coordinate.setLatD(c[1]);
+          coordinate.setLongD(c[2]);
           artist.setRestingPlaceCoordinates(coordinate);
           break;
         case NATIONALITY:
@@ -228,11 +225,13 @@ public class WikipediaArtistInfoboxParser
     date = date.replace("\n", "");
     date = date.replace("{", "");
     date = date.replace("}", "");
-    if (date.contains("|| df=yes"))
+    if (date.contains("|| df=yes") || date.contains("|| mf=yes"))
     {
       date = date.replace("|| df=yes", "");
+      date = date.replace("|| mf=yes", "");
     }
     date = date.replace("birth date||", "");
+    date = date.replace("Birth date||", "");
     if (date.contains("|| "))
     {
       String[] dateSplit = StringUtils.split(date, "|| ");
@@ -343,28 +342,6 @@ public class WikipediaArtistInfoboxParser
     patron = patron.replace("\n", "");
 
     return patron;
-  }
-
-  public static URL infoboxImageUrl(String nameImage)
-  {
-    nameImage = nameImage.replaceAll(" ", "_");
-    nameImage = nameImage.replace("|", "");
-    nameImage = nameImage.replace("\n", "");
-    
-    nameImage = nameImage.contains("File:") ? "http://en.wikipedia.org/wiki/" + nameImage : "http://en.wikipedia.org/wiki/File:" + nameImage;
-
-    URL url = null;
-    
-    try
-    {
-      url = new URL(nameImage);
-    }
-    catch (MalformedURLException e)
-    {
-      e.printStackTrace();
-    }
-    
-    return url;
   }
 
   public static String infoboxCaption(String caption)

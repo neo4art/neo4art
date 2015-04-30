@@ -50,7 +50,7 @@ public class WikipediaImporterTest {
 		try {
 		  
 			//File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
-			File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+			File dumpFile = new File("/home/larus/Scaricati/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
 			
 			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
       
