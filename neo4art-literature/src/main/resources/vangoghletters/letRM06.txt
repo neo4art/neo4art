@@ -1,0 +1,11 @@
+Title| Note to Theo van Gogh. Paris, probably September or October 1875. - Vincent van Gogh Letters
+Location|Paris
+Date|probably September or October 1875
+To|Theo van Gogh
+From|Vincent van Gogh
+Museum|Amsterdam, Van Gogh Museum, inv. no. b49 b V/1962
+Link image 1|http://vangoghletters.org/vg/facsimiles/VGM001000052_01_nf.png
+Link image 2|http://vangoghletters.org/vg/facsimiles/VGM001000052_02_nf.png
+Url letter|http://vangoghletters.org/vg/letters/RM06/letter.html
+Letter|You are eating well, aren’t you? Be sure and eat as much bread as you like. Good-night, I have to go and polish my boots for tomorrow.
+RM06
