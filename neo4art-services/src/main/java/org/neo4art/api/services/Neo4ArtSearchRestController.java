@@ -18,10 +18,10 @@ package org.neo4art.api.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.builder.SearchDomainBuilder;
-import org.neo4art.api.builder.SearchResultBuilder;
 import org.neo4art.api.domain.SearchDomain;
 import org.neo4art.api.domain.SearchResult;
+import org.neo4art.api.transformer.SearchDomainTransformer;
+import org.neo4art.api.transformer.SearchResultTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,11 +43,11 @@ public class Neo4ArtSearchRestController {
 	public @ResponseBody List<SearchDomain> getDomains(Model model) {
 
 		List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-		listaSearchDomain.addAll(SearchDomainBuilder.buildDomainArtists());
-		listaSearchDomain.addAll(SearchDomainBuilder.buildDomainArtworks());
-		listaSearchDomain.addAll(SearchDomainBuilder.buildDomainMuseums());
-		listaSearchDomain.addAll(SearchDomainBuilder.buildDomainColors());
-		listaSearchDomain.addAll(SearchDomainBuilder.buildDomainSentiments());
+		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainArtists());
+		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainArtworks());
+		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainMuseums());
+		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainColors());
+		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainSentiments());
 		
 		return listaSearchDomain;
 	}
@@ -58,17 +58,17 @@ public class Neo4ArtSearchRestController {
 
 		System.out.println("Input search: "+searchInput);
 		
-		return SearchResultBuilder.buildSearchResult();
+		return SearchResultTransformer.buildSearchResult();
 	}
 	
 	
-	@RequestMapping(value = "/detail-node-search.json", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/node-explode.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody SearchResult getDetailNodeSearch(Model model,
 			                                     @RequestParam(value="nodeId", required=true) Long nodeId) {
 
 		System.out.println("Input nodeId: "+nodeId);
 		
-		return SearchResultBuilder.buildDetailNodeSearch();
+		return SearchResultTransformer.buildDetailNodeSearch();
 	}
 	
 	

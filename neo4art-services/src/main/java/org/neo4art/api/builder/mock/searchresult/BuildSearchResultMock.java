@@ -57,52 +57,71 @@ public class BuildSearchResultMock {
 		nodo1.setId(0);
 		nodo1.setName("Van Gogh");
 		nodo1.setThumbnail("");
-		
+		nodo1.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo1.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo2 = new Node();
 		nodo2.setId(1);
 		nodo2.setName("Water Mill at Gennep I");
 		nodo2.setThumbnail("http://www.vggallery.com/painting/f_0046.jpg");
+		nodo2.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo2.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo3 = new Node();
 		nodo3.setId(2);
 		nodo3.setName("Village at Sunset");
 		nodo3.setThumbnail("http://www.vggallery.com/painting/f_0190.jpg");
+		nodo3.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo3.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo4 = new Node();
 		nodo4.setId(3);
 		nodo4.setName("red");
 		nodo4.setThumbnail("");
+		nodo4.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo4.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo5 = new Node();
 		nodo5.setId(4);
 		nodo5.setName("good");
 		nodo5.setThumbnail("");
+		nodo5.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo5.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo6 = new Node();
 		nodo6.setId(5);
 		nodo6.setName("Weaver, Interior with Three Small Windows");
 		nodo6.setThumbnail("http://www.vggallery.com/painting/f_0037.jpg");
+		nodo6.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo6.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo7 = new Node();
 		nodo7.setId(6);
 		nodo7.setName("Van Gogh Museum");
 		nodo7.setThumbnail("");
+		nodo7.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo7.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo8 = new Node();
 		nodo8.setId(7);
 		nodo8.setName("Head of a Man I");
 		nodo8.setThumbnail("http://www.vggallery.com/painting/f_0179r.jpg");
+		nodo8.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo8.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo9 = new Node();
 		nodo9.setId(8);
 		nodo9.setName("The Potato Eaters I");
 		nodo9.setThumbnail("http://www.vggallery.com/painting/f_0082.jpg");
+		nodo9.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo9.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo10 = new Node();
 		nodo10.setId(9);
 		nodo10.setName("Landscape with Pollard Willows");
 		nodo10.setThumbnail("http://www.vggallery.com/painting/f_0031.jpg");
+		nodo10.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo10.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		nodeList.add(nodo1);
 		nodeList.add(nodo2);
@@ -255,51 +274,71 @@ public class BuildSearchResultMock {
 		nodo1.setId(10);
 		nodo1.setName("Garden in Auvers");
 		nodo1.setThumbnail("http://www.vggallery.com/painting/f_0814.jpg");
+		nodo1.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo1.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo2 = new Node();
 		nodo2.setId(11);
 		nodo2.setName("Plaster Statuette of a Female Torso VIII");
 		nodo2.setThumbnail("http://www.vggallery.com/painting/f_0216.jpg");
+		nodo2.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo2.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo3 = new Node();
 		nodo3.setId(12);
 		nodo3.setName("Portrait of PÃ¨re Tanguy I");
 		nodo3.setThumbnail("http://www.vggallery.com/painting/f_0364.jpg");
+		nodo3.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo3.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo4 = new Node();
 		nodo4.setId(13);
 		nodo4.setName("Still Life with Meadow Flowers and Roses");
 		nodo4.setThumbnail("http://www.vggallery.com/painting/f_0278.jpg");
-		
+		nodo4.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo4.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
+				
 		Node nodo5 = new Node();
 		nodo5.setId(14);
 		nodo5.setName("Portrait of a Man with a Skull Cap");
 		nodo5.setThumbnail("http://www.vggallery.com/painting/f_0289.jpg");
+		nodo5.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo5.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo6 = new Node();
 		nodo6.setId(15);
 		nodo6.setName("Head of a Woman VIII");
 		nodo6.setThumbnail("http://www.vggallery.com/painting/f_0156.jpg");
+		nodo6.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo6.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo7 = new Node();
 		nodo7.setId(16);
 		nodo7.setName("Thatched Cottages in Jorgus");
 		nodo7.setThumbnail("http://www.vggallery.com/painting/f_0758.jpg");
+		nodo7.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo7.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo8 = new Node();
 		nodo8.setId(17);
 		nodo8.setName("Still Life: Glass with Carnations");
 		nodo8.setThumbnail("http://www.vggallery.com/painting/f_0598.jpg");
+		nodo8.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo8.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo9 = new Node();
 		nodo9.setId(18);
 		nodo9.setName("Portrait of Adeline Ravoux II");
 		nodo9.setThumbnail("http://www.vggallery.com/painting/f_0768.jpg");
+		nodo9.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo9.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		Node nodo10 = new Node();
 		nodo10.setId(19);
 		nodo10.setName("The Fields");
 		nodo10.setThumbnail("http://www.vggallery.com/painting/f_0761.jpg");
+		nodo10.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		nodo10.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
 		
 		nodeList.add(nodo1);
 		nodeList.add(nodo2);

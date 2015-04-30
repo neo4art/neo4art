@@ -15,6 +15,9 @@ neo4art-services/api/services/search/search-results.json?searchInput=van gogh
          "id":10,
          "name":"Garden in Auvers",
          "thumbnail":"http://www.vggallery.com/painting/f_0814.jpg",
+         "link": "http://en.wikipedia.org/wiki/Vincent_van_Gogh",
+         "type": "Artist",
+         "description": "Garden in Auvers",
          "group":0
       },.....
       ],
@@ -27,15 +30,18 @@ neo4art-services/api/services/search/search-results.json?searchInput=van gogh
       },
 ,...... ]
 <br><br>
-<u><b>neo4art-services/api/services/search/detail-node-search.json</b></u> <br>it returns the node details in a json format.
+<u><b>neo4art-services/api/services/search/node-explode.json</b></u> <br>it returns the node details in a json format.
 <br><u> Example Request:</u> <br>
-neo4art-services/api/services/search/detail-node-search.json?nodeId=1
+neo4art-services/api/services/search/node-explode.json?nodeId=1
 <br><u> Example Result:</u><br> {  
    "nodeList":[  
       {  
          "id":10,
          "name":"Garden in Auvers",
          "thumbnail":"http://www.vggallery.com/painting/f_0814.jpg",
+         "link": "http://en.wikipedia.org/wiki/Vincent_van_Gogh",
+         "type": "Artist",
+         "description": "Garden in Auvers",
          "group":0
       },.....
       ],

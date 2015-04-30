@@ -28,6 +28,12 @@ public class Node {
 	
 	private String thumbnail;
 	
+	private String link;
+	
+	private String type;
+	
+	private String description;
+	
 	private int group;
 
 	public long getId() {
@@ -60,6 +66,30 @@ public class Node {
 
 	public void setGroup(int group) {
 		this.group = group;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

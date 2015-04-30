@@ -17,8 +17,8 @@ package org.neo4art.api.services;
 
 import java.util.List;
 
-import org.neo4art.api.builder.TimeLineBuilder;
 import org.neo4art.api.domain.TimelineEvent;
+import org.neo4art.api.transformer.TimeLineTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +42,7 @@ public class Neo4ArtTimelineSearchRestController {
 
 		System.out.println("Input search: "+searchInput);
 		//TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
-		return TimeLineBuilder.buildTimeLineEvents();
+		return TimeLineTransformer.buildTimeLineEvents();
 	}
 	
 	

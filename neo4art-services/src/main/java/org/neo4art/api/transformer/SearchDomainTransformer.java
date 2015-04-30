@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.api.builder;
+package org.neo4art.api.transformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import org.neo4art.api.domain.SearchDomain;
  * @since 25 Apr 2015
  *
  */
-public class SearchDomainBuilder {
+public class SearchDomainTransformer {
 
 	/**
 	 * 

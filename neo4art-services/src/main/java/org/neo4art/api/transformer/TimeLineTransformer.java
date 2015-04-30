@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.api.builder;
+package org.neo4art.api.transformer;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import org.neo4art.api.domain.TimelineEvent;
  * @since 29 Apr 2015
  *
  */
-public class TimeLineBuilder {
+public class TimeLineTransformer {
 
 	/**
 	 * 

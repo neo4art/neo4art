@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.api.builder;
+package org.neo4art.api.transformer;
 
 import org.neo4art.api.builder.mock.searchresult.BuildSearchResultMock;
 import org.neo4art.api.domain.SearchResult;
@@ -23,7 +23,7 @@ import org.neo4art.api.domain.SearchResult;
  * @since 29 Apr 2015
  *
  */
-public class SearchResultBuilder {
+public class SearchResultTransformer {
 
 	/**
 	 * 
