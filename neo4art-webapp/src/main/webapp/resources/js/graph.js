@@ -152,11 +152,10 @@ function theGraph() {
 
 	var nodeEnter, linkEnter;
 	function firstUpdate(json) {
-		var serviceUrl = "http://localhost:8080/neo4art-services/api/services/search/search-results.json?searchInput="
-				+ p.query.toString().replace(/\+/g, " ");
+
 		$.ajax({
 			method : 'get',
-			url : "http://localhost:8080/neo4art-services/api/services/search/search-results.json?searchInput="
+			url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/search-results.json?searchInput="
 					+ p.query.toString().replace(/\+/g, " "),
 			dataType : 'json',
 			success : function(graph) {
@@ -340,7 +339,7 @@ function theGraph() {
 		nodeEnter.on("dblclick", function(d) {
 			$.ajax({
 				method : 'get',
-				url : "http://localhost:8080/neo4art-services/api/services/search/node-explode.json?nodeId="
+				url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/node-explode.json?nodeId="
 						+ d.id,
 				dataType : 'json',
 				success : function(graphExp) {
