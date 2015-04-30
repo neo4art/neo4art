@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>neo4art-sentiment</artifactId>
+
+	<description>neo4art sentiment analysis</description>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.neo4art</groupId>
+		<artifactId>neo4art-parent</artifactId>
+		<version>0.0.1.ALFA</version>
+	</parent>
+
+	<properties>
+	    <start-class>org.neo4art.importer.wikipedia.configuration.SpringBootConfiguration</start-class>
+	</properties>
+
+	<dependencies>
+	
+		<!-- neo4art -->
+		<dependency>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- Natural Language Processing -->
+		
+		<!-- Stanford implementation requires java 1.8 -->
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.5.1</version>
+			<classifier>models</classifier>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+
+		<repository>
+			<id>sonatype</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+		</repository>
+
+	</repositories>
+
+</project>

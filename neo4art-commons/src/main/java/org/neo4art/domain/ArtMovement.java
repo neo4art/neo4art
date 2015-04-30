@@ -16,103 +16,166 @@
 
 package org.neo4art.domain;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.neo4art.graphdb.Neo4ArtLabel;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4j.graphdb.Label;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Apr 2015
  */
-public class ArtMovement {
+public class ArtMovement implements Neo4ArtNode
+{
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.ArtMovement };
 
-  private String name;
-  private String image;
-  private String imageSize;
-  private String alt;
-  private String caption;
-  private String yearsActive;
-  private String country;
-  private String majorFigures;
-  private String influences;
-  private String influenced;
+  private Long                 nodeId;
   
-  public ArtMovement() {
+  private String               name;
+  private String               image;
+  private String               imageSize;
+  private String               alt;
+  private String               caption;
+  private String               yearsActive;
+  private String               country;
+  private String               majorFigures;
+  private String               influences;
+  private String               influenced;
+
+  public ArtMovement()
+  {
   }
 
-  public String getName() {
+  public String getName()
+  {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(String name)
+  {
     this.name = name;
   }
 
-  public String getImage() {
+  public String getImage()
+  {
     return image;
   }
 
-  public void setImage(String image) {
+  public void setImage(String image)
+  {
     this.image = image;
   }
 
-  public String getImageSize() {
+  public String getImageSize()
+  {
     return imageSize;
   }
 
-  public void setImageSize(String imageSize) {
+  public void setImageSize(String imageSize)
+  {
     this.imageSize = imageSize;
   }
 
-  public String getAlt() {
+  public String getAlt()
+  {
     return alt;
   }
 
-  public void setAlt(String alt) {
+  public void setAlt(String alt)
+  {
     this.alt = alt;
   }
 
-  public String getCaption() {
+  public String getCaption()
+  {
     return caption;
   }
 
-  public void setCaption(String caption) {
+  public void setCaption(String caption)
+  {
     this.caption = caption;
   }
 
-  public String getYearsActive() {
+  public String getYearsActive()
+  {
     return yearsActive;
   }
 
-  public void setYearsActive(String yearsActive) {
+  public void setYearsActive(String yearsActive)
+  {
     this.yearsActive = yearsActive;
   }
 
-  public String getCountry() {
+  public String getCountry()
+  {
     return country;
   }
 
-  public void setCountry(String country) {
+  public void setCountry(String country)
+  {
     this.country = country;
   }
 
-  public String getMajorFigures() {
+  public String getMajorFigures()
+  {
     return majorFigures;
   }
 
-  public void setMajorFigures(String majorFigures) {
+  public void setMajorFigures(String majorFigures)
+  {
     this.majorFigures = majorFigures;
   }
 
-  public String getInfluences() {
+  public String getInfluences()
+  {
     return influences;
   }
 
-  public void setInfluences(String influences) {
+  public void setInfluences(String influences)
+  {
     this.influences = influences;
   }
 
-  public String getInfluenced() {
+  public String getInfluenced()
+  {
     return influenced;
   }
 
-  public void setInfluenced(String influenced) {
+  public void setInfluenced(String influenced)
+  {
     this.influenced = influenced;
+  }
+
+  @Override
+  public Long getNodeId()
+  {
+    return this.nodeId;
+  }
+
+  @Override
+  public void setNodeId(long nodeId)
+  {
+    this.nodeId = nodeId;
+  }
+
+  @Override
+  public Map<String, Object> getProperties()
+  {
+    Map<String, Object> properties = new HashMap<String, Object>();
+
+    if (this.name != null)
+    {
+      properties.put("name", this.name);
+    }
+    
+    return properties;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

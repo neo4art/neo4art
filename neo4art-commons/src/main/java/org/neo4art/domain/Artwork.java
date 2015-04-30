@@ -16,294 +16,497 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.neo4art.graphdb.Neo4ArtLabel;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4j.graphdb.Label;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public class Artwork {
+public class Artwork implements Neo4ArtNode
+{
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Artwork };
 
-  private String title;
-  private String imageFile;
-  private String imageSize;
-  private String alt;
-  private String caption;
-  private String paintingAlignment;
-  private String otherLanguage1;
-  private String otherTitle1;
-  private String otherLanguage2;
-  private String otherTitle2;
-  private String artist;
-  private String year;
-  private String completionDate;
-  private String catalogue;
-  private String type;
-  private String material;
-  private String subject;
-  private String heightMetric;
-  private String widthMetric;
-  private String lengthMetric;
-  private String heightImperial;
-  private String heightInch;
-  private String widthImperial;
-  private String widthInch;
-  private String lengthImperial;
-  private String lengthInch;
-  private String diameterMetric;
-  private String diameterImperial;
-  private String metricUnit;
-  private String imperialUnit;
-  private String dimensions;
-  private String dimensionsRef;
-  private String weight;
-  private String condition;
-  private String owner;
-  private String accession;
-  private String museum;
-  private String city;
-  private String coordinates;
-  private String url;
-  
-  public Artwork() {
+  private Long                 nodeId;
+
+  private String               title;
+  private String               imageFile;
+  private String               imageSize;
+  private String               alt;
+  private String               caption;
+  private String               paintingAlignment;
+  private String               otherLanguage1;
+  private String               otherTitle1;
+  private String               otherLanguage2;
+  private String               otherTitle2;
+  private Artist               artist;
+  private String               year;
+  private String               completionDate;
+  private String               catalogue;
+  private String               type;
+  private String               material;
+  private String               subject;
+  private String               heightMetric;
+  private String               widthMetric;
+  private String               lengthMetric;
+  private String               heightImperial;
+  private String               heightInch;
+  private String               widthImperial;
+  private String               widthInch;
+  private String               lengthImperial;
+  private String               lengthInch;
+  private String               diameterMetric;
+  private String               diameterImperial;
+  private String               metricUnit;
+  private String               imperialUnit;
+  private String               dimensions;
+  private String               dimensionsRef;
+  private String               weight;
+  private String               condition;
+  private String               owner;
+  private String               accession;
+  private Museum               museum;
+  private Country              city;
+  private Coordinate           coordinates;
+  private URL                  url;
+
+  public Artwork()
+  {
   }
-  
-  public String getTitle() {
+
+  public String getTitle()
+  {
     return title;
   }
-  public void setTitle(String title) {
+
+  public void setTitle(String title)
+  {
     this.title = title;
   }
-  public String getImageFile() {
+
+  public String getImageFile()
+  {
     return imageFile;
   }
-  public void setImageFile(String imageFile) {
+
+  public void setImageFile(String imageFile)
+  {
     this.imageFile = imageFile;
   }
-  public String getImageSize() {
+
+  public String getImageSize()
+  {
     return imageSize;
   }
-  public void setImageSize(String imageSize) {
+
+  public void setImageSize(String imageSize)
+  {
     this.imageSize = imageSize;
   }
-  public String getAlt() {
+
+  public String getAlt()
+  {
     return alt;
   }
-  public void setAlt(String alt) {
+
+  public void setAlt(String alt)
+  {
     this.alt = alt;
   }
-  public String getCaption() {
+
+  public String getCaption()
+  {
     return caption;
   }
-  public void setCaption(String caption) {
+
+  public void setCaption(String caption)
+  {
     this.caption = caption;
   }
-  public String getPaintingAlignment() {
+
+  public String getPaintingAlignment()
+  {
     return paintingAlignment;
   }
-  public void setPaintingAlignment(String paintingAlignment) {
+
+  public void setPaintingAlignment(String paintingAlignment)
+  {
     this.paintingAlignment = paintingAlignment;
   }
-  public String getOtherLanguage1() {
+
+  public String getOtherLanguage1()
+  {
     return otherLanguage1;
   }
-  public void setOtherLanguage1(String otherLanguage1) {
+
+  public void setOtherLanguage1(String otherLanguage1)
+  {
     this.otherLanguage1 = otherLanguage1;
   }
-  public String getOtherTitle1() {
+
+  public String getOtherTitle1()
+  {
     return otherTitle1;
   }
-  public void setOtherTitle1(String otherTitle1) {
+
+  public void setOtherTitle1(String otherTitle1)
+  {
     this.otherTitle1 = otherTitle1;
   }
-  public String getOtherLanguage2() {
+
+  public String getOtherLanguage2()
+  {
     return otherLanguage2;
   }
-  public void setOtherLanguage2(String otherLanguage2) {
+
+  public void setOtherLanguage2(String otherLanguage2)
+  {
     this.otherLanguage2 = otherLanguage2;
   }
-  public String getOtherTitle2() {
+
+  public String getOtherTitle2()
+  {
     return otherTitle2;
   }
-  public void setOtherTitle2(String otherTitle2) {
+
+  public void setOtherTitle2(String otherTitle2)
+  {
     this.otherTitle2 = otherTitle2;
   }
-  public String getArtist() {
+
+  public Artist getArtist()
+  {
     return artist;
   }
-  public void setArtist(String artist) {
+
+  public void setArtist(Artist artist)
+  {
     this.artist = artist;
   }
-  public String getYear() {
+
+  public String getYear()
+  {
     return year;
   }
-  public void setYear(String year) {
+
+  public void setYear(String year)
+  {
     this.year = year;
   }
-  public String getCompletionDate() {
+
+  public String getCompletionDate()
+  {
     return completionDate;
   }
-  public void setCompletionDate(String completionDate) {
+
+  public void setCompletionDate(String completionDate)
+  {
     this.completionDate = completionDate;
   }
-  public String getCatalogue() {
+
+  public String getCatalogue()
+  {
     return catalogue;
   }
-  public void setCatalogue(String catalogue) {
+
+  public void setCatalogue(String catalogue)
+  {
     this.catalogue = catalogue;
   }
-  public String getType() {
+
+  public String getType()
+  {
     return type;
   }
-  public void setType(String type) {
+
+  public void setType(String type)
+  {
     this.type = type;
   }
-  public String getMaterial() {
+
+  public String getMaterial()
+  {
     return material;
   }
-  public void setMaterial(String material) {
+
+  public void setMaterial(String material)
+  {
     this.material = material;
   }
-  public String getSubject() {
+
+  public String getSubject()
+  {
     return subject;
   }
-  public void setSubject(String subject) {
+
+  public void setSubject(String subject)
+  {
     this.subject = subject;
   }
-  public String getHeightMetric() {
+
+  public String getHeightMetric()
+  {
     return heightMetric;
   }
-  public void setHeightMetric(String heightMetric) {
+
+  public void setHeightMetric(String heightMetric)
+  {
     this.heightMetric = heightMetric;
   }
-  public String getWidthMetric() {
+
+  public String getWidthMetric()
+  {
     return widthMetric;
   }
-  public void setWidthMetric(String widthMetric) {
+
+  public void setWidthMetric(String widthMetric)
+  {
     this.widthMetric = widthMetric;
   }
-  public String getLengthMetric() {
+
+  public String getLengthMetric()
+  {
     return lengthMetric;
   }
-  public void setLengthMetric(String lengthMetric) {
+
+  public void setLengthMetric(String lengthMetric)
+  {
     this.lengthMetric = lengthMetric;
   }
-  public String getHeightImperial() {
+
+  public String getHeightImperial()
+  {
     return heightImperial;
   }
-  public void setHeightImperial(String heightImperial) {
+
+  public void setHeightImperial(String heightImperial)
+  {
     this.heightImperial = heightImperial;
   }
-  public String getHeightInch() {
+
+  public String getHeightInch()
+  {
     return heightInch;
   }
-  public void setHeightInch(String heightInch) {
+
+  public void setHeightInch(String heightInch)
+  {
     this.heightInch = heightInch;
   }
-  public String getWidthImperial() {
+
+  public String getWidthImperial()
+  {
     return widthImperial;
   }
-  public void setWidthImperial(String widthImperial) {
+
+  public void setWidthImperial(String widthImperial)
+  {
     this.widthImperial = widthImperial;
   }
-  public String getWidthInch() {
+
+  public String getWidthInch()
+  {
     return widthInch;
   }
-  public void setWidthInch(String widthInch) {
+
+  public void setWidthInch(String widthInch)
+  {
     this.widthInch = widthInch;
   }
-  public String getLengthImperial() {
+
+  public String getLengthImperial()
+  {
     return lengthImperial;
   }
-  public void setLengthImperial(String lengthImperial) {
+
+  public void setLengthImperial(String lengthImperial)
+  {
     this.lengthImperial = lengthImperial;
   }
-  public String getLengthInch() {
+
+  public String getLengthInch()
+  {
     return lengthInch;
   }
-  public void setLengthInch(String lengthInch) {
+
+  public void setLengthInch(String lengthInch)
+  {
     this.lengthInch = lengthInch;
   }
-  public String getDiameterMetric() {
+
+  public String getDiameterMetric()
+  {
     return diameterMetric;
   }
-  public void setDiameterMetric(String diameterMetric) {
+
+  public void setDiameterMetric(String diameterMetric)
+  {
     this.diameterMetric = diameterMetric;
   }
-  public String getDiameterImperial() {
+
+  public String getDiameterImperial()
+  {
     return diameterImperial;
   }
-  public void setDiameterImperial(String diameterImperial) {
+
+  public void setDiameterImperial(String diameterImperial)
+  {
     this.diameterImperial = diameterImperial;
   }
-  public String getMetricUnit() {
+
+  public String getMetricUnit()
+  {
     return metricUnit;
   }
-  public void setMetricUnit(String metricUnit) {
+
+  public void setMetricUnit(String metricUnit)
+  {
     this.metricUnit = metricUnit;
   }
-  public String getImperialUnit() {
+
+  public String getImperialUnit()
+  {
     return imperialUnit;
   }
-  public void setImperialUnit(String imperialUnit) {
+
+  public void setImperialUnit(String imperialUnit)
+  {
     this.imperialUnit = imperialUnit;
   }
-  public String getDimensions() {
+
+  public String getDimensions()
+  {
     return dimensions;
   }
-  public void setDimensions(String dimensions) {
+
+  public void setDimensions(String dimensions)
+  {
     this.dimensions = dimensions;
   }
-  public String getDimensionsRef() {
+
+  public String getDimensionsRef()
+  {
     return dimensionsRef;
   }
-  public void setDimensionsRef(String dimensionsRef) {
+
+  public void setDimensionsRef(String dimensionsRef)
+  {
     this.dimensionsRef = dimensionsRef;
   }
-  public String getWeight() {
+
+  public String getWeight()
+  {
     return weight;
   }
-  public void setWeight(String weight) {
+
+  public void setWeight(String weight)
+  {
     this.weight = weight;
   }
-  public String getCondition() {
+
+  public String getCondition()
+  {
     return condition;
   }
-  public void setCondition(String condition) {
+
+  public void setCondition(String condition)
+  {
     this.condition = condition;
   }
-  public String getOwner() {
+
+  public String getOwner()
+  {
     return owner;
   }
-  public void setOwner(String owner) {
+
+  public void setOwner(String owner)
+  {
     this.owner = owner;
   }
-  public String getAccession() {
+
+  public String getAccession()
+  {
     return accession;
   }
-  public void setAccession(String accession) {
+
+  public void setAccession(String accession)
+  {
     this.accession = accession;
   }
-  public String getMuseum() {
+
+  public Museum getMuseum()
+  {
     return museum;
   }
-  public void setMuseum(String museum) {
+
+  public void setMuseum(Museum museum)
+  {
     this.museum = museum;
   }
-  public String getCity() {
+
+  public Country getCity()
+  {
     return city;
   }
-  public void setCity(String city) {
-    this.city = city;
+
+  public void setCity(Country country)
+  {
+    this.city = country;
   }
-  public String getCoordinates() {
+
+  public Coordinate getCoordinates()
+  {
     return coordinates;
   }
-  public void setCoordinates(String coordinates) {
+
+  public void setCoordinates(Coordinate coordinates)
+  {
     this.coordinates = coordinates;
   }
-  public String getUrl() {
+
+  public URL getUrl()
+  {
     return url;
   }
-  public void setUrl(String url) {
+
+  public void setUrl(URL url)
+  {
     this.url = url;
+  }
+
+  @Override
+  public Long getNodeId()
+  {
+    return this.nodeId;
+  }
+
+  @Override
+  public void setNodeId(long nodeId)
+  {
+    this.nodeId = nodeId;
+  }
+
+  @Override
+  public Map<String, Object> getProperties()
+  {
+    Map<String, Object> properties = new HashMap<String, Object>();
+
+    if (this.title != null)
+    {
+      properties.put("title", this.title);
+    }
+
+    return properties;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

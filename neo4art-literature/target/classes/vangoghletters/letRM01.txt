@@ -1,0 +1,11 @@
+Title| Drawing with explanatory text. Possibly enclosed in a letter to Anna van Gogh. London, about July 1873 - May 1874. - Vincent van Gogh Letters
+Location|London
+Date|about July 1873 - May 1874
+To|Anna van Gogh
+From|Vincent van Gogh
+Museum|Amsterdam, Van Gogh Museum, inv. no. d405 V/1973
+Link image 1|http://vangoghletters.org/vg/facsimiles/VGM001001681_01_nf.png
+Link image 2|http://vangoghletters.org/vg/facsimiles/VGM001001681_02_nf.png
+Url letter|http://vangoghletters.org/vg/letters/RM01/letter.html
+Letter|This little church is a remarkable remnant of an old Augustinian foundation (Austin Friars) dating from at least 1354, if not from 100 years earlier. The Dutch congregation had held its religious services here since 1550, by virtue of a voluntary gift of Edward VI.
+RM01

@@ -18,29 +18,34 @@ package org.neo4art.importer.wikipedia.domain;
 
 import java.util.Set;
 
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.graphdb.Neo4ArtNode;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public interface WikipediaElement {
+public interface WikipediaElement extends Neo4ArtNode
+{
+  Long getId();
 
-  long getId();
   String getTitle();
-  long getRevision();
-  long getTimestamp();
+
+  Long getRevision();
+
+  Long getTimestamp();
 
   int getHashCode();
-  
+
   void setId(long id);
+
   void setTitle(String title);
+
   void setRevision(long revision);
+
   void setTimestamp(long timestamp);
 
   WikipediaType getType();
-  WikipediaLabel getLabel();
-  
+
   /**
    * Here's where we have great fun with graph!
    * 
@@ -48,17 +53,22 @@ public interface WikipediaElement {
    * @return
    */
   WikipediaElement getRedirect();
+
   void setRedirect(WikipediaElement redirectText);
 
   Set<WikipediaElement> getLinks();
+
   Set<WikipediaCategory> getCategories();
-  
+
   boolean addLink(WikipediaElement link);
+
   boolean addCategory(WikipediaCategory category);
 
   void setLinks(Set<WikipediaElement> links);
+
   void setCategories(Set<WikipediaCategory> categories);
-  
+
   String[] getLinksAsArray();
+
   String[] getCategoriesAsArray();
 }
