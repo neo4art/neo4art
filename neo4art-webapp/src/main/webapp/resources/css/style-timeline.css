@@ -1,0 +1,80 @@
+.logo {
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.timeline-page {
+	width: 100%;
+	height: 100%;
+	left: 100%;
+	-webkit-transition: left 0.8s;
+	-moz-transition: left 0.8s;
+	-o-transition: left 0.8s;
+	transition: left 0.8s;
+	position: absolute;
+	/* da tolgliere */
+	/* 	background-color:rgba(255, 255, 255, 0.9); */
+}
+
+.color-chart-container {
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+	position: relative;
+}
+.emotion-chart-container {
+	width: 100%;
+	height: 40px;
+	overflow: hidden;
+	position: relative;
+	background-color:#eee;
+}
+
+.color-chart {
+	position: absolute;
+	left: 0;
+}
+.emotion-chart{
+	position:absolute;
+	left:0;
+}
+.icon-text{
+	font-family: FontAwesome;
+	color:white;
+	font-size:30px;
+}
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	display: none;
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1.5px;
+}
+
+.infobox {
+	width:25px;
+	height:25px;
+	border: 1px solid #333;
+	border-radius: 4px;
+	box-shadow: #dfdfdf 0 4px 16px;
+	margin: 200px auto;
+	padding: 5px 10px;
+	background: rgba(255, 255, 255, 0.8);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 10500;
+	font-weight: bold;
+}
+.pallino{
+	stroke:#555;
+}

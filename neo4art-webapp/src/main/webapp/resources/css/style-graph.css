@@ -1,0 +1,158 @@
+.container-page{
+	height:100%;
+	width:100%;
+	position:relative;
+}
+.graph-page {
+	width:100%;
+/* 	left: 100%; */
+	-webkit-transition: left 0.8s;
+	-moz-transition: left 0.8s;
+	-o-transition: left 0.8s;
+	transition: left 0.8s;
+	position: absolute;
+}
+
+.logo {
+	text-align: center;
+	margin-top:40px;
+	margin-bottom:30px;
+}
+
+#graph {
+	padding: 0 35px 0 35px;
+	min-height: 500px;
+}
+
+.link {
+	stroke: #999;
+	stroke-opacity: .6;
+}
+
+.svg {
+	position: relative;
+	width: 100%;
+	min-height: 500px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #555;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	box-shadow: 0 2px 16px #dfdfdf;
+}
+
+.node {
+	stroke: #333;
+	stroke-width: 2px;
+}
+
+.node-active {
+	stroke: #FF5555;
+	stroke-width: 3px;
+}
+.node-active-green {
+	stroke: #55FF55;
+	stroke-width: 3px;
+}
+
+.link {
+	stroke: #555;
+	stroke-opacity: .3;
+}
+
+.link-active {
+	stroke: #FF5555;
+	stroke-opacity: 1;
+}
+.link-active-green {
+	stroke: #55FF55;
+	stroke-opacity: 1;
+}
+#floating {
+	position: fixed;
+	overflow-y: scroll;
+	left: 100%;
+	width: 50%;
+	height: 98%;
+	top: 1%;
+	border-top-left-radius: 15px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	border: 1px solid #333;
+	background-color: rgba(255, 255, 255, 0.8);
+	-webkit-transition: left 0.8s;
+	-moz-transition: left 0.8s;
+	-o-transition: left 0.8s;
+	transition: left 0.8s;
+	text-align: center;
+}
+
+#floating.visible {
+	left: 50%;
+}
+
+#floating.visible.ui-resizable-resizing {
+	left: 50%;
+	-webkit-transition: left 0s;
+	-moz-transition: left 0s;
+	-o-transition: left 0s;
+	transition: left 0s;
+}
+
+.ics {
+	position: fixed;
+	margin: 10px 0 0 10px;
+	/* 	width: 14px; */
+	/* 	height: 14px; */
+	font-size: 14px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+	color: #999999;
+	/* 	border-right: 1px solid #333; */
+	/* 	border-bottom: 1px solid #333; */
+	/* 	background-color: #ddd; */
+}
+
+.ics:hover {
+	cursor: pointer;
+}
+
+#data {
+	padding: 15px;
+}
+
+.title {
+	text-align: right;
+}
+
+.title h1 {
+	margin: 0 0 15px 0;
+}
+
+.thumbnail {
+	text-align: right;
+	margin: 0 0 15px 0;
+}
+
+.thumbnail img {
+	width: 250px;
+}
+
+.description {
+	text-align: justify;
+	font-size: .875em;
+}
+
+.buttons {
+	margin-top: 10px;
+	text-align: right;
+}
