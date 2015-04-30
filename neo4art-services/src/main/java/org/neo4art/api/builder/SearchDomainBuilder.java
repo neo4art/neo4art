@@ -25,7 +25,7 @@ import org.neo4art.api.builder.mock.BuildMockMuseums;
 import org.neo4art.api.builder.mock.BuildMockNegativeAOSentiment;
 import org.neo4art.api.builder.mock.BuildMockNegativePZSentiment;
 import org.neo4art.api.builder.mock.BuildMockPositiveSentiment;
-import org.neo4art.domain.SearchDomain;
+import org.neo4art.api.domain.SearchDomain;
 
 /**
  * @author Enrico De Benetti

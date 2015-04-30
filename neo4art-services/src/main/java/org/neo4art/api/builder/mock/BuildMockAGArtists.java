@@ -17,7 +17,7 @@ package org.neo4art.api.builder.mock;
 
 import java.util.List;
 
-import org.neo4art.domain.SearchDomain;
+import org.neo4art.api.domain.SearchDomain;
 
 /**
  * @author Enrico De Benetti

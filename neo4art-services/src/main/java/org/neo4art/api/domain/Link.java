@@ -13,37 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.neo4art.domain;
+package org.neo4art.api.domain;
 
 /**
  * @author Enrico De Benetti
- * @since 25 Apr 2015
+ * @since 29 Apr 2015
+ *
  */
-public class SearchDomain {
+public class Link {
 
-	private String text;
+	private long source;
 	
+	private long target;
+	
+	private int value;
+	
+	private String linkName;
+
 	/**
-	 * Constructor.
+	 * 
 	 */
-	public SearchDomain() {
+	public Link() {
+
+	  this.value = 1;
 	}
 	
-	/**
-	 * Constructor.
-	 * @param text
-	 */
-	public SearchDomain(String text) {
+	public long getSource() {
+		return source;
+	}
+
+	public void setSource(long source) {
+		this.source = source;
+	}
+
+	public long getTarget() {
+		return target;
+	}
+
+	public void setTarget(long target) {
+		this.target = target;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public String getLinkName() {
+		return linkName;
+	}
+
+	public void setLinkName(String linkName) {
+		this.linkName = linkName;
+	}
 	
-	 this.text = text;	
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
 }
