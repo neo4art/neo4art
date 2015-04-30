@@ -14,19 +14,21 @@ var currentTranslateY = 0;
  * dimensions of the document
  */
 $(document).ready(function() {
-	// $.ajax({
-	// dataType: "json",
-	// url: url,
-	// data: data,
-	// success: success
-	// });
-	// console.log(parseURLParams().query);
 	p = parseURLParams();
 	if (p != undefined) {
 		graph = new theGraph();
 	} else {
 		console.log("non faccio niente");
 	}
+	$("#dialog").dialog({
+		autoOpen : false,
+		title:"Legend",
+		width: 500,
+		resizable: false
+	});
+	$("#legendOpener").click(function() {
+		$("#dialog").dialog("open");
+	});
 });
 
 function wantsTimeline() {
@@ -76,9 +78,9 @@ function theGraph() {
 			"name" : nodeToAdd.name,
 			"group" : nodeToAdd.group,
 			"thumbnail" : nodeToAdd.thumbnail,
-			"type":nodeToAdd.type,
-			"link":nodeToAdd.link,
-			"description":nodeToAdd.description
+			"type" : nodeToAdd.type,
+			"link" : nodeToAdd.link,
+			"description" : nodeToAdd.description
 		});
 	}
 	addLink = function(linkToAdd) {
@@ -155,8 +157,8 @@ function theGraph() {
 
 		$.ajax({
 			method : 'get',
-			url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/search-results.json?searchInput="
-					+ p.query.toString().replace(/\+/g, " "),
+			url : window.location.protocol + '//' + window.location.host
+					+ "/neo4art-services/api/services/search/search-results.json?searchInput=" + p.query.toString().replace(/\+/g, " "),
 			dataType : 'json',
 			success : function(graph) {
 				// d3.json("miserables.json", function(error, graph) {
@@ -237,9 +239,7 @@ function theGraph() {
 			return d.radius * 2;
 		}).attr("height", function(d) {
 			return d.radius * 2;
-		}).attr("viewBox",function(d){
-			return (-d.radius) +" "+(-d.radius) +" "+(d.radius*2) + " "+ (d.radius*2);
-		});
+		}).attr("preserveAspectRatio", "xMidYMid slice");
 
 		nodeEnter.append("title").text(function(d) {
 			return d.name;
@@ -278,8 +278,7 @@ function theGraph() {
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 1.5).attr("y", -d.radius * 1.5)
 								.attr("width", (d.radius * 2) * 1.5).attr("height", (d.radius * 2) * 1.5);
 					}
-				})
-		.on(
+				}).on(
 				"mouseout",
 				function(d) {
 					if (!d.clicked) {
@@ -339,8 +338,8 @@ function theGraph() {
 		nodeEnter.on("dblclick", function(d) {
 			$.ajax({
 				method : 'get',
-				url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/search/node-explode.json?nodeId="
-						+ d.id,
+				url : window.location.protocol + '//' + window.location.host
+						+ "/neo4art-services/api/services/search/node-explode.json?nodeId=" + d.id,
 				dataType : 'json',
 				success : function(graphExp) {
 					// d3.json("explode.json", function(error, graphExp) {
@@ -399,6 +398,7 @@ function theGraph() {
 		var bttX = float.append("div").attr("class", "ics").text("X");
 		bttX.on("click", closeWindow);
 		float.append("div").attr("id", "data");
+		float.append("iframe").attr("width", "100%");
 	}
 
 	function openWindow(d) {
@@ -408,9 +408,13 @@ function theGraph() {
 		data.append("div").attr("class", "title").append("h1").text(d.name);
 		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
 		data.append("div").attr("class", "description").text(d.description);
-		data.append("div").attr("class", "link").html("</br><a href='"+d.link+"'>"+d.link+"</a>");
+		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+		var frame = float.select("iframe");
+		frame.attr("src", d.link);
 		$("#floating").perfectScrollbar();
 		$("#floating").perfectScrollbar('update');
+		$("iframe").perfectScrollbar();
+		$("iframe").perfectScrollbar('update');
 	}
 
 	function closeWindow() {
