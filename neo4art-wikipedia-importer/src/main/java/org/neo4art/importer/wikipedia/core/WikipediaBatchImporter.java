@@ -69,7 +69,7 @@ public class WikipediaBatchImporter implements WikipediaImporter
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
       wikipediaNodesImporterListener.setBatchSize(10000);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
-      WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile.getAbsolutePath(), wikipediaNodesImporterListener);
+      WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
       long parserForNodesEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();
@@ -88,7 +88,7 @@ public class WikipediaBatchImporter implements WikipediaImporter
       WikipediaImporterListener wikipediaRelsImporterListener = new WikipediaRelsBatchImporterListener();
       wikipediaRelsImporterListener.setBatchSize(10000);
       long parserForRelsStartDate = Calendar.getInstance().getTimeInMillis();
-      WikiXMLParser parserForRels = new WikiXMLParser(dumpFile.getAbsolutePath(), wikipediaRelsImporterListener);
+      WikiXMLParser parserForRels = new WikiXMLParser(dumpFile, wikipediaRelsImporterListener);
       parserForRels.parse();
       long parserForRelsEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaRelsImporterListener.flush();

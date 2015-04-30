@@ -142,124 +142,57 @@ public class WikipediaMuseumInfoboxParser
           museum.setMapDotLabel(map.get(key));
           break;
         case LATITUDE:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLatD(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LONGITUDE:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLongD(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LAT_DEG:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLatD(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LAT_MIN:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatM(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLatM(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LAT_SEC:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatS(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLatS(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LAT_DIR:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatNS("");
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          museum.setCoordinate(coordinate);
           break;
         case LON_DEG:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongD(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LON_MIN:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongM(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongM(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LON_SEC:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongS(0);
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongS(map.get(key));
+          museum.setCoordinate(coordinate);
           break;
         case LON_DIR:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongEW("");
-            museum.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            museum.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          museum.setCoordinate(coordinate);
           break;
         case COORDINATES_TYPE:
           museum.setCoordinatesType(map.get(key));
@@ -275,9 +208,6 @@ public class WikipediaMuseumInfoboxParser
           break;
         case COORDINATES:
           String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLongD(Double.parseDouble(c[2]));
-          coordinate.setMap(c[3]);
           museum.setCoordinates(coordinate);
           break;
         case FORMER_NAME:

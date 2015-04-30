@@ -209,14 +209,14 @@ public class WikipediaArtworkInfoboxParser
           break;
         case COORDINATES:
           String[] c = infoboxCoordinate(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLatM(Double.parseDouble(c[2]));
-          coordinate.setLatS(Double.parseDouble(c[3]));
-          coordinate.setLatNS(c[4]);
-          coordinate.setLongD(Double.parseDouble(c[5]));
-          coordinate.setLongM(Double.parseDouble(c[6]));
-          coordinate.setLongS(Double.parseDouble(c[7]));
-          coordinate.setLongEW(c[8]);
+//          coordinate.setLatD(Double.parseDouble(c[1]));
+//          coordinate.setLatM(Double.parseDouble(c[2]));
+//          coordinate.setLatS(Double.parseDouble(c[3]));
+//          coordinate.setLatNS(c[4]);
+//          coordinate.setLongD(Double.parseDouble(c[5]));
+//          coordinate.setLongM(Double.parseDouble(c[6]));
+//          coordinate.setLongS(Double.parseDouble(c[7]));
+//          coordinate.setLongEW(c[8]);
           artwork.setCoordinates(coordinate);
           break;
         case URL:

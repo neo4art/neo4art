@@ -209,100 +209,48 @@ public class WikipediaCountryInfoboxParser
           country.setCommonName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case LATD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+          coordinate.setLatD(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LATM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatM(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLatM(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LATS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatS(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLatS(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LATNS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatNS("");
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            country.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          country.setCoordinate(coordinate);
           break;
         case LONGD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongD(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LONGM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongM(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongM(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LONGS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongS(0);
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            country.setCoordinate(coordinate);
-          }
+
+
+          coordinate.setLongS(map.get(key));
+          country.setCoordinate(coordinate);
           break;
         case LONGEW:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongEW("");
-            country.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            country.setCoordinate(coordinate);
-          }
+
+          coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          country.setCoordinate(coordinate);
           break;
       }
     }

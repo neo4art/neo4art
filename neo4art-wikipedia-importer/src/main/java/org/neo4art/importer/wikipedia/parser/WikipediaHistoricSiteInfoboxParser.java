@@ -74,15 +74,15 @@ public class WikipediaHistoricSiteInfoboxParser
           historicSite.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
           break;
         case LATD:
-          coordinate.setLatD(Double.parseDouble(map.get(key)));
+          coordinate.setLatD(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATM:
-          coordinate.setLatM(Double.parseDouble(map.get(key)));
+          coordinate.setLatM(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATS:
-          coordinate.setLatS(Double.parseDouble(map.get(key)));
+          coordinate.setLatS(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATNS:
@@ -90,15 +90,15 @@ public class WikipediaHistoricSiteInfoboxParser
           historicSite.setCoordinate(coordinate);
           break;
         case LONGD:
-          coordinate.setLongD(Double.parseDouble(map.get(key)));
+          coordinate.setLongD(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGM:
-          coordinate.setLongM(Double.parseDouble(map.get(key)));
+          coordinate.setLongM(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGS:
-          coordinate.setLongS(Double.parseDouble(map.get(key)));
+          coordinate.setLongS(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGEW:
@@ -106,15 +106,15 @@ public class WikipediaHistoricSiteInfoboxParser
           historicSite.setCoordinate(coordinate);
           break;
         case LATDL:
-          coordinate.setLatD(Double.parseDouble(map.get(key)));
+          coordinate.setLatD(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATML:
-          coordinate.setLatM(Double.parseDouble(map.get(key)));
+          coordinate.setLatM(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATSL:
-          coordinate.setLatS(Double.parseDouble(map.get(key)));
+          coordinate.setLatS(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LATNSL:
@@ -122,15 +122,15 @@ public class WikipediaHistoricSiteInfoboxParser
           historicSite.setCoordinate(coordinate);
           break;
         case LONGDL:
-          coordinate.setLongD(Double.parseDouble(map.get(key)));
+          coordinate.setLongD(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGML:
-          coordinate.setLongM(Double.parseDouble(map.get(key)));
+          coordinate.setLongM(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGSL:
-          coordinate.setLongS(Double.parseDouble(map.get(key)));
+          coordinate.setLongS(map.get(key));
           historicSite.setCoordinate(coordinate);
           break;
         case LONGEWL:
