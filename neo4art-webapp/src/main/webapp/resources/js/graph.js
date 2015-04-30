@@ -389,6 +389,7 @@ function theGraph() {
 		var bttX = float.append("div").attr("class", "ics").text("X");
 		bttX.on("click", closeWindow);
 		float.append("div").attr("id", "data");
+		float.append("iframe").attr("width","100%");
 	}
 
 	function openWindow(d) {
@@ -399,7 +400,8 @@ function theGraph() {
 		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
 		data.append("div").attr("class", "description").text(d.description);
 		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
-		var frame = float.append("iframe").attr("src",d.link).attr("width","100%");
+		var frame = float.select("iframe");
+		frame.attr("src",d.link);
 		$("#floating").perfectScrollbar();
 		$("#floating").perfectScrollbar('update');
 		$("iframe").perfectScrollbar();
