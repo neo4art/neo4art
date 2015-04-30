@@ -93,6 +93,8 @@
 	-o-transition: left 0.8s;
 	transition: left 0.8s;
 	text-align: center;
+	display:flex;
+	flex-direction:column;
 }
 
 #floating.visible {
@@ -105,6 +107,9 @@
 	-moz-transition: left 0s;
 	-o-transition: left 0s;
 	transition: left 0s;
+}
+iframe{
+	flex:1;
 }
 
 .ics {

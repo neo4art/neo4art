@@ -220,15 +220,10 @@ function theGraph() {
 		});
 		
 		var img = nodeEnter.append("svg:image").attr("class", "circle").attr("xlink:href", function(d) {
-			$("<img/>").attr("src", d.thumbnail).load(function() {
-				d.imgW = this.width;
-				d.imgH = this.height;
-			});
 			return d.thumbnail;
 		}).attr("clip-path", function(d, i) {
 			return "url(#clip" + i + ")"
 		}).attr("x", function(d) {
-			console.log(d.imgW);
 			return -d.radius;
 		}).attr("y", function(d) {
 			return -d.radius;
@@ -404,8 +399,11 @@ function theGraph() {
 		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
 		data.append("div").attr("class", "description").text(d.description);
 		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+		var frame = float.append("iframe").attr("src",d.link).attr("width","100%");
 		$("#floating").perfectScrollbar();
 		$("#floating").perfectScrollbar('update');
+		$("iframe").perfectScrollbar();
+		$("iframe").perfectScrollbar('update');
 	}
 
 	function closeWindow() {
