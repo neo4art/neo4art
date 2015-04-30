@@ -18,46 +18,69 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ArtMovement;
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtMovementInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaArtMovementPage extends WikipediaPage implements WikipediaElement {
-
-  private ArtMovement artMovement;
-
-  public WikipediaArtMovementPage() {
-  }
+public class WikipediaArtMovementPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaArtMovementPage.class);
   
-  public WikipediaArtMovementPage(WikiArticle article) {
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtMovementPage };
+
+  private ArtMovement          artMovement;
+
+  public WikipediaArtMovementPage()
+  {
+  }
+
+  public WikipediaArtMovementPage(WikiArticle article)
+  {
     from(article);
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaArtMovementPage;
-  }
-  
-  @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.ART_MOVEMENT_PAGE;
   }
 
-  public ArtMovement getArtMovement() {
+  public ArtMovement getArtMovement()
+  {
     return artMovement;
   }
 
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.artMovement = WikipediaArtMovementInfoboxParser.parse(article.getText());
-    
+  public WikipediaElement from(WikiArticle article)
+  {
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.artMovement = WikipediaArtMovementInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing ArtMovement infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

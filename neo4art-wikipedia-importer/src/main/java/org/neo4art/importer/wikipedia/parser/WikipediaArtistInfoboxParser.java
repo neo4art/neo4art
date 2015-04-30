@@ -15,19 +15,29 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Coordinate;
+import org.neo4art.domain.Country;
 import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
 
 /**
- * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
+ * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template :Infobox_artist</a>
  * 
- * @author Lorenzo Speranzoni
+ * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 19 Mar 2015
  */
-public class WikipediaArtistInfoboxParser {
-
+public class WikipediaArtistInfoboxParser
+{
   public static final String HONORIFIC_PREFIX          = "honorific_prefix";
   public static final String NAME                      = "name";
   public static final String HONORIFIC_SUFFIX          = "honorific_suffix";
@@ -48,118 +58,347 @@ public class WikipediaArtistInfoboxParser {
   public static final String EDUCATION                 = "education";
   public static final String ALMA_MATER                = "alma_mater";
   public static final String KNOWN_FOR                 = "known_for";
-  public static final String NOTABLE_WORKS             = "notable_works";
+  public static final String NOTABLE_WORKS             = "works";
   public static final String STYLE                     = "style";
   public static final String MOVEMENT                  = "movement";
   public static final String SPOUSE                    = "spouse";
   public static final String AWARDS                    = "awards";
   public static final String ELECTED                   = "elected";
-  public static final String PATRONS                   = "patrons";
+  public static final String PATRONS                   = "patron";
   public static final String MEMORIALS                 = "memorials";
   public static final String WEBSITE                   = "website";
+  public static final String FIELD                     = "field";
+  public static final String TRAINING                  = "training";
 
-  public WikipediaArtistInfoboxParser() {
+  public WikipediaArtistInfoboxParser()
+  {
   }
 
-  public static Artist parse(String text) {
-
+  public static Artist parse(String text)
+  {
     Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
 
-    Artist artist = new Artist();
+    ArrayList<ArtMovement> artworks = new ArrayList<ArtMovement>();
 
-    for (String key : map.keySet()) {
-      
-      switch (key) {
-        case HONORIFIC_PREFIX          :
-          artist.setHonorificPrefix(map.get(key));
+    Artist artist = new Artist();
+    ArtMovement artMovement = null;
+    Country country = new Country();
+    Coordinate coordinate = new Coordinate();
+
+    for (String key : map.keySet())
+    {
+      switch (key)
+      {
+        case HONORIFIC_PREFIX:
+          artist.setHonorificPrefix(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case NAME                      :
-          artist.setName(map.get(key));
+        case NAME:
+          artist.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case HONORIFIC_SUFFIX          :
-          artist.setHonorificSuffix(map.get(key));
+        case HONORIFIC_SUFFIX:
+          artist.setHonorificSuffix(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case IMAGE                     :
-          artist.setImage(map.get(key));
+        case FIELD:
+          artist.setField(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case IMAGE_SIZE                :
-          artist.setImageSize(map.get(key));
+        case TRAINING:
+          artist.setTrainer(infoboxTraining(map.get(key)));
           break;
-        case ALT                       :
-          artist.setAlt(map.get(key));
+        case IMAGE:
+          artist.setImage(infoboxImageUrl(map.get(key)));
           break;
-        case CAPTION                   :
-          artist.setCaption(map.get(key));
+        case IMAGE_SIZE:
+          artist.setImageSize(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case NATIVE_NAME               :
-          artist.setNativeName(map.get(key));
+        case ALT:
+          artist.setAlt(infoboxAlt(map.get(key)));
           break;
-        case NATIVE_NAME_LANG          :
-          artist.setNativeNameLang(map.get(key));
+        case CAPTION:
+          artist.setCaption(infoboxCaption(map.get(key)));
           break;
-        case BIRTH_NAME                :
-          artist.setBirthName(map.get(key));
+        case NATIVE_NAME:
+          artist.setNativeName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case BIRTH_DATE                :
-          artist.setBirthDate(map.get(key));
+        case NATIVE_NAME_LANG:
+          artist.setNativeNameLang(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case BIRTH_PLACE               :
-          artist.setBirthPlace(map.get(key));
+        case BIRTH_NAME:
+          artist.setBirthName(infoboxBirthName(map.get(key)));
           break;
-        case DEATH_DATE                :
-          artist.setDeathDate(map.get(key));
+        case BIRTH_DATE:
+          artist.setBirthDate(parseInfoboxDateBirth(map.get(key)));
           break;
-        case DEATH_PLACE               :
-          artist.setDeathPlace(map.get(key));
+        case BIRTH_PLACE:
+          artist.setBirthPlace(infoboxPlaceBirth(map.get(key)));
           break;
-        case RESTING_PLACE             :
-          artist.setRestingPlace(map.get(key));
+        case DEATH_DATE:
+          Calendar date = parseInfoboxDateDeath(map.get(key));
+          artist.setDeathDate(date);
           break;
-        case RESTING_PLACE_COORDINATES :
-          artist.setRestingPlaceCoordinates(map.get(key));
+        case DEATH_PLACE:
+          artist.setDeathPlace(infoboxPlaceDeath(map.get(key)));
           break;
-        case NATIONALITY               :
-          artist.setNationality(map.get(key));
+        case RESTING_PLACE:
+          coordinate.setMap(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          artist.setRestingPlace(coordinate);
           break;
-        case EDUCATION                 :
+        case RESTING_PLACE_COORDINATES:
+          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
+          coordinate.setLatD(Double.parseDouble(c[1]));
+          coordinate.setLongD(Double.parseDouble(c[2]));
+          coordinate.setMap(c[3]);
+          artist.setRestingPlaceCoordinates(coordinate);
+          break;
+        case NATIONALITY:
+          country.setCommonName(map.get(key));
+          artist.setNationality(country);
+          break;
+        case EDUCATION:
           artist.setEducation(map.get(key));
           break;
-        case ALMA_MATER                :
+        case ALMA_MATER:
           artist.setAlmaMater(map.get(key));
           break;
-        case KNOWN_FOR                 :
+        case KNOWN_FOR:
           artist.setKnownFor(map.get(key));
           break;
-        case NOTABLE_WORKS             :
-          artist.setNotableWorks(map.get(key));
+        case NOTABLE_WORKS:
+          artist.setNotableWorks(infoboxWorks(map.get(key)));
           break;
-        case STYLE                     :
+        case STYLE:
           artist.setStyle(map.get(key));
           break;
-        case MOVEMENT                  :
-          artist.setMovement(map.get(key));
+        case MOVEMENT:
+          String[] work = infoboxMovement(map.get(key));
+          for (int i = 0; i < work.length; i++)
+          {
+            artMovement = new ArtMovement();
+            artMovement.setName(work[i]);
+            artworks.add(artMovement);
+          }
+          artist.setMovement(artworks);
           break;
-        case SPOUSE                    :
+        case SPOUSE:
           artist.setSpouse(map.get(key));
           break;
-        case AWARDS                    :
-          artist.setAwards(map.get(key));
+        case AWARDS:
+          artist.setAwards(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case ELECTED                   :
-          artist.setElected(map.get(key));
+        case ELECTED:
+          artist.setElected(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
-        case PATRONS                   :
-          artist.setPatrons(map.get(key));
+        case PATRONS:
+          artist.setPatrons(infoboxPatron(map.get(key)));
           break;
-        case MEMORIALS                 :
+        case MEMORIALS:
           artist.setMemorials(map.get(key));
           break;
-        case WEBSITE                   :
-          artist.setWebsite(map.get(key));
+        case WEBSITE:
+          artist.setWebsite(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
       }
     }
 
     return artist;
+  }
+
+  public static Calendar parseInfoboxDateDeath(String date)
+  {
+    date = date.replace("\n", "");
+    date = date.replace("{", "");
+    date = date.replace("}", "");
+    if (date.contains("|| df=yes"))
+    {
+      date = date.replace("|| df=yes", "");
+    }
+    date = date.replace("death date and age||", "");
+    date = date.replace("Death date and age||", "");
+
+    String[] dateSplit = StringUtils.split(date, "|| ");
+    int year = Integer.parseInt(dateSplit[0]);
+    int month = Integer.parseInt(dateSplit[1]);
+    int day = Integer.parseInt(dateSplit[2]);
+    Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+    return dateClean;
+  }
+
+  public static Calendar parseInfoboxDateBirth(String date)
+  {
+    date = date.replace("March", "3");
+    date = date.replace("\n", "");
+    date = date.replace("{", "");
+    date = date.replace("}", "");
+    if (date.contains("|| df=yes"))
+    {
+      date = date.replace("|| df=yes", "");
+    }
+    date = date.replace("birth date||", "");
+    if (date.contains("|| "))
+    {
+      String[] dateSplit = StringUtils.split(date, "|| ");
+      int year = Integer.parseInt(dateSplit[0]);
+      int month = Integer.parseInt(dateSplit[1]);
+      int day = Integer.parseInt(dateSplit[2]);
+      Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+      return dateClean;
+    }
+    else
+    {
+      String[] dateSplit = StringUtils.split(date, " ");
+      int year = Integer.parseInt(dateSplit[2]);
+      int month = Integer.parseInt(dateSplit[1]);
+      int day = Integer.parseInt(dateSplit[0]);
+      Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+      return dateClean;
+    }
+  }
+
+  public static String infoboxPlaceDeath(String place)
+  {
+
+    place = place.replace("\n", "");
+    place = place.replace("[", "");
+    place = place.replace("]", "");
+    place = place.replace("|", " ");
+    String[] p = StringUtils.split(place, ",");
+
+    return p[0];
+  }
+
+  public static String[] infoboxRestingPlaceCoordinates(String coor)
+  {
+
+    String[] c = StringUtils.split(coor, "|");
+
+    return c;
+  }
+
+  public static String infoboxPlaceBirth(String place)
+  {
+
+    place = place.replace("\n", "");
+    place = place.replace("[", "");
+    place = place.replace("]", "");
+    place = place.replace("|", " ");
+
+    return place;
+  }
+
+  public static String[] infoboxMovement(String movement)
+  {
+
+    movement = movement.replace("[", "");
+    movement = movement.replace("]", "");
+    movement = movement.replace("\n", "");
+
+    String[] mov = StringUtils.split(movement, ",");
+
+    return mov;
+  }
+
+  public static ArrayList<Artwork> infoboxWorks(String work)
+  {
+
+    work = work.replace("[", "");
+    work = work.replace("]", "");
+    work = work.replace("'", "");
+    work = work.replace("\n", "");
+    ArrayList<Artwork> worksArray = new ArrayList<Artwork>();
+    if (work.contains("<br />"))
+    {
+      work = work.replace("br />", "");
+      work = work.replace("||", "");
+      String[] works = StringUtils.split(work, "<");
+      for (int i = 0; i < works.length; i++)
+      {
+        Artwork art = new Artwork();
+        art.setTitle(works[i]);
+        worksArray.add(art);
+      }
+      return worksArray;
+    }
+    else
+    {
+      String[] works = StringUtils.split(work, ",");
+      // System.out.println(""+work);
+      for (int i = 0; i < works.length; i++)
+      {
+        Artwork art = new Artwork();
+        art.setTitle(works[i]);
+        worksArray.add(art);
+      }
+      return worksArray;
+    }
+
+  }
+
+  public static String infoboxPatron(String patron)
+  {
+
+    patron = patron.replace("[", "");
+    patron = patron.replace("]", "");
+    patron = patron.replace("'", "");
+    patron = patron.replace("}", "");
+    patron = patron.replace("|", "");
+    patron = patron.replace("\n", "");
+
+    return patron;
+  }
+
+  public static URL infoboxImageUrl(String nameImage)
+  {
+    nameImage = nameImage.replaceAll(" ", "_");
+    nameImage = nameImage.replace("|", "");
+    nameImage = nameImage.replace("\n", "");
+    
+    nameImage = nameImage.contains("File:") ? "http://en.wikipedia.org/wiki/" + nameImage : "http://en.wikipedia.org/wiki/File:" + nameImage;
+
+    URL url = null;
+    
+    try
+    {
+      url = new URL(nameImage);
+    }
+    catch (MalformedURLException e)
+    {
+      e.printStackTrace();
+    }
+    
+    return url;
+  }
+
+  public static String infoboxCaption(String caption)
+  {
+
+    caption = caption.replace("[", "");
+    caption = caption.replace("]", "");
+    caption = caption.replace("'", "");
+    caption = caption.replace("&nbsp;", " ");
+    caption = caption.replace("\n", "");
+
+    return caption;
+  }
+
+  public static String infoboxAlt(String alt)
+  {
+    alt = alt.replace("\n", "");
+    return alt;
+  }
+
+  public static String infoboxTraining(String trainer)
+  {
+
+    trainer = trainer.replace("[", "");
+    trainer = trainer.replace("]", "");
+    trainer = trainer.replace("\n", "");
+    trainer = trainer.replace("<br /> ", "");
+
+    return trainer;
+  }
+
+  public static String infoboxBirthName(String name)
+  {
+    String[] field = StringUtils.split(name, "<");
+    return field[0];
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Copyright 2015 the original author or authors.
  *
- * Licensed under the Apache License, Version 2.0 (the "License;
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,32 +14,15 @@
  * limitations under the License.
  */
 
-package org.neo4art.graph;
+package org.neo4art.importer.wikipedia.graphdb;
 
-import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.RelationshipType;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum WikipediaLabel implements Label {
-
-  Wikipedia,
+public enum WikipediaRelationship implements RelationshipType {
   
-  WikipediaArtistPage,
-  WikipediaArtworkPage,
-  WikipediaArtMovementPage,
-  WikipediaMuseumPage,
-  WikipediaMonumentPage,
-  WikipediaReligiousBuildingPage,
-  
-  WikipediaSettlementPage,
-  WikipediaCountryPage,
-  
-  WikipediaPage,
-  WikipediaCategory,
-  WikipediaFile,
-  WikipediaProject,
-  WikipediaTemplate,
-  WikipediaGeneric
+  REFERS, BELONGS_TO, REDIRECTS_TO, DOCUMENTED_IN
 }

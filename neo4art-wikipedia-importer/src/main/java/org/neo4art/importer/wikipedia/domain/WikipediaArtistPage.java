@@ -18,46 +18,69 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artist;
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaArtistPage extends WikipediaPage implements WikipediaElement {
-
-  private Artist artist;
-
-  public WikipediaArtistPage() {
-  }
+public class WikipediaArtistPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaArtistPage.class);
   
-  public WikipediaArtistPage(WikiArticle article) {
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage };
+
+  private Artist               artist;
+
+  public WikipediaArtistPage()
+  {
+  }
+
+  public WikipediaArtistPage(WikiArticle article)
+  {
     from(article);
   }
-  
+
   @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.ARTIST_PAGE;
   }
 
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaArtistPage;
-  }
-
-  public Artist getArtist() {
+  public Artist getArtist()
+  {
     return artist;
   }
-  
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.artist = WikipediaArtistInfoboxParser.parse(article.getText());
-    
+
+  public WikipediaElement from(WikiArticle article)
+  {
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.artist = WikipediaArtistInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing Artist infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

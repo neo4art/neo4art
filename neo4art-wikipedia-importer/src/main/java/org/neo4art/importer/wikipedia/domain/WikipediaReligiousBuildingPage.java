@@ -18,46 +18,70 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.graph.WikipediaLabel;
-import org.neo4art.importer.wikipedia.parser.WikipediaReligiousBuildingInfoboxParser;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
+import org.neo4art.importer.wikipedia.parser.religiousBuilding.WikipediaReligiousBuildingInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaReligiousBuildingPage extends WikipediaPage implements WikipediaElement {
+public class WikipediaReligiousBuildingPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaReligiousBuildingPage.class);
+  
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaReligiousBuildingPage };
 
   private ReligiousBuilding religiousBuilding;
 
-  public WikipediaReligiousBuildingPage() {
+  public WikipediaReligiousBuildingPage()
+  {
   }
-  
-  public WikipediaReligiousBuildingPage(WikiArticle article) {
+
+  public WikipediaReligiousBuildingPage(WikiArticle article)
+  {
     from(article);
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaReligiousBuildingPage;
-  }
-  
-  @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.RELIGIOUS_BUILDING_PAGE;
   }
 
-  public ReligiousBuilding getReligiousBuilding() {
+  public ReligiousBuilding getReligiousBuilding()
+  {
     return religiousBuilding;
   }
 
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.religiousBuilding = WikipediaReligiousBuildingInfoboxParser.parse(article.getText());
-    
+  public WikipediaElement from(WikiArticle article)
+  {
+
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.religiousBuilding = WikipediaReligiousBuildingInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing ReligiousBuilding infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

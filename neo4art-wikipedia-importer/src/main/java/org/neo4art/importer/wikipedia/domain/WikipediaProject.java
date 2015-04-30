@@ -16,30 +16,37 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import org.neo4art.graph.WikipediaLabel;
-
 import info.bliki.wiki.dump.WikiArticle;
+
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public class WikipediaProject extends WikipediaGeneric implements WikipediaElement {
+public class WikipediaProject extends WikipediaGeneric implements WikipediaElement
+{
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaProject };
 
-  public WikipediaProject() {
+  public WikipediaProject()
+  {
   }
-  
-  public WikipediaProject(WikiArticle article) {
+
+  public WikipediaProject(WikiArticle article)
+  {
     from(article);
   }
-  
+
   @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.PROJECT;
   }
 
   @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaProject;
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

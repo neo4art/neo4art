@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.repository;
 
-import org.neo4art.graph.WikipediaRelationship;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtMovementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtworkPage;
@@ -31,6 +30,7 @@ import org.neo4art.importer.wikipedia.domain.WikipediaProject;
 import org.neo4art.importer.wikipedia.domain.WikipediaReligiousBuildingPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaSettlementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaRelationship;
 
 /**
  * 

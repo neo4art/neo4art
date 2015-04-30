@@ -16,571 +16,750 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.neo4art.graphdb.Neo4ArtLabel;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4j.graphdb.Label;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Apr 2015
  */
-public class ReligiousBuilding {
-  
-  private String buildingName;
-  private String nativeName;
-  private String nativeNameLang;
-  private String image;
-  private String imageSize;
-  private String alt;
-  private String caption;
-  private String mapType;
-  private String mapSize;
-  private String mapCaption;
-  private String location;
-  private String coordinates;
-  private String latitude;
-  private String longitude;
-  private String coordinatesRegion;
-  private String religiousAffiliation;
-  private String rite;
-  private String region;
-  private String state;
-  private String province;
-  private String territory;
-  private String prefecture;
-  private String sector;
-  private String district;
-  private String cercle;
-  private String municipality;
-  private String consecrationYear;
-  private String status;
-  private String functionalStatus;
-  private String heritageDesignation;
-  private String leadership;
-  private String patron;
-  private String website;
-  private String architecture;
-  private String architect;
-  private String architectureType;
-  private String architectureStyle;
-  private String generalContractor;
-  private String facadeDirection;
-  private String groundbreaking;
-  private String yearCompleted;
-  private String constructionCost;
-  private String specifications;
-  private String capacity;
-  private String length;
-  private String width;
-  private String widthNave;
-  private String heightMax;
-  private String domeQuantity;
-  private String domeHeightOuter;
-  private String domeHeightInner;
-  private String domeDiaOuter;
-  private String domeDiaInner;
-  private String minaretQuantity;
-  private String minaretHeight;
-  private String spireQuantity;
-  private String spireHeight;
-  private String materials;
-  private String nrhp;
-  private String added;
-  private String refnum;
-  private String designated;
-  
-  public ReligiousBuilding() {
+public class ReligiousBuilding implements Neo4ArtNode
+{
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.ReligiousBuilding };
+
+  private Long                 nodeId;
+
+  private String               type;
+  private String               buildingName;
+  private String               nativeName;
+  private String               nativeNameLang;
+  private URL                  image;
+  private String               imageSize;
+  private String               alt;
+  private String               caption;
+  private String               mapType;
+  private String               mapSize;
+  private String               mapCaption;
+  private Settlement           location;
+  private Coordinate           coordinate;
+  private String               latitude;
+  private String               longitude;
+  private String               coordinatesRegion;
+  private String               religiousAffiliation;
+  private String               rite;
+  private String               region;
+  private String               state;
+  private String               province;
+  private String               territory;
+  private String               prefecture;
+  private String               sector;
+  private String               district;
+  private String               cercle;
+  private String               municipality;
+  private String               consecrationYear;
+  private String               status;
+  private String               functionalStatus;
+  private String               heritageDesignation;
+  private String               leadership;
+  private String               patron;
+  private String               website;
+  private String               architecture;
+  private String               architect;
+  private String               architectureType;
+  private String               architectureStyle;
+  private String               generalContractor;
+  private String               facadeDirection;
+  private String               groundbreaking;
+  private String               yearCompleted;
+  private String               constructionCost;
+  private String               specifications;
+  private String               capacity;
+  private String               length;
+  private String               width;
+  private String               widthNave;
+  private String               heightMax;
+  private String               domeQuantity;
+  private String               domeHeightOuter;
+  private String               domeHeightInner;
+  private String               domeDiaOuter;
+  private String               domeDiaInner;
+  private String               minaretQuantity;
+  private String               minaretHeight;
+  private String               spireQuantity;
+  private String               spireHeight;
+  private String               materials;
+  private String               nrhp;
+  private String               added;
+  private String               refnum;
+  private String               designated;
+
+  public String getType()
+  {
+    return type;
   }
 
-  public String getBuildingName() {
+  public void setType(String type)
+  {
+    this.type = type;
+  }
+
+  public ReligiousBuilding()
+  {
+  }
+
+  public String getBuildingName()
+  {
     return buildingName;
   }
 
-  public void setBuildingName(String buildingName) {
+  public void setBuildingName(String buildingName)
+  {
     this.buildingName = buildingName;
   }
 
-  public String getNativeName() {
+  public String getNativeName()
+  {
     return nativeName;
   }
 
-  public void setNativeName(String nativeName) {
+  public void setNativeName(String nativeName)
+  {
     this.nativeName = nativeName;
   }
 
-  public String getNativeNameLang() {
+  public String getNativeNameLang()
+  {
     return nativeNameLang;
   }
 
-  public void setNativeNameLang(String nativeNameLang) {
+  public void setNativeNameLang(String nativeNameLang)
+  {
     this.nativeNameLang = nativeNameLang;
   }
 
-  public String getImage() {
+  public URL getImage()
+  {
     return image;
   }
 
-  public void setImage(String image) {
-    this.image = image;
+  public void setImage(URL url)
+  {
+    this.image = url;
   }
 
-  public String getImageSize() {
+  public String getImageSize()
+  {
     return imageSize;
   }
 
-  public void setImageSize(String imageSize) {
+  public void setImageSize(String imageSize)
+  {
     this.imageSize = imageSize;
   }
 
-  public String getAlt() {
+  public String getAlt()
+  {
     return alt;
   }
 
-  public void setAlt(String alt) {
+  public void setAlt(String alt)
+  {
     this.alt = alt;
   }
 
-  public String getCaption() {
+  public String getCaption()
+  {
     return caption;
   }
 
-  public void setCaption(String caption) {
+  public void setCaption(String caption)
+  {
     this.caption = caption;
   }
 
-  public String getMapType() {
+  public String getMapType()
+  {
     return mapType;
   }
 
-  public void setMapType(String mapType) {
+  public void setMapType(String mapType)
+  {
     this.mapType = mapType;
   }
 
-  public String getMapSize() {
+  public String getMapSize()
+  {
     return mapSize;
   }
 
-  public void setMapSize(String mapSize) {
+  public void setMapSize(String mapSize)
+  {
     this.mapSize = mapSize;
   }
 
-  public String getMapCaption() {
+  public String getMapCaption()
+  {
     return mapCaption;
   }
 
-  public void setMapCaption(String mapCaption) {
+  public void setMapCaption(String mapCaption)
+  {
     this.mapCaption = mapCaption;
   }
 
-  public String getLocation() {
+  public Settlement getLocation()
+  {
     return location;
   }
 
-  public void setLocation(String location) {
-    this.location = location;
+  public void setLocation(Settlement settlement)
+  {
+    this.location = settlement;
   }
 
-  public String getCoordinates() {
-    return coordinates;
+  public Coordinate getCoordinates()
+  {
+    return coordinate;
   }
 
-  public void setCoordinates(String coordinates) {
-    this.coordinates = coordinates;
+  public void setCoordinates(Coordinate coordinate)
+  {
+    this.coordinate = coordinate;
   }
 
-  public String getLatitude() {
+  public String getLatitude()
+  {
     return latitude;
   }
 
-  public void setLatitude(String latitude) {
+  public void setLatitude(String latitude)
+  {
     this.latitude = latitude;
   }
 
-  public String getLongitude() {
+  public String getLongitude()
+  {
     return longitude;
   }
 
-  public void setLongitude(String longitude) {
+  public void setLongitude(String longitude)
+  {
     this.longitude = longitude;
   }
 
-  public String getCoordinatesRegion() {
+  public String getCoordinatesRegion()
+  {
     return coordinatesRegion;
   }
 
-  public void setCoordinatesRegion(String coordinatesRegion) {
+  public void setCoordinatesRegion(String coordinatesRegion)
+  {
     this.coordinatesRegion = coordinatesRegion;
   }
 
-  public String getReligiousAffiliation() {
+  public String getReligiousAffiliation()
+  {
     return religiousAffiliation;
   }
 
-  public void setReligiousAffiliation(String religiousAffiliation) {
+  public void setReligiousAffiliation(String religiousAffiliation)
+  {
     this.religiousAffiliation = religiousAffiliation;
   }
 
-  public String getRite() {
+  public String getRite()
+  {
     return rite;
   }
 
-  public void setRite(String rite) {
+  public void setRite(String rite)
+  {
     this.rite = rite;
   }
 
-  public String getRegion() {
+  public String getRegion()
+  {
     return region;
   }
 
-  public void setRegion(String region) {
+  public void setRegion(String region)
+  {
     this.region = region;
   }
 
-  public String getState() {
+  public String getState()
+  {
     return state;
   }
 
-  public void setState(String state) {
+  public void setState(String state)
+  {
     this.state = state;
   }
 
-  public String getProvince() {
+  public String getProvince()
+  {
     return province;
   }
 
-  public void setProvince(String province) {
+  public void setProvince(String province)
+  {
     this.province = province;
   }
 
-  public String getTerritory() {
+  public String getTerritory()
+  {
     return territory;
   }
 
-  public void setTerritory(String territory) {
+  public void setTerritory(String territory)
+  {
     this.territory = territory;
   }
 
-  public String getPrefecture() {
+  public String getPrefecture()
+  {
     return prefecture;
   }
 
-  public void setPrefecture(String prefecture) {
+  public void setPrefecture(String prefecture)
+  {
     this.prefecture = prefecture;
   }
 
-  public String getSector() {
+  public String getSector()
+  {
     return sector;
   }
 
-  public void setSector(String sector) {
+  public void setSector(String sector)
+  {
     this.sector = sector;
   }
 
-  public String getDistrict() {
+  public String getDistrict()
+  {
     return district;
   }
 
-  public void setDistrict(String district) {
+  public void setDistrict(String district)
+  {
     this.district = district;
   }
 
-  public String getCercle() {
+  public String getCercle()
+  {
     return cercle;
   }
 
-  public void setCercle(String cercle) {
+  public void setCercle(String cercle)
+  {
     this.cercle = cercle;
   }
 
-  public String getMunicipality() {
+  public String getMunicipality()
+  {
     return municipality;
   }
 
-  public void setMunicipality(String municipality) {
+  public void setMunicipality(String municipality)
+  {
     this.municipality = municipality;
   }
 
-  public String getConsecrationYear() {
+  public String getConsecrationYear()
+  {
     return consecrationYear;
   }
 
-  public void setConsecrationYear(String consecrationYear) {
+  public void setConsecrationYear(String consecrationYear)
+  {
     this.consecrationYear = consecrationYear;
   }
 
-  public String getStatus() {
+  public String getStatus()
+  {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(String status)
+  {
     this.status = status;
   }
 
-  public String getFunctionalStatus() {
+  public String getFunctionalStatus()
+  {
     return functionalStatus;
   }
 
-  public void setFunctionalStatus(String functionalStatus) {
+  public void setFunctionalStatus(String functionalStatus)
+  {
     this.functionalStatus = functionalStatus;
   }
 
-  public String getHeritageDesignation() {
+  public String getHeritageDesignation()
+  {
     return heritageDesignation;
   }
 
-  public void setHeritageDesignation(String heritageDesignation) {
+  public void setHeritageDesignation(String heritageDesignation)
+  {
     this.heritageDesignation = heritageDesignation;
   }
 
-  public String getLeadership() {
+  public String getLeadership()
+  {
     return leadership;
   }
 
-  public void setLeadership(String leadership) {
+  public void setLeadership(String leadership)
+  {
     this.leadership = leadership;
   }
 
-  public String getPatron() {
+  public String getPatron()
+  {
     return patron;
   }
 
-  public void setPatron(String patron) {
+  public void setPatron(String patron)
+  {
     this.patron = patron;
   }
 
-  public String getWebsite() {
+  public String getWebsite()
+  {
     return website;
   }
 
-  public void setWebsite(String website) {
+  public void setWebsite(String website)
+  {
     this.website = website;
   }
 
-  public String getArchitecture() {
+  public String getArchitecture()
+  {
     return architecture;
   }
 
-  public void setArchitecture(String architecture) {
+  public void setArchitecture(String architecture)
+  {
     this.architecture = architecture;
   }
 
-  public String getArchitect() {
+  public String getArchitect()
+  {
     return architect;
   }
 
-  public void setArchitect(String architect) {
+  public void setArchitect(String architect)
+  {
     this.architect = architect;
   }
 
-  public String getArchitectureType() {
+  public String getArchitectureType()
+  {
     return architectureType;
   }
 
-  public void setArchitectureType(String architectureType) {
+  public void setArchitectureType(String architectureType)
+  {
     this.architectureType = architectureType;
   }
 
-  public String getArchitectureStyle() {
+  public String getArchitectureStyle()
+  {
     return architectureStyle;
   }
 
-  public void setArchitectureStyle(String architectureStyle) {
+  public void setArchitectureStyle(String architectureStyle)
+  {
     this.architectureStyle = architectureStyle;
   }
 
-  public String getGeneralContractor() {
+  public String getGeneralContractor()
+  {
     return generalContractor;
   }
 
-  public void setGeneralContractor(String generalContractor) {
+  public void setGeneralContractor(String generalContractor)
+  {
     this.generalContractor = generalContractor;
   }
 
-  public String getFacadeDirection() {
+  public String getFacadeDirection()
+  {
     return facadeDirection;
   }
 
-  public void setFacadeDirection(String facadeDirection) {
+  public void setFacadeDirection(String facadeDirection)
+  {
     this.facadeDirection = facadeDirection;
   }
 
-  public String getGroundbreaking() {
+  public String getGroundbreaking()
+  {
     return groundbreaking;
   }
 
-  public void setGroundbreaking(String groundbreaking) {
+  public void setGroundbreaking(String groundbreaking)
+  {
     this.groundbreaking = groundbreaking;
   }
 
-  public String getYearCompleted() {
+  public String getYearCompleted()
+  {
     return yearCompleted;
   }
 
-  public void setYearCompleted(String yearCompleted) {
+  public void setYearCompleted(String yearCompleted)
+  {
     this.yearCompleted = yearCompleted;
   }
 
-  public String getConstructionCost() {
+  public String getConstructionCost()
+  {
     return constructionCost;
   }
 
-  public void setConstructionCost(String constructionCost) {
+  public void setConstructionCost(String constructionCost)
+  {
     this.constructionCost = constructionCost;
   }
 
-  public String getSpecifications() {
+  public String getSpecifications()
+  {
     return specifications;
   }
 
-  public void setSpecifications(String specifications) {
+  public void setSpecifications(String specifications)
+  {
     this.specifications = specifications;
   }
 
-  public String getCapacity() {
+  public String getCapacity()
+  {
     return capacity;
   }
 
-  public void setCapacity(String capacity) {
+  public void setCapacity(String capacity)
+  {
     this.capacity = capacity;
   }
 
-  public String getLength() {
+  public String getLength()
+  {
     return length;
   }
 
-  public void setLength(String length) {
+  public void setLength(String length)
+  {
     this.length = length;
   }
 
-  public String getWidth() {
+  public String getWidth()
+  {
     return width;
   }
 
-  public void setWidth(String width) {
+  public void setWidth(String width)
+  {
     this.width = width;
   }
 
-  public String getWidthNave() {
+  public String getWidthNave()
+  {
     return widthNave;
   }
 
-  public void setWidthNave(String widthNave) {
+  public void setWidthNave(String widthNave)
+  {
     this.widthNave = widthNave;
   }
 
-  public String getHeightMax() {
+  public String getHeightMax()
+  {
     return heightMax;
   }
 
-  public void setHeightMax(String heightMax) {
+  public void setHeightMax(String heightMax)
+  {
     this.heightMax = heightMax;
   }
 
-  public String getDomeQuantity() {
+  public String getDomeQuantity()
+  {
     return domeQuantity;
   }
 
-  public void setDomeQuantity(String domeQuantity) {
+  public void setDomeQuantity(String domeQuantity)
+  {
     this.domeQuantity = domeQuantity;
   }
 
-  public String getDomeHeightOuter() {
+  public String getDomeHeightOuter()
+  {
     return domeHeightOuter;
   }
 
-  public void setDomeHeightOuter(String domeHeightOuter) {
+  public void setDomeHeightOuter(String domeHeightOuter)
+  {
     this.domeHeightOuter = domeHeightOuter;
   }
 
-  public String getDomeHeightInner() {
+  public String getDomeHeightInner()
+  {
     return domeHeightInner;
   }
 
-  public void setDomeHeightInner(String domeHeightInner) {
+  public void setDomeHeightInner(String domeHeightInner)
+  {
     this.domeHeightInner = domeHeightInner;
   }
 
-  public String getDomeDiaOuter() {
+  public String getDomeDiaOuter()
+  {
     return domeDiaOuter;
   }
 
-  public void setDomeDiaOuter(String domeDiaOuter) {
+  public void setDomeDiaOuter(String domeDiaOuter)
+  {
     this.domeDiaOuter = domeDiaOuter;
   }
 
-  public String getDomeDiaInner() {
+  public String getDomeDiaInner()
+  {
     return domeDiaInner;
   }
 
-  public void setDomeDiaInner(String domeDiaInner) {
+  public void setDomeDiaInner(String domeDiaInner)
+  {
     this.domeDiaInner = domeDiaInner;
   }
 
-  public String getMinaretQuantity() {
+  public String getMinaretQuantity()
+  {
     return minaretQuantity;
   }
 
-  public void setMinaretQuantity(String minaretQuantity) {
+  public void setMinaretQuantity(String minaretQuantity)
+  {
     this.minaretQuantity = minaretQuantity;
   }
 
-  public String getMinaretHeight() {
+  public String getMinaretHeight()
+  {
     return minaretHeight;
   }
 
-  public void setMinaretHeight(String minaretHeight) {
+  public void setMinaretHeight(String minaretHeight)
+  {
     this.minaretHeight = minaretHeight;
   }
 
-  public String getSpireQuantity() {
+  public String getSpireQuantity()
+  {
     return spireQuantity;
   }
 
-  public void setSpireQuantity(String spireQuantity) {
+  public void setSpireQuantity(String spireQuantity)
+  {
     this.spireQuantity = spireQuantity;
   }
 
-  public String getSpireHeight() {
+  public String getSpireHeight()
+  {
     return spireHeight;
   }
 
-  public void setSpireHeight(String spireHeight) {
+  public void setSpireHeight(String spireHeight)
+  {
     this.spireHeight = spireHeight;
   }
 
-  public String getMaterials() {
+  public String getMaterials()
+  {
     return materials;
   }
 
-  public void setMaterials(String materials) {
+  public void setMaterials(String materials)
+  {
     this.materials = materials;
   }
 
-  public String getNrhp() {
+  public String getNrhp()
+  {
     return nrhp;
   }
 
-  public void setNrhp(String nrhp) {
+  public void setNrhp(String nrhp)
+  {
     this.nrhp = nrhp;
   }
 
-  public String getAdded() {
+  public String getAdded()
+  {
     return added;
   }
 
-  public void setAdded(String added) {
+  public void setAdded(String added)
+  {
     this.added = added;
   }
 
-  public String getRefnum() {
+  public String getRefnum()
+  {
     return refnum;
   }
 
-  public void setRefnum(String refnum) {
+  public void setRefnum(String refnum)
+  {
     this.refnum = refnum;
   }
 
-  public String getDesignated() {
+  public String getDesignated()
+  {
     return designated;
   }
 
-  public void setDesignated(String designated) {
+  public void setDesignated(String designated)
+  {
     this.designated = designated;
+  }
+
+  @Override
+  public Long getNodeId()
+  {
+    return this.nodeId;
+  }
+
+  @Override
+  public void setNodeId(long nodeId)
+  {
+    this.nodeId = nodeId;
+  }
+
+  @Override
+  public Map<String, Object> getProperties()
+  {
+    Map<String, Object> properties = new HashMap<String, Object>();
+
+    if (this.buildingName != null)
+    {
+      properties.put("buildingName", this.buildingName);
+    }
+    
+    return properties;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

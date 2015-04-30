@@ -18,46 +18,70 @@ package org.neo4art.importer.wikipedia.domain;
 
 import info.bliki.wiki.dump.WikiArticle;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Museum;
-import org.neo4art.graph.WikipediaLabel;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
+import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaMuseumPage extends WikipediaPage implements WikipediaElement {
+public class WikipediaMuseumPage extends WikipediaPage implements WikipediaElement
+{
+  private static Log logger = LogFactory.getLog(WikipediaMuseumPage.class);
+  
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage };
 
   private Museum museum;
 
-  public WikipediaMuseumPage() {
+  public WikipediaMuseumPage()
+  {
   }
-  
-  public WikipediaMuseumPage(WikiArticle article) {
+
+  public WikipediaMuseumPage(WikiArticle article)
+  {
     from(article);
   }
-  
+
   @Override
-  public WikipediaType getType() {
+  public WikipediaType getType()
+  {
     return WikipediaType.MUSEUM_PAGE;
   }
 
-  @Override
-  public WikipediaLabel getLabel() {
-    return WikipediaLabel.WikipediaMuseumPage;
-  }
-
-  public Museum getMuseum() {
+  public Museum getMuseum()
+  {
     return museum;
   }
 
-  public WikipediaElement from(WikiArticle article) {
-    
-    WikipediaElementTransformer.toWikipediaElement(this, article);
-    
-    this.museum = WikipediaMuseumInfoboxParser.parse(article.getText());
-    
+  public WikipediaElement from(WikiArticle article)
+  {
+
+    String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
+
+    if (StringUtils.isNoneEmpty(infobox))
+    {
+      try
+      {
+        this.museum = WikipediaMuseumInfoboxParser.parse(infobox);
+      }
+      catch (Exception e)
+      {
+        logger.error("Error parsing Museum infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
+      }
+    }
+
     return this;
+  }
+
+  @Override
+  public Label[] getLabels()
+  {
+    return LABELS;
   }
 }

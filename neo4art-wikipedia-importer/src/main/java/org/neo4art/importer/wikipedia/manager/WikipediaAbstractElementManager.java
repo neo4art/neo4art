@@ -17,9 +17,9 @@
 package org.neo4art.importer.wikipedia.manager;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.neo4art.graph.WikipediaRelationship;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaRelationship;
 import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
 import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
 

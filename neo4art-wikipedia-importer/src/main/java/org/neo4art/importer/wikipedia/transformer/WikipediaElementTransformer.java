@@ -60,7 +60,7 @@ public class WikipediaElementTransformer {
   public static WikipediaElement toWikipediaElement(WikiArticle article) {
 
     switch (WikipediaElementUtils.getWikipediaElementType(article)) {
-      
+
       case ARTIST_PAGE:
         return new WikipediaArtistPage().from(article);
       case ARTWORK_PAGE:
@@ -73,12 +73,12 @@ public class WikipediaElementTransformer {
         return new WikipediaMonumentPage().from(article);
       case RELIGIOUS_BUILDING_PAGE:
         return new WikipediaReligiousBuildingPage().from(article);
-        
+
       case SETTLEMENT_PAGE:
         return new WikipediaSettlementPage().from(article);
       case COUNTRY_PAGE:
         return new WikipediaCountryPage().from(article);
-        
+
       case PAGE:
         return new WikipediaPage().from(article);
       case CATEGORY:
@@ -100,52 +100,59 @@ public class WikipediaElementTransformer {
    * @param wikipediaElement
    * @param article
    */
-  public static void toWikipediaElement(WikipediaElement wikipediaElement, WikiArticle article) {
-     
-     wikipediaElement.setId(Long.parseLong(article.getId()));
-     wikipediaElement.setTitle(article.getTitle());
-     wikipediaElement.setRevision(Long.parseLong(article.getRevisionId()));
-     wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
-     
-     if (StringUtils.isNotEmpty(article.getText())) {
+  public static String toWikipediaElement(WikipediaElement wikipediaElement, WikiArticle article) {
+    
+    String infobox = null;
 
-       WikiPatternMatcher textParser = new WikiPatternMatcher(article.getText());
-       
-       // ----- DISAMBIGUATION PAGES are ignored -----
-       
-       if (textParser.isDisambiguationPage()) {
-       }
+    wikipediaElement.setId(Long.parseLong(article.getId()));
+    wikipediaElement.setTitle(article.getTitle());
+    wikipediaElement.setRevision(Long.parseLong(article.getRevisionId()));
+    wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
 
-       // ----- STUB PAGES are ignored -----
-       
-       if (textParser.isStub()) {
-       }
+    if (StringUtils.isNotEmpty(article.getText())) {
 
-       // ----- REDIRECT PAGE -----
-       
-       if (textParser.isRedirect()) {
-         wikipediaElement.setRedirect(new WikipediaOnlyTitleElement(textParser.getRedirectText()));
-       }
-       else {
-         
-         // ----- LINKS -----
-         
-         List<String> links = textParser.getLinks();
-         if (CollectionUtils.isNotEmpty(links)) {
-           for (String link : links) {
-             wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
-           }
-         }
-         
-         // ----- CATEGORIES -----
-         
-         List<String> categories =  textParser.getCategories();
-         if (CollectionUtils.isNotEmpty(categories)) {
-           for (String category : categories) {
-             wikipediaElement.addCategory(new WikipediaCategory(category));
-           }
-         }
-       }
-     }
-   }
+      WikiPatternMatcher textParser = new WikiPatternMatcher(article.getText());
+
+      // ----- DISAMBIGUATION PAGES are ignored -----
+
+      if (textParser.isDisambiguationPage()) {
+      }
+
+      // ----- STUB PAGES are ignored -----
+
+      if (textParser.isStub()) {
+      }
+
+      // ----- REDIRECT PAGE -----
+
+      if (textParser.isRedirect()) {
+        wikipediaElement.setRedirect(new WikipediaOnlyTitleElement(textParser.getRedirectText()));
+      } else {
+
+        // ----- LINKS -----
+
+        List<String> links = textParser.getLinks();
+        if (CollectionUtils.isNotEmpty(links)) {
+          for (String link : links) {
+            wikipediaElement.addLink(new WikipediaOnlyTitleElement(link));
+          }
+        }
+
+        // ----- CATEGORIES -----
+
+        List<String> categories = textParser.getCategories();
+        if (CollectionUtils.isNotEmpty(categories)) {
+          for (String category : categories) {
+            wikipediaElement.addCategory(new WikipediaCategory(category));
+          }
+        }
+      }
+
+      if (textParser.getInfoBox() != null) {
+        infobox = textParser.getInfoBox().dumpRaw();
+      }
+    }
+
+    return infobox;
+  }
 }

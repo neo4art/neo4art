@@ -23,11 +23,11 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
  * 
- * @author Lorenzo Speranzoni
+ * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 19 Mar 2015
  */
-public class WikipediaArtMovementInfoboxParser {
-
+public class WikipediaArtMovementInfoboxParser
+{
   public static final String NAME         = "name";
   public static final String IMAGE        = "image";
   public static final String IMAGE_SIZE   = "image_size";
@@ -39,18 +39,20 @@ public class WikipediaArtMovementInfoboxParser {
   public static final String INFLUENCES   = "influences";
   public static final String INFLUENCED   = "influenced";
 
-  public WikipediaArtMovementInfoboxParser() {
+  public WikipediaArtMovementInfoboxParser()
+  {
   }
 
-  public static ArtMovement parse(String text) {
-
+  public static ArtMovement parse(String text)
+  {
     Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
 
     ArtMovement artMovement = new ArtMovement();
 
-    for (String key : map.keySet()) {
-      
-      switch (key) {
+    for (String key : map.keySet())
+    {
+      switch (key)
+      {
         case NAME:
           artMovement.setName(map.get(key));
           break;
