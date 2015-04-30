@@ -14,13 +14,6 @@ var currentTranslateY = 0;
  * dimensions of the document
  */
 $(document).ready(function() {
-	// $.ajax({
-	// dataType: "json",
-	// url: url,
-	// data: data,
-	// success: success
-	// });
-	// console.log(parseURLParams().query);
 	p = parseURLParams();
 	if (p != undefined) {
 		graph = new theGraph();
@@ -237,9 +230,7 @@ function theGraph() {
 			return d.radius * 2;
 		}).attr("height", function(d) {
 			return d.radius * 2;
-		}).attr("viewBox",function(d){
-			return (-d.radius) +" "+(-d.radius) +" "+(d.radius*2) + " "+ (d.radius*2);
-		});
+		}).attr("preserveAspectRatio", "xMidYMid slice");
 
 		nodeEnter.append("title").text(function(d) {
 			return d.name;
@@ -391,27 +382,32 @@ function theGraph() {
 	}
 
 	function generateWindow() {
-		clearDiv("floating");
-		var float = d3.select("#floating");
-		$("#floating").resizable({
-			handles : "w"
-		});
-		var bttX = float.append("div").attr("class", "ics").text("X");
-		bttX.on("click", closeWindow);
-		float.append("div").attr("id", "data");
-	}
+	    clearDiv("floating");
+	    var float = d3.select("#floating");
+	    $("#floating").resizable({
+	      handles : "w"
+	    });
+	    var bttX = float.append("div").attr("class", "ics").text("X");
+	    bttX.on("click", closeWindow);
+	    float.append("div").attr("id", "data");
+	    float.append("iframe").attr("width","100%");
+	  }
 
-	function openWindow(d) {
-		clearDiv("data");
-		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
-		var data = float.select("#data");
-		data.append("div").attr("class", "title").append("h1").text(d.name);
-		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
-		data.append("div").attr("class", "description").text(d.description);
-		data.append("div").attr("class", "link").html("</br><a href='"+d.link+"'>"+d.link+"</a>");
-		$("#floating").perfectScrollbar();
-		$("#floating").perfectScrollbar('update');
-	}
+	  function openWindow(d) {
+	    clearDiv("data");
+	    var float = d3.select("#floating").attr("class", "visible").attr("style", null);
+	    var data = float.select("#data");
+	    data.append("div").attr("class", "title").append("h1").text(d.name);
+	    data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
+	    data.append("div").attr("class", "description").text(d.description);
+	    data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+	    var frame = float.select("iframe");
+	    frame.attr("src",d.link);
+	    $("#floating").perfectScrollbar();
+	    $("#floating").perfectScrollbar('update');
+	    $("iframe").perfectScrollbar();
+	    $("iframe").perfectScrollbar('update');
+	  }
 
 	function closeWindow() {
 		d3.select("#floating").attr("class", null).style("left", null);
