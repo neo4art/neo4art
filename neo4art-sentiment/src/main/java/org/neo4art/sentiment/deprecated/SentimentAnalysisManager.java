@@ -73,9 +73,4 @@ public class SentimentAnalysisManager {
       sentimentAnalysisPennTreeBackService.compute(rootNodeId);
     }
   }
-  
-  public static void main(String[] args) {
-    
-    new SentimentAnalysisManager().compute(VanGoghLetter001.TEXT);
-  }
 }
