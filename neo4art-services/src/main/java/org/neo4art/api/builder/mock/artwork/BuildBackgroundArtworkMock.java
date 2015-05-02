@@ -13,38 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.api.builder.mock;
+package org.neo4art.api.builder.mock.artwork;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import org.neo4art.sentiment.domain.Word;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Enrico De Benetti
- * @since 26 Apr 2015
+ * @since 02 Mag 2015
  *
  */
-public class BuildMockNegativePZSentiment {
+public class BuildBackgroundArtworkMock {
 
-	public List<Word> loadMockSentiments(){
-		 
-	 List<Word> wordList = new ArrayList<Word>();
+	
+	public Artwork getArtwork(){
 		
-	 Word word1 = new Word();
-	 word1.setWord("pain");
-	
-	 Word word2 = new Word();
-	 word2.setWord("painful");
-	
-	 Word word3 = new Word();
-	 word3.setWord("painfull");
-	
-	 wordList.add(word1);
-	 wordList.add(word2);
-	 wordList.add(word3);
-	      	        
-	 return wordList;       
+	 Artwork artwork = null;
+	 
+	 try 
+	 {
+	   artwork  = new Artwork(); 
+	   artwork.setTitle("Water Mill at Gennep I");
+	   artwork.setUrl(new URL("http://www.vggallery.com/painting/f_0046.jpg"));
+	 } 
+	 catch (MalformedURLException e)
+	 {
+	 }	
+	 
+	 return artwork;	
 	}
 	
 }

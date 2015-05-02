@@ -201,7 +201,6 @@ public class NodeCreator {
 	 if(colour.getColor() != null){
 		 
 	  String hex = String.format("#%02x%02x%02x", colour.getColor().getRed(), colour.getColor().getGreen(), colour.getColor().getBlue());
-	  System.out.println("hex: "+hex);
 	  node.setThumbnail(hex);	 
 	 }
 	 
