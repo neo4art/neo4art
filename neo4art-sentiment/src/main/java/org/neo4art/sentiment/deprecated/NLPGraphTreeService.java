@@ -151,9 +151,9 @@ public class NLPGraphTreeService {
     
     if (isLeaf) {
       
-      BatchInserterIndex negationWordIndex = null; //NLPLegacyIndex.getBatchInserterIndex(NLPLabel.NegationWord);
-      BatchInserterIndex negativeWordIndex = null; //NLPLegacyIndex.getBatchInserterIndex(NLPLabel.NegativeWord);
-      BatchInserterIndex positiveWordIndex = null; //NLPLegacyIndex.getBatchInserterIndex(NLPLabel.PositiveWord);
+      BatchInserterIndex negationWordIndex = null; //ColourLegacyIndex.getBatchInserterIndex(NLPLabel.NegationWord);
+      BatchInserterIndex negativeWordIndex = null; //ColourLegacyIndex.getBatchInserterIndex(NLPLabel.NegativeWord);
+      BatchInserterIndex positiveWordIndex = null; //ColourLegacyIndex.getBatchInserterIndex(NLPLabel.PositiveWord);
       
       IndexHits<Long> indexHits = negationWordIndex.get("word", coveredText);
       

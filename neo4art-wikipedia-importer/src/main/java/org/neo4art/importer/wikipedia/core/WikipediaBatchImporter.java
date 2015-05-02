@@ -47,7 +47,6 @@ public class WikipediaBatchImporter implements WikipediaImporter
   @Override
   public long importOrUpdateDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException
   {
-
     logger.info("Wikipedia dump file import started...");
 
     long dumpImportStartDate = Calendar.getInstance().getTimeInMillis();
@@ -111,7 +110,6 @@ public class WikipediaBatchImporter implements WikipediaImporter
 
   public static void main(String[] args)
   {
-
     if (args.length != 1)
     {
       throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar org.neo4art.importer.wikipedia.core.WikipediaBatchImporter /path/to/wikipedia-dump.xml");

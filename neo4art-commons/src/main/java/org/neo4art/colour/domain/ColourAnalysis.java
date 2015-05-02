@@ -38,17 +38,17 @@ public class ColourAnalysis implements Neo4ArtNode
 
   private String               imageName;
 
-  private String               nameAverageColor;
+  private String               averageColourName;
 
-  private Color                rgbAverageColor;
+  private Color                averageRGBColour;
 
-  private String               nameMinimumColor;
+  private String               minimumColorName;
 
-  private Color                rgbMinimumColor;
+  private Color                minimumRGBColour;
 
-  private String               nameMaximumColor;
+  private String               maximumColourName;
 
-  private Color                rgbMaximumColor;
+  private Color                maximumRGBColour;
 
   private String               source;
 
@@ -60,9 +60,9 @@ public class ColourAnalysis implements Neo4ArtNode
 
   public ColourAnalysis(Color rgbAverageColor, Color rgbMinimumColor, Color rgbMaximumColor, int increment)
   {
-    this.rgbAverageColor = rgbAverageColor;
-    this.rgbMinimumColor = rgbMinimumColor;
-    this.rgbMaximumColor = rgbMaximumColor;
+    this.averageRGBColour = rgbAverageColor;
+    this.minimumRGBColour = rgbMinimumColor;
+    this.maximumRGBColour = rgbMaximumColor;
     this.increment = increment;
   }
 
@@ -81,12 +81,51 @@ public class ColourAnalysis implements Neo4ArtNode
   @Override
   public Map<String, Object> getProperties()
   {
-
     Map<String, Object> properties = new HashMap<String, Object>();
 
     if (this.name != null)
     {
       properties.put("name", this.name);
+    }
+
+    if (this.imageName != null)
+    {
+      properties.put("imageName", this.imageName);
+    }
+    
+    if (this.averageColourName != null)
+    {
+      properties.put("averageColourName", this.averageColourName);
+    }
+
+    if (this.averageRGBColour != null)
+    {
+      properties.put("averageRGBColour", this.averageRGBColour);
+    }
+
+    if (this.minimumColorName != null)
+    {
+      properties.put("minimumColorName", this.minimumColorName);
+    }
+    
+    if (this.minimumRGBColour != null)
+    {
+      properties.put("minimumRGBColour", this.minimumRGBColour);
+    }
+
+    if (this.maximumColourName != null)
+    {
+      properties.put("maximumColourName", this.maximumColourName);
+    }
+    
+    if (this.maximumRGBColour != null)
+    {
+      properties.put("maximumRGBColour", this.maximumRGBColour);
+    }
+
+    if (this.source != null)
+    {
+      properties.put("source", this.source);
     }
 
     return properties;
@@ -120,62 +159,62 @@ public class ColourAnalysis implements Neo4ArtNode
 
   public String getNameAverageColor()
   {
-    return nameAverageColor;
+    return averageColourName;
   }
 
   public void setNameAverageColor(String nameAverageColor)
   {
-    this.nameAverageColor = nameAverageColor;
+    this.averageColourName = nameAverageColor;
   }
 
   public Color getRgbAverageColor()
   {
-    return rgbAverageColor;
+    return averageRGBColour;
   }
 
   public void setRgbAverageColor(Color rgbAverageColor)
   {
-    this.rgbAverageColor = rgbAverageColor;
+    this.averageRGBColour = rgbAverageColor;
   }
 
   public String getNameMinimumColor()
   {
-    return nameMinimumColor;
+    return minimumColorName;
   }
 
   public void setNameMinimumColor(String nameMinimumColor)
   {
-    this.nameMinimumColor = nameMinimumColor;
+    this.minimumColorName = nameMinimumColor;
   }
 
   public Color getRgbMinimumColor()
   {
-    return rgbMinimumColor;
+    return minimumRGBColour;
   }
 
   public void setRgbMinimumColor(Color rgbMinimumColor)
   {
-    this.rgbMinimumColor = rgbMinimumColor;
+    this.minimumRGBColour = rgbMinimumColor;
   }
 
   public String getNameMaximumColor()
   {
-    return nameMaximumColor;
+    return maximumColourName;
   }
 
   public void setNameMaximumColor(String nameMaximumColor)
   {
-    this.nameMaximumColor = nameMaximumColor;
+    this.maximumColourName = nameMaximumColor;
   }
 
   public Color getRgbMaximumColor()
   {
-    return rgbMaximumColor;
+    return maximumRGBColour;
   }
 
   public void setRgbMaximumColor(Color rgbMaximumColor)
   {
-    this.rgbMaximumColor = rgbMaximumColor;
+    this.maximumRGBColour = rgbMaximumColor;
   }
 
   public String getSource()
