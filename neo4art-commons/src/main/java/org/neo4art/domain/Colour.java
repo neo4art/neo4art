@@ -141,4 +141,16 @@ public class Colour implements Neo4ArtNode
   {
     return this.rgb.getBlue();
   }
+  
+  public String getHexaDecimalColor(){
+	  
+    String hex = "";
+	    
+	if(this.rgb != null)
+	{
+	  hex = String.format("%02x%02x%02x", this.rgb.getRed(), this.rgb.getGreen(), this.rgb.getBlue());	  	
+	}
+	    
+	return hex;
+  }
 }

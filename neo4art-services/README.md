@@ -70,16 +70,15 @@ neo4art-services/api/services/search/node-explode.json?nodeId=1
       },
 ,...... ]
 <br><br>
-<u><b>neo4art-services/api/services/timeline/search.json</b></u> <br>it returns the timeline search in a json format.
+<u><b>neo4art-services/api/services/timeline/colours-analysis.json</b></u> <br>it returns the timeline colour analysis in a json format.
 <br><u> Example Request:</u> <br>
-neo4art-services/api/services/timeline/search.json?searchInput=van gogh
+neo4art-services/api/services/timeline/colours-analysis.json?searchInput=van gogh
 <br><u> Example Result:</u><br> [  
    {  
       "start":"12-Dec-1881 00:00",
       "thumbnail":"http://www.vggallery.com/painting/f_0001.jpg",
       "description":"Still Life with Cabbage and Clogs",
-      "averageRgb":"C5D7F2",
-      "emotion":"smile"
+      "averageRgb":"C5D7F2"
    },
    {  ....... }
    ]

@@ -15,10 +15,17 @@
  */
 package org.neo4art.api.transformer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.neo4art.api.builder.mock.timeline.BuildTimeLineMock;
 import org.neo4art.api.domain.TimelineEvent;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Enrico De Benetti
@@ -33,9 +40,46 @@ public class TimeLineTransformer {
 	 */
 	public static List<TimelineEvent> buildTimeLineEvents(){
 		
-        BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
+	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
+     BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
+     List<ColourAnalysis> colourAnalysisList = mockTimeLineEvent.getColourAnalysis();
+        
+      for (ColourAnalysis colourAnalysis : colourAnalysisList) {
+
+       TimelineEvent timelineEvent = new TimelineEvent(); 
+       timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
+       timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
+       timelineEvent.setStart(verifyArtworkDate(colourAnalysis.getArtwork()));
+       timelineEvent.setThumbnail(colourAnalysis.getSource());
+       //TODO DA ELIMINARE..
+       timelineEvent.setEmotion("smile");
+       timelineEventsList.add(timelineEvent);
+	  }  
 		
-	  return mockTimeLineEvent.getTimeLineList();
+	 return timelineEventsList;
 	}
 	
+	private static String verifyArtworkDate(Artwork artwork){
+		
+	 String result="";
+	 try
+	 {
+		 
+	  if(artwork != null && artwork.getCompletionDate() != null)
+	  {
+	   SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy HH:mm",Locale.ENGLISH);
+	   Date parse = format.parse(artwork.getCompletionDate());
+       result = format.format(parse); 
+	  }
+	  else if(artwork != null)
+	  {
+	   result = "10-Jan-"+artwork.getYear()+" 00:00";
+	  }
+	 }
+	 catch (ParseException e)
+	 {
+	 }
+	  
+	 return result;	
+	}
 }

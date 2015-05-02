@@ -36,14 +36,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/api/services/timeline")
 public class Neo4ArtTimelineSearchRestController {
 
-	@RequestMapping(value = "/search.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<TimelineEvent> search(Model model, 
+	@RequestMapping(value = "/colours-analysis.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, 
 			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
 
-		System.out.println("Input search: "+searchInput);
-		//TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
-		return TimeLineTransformer.buildTimeLineEvents();
+	 System.out.println("Input search: "+searchInput);
+	 //TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
+	 return TimeLineTransformer.buildTimeLineEvents();
 	}
 	
+	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String getSentimentAnalysis(Model model, 
+			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
+
+	 System.out.println("Input search: "+searchInput);
+	 
+	 return "";
+	}
 	
 }

@@ -219,4 +219,16 @@ public class ColourAnalysis implements Neo4ArtNode
   {
     this.nodeId = nodeId;
   }
+  
+  public String getHexaDecimalAverageColor(){
+	  
+    String hex = "";
+    
+    if(this.averageColour != null)
+    {
+      hex = String.format("%02x%02x%02x", this.averageColour.getRed(), this.averageColour.getGreen(), this.averageColour.getBlue());	  	
+    }
+    
+    return hex;
+  }
 }

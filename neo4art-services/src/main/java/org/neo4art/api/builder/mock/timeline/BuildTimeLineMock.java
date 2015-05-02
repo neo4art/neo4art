@@ -15,10 +15,12 @@
  */
 package org.neo4art.api.builder.mock.timeline;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.domain.TimelineEvent;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Enrico De Benetti
@@ -28,92 +30,51 @@ import org.neo4art.api.domain.TimelineEvent;
 public class BuildTimeLineMock {
 
 	
-	public List<TimelineEvent> getTimeLineList(){
+	public List<ColourAnalysis> getColourAnalysis(){
 		
-        List<TimelineEvent> listaTimelineEvent = new ArrayList<TimelineEvent>();
+		List<ColourAnalysis> colourAnalysisList = new ArrayList<ColourAnalysis>();
+        
+		ColourAnalysis colourAnalysis1 = new ColourAnalysis();
+		colourAnalysis1.setAverageColour(new Color(197,215,242));
+		colourAnalysis1.setSource("http://www.vggallery.com/painting/f_0001.jpg");
+		Artwork artwork1 = new Artwork();
+		artwork1.setTitle("Still Life with Cabbage and Clogs");
+		artwork1.setYear("1881");
+		//artwork1.setCompletionDate("10-Gen-1881 00:00");
+		colourAnalysis1.setArtwork(artwork1);
 		
-		TimelineEvent event1= new TimelineEvent();
-		event1.setAverageRgb("C5D7F2");
-		event1.setDescription("Still Life with Cabbage and Clogs");
-		event1.setEmotion("smile");
-		event1.setStart("12-Dec-1881 00:00");
-		event1.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
+		ColourAnalysis colourAnalysis2 = new ColourAnalysis();
+		colourAnalysis2.setAverageColour(new Color(4,135,213));
+		colourAnalysis2.setSource("http://www.vggallery.com/painting/f_0018.jpg");
+		Artwork artwork2 = new Artwork();
+		artwork2.setTitle("Farmhouses Among Trees");
+		artwork2.setCompletionDate("15-Sep-1883 00:00");
+		//artwork2.setCompletionDate("15/Sep/1883 00:00");
+		//artwork2.setCompletionDate("Nov 4, 2003");
+		colourAnalysis2.setArtwork(artwork2);
 		
-		TimelineEvent event2= new TimelineEvent();
-		event2.setAverageRgb("0487D5");
-		event2.setDescription("Farmhouses Among Trees");
-		event2.setEmotion("meh");
-		event2.setStart("15-sep-1883 00:00");
-		event2.setThumbnail("http://www.vggallery.com/painting/f_0018.jpg");
+		ColourAnalysis colourAnalysis3 = new ColourAnalysis();
+		colourAnalysis3.setAverageColour(new Color(77,211,18));
+		colourAnalysis3.setSource("http://www.vggallery.com/painting/f_0216i.jpg");
+		Artwork artwork3 = new Artwork();
+		artwork3.setTitle("Plaster Statuette of a Female Torso");
+		artwork3.setCompletionDate("10-Mar-1886 00:00");
+		colourAnalysis3.setArtwork(artwork3);
 		
-		TimelineEvent event3= new TimelineEvent();
-		event3.setAverageRgb("4DD312");
-		event3.setDescription("Plaster Statuette of a Female Torso");
-		event3.setEmotion("frown");
-		event3.setStart("10-mar-1886 00:00");
-		event3.setThumbnail("http://www.vggallery.com/painting/f_0216i.jpg");
+		ColourAnalysis colourAnalysis4 = new ColourAnalysis();
+		colourAnalysis4.setAverageColour(new Color(141,115,245));
+		colourAnalysis4.setSource("http://www.vggallery.com/painting/f_0273.jpg");
+		Artwork artwork4 = new Artwork();
+		artwork4.setTitle("Le Moulin de Blute-Fin");
+		artwork4.setCompletionDate("10-Jun-1886 00:00");
+		colourAnalysis4.setArtwork(artwork4);
 		
-		TimelineEvent event4= new TimelineEvent();
-		event4.setAverageRgb("8D73F5");
-		event4.setDescription("Le Moulin de Blute-Fin");
-		event4.setEmotion("smile");
-		event4.setStart("10-jun-1886 00:00");
-		event4.setThumbnail("http://www.vggallery.com/painting/f_0273.jpg");
+		colourAnalysisList.add(colourAnalysis1);
+		colourAnalysisList.add(colourAnalysis2);
+		colourAnalysisList.add(colourAnalysis3);
+		colourAnalysisList.add(colourAnalysis4);
 		
-		TimelineEvent event5= new TimelineEvent();
-		event5.setAverageRgb("9D5F66");
-		event5.setDescription("Still Life: Potatoes in a Yellow Dish");
-		event5.setEmotion("meh");
-		event5.setStart("10-mar-1888 00:00");
-		event5.setThumbnail("http://www.vggallery.com/painting/f_0386.jpg");
-		
-		TimelineEvent event6= new TimelineEvent();
-		event6.setAverageRgb("23D56F");
-		event6.setDescription("Langlois Bridge at Arles, The");
-		event6.setEmotion("frown");
-		event6.setStart("5-apr-1888 00:00");
-		event6.setThumbnail("http://www.vggallery.com/painting/f_0571.jpg");
-		
-		TimelineEvent event7= new TimelineEvent();
-		event7.setAverageRgb("15D7F4");
-		event7.setDescription("Lane near Arles, A");
-		event7.setEmotion("smile");
-		event7.setStart("10-may-1888 00:00");
-		event7.setThumbnail("http://www.vggallery.com/painting/f_0567.jpg");
-		
-		TimelineEvent event8= new TimelineEvent();
-		event8.setAverageRgb("65F1A3");
-		event8.setDescription("Seated Zouave, The");
-		event8.setEmotion("meh");
-		event8.setStart("10-jun-1888 00:00");
-		event8.setThumbnail("http://www.vggallery.com/painting/f_0424.jpg");
-		
-		TimelineEvent event9= new TimelineEvent();
-		event9.setAverageRgb("34F7E2");
-		event9.setDescription("La Mousmé, Sitting");
-		event9.setEmotion("frown");
-		event9.setStart("10-jul-1888 00:00");
-		event9.setThumbnail("http://www.vggallery.com/painting/f_0431.jpg");
-		
-		TimelineEvent event10= new TimelineEvent();
-		event10.setAverageRgb("D543FF");
-		event10.setDescription("Little Arlesienne, The");
-		event10.setEmotion("smile");
-		event10.setStart("10-jun-1890 00:00");
-		event10.setThumbnail("http://www.vggallery.com/painting/f_0518.jpg");
-		
-		listaTimelineEvent.add(event1);
-		listaTimelineEvent.add(event2);
-		listaTimelineEvent.add(event3);
-		listaTimelineEvent.add(event4);
-		listaTimelineEvent.add(event5);
-		listaTimelineEvent.add(event6);
-		listaTimelineEvent.add(event7);
-		listaTimelineEvent.add(event8);
-		listaTimelineEvent.add(event9);
-		listaTimelineEvent.add(event10);
-		
-	  return listaTimelineEvent;	
+	  return colourAnalysisList;	
 	}
 	
 }
