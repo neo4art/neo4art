@@ -86,6 +86,8 @@ neo4art-services/api/services/timeline/search.json?searchInput=van gogh
 }
 <br><br>
 
+<u><b>neo4art-services/api/services/homepage/background-artwork.json</b></u> <br>it returns the Artwork in a json format. <br> <u>Example Result:</u> <br> {"title":"Water Mill at Gennep I","link":"http://www.vggallery.com/painting/f_0046.jpg"}
+<br><br>
      
 
 ## Bold Thanks!

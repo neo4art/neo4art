@@ -15,6 +15,8 @@
  */
 package org.neo4art.api.services;
 
+import org.neo4art.api.domain.BackgroundArtwork;
+import org.neo4art.api.transformer.HomeTransformer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +33,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/api/services/homepage")
 public class Neo4ArtHomePageRestController {
 
-	@RequestMapping(value = "/background-image.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String getBackgroundImage(Model model) {
+	@RequestMapping(value = "/background-artwork.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody BackgroundArtwork getBackgroundImage(Model model) {
 
-		return "";
+		return HomeTransformer.buildBackgroundArtwork();
 	}
-	
 	
 }
