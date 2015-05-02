@@ -133,12 +133,12 @@ public class ImageDefaultManager implements ImageManager
     operationImage();
     colorReport = getReportRgb(utility.pixelMatrix());
 
-    imageColor.setNameAverageColor(getNameColor(colorReport[0]));
-    imageColor.setNameMaximumColor(getNameColor(colorReport[2]));
-    imageColor.setNameMinimumColor(getNameColor(colorReport[1]));
-    imageColor.setRgbAverageColor(colorReport[0]);
-    imageColor.setRgbMaximumColor(colorReport[2]);
-    imageColor.setRgbMinimumColor(colorReport[1]);
+    imageColor.setAverageColourName(getNameColor(colorReport[0]));
+    imageColor.setMaximumColourName(getNameColor(colorReport[2]));
+    imageColor.setMinimumColourName(getNameColor(colorReport[1]));
+    imageColor.setAverageRGBColour(colorReport[0]);
+    imageColor.setMaximumRGBColour(colorReport[2]);
+    imageColor.setMinimumRGBColour(colorReport[1]);
 
     return imageColor;
   }

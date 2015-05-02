@@ -233,9 +233,9 @@ public class UtilityImage
 
   public void writeReport(Color avg, Color min, Color max, ColourAnalysis imageColor)
   {
-    imageColor.setRgbAverageColor(avg);
-    imageColor.setRgbMaximumColor(max);
-    imageColor.setRgbMinimumColor(min);
+    imageColor.setAverageRGBColour(avg);
+    imageColor.setMaximumRGBColour(max);
+    imageColor.setMinimumRGBColour(min);
     this.writeReportCSV(imageColor);
   }
 

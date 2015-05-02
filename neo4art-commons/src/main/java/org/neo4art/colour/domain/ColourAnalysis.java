@@ -42,7 +42,7 @@ public class ColourAnalysis implements Neo4ArtNode
 
   private Color                averageRGBColour;
 
-  private String               minimumColorName;
+  private String               minimumColourName;
 
   private Color                minimumRGBColour;
 
@@ -103,9 +103,9 @@ public class ColourAnalysis implements Neo4ArtNode
       properties.put("averageRGBColour", this.averageRGBColour);
     }
 
-    if (this.minimumColorName != null)
+    if (this.minimumColourName != null)
     {
-      properties.put("minimumColorName", this.minimumColorName);
+      properties.put("minimumColourName", this.minimumColourName);
     }
     
     if (this.minimumRGBColour != null)
@@ -157,64 +157,64 @@ public class ColourAnalysis implements Neo4ArtNode
     this.imageName = imageName;
   }
 
-  public String getNameAverageColor()
+  public String getAverageColourName()
   {
     return averageColourName;
   }
 
-  public void setNameAverageColor(String nameAverageColor)
+  public void setAverageColourName(String averageColourName)
   {
-    this.averageColourName = nameAverageColor;
+    this.averageColourName = averageColourName;
   }
 
-  public Color getRgbAverageColor()
+  public Color getAverageRGBColour()
   {
     return averageRGBColour;
   }
 
-  public void setRgbAverageColor(Color rgbAverageColor)
+  public void setAverageRGBColour(Color averageRGBColour)
   {
-    this.averageRGBColour = rgbAverageColor;
+    this.averageRGBColour = averageRGBColour;
   }
 
-  public String getNameMinimumColor()
+  public String getMinimumColourName()
   {
-    return minimumColorName;
+    return minimumColourName;
   }
 
-  public void setNameMinimumColor(String nameMinimumColor)
+  public void setMinimumColourName(String minimumColourName)
   {
-    this.minimumColorName = nameMinimumColor;
+    this.minimumColourName = minimumColourName;
   }
 
-  public Color getRgbMinimumColor()
+  public Color getMinimumRGBColour()
   {
     return minimumRGBColour;
   }
 
-  public void setRgbMinimumColor(Color rgbMinimumColor)
+  public void setMinimumRGBColour(Color minimumRGBColour)
   {
-    this.minimumRGBColour = rgbMinimumColor;
+    this.minimumRGBColour = minimumRGBColour;
   }
 
-  public String getNameMaximumColor()
+  public String getMaximumColourName()
   {
     return maximumColourName;
   }
 
-  public void setNameMaximumColor(String nameMaximumColor)
+  public void setMaximumColourName(String maximumColourName)
   {
-    this.maximumColourName = nameMaximumColor;
+    this.maximumColourName = maximumColourName;
   }
 
-  public Color getRgbMaximumColor()
+  public Color getMaximumRGBColour()
   {
     return maximumRGBColour;
   }
 
-  public void setRgbMaximumColor(Color rgbMaximumColor)
+  public void setMaximumRGBColour(Color maximumRGBColour)
   {
-    this.maximumRGBColour = rgbMaximumColor;
+    this.maximumRGBColour = maximumRGBColour;
   }
 
   public String getSource()

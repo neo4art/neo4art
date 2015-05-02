@@ -24,12 +24,12 @@ public class DefaultVanGoghColoursAnalyzerTest
       {
 
         System.out.println("Image Name: " + imageColor.getImageName());
-        System.out.println("AVG name:" + imageColor.getNameAverageColor());
-        System.out.println("MAX name:" + imageColor.getNameMaximumColor());
-        System.out.println("MIN name:" + imageColor.getNameMinimumColor());
-        System.out.println("AVG :" + imageColor.getRgbAverageColor().toString());
-        System.out.println("Max :" + imageColor.getRgbMaximumColor().toString());
-        System.out.println("Min :" + imageColor.getRgbMinimumColor().toString());
+        System.out.println("AVG name:" + imageColor.getAverageColourName());
+        System.out.println("MAX name:" + imageColor.getMaximumColourName());
+        System.out.println("MIN name:" + imageColor.getMinimumColourName());
+        System.out.println("AVG :" + imageColor.getAverageRGBColour().toString());
+        System.out.println("Max :" + imageColor.getMaximumRGBColour().toString());
+        System.out.println("Min :" + imageColor.getMinimumRGBColour().toString());
         System.out.println("------------------------------------------------\n");
 
       }
