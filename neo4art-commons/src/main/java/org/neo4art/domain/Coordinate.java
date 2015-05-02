@@ -1,34 +1,55 @@
+/**
+ * Copyright 2015 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.neo4art.domain;
 
+/**
+ * 
+ * @author Mattia Zaratin
+ * @since 30 Apr 2015
+ */
 public class Coordinate
 {
   private String name;
   private String map;
-  
-  private Double latD;
-  private Double latM;
-  private Double latS;
+
+  private String latD;
+  private String latM;
+  private String latS;
   private String latNS;
-  
-  private Double longD;
-  private Double longM;
-  private Double longS;
+
+  private String longD;
+  private String longM;
+  private String longS;
   private String longEW;
   
   private Double coordsRef;
 
   public Coordinate()
   {
-    this.name      = null;
-    this.map       = null;
-    this.latD      = null;
-    this.latM      = null;
-    this.latS      = null;
-    this.latNS     = null;
-    this.longD     = null;
-    this.longM     = null;
-    this.longS     = null;
-    this.longEW    = null;
+    this.name = null;
+    this.map = null;
+    this.latD = null;
+    this.latM = null;
+    this.latS = null;
+    this.latNS = null;
+    this.longD = null;
+    this.longM = null;
+    this.longS = null;
+    this.longEW = null;
     this.coordsRef = null;
   }
 
@@ -54,32 +75,53 @@ public class Coordinate
 
   public double getLatD()
   {
-    return latD;
+    return Double.parseDouble(latD);
   }
 
-  public void setLatD(double latD)
+  public void setLatD(String latD)
   {
-    this.latD = latD;
+    if (latD == null)
+    {
+      this.latD = null;
+    }
+    else
+    {
+      this.latD = latD;
+    }
   }
 
   public double getLatM()
   {
-    return latM;
+    return Double.parseDouble(latM);
   }
 
-  public void setLatM(double latM)
+  public void setLatM(String latM)
   {
-    this.latM = latM;
+    if (latM == null)
+    {
+      this.latM = null;
+    }
+    else
+    {
+      this.latM = latM;
+    }
   }
 
   public double getLatS()
   {
-    return latS;
+    return Double.parseDouble(latS);
   }
 
-  public void setLatS(double latS)
+  public void setLatS(String latS)
   {
-    this.latS = latS;
+    if (latS == null)
+    {
+      this.latS = null;
+    }
+    else
+    {
+      this.latS = latS;
+    }
   }
 
   public String getLatNS()
@@ -89,37 +131,65 @@ public class Coordinate
 
   public void setLatNS(String latNS)
   {
-    this.latNS = latNS;
+    if (latNS == null)
+    {
+      this.latNS = null;
+    }
+    else
+    {
+      this.latNS = latNS;
+    }
   }
 
   public double getLongD()
   {
-    return longD;
+    return Double.parseDouble(longD);
   }
 
-  public void setLongD(double longD)
+  public void setLongD(String longD)
   {
-    this.longD = longD;
+    if (longD == null)
+    {
+      this.longD = null;
+    }
+    else
+    {
+      this.longD = longD;
+    }
   }
 
   public double getLongM()
   {
-    return longM;
+    return Double.parseDouble(longM);
   }
 
-  public void setLongM(double longM)
+  public void setLongM(String longM)
   {
-    this.longM = longM;
+    if (longM == null)
+    {
+      this.longM = null;
+    }
+    else
+    {
+      this.longM = longM;
+    }
   }
 
   public double getLongS()
   {
-    return longS;
+    return Double.parseDouble(longS);
   }
 
-  public void setLongS(double longS)
+  public void setLongS(String longS)
   {
-    this.longS = longS;
+    if (longS == null)
+    {
+      this.longS = null;
+    }
+    else
+    {
+      this.longS = longS;
+    }
   }
 
   public String getLongEW()
@@ -129,7 +199,14 @@ public class Coordinate
 
   public void setLongEW(String longEW)
   {
-    this.longEW = longEW;
+    if (longEW == null)
+    {
+      this.longEW = null;
+    }
+    else
+    {
+      this.longEW = longEW;
+    }
   }
 
   public double getCoordsRef()
@@ -151,46 +228,31 @@ public class Coordinate
   public double getLatitude()
   {
     double latitude = 0;
-    
+
     if (this.latD != null)
-      latitude += this.latD;
-    
+      latitude += Double.parseDouble(this.latD);
+
     if (this.latM != null)
-      latitude += this.latM / 60;
-    
+      latitude += Double.parseDouble(this.latM) / 60;
+
     if (this.latS != null)
-      latitude += this.latS / 3600;
-    
+      latitude += Double.parseDouble(this.latS) / 3600;
+
     return latitude;
   }
 
   public double getLongitude()
   {
     double longitude = 0;
-    
-    if (this.longD != null)
-      longitude += this.longD;
-    
-    if (this.longM != null)
-      longitude += this.longM / 60;
-    
-    if (this.longS != null)
-      longitude += this.longS / 3600;
-    
+    if (this.latD != null)
+      longitude += Double.parseDouble(this.longD);
+
+    if (this.latM != null)
+      longitude += Double.parseDouble(this.longM) / 60;
+
+    if (this.latS != null)
+      longitude += Double.parseDouble(this.longS) / 3600;
+
     return longitude;
-  }
-  
-  @Deprecated
-  public String getCoordinate()
-  {
-
-    return latD + " " + longD;
-  }
-
-  @Deprecated
-  public String getCoordinateComplete()
-  {
-
-    return latD + " " + latM + " " + latS + "" + latNS + " " + longD + " " + longM + " " + longS + "" + longEW;
   }
 }
