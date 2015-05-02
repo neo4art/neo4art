@@ -24,6 +24,7 @@ import java.util.Map;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.graphdb.ColourLabel;
 import org.neo4art.colour.graphdb.ColourRelationship;
+import org.neo4art.core.graphdb.CoreRelationship;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
@@ -77,7 +78,7 @@ public class ColourGraphDatabaseServiceRepository implements ColourAnalysisRepos
     
     GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
     
-    String cql = "MATCH (artist:" + Neo4ArtLabel.Artist + ")-[:REALIZED]->(artwork:" + Neo4ArtLabel.Artwork + "), " +
+    String cql = "MATCH (artist:" + Neo4ArtLabel.Artist + ")-[:" + CoreRelationship.REALIZED + "]->(artwork:" + Neo4ArtLabel.Artwork + "), " +
                        "(artwork)-[:" + ColourRelationship.COLOUR_ANALYSIS + "]->(colourAnalysis:" + ColourLabel.ColourAnalysis + "), " +
                        "(colourAnalysis)-[:" + ColourRelationship.CLOSEST_AVG_COLOUR + "]->(averageClosestColour:" + Neo4ArtLabel.Colour + ") " +
                  "WHERE artist.name={name} " +
