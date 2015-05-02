@@ -34,7 +34,7 @@ public class TimeLineTransformer {
 	 * 
 	 * @return
 	 */
-	public static List<TimelineEvent> buildTimeLineEvents(){
+	public static List<TimelineEvent> buildTimeLineEvents(String inputSearch){
 		
 	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
      BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
@@ -45,6 +45,7 @@ public class TimeLineTransformer {
 
        TimelineEvent timelineEvent = new TimelineEvent(); 
        timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
+       timelineEvent.setClosestAverageColorName(colourAnalysis.getAverageClosestColour() != null ? colourAnalysis.getAverageClosestColour().getName() : "");
        timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
        timelineEvent.setStart(servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork()));
        timelineEvent.setThumbnail(colourAnalysis.getSource());
