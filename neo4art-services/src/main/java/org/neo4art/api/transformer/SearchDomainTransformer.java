@@ -19,13 +19,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.neo4art.api.builder.mock.BuildMockAGArtists;
-import org.neo4art.api.builder.mock.BuildMockVanGoghArtworks;
 import org.neo4art.api.builder.mock.BuildMockColours;
 import org.neo4art.api.builder.mock.BuildMockMuseums;
 import org.neo4art.api.builder.mock.BuildMockNegativeAOSentiment;
 import org.neo4art.api.builder.mock.BuildMockNegativePZSentiment;
 import org.neo4art.api.builder.mock.BuildMockPositiveSentiment;
+import org.neo4art.api.builder.mock.BuildMockVanGoghArtworks;
 import org.neo4art.api.domain.SearchDomain;
+import org.neo4art.domain.ArtMovement;
+import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
+import org.neo4art.domain.HistoricPlace;
+import org.neo4art.domain.HistoricSite;
+import org.neo4art.domain.Monument;
+import org.neo4art.domain.Museum;
+import org.neo4art.domain.ReligiousBuilding;
+import org.neo4art.domain.Settlement;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.literature.domain.Letter;
+import org.neo4art.sentiment.domain.Word;
 
 /**
  * @author Enrico De Benetti
@@ -40,14 +53,18 @@ public class SearchDomainTransformer {
 	 */
 	public static List<SearchDomain> buildDomainArtists(){
 		
-        List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-        BuildMockAGArtists mockAGArtists = new BuildMockAGArtists();
-        mockAGArtists.loadMockArtists(listaSearchDomain);
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     BuildMockAGArtists mockAGArtists = new BuildMockAGArtists();
+     List<Artist> loadMockArtists = mockAGArtists.loadMockArtists();
+     SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
         
-		listaSearchDomain.add(new SearchDomain("Vincent Van gogh"));
-		listaSearchDomain.add(new SearchDomain("Claude Monet"));
+     for (Artist artist : loadMockArtists) {
+        	
+       SearchDomain searchDomainArtist = searchDomainCreator.createSearchDomainFromArtist(artist);
+       listaSearchDomain.add(searchDomainArtist);
+	 }
 		
-	  return listaSearchDomain;
+	 return listaSearchDomain;
 	}
 	
 	/**
@@ -56,11 +73,18 @@ public class SearchDomainTransformer {
 	 */
     public static List<SearchDomain> buildDomainMuseums(){
 		
-        List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-        BuildMockMuseums mockMuseums = new BuildMockMuseums();
-        mockMuseums.loadMockMuseums(listaSearchDomain);
+     SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     BuildMockMuseums mockMuseums = new BuildMockMuseums();
+     List<Museum> loadMockMuseums = mockMuseums.loadMockMuseums();
+     
+      for (Museum museum : loadMockMuseums) {
+
+    	SearchDomain searchDomainMuseum = searchDomainCreator.createSearchDomainFromMuseum(museum); 
+    	listaSearchDomain.add(searchDomainMuseum); 
+	  }
         
-	  return listaSearchDomain;
+	 return listaSearchDomain;
 	}
 	
     /**
@@ -69,11 +93,18 @@ public class SearchDomainTransformer {
      */
     public static List<SearchDomain> buildDomainArtworks(){
 		
-        List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-        BuildMockVanGoghArtworks mockArtworks = new BuildMockVanGoghArtworks();
-        mockArtworks.loadMockArtworks(listaSearchDomain);
+     SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     BuildMockVanGoghArtworks mockArtworks = new BuildMockVanGoghArtworks();
+     List<Artwork> loadMockArtworks = mockArtworks.loadMockArtworks();
+        
+      for (Artwork artwork : loadMockArtworks) {
 		
-	  return listaSearchDomain;
+    	SearchDomain searchDomainArtwork = searchDomainCreator.createSearchDomainFromArtwork(artwork);
+    	listaSearchDomain.add(searchDomainArtwork);
+	  }   
+		
+	 return listaSearchDomain;
 	}
 	
     /**
@@ -82,11 +113,18 @@ public class SearchDomainTransformer {
      */
     public static List<SearchDomain> buildDomainColors(){
 		
-        List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-        BuildMockColours mockColours = new BuildMockColours();
-		mockColours.loadMockColours(listaSearchDomain);
-        
-	  return listaSearchDomain;
+     SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();	
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     BuildMockColours mockColours = new BuildMockColours();
+	 List<Colour> loadMockColours = mockColours.loadMockColours();
+     
+	  for (Colour colour : loadMockColours) {
+		
+	    SearchDomain searchDomainColour = searchDomainCreator.createSearchDomainFromColour(colour);
+	    listaSearchDomain.add(searchDomainColour);
+	  }
+	 
+	 return listaSearchDomain;
 	}
     
     /**
@@ -95,15 +133,130 @@ public class SearchDomainTransformer {
      */
     public static List<SearchDomain> buildDomainSentiments(){
 		
-        List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-        BuildMockPositiveSentiment positive = new BuildMockPositiveSentiment();
-        BuildMockNegativeAOSentiment negativeAO = new BuildMockNegativeAOSentiment();
-        BuildMockNegativePZSentiment negativePZ = new BuildMockNegativePZSentiment();
+     SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     BuildMockPositiveSentiment positive = new BuildMockPositiveSentiment();
+     BuildMockNegativeAOSentiment negativeAO = new BuildMockNegativeAOSentiment();
+     BuildMockNegativePZSentiment negativePZ = new BuildMockNegativePZSentiment();
         
-        positive.loadMockSentiments(listaSearchDomain);
-        negativeAO.loadMockSentiments(listaSearchDomain);
-        negativePZ.loadMockSentiments(listaSearchDomain);
+     List<Word> sentimentsList = new ArrayList<Word>();
+     sentimentsList.addAll(positive.loadMockSentiments());
+     sentimentsList.addAll(negativeAO.loadMockSentiments());
+     sentimentsList.addAll(negativePZ.loadMockSentiments());
+    	
+      for (Word word : sentimentsList) {
 		
-	  return listaSearchDomain;
+    	SearchDomain searchDomainWord = searchDomainCreator.createSearchDomainFromWord(word);
+    	listaSearchDomain.add(searchDomainWord);
+	  }
+     
+	 return listaSearchDomain;
 	}
+    
+    /**
+     * 
+     * @return
+     */
+    public static List<SearchDomain> buildDomains(){
+		
+     List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
+     List<Neo4ArtNode>  entityList = new ArrayList<Neo4ArtNode>();
+     
+     BuildMockAGArtists mockAGArtists = new BuildMockAGArtists();
+     BuildMockMuseums mockMuseums = new BuildMockMuseums();
+     BuildMockVanGoghArtworks mockArtworks = new BuildMockVanGoghArtworks();
+     BuildMockColours mockColours = new BuildMockColours();
+	 BuildMockPositiveSentiment positive = new BuildMockPositiveSentiment();
+     BuildMockNegativeAOSentiment negativeAO = new BuildMockNegativeAOSentiment();
+     BuildMockNegativePZSentiment negativePZ = new BuildMockNegativePZSentiment();
+    
+     entityList.addAll(mockAGArtists.loadMockArtists());  
+     entityList.addAll(mockMuseums.loadMockMuseums());
+     entityList.addAll(mockArtworks.loadMockArtworks()); 
+     entityList.addAll(mockColours.loadMockColours()); 
+     entityList.addAll(positive.loadMockSentiments());
+     entityList.addAll(negativeAO.loadMockSentiments());
+     entityList.addAll(negativePZ.loadMockSentiments());  
+        
+     for (Neo4ArtNode neo4ArtNode : entityList) {
+    	 
+      SearchDomain searchDomain = createSearchDomainFromEntity(neo4ArtNode);
+      listaSearchDomain.add(searchDomain);
+	}
+		
+	 return listaSearchDomain;
+	}
+    
+    /**
+	 * @param neo4ArtNode
+	 * @return
+	 */
+	private static SearchDomain createSearchDomainFromEntity(Neo4ArtNode neo4ArtNode) {
+		
+	 SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
+	 SearchDomain result = null;
+		  
+	 if(neo4ArtNode instanceof Artist){
+			  
+	   result = searchDomainCreator.createSearchDomainFromArtist((Artist) neo4ArtNode);
+	 }
+		  
+	 if(neo4ArtNode instanceof ArtMovement){
+		  
+	   result = searchDomainCreator.createSearchDomainFromArtMovement((ArtMovement) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Artwork){
+		  
+	   result = searchDomainCreator.createSearchDomainFromArtwork((Artwork) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Museum){
+		  
+	  result = searchDomainCreator.createSearchDomainFromMuseum((Museum) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Monument){
+		  
+	   result = searchDomainCreator.createSearchDomainFromMonument((Monument) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof HistoricPlace){
+		  
+	   result = searchDomainCreator.createSearchDomainFromHistoricPlace((HistoricPlace) neo4ArtNode);
+	 }
+	
+	 if(neo4ArtNode instanceof HistoricSite){
+		  
+	   result = searchDomainCreator.createSearchDomainFromHistoricSite((HistoricSite) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof ReligiousBuilding){
+		  
+	   result = searchDomainCreator.createSearchDomainFromReligiousBuilding((ReligiousBuilding) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Settlement){
+		  
+	   result = searchDomainCreator.createSearchDomainFromSettlement((Settlement) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Letter){
+		  
+	   result = searchDomainCreator.createSearchDomainFromLetter((Letter) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Word){
+		  
+	   result = searchDomainCreator.createSearchDomainFromWord((Word) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Colour){
+		  
+	   result = searchDomainCreator.createSearchDomainFromColour((Colour) neo4ArtNode);
+	 }
+		  
+	 return result;
+	}
+    
 }

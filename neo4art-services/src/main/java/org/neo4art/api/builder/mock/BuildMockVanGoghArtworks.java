@@ -15,9 +15,10 @@
  */
 package org.neo4art.api.builder.mock;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.domain.SearchDomain;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Enrico De Benetti
@@ -26,19 +27,48 @@ import org.neo4art.api.domain.SearchDomain;
  */
 public class BuildMockVanGoghArtworks {
 
-	public void loadMockArtworks(List<SearchDomain> listaSearchDomain) {
+	public List<Artwork> loadMockArtworks() {
 
-		listaSearchDomain.add(new SearchDomain("Still Life with Cabbage and Clogs"));
-		listaSearchDomain.add(new SearchDomain("Crouching Boy with Sickle"));
-		listaSearchDomain.add(new SearchDomain("Old Man at the Fireside"));
-		listaSearchDomain.add(new SearchDomain("Woman Sewing"));
-		listaSearchDomain.add(new SearchDomain("Woman with White Shawl"));
-		listaSearchDomain.add(new SearchDomain("Beach at Scheveningen in Calm Weather"));
-		listaSearchDomain.add(new SearchDomain("Dunes"));
-		listaSearchDomain.add(new SearchDomain("Dunes with Figures"));
-		listaSearchDomain.add(new SearchDomain("Beach at Scheveningen in Stormy Weather"));
-		listaSearchDomain.add(new SearchDomain("Fisherman on the Beach"));
-		listaSearchDomain.add(new SearchDomain("Starry Night Over the Rhone"));
-		listaSearchDomain.add(new SearchDomain("Blossoming Acacia Branches"));
+		List<Artwork> artworkList = new ArrayList<Artwork>();
+		
+		Artwork artwork2 = new Artwork();
+		artwork2.setTitle("Still Life with Cabbage and Clogs");
+		Artwork artwork3 = new Artwork();
+		artwork3.setTitle("Crouching Boy with Sickle");
+		Artwork artwork4 = new Artwork();
+		artwork4.setTitle("Old Man at the Fireside");
+		Artwork artwork5 = new Artwork();
+		artwork5.setTitle("Woman Sewing");
+		Artwork artwork6 = new Artwork();
+		artwork6.setTitle("Woman with White Shawl");
+		Artwork artwork7 = new Artwork();
+		artwork7.setTitle("Beach at Scheveningen in Calm Weather");
+		Artwork artwork8 = new Artwork();
+		artwork8.setTitle("Dunes");
+		Artwork artwork9 = new Artwork();
+		artwork9.setTitle("Dunes with Figures");
+		Artwork artwork10 = new Artwork();
+		artwork10.setTitle("Beach at Scheveningen in Stormy Weather");
+		Artwork artwork11 = new Artwork();
+		artwork11.setTitle("Fisherman on the Beach");
+		Artwork artwork12 = new Artwork();
+		artwork12.setTitle("Starry Night Over the Rhone");
+		Artwork artwork13 = new Artwork();
+		artwork13.setTitle("Blossoming Acacia Branches");
+		
+		artworkList.add(artwork2);
+		artworkList.add(artwork3);
+		artworkList.add(artwork4);
+		artworkList.add(artwork5);
+		artworkList.add(artwork6);
+		artworkList.add(artwork7);
+		artworkList.add(artwork8);
+		artworkList.add(artwork9);
+		artworkList.add(artwork10);
+		artworkList.add(artwork11);
+		artworkList.add(artwork12);
+		artworkList.add(artwork13);
+		
+	 return artworkList;	
 	}
 }

@@ -15,7 +15,6 @@
  */
 package org.neo4art.api.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.neo4art.api.domain.SearchDomain;
@@ -42,23 +41,46 @@ public class Neo4ArtSearchRestController {
 	@RequestMapping(value = "/domains.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List<SearchDomain> getDomains(Model model) {
 
-		List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainArtists());
-		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainArtworks());
-		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainMuseums());
-		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainColors());
-		listaSearchDomain.addAll(SearchDomainTransformer.buildDomainSentiments());
-		
-		return listaSearchDomain;
+	  return SearchDomainTransformer.buildDomains();
+	}
+
+	@RequestMapping(value = "/artists-domain.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<SearchDomain> getArtistsDomain(Model model) {
+
+	  return SearchDomainTransformer.buildDomainArtists();
+	}
+	
+	@RequestMapping(value = "/artworks-domain.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<SearchDomain> getArtworkDomain(Model model) {
+
+	  return SearchDomainTransformer.buildDomainArtworks();
+	}
+	
+	@RequestMapping(value = "/museums-domain.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<SearchDomain> getMuseumsDomain(Model model) {
+
+	  return SearchDomainTransformer.buildDomainMuseums();
+	}
+	
+	@RequestMapping(value = "/colours-domain.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<SearchDomain> getColoursDomain(Model model) {
+
+	  return SearchDomainTransformer.buildDomainColors();
+	}
+	
+	@RequestMapping(value = "/sentiments-domain.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<SearchDomain> getSentimentsDomain(Model model) {
+
+	  return SearchDomainTransformer.buildDomainSentiments();
 	}
 	
 	@RequestMapping(value = "/search-results.json", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody SearchResult getResults(Model model,
 			                                     @RequestParam(value="searchInput", required=true) String searchInput) {
 
-		System.out.println("Input search: "+searchInput);
+	 System.out.println("Input search: "+searchInput);
 		
-		return SearchResultTransformer.buildSearchResult();
+	 return SearchResultTransformer.buildSearchResult();
 	}
 	
 	
@@ -66,13 +88,9 @@ public class Neo4ArtSearchRestController {
 	public @ResponseBody SearchResult getDetailNodeSearch(Model model,
 			                                     @RequestParam(value="nodeId", required=true) Long nodeId) {
 
-		System.out.println("Input nodeId: "+nodeId);
+	 System.out.println("Input nodeId: "+nodeId);
 		
-		return SearchResultTransformer.buildDetailNodeSearch();
+	 return SearchResultTransformer.buildDetailNodeSearch();
 	}
-	
-	
-	
-	
 	
 }
