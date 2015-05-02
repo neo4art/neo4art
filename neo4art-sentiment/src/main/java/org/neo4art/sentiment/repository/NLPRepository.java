@@ -48,8 +48,9 @@ public interface NLPRepository
   /**
    * @param documentNodeId
    * @param nlpLinkedListStartingNodeId
+   * @param nlpSentenceLength
    * @return
    */
-  long addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId);
+  long addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId, int nlpSentenceLength);
 
 }

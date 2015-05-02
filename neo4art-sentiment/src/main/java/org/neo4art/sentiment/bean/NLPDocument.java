@@ -19,6 +19,7 @@ package org.neo4art.sentiment.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.literature.domain.Document;
 
 /**
@@ -63,5 +64,25 @@ public class NLPDocument
   public boolean add(NLPSentence nlpSentente)
   {
     return this.nlpSentences.add(nlpSentente);
+  }
+  
+  public int getLength()
+  {
+    int nlpSentenceLength = 0;
+    
+    if (CollectionUtils.isNotEmpty(this.nlpSentences))
+    {
+      for (NLPSentence nlpSentence : this.nlpSentences)
+      {
+        List<NLPElement> nlpElements = nlpSentence.getNlpElements();
+        
+        if (CollectionUtils.isNotEmpty(nlpElements))
+        {
+          nlpSentenceLength += nlpElements.size();
+        }
+      }
+    }
+    
+    return nlpSentenceLength;
   }
 }

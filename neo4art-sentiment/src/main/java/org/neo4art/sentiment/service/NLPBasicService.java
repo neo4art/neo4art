@@ -104,14 +104,14 @@ public class NLPBasicService implements NLPService
   }
 
   /**
-   * @see org.neo4art.sentiment.service.NLPService#connectDocumentToNLPLinkedList(long, long)
+   * @see org.neo4art.sentiment.service.NLPService#connectDocumentToNLPLinkedList(long, long, int)
    */
   @Override
-  public long connectDocumentToNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId)
+  public long connectDocumentToNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId, int nlpSentenceLength)
   {
     NLPBatchInserterRepository nlpRepository = new NLPBatchInserterRepository();
     
-    return nlpRepository.addRelationshipBetweenOriginalDocumentAndNLPLinkedList(documentNodeId, nlpLinkedListStartingNodeId);
+    return nlpRepository.addRelationshipBetweenOriginalDocumentAndNLPLinkedList(documentNodeId, nlpLinkedListStartingNodeId, nlpSentenceLength);
   }
 
 }

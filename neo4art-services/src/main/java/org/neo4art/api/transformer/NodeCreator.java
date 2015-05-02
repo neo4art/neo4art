@@ -16,11 +16,12 @@
 package org.neo4art.api.transformer;
 
 import org.neo4art.api.domain.Node;
-import org.neo4art.colour.domain.Colour;
 import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.colour.graphdb.ColourLabel;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
 import org.neo4art.domain.HistoricPlace;
 import org.neo4art.domain.HistoricSite;
 import org.neo4art.domain.Monument;
@@ -216,7 +217,7 @@ public class NodeCreator {
 	 node.setLink(null);
 	 node.setName(null);
 	 node.setThumbnail(null);
-	 node.setType(Neo4ArtLabel.ColourAnalysis.name());
+	 node.setType(ColourLabel.ColourAnalysis.name());
 		 
 	 return node;		
 	}

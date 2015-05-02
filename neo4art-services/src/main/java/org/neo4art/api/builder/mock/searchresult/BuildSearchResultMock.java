@@ -20,9 +20,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.colour.domain.Colour;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
 import org.neo4art.domain.Museum;
 import org.neo4art.graphdb.Neo4ArtGraph;
 import org.neo4art.graphdb.Neo4ArtNode;

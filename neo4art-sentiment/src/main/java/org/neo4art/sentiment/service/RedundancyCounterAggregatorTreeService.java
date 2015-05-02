@@ -49,7 +49,9 @@ public class RedundancyCounterAggregatorTreeService implements RedundancyCounter
 
     try (Transaction tx = graphDatabaseService.beginTx())
     {
-      graphDatabaseService.schema().indexFor(RedundancyTreeLabel.RedundancyTree).on(RedundancyCounter.REDUNDANT_PATH_PROPERTY_NAME);
+      graphDatabaseService.schema().indexFor(RedundancyTreeLabel.RedundancyTree).on(RedundancyCounter.REDUNDANT_PATH_PROPERTY_NAME).create();
+      
+      //graphDatabaseService.execute("CREATE INDEX ON :" + RedundancyTreeLabel.RedundancyTree + "(" + RedundancyCounter.REDUNDANT_PATH_PROPERTY_NAME + ");");
       
       tx.success();
     }
@@ -67,10 +69,10 @@ public class RedundancyCounterAggregatorTreeService implements RedundancyCounter
     {
       GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
       
+      RedundancyCounterRepository redundancyCounterRepository = new RedundancyCounterAggregatorTreeRepository(); 
+      
       try (Transaction tx = graphDatabaseService.beginTx())
       {
-        RedundancyCounterRepository redundancyCounterRepository = new RedundancyCounterAggregatorTreeRepository(); 
-        
         long redundancyRootNodeId = redundancyCounterRepository.createRedundancyRootNode();
         
         for (Document document : documents)

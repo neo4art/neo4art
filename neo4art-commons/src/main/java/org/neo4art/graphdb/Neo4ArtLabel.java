@@ -30,5 +30,5 @@ public enum Neo4ArtLabel implements Label
 
   Country, Settlement,
   
-  Colour, ColourAnalysis
+  Colour
 }

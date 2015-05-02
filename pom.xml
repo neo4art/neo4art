@@ -28,6 +28,7 @@
 		<module>neo4art-services</module>
 		<module>neo4art-sentiment</module>
 		<module>neo4art-literature</module>
+		<module>neo4art-colour</module>
 		<module>neo4art-wikipedia-importer</module>
 		<module>neo4art-database</module>
 	</modules>
