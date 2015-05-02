@@ -39,7 +39,8 @@ public class BuildTimeLineMock {
 		colourAnalysis1.setSource("http://www.vggallery.com/painting/f_0001.jpg");
 		Artwork artwork1 = new Artwork();
 		artwork1.setTitle("Still Life with Cabbage and Clogs");
-		artwork1.setCompletionDate("12-Dec-1881 00:00");
+		artwork1.setYear("1881");
+		//artwork1.setCompletionDate("10-Gen-1881 00:00");
 		colourAnalysis1.setArtwork(artwork1);
 		
 		ColourAnalysis colourAnalysis2 = new ColourAnalysis();
@@ -48,6 +49,8 @@ public class BuildTimeLineMock {
 		Artwork artwork2 = new Artwork();
 		artwork2.setTitle("Farmhouses Among Trees");
 		artwork2.setCompletionDate("15-Sep-1883 00:00");
+		//artwork2.setCompletionDate("15/Sep/1883 00:00");
+		//artwork2.setCompletionDate("Nov 4, 2003");
 		colourAnalysis2.setArtwork(artwork2);
 		
 		ColourAnalysis colourAnalysis3 = new ColourAnalysis();
