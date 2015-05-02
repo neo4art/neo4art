@@ -6,11 +6,15 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.neo4art.colour.service.ColourDefaultService;
-import org.neo4art.colour.service.ColourService;
+import org.neo4art.colour.repository.ColourAnalysisRepository;
+import org.neo4art.colour.repository.ColourGraphDatabaseServiceRepository;
+import org.neo4art.core.service.ColourDefaultService;
+import org.neo4art.core.service.ColourService;
+import org.neo4art.domain.Artist;
 import org.neo4art.domain.Colour;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
+import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 
 public class VanGoghArtworksColoursManagerTest
 {
@@ -35,6 +39,8 @@ public class VanGoghArtworksColoursManagerTest
       colourService.createIndexes();
       colourService.saveColours(colours);
       
+      System.out.println("STEP 3. Computing colour analysis...");
+
       new VanGoghArtworksColoursDefaultManager().computeAndSaveColourAnalyses();
       
     }
@@ -47,6 +53,36 @@ public class VanGoghArtworksColoursManagerTest
     finally
     {
       Neo4ArtBatchInserterSingleton.shutdownBatchInserterInstance();
+    }
+  }
+  
+  @Test
+  public void shouldRetrieveColourAnalysesByArtist()
+  {
+    try
+    {
+      Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
+      
+      Neo4ArtGraphDatabaseServiceSingleton.beginTransaction();
+      
+      ColourAnalysisRepository colourAnalysisRepository = new ColourGraphDatabaseServiceRepository();
+      
+      Artist artist = new Artist();
+      artist.setName("Van Gogh");
+      
+      colourAnalysisRepository.getColourAnalisysByArtist(artist);
+      
+      Neo4ArtGraphDatabaseServiceSingleton.commitTransaction();
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+
+      Assert.fail(e.getMessage());
+    }
+    finally
+    {
+      Neo4ArtGraphDatabaseServiceSingleton.shutdownInstance();
     }
   }
 }

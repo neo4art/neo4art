@@ -25,6 +25,12 @@
 
 		<dependency>
 			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.neo4art</groupId>
 			<artifactId>neo4art-sentiment</artifactId>
 			<version>${project.version}</version>
 		</dependency>

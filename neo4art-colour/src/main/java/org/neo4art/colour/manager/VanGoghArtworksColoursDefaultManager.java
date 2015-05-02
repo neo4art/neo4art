@@ -18,7 +18,6 @@ package org.neo4art.colour.manager;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,12 +30,16 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
-import org.neo4art.colour.service.ColourDefaultService;
-import org.neo4art.colour.service.ColourService;
+import org.neo4art.colour.service.ColourAnalysisDefaultService;
+import org.neo4art.colour.service.ColourAnalysisService;
+import org.neo4art.core.graphdb.CoreLegacyIndex;
+import org.neo4art.core.repository.ArtistBatchInserterRepository;
+import org.neo4art.core.repository.ArtistRepository;
+import org.neo4art.core.repository.ArtworkBatchInserterRepository;
+import org.neo4art.core.repository.ArtworkRepository;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
-import org.neo4j.graphdb.DynamicRelationshipType;
 
 /**
  * @author Lorenzo Speranzoni
@@ -66,43 +69,53 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
       CSVParser csvParser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.EXCEL.withDelimiter(',').withQuote('\'').withEscape('\\').withIgnoreSurroundingSpaces(true));
       List<CSVRecord> cvsRecords = csvParser.getRecords();
 
-      Artist vanGogh = new Artist();
-      vanGogh.setName("Van Gogh");
-      
-      Neo4ArtBatchInserterSingleton.createNode(vanGogh);
-      
-      for (int i = 1; i < cvsRecords.size(); i++)
+      if (CollectionUtils.isNotEmpty(cvsRecords) && CollectionUtils.size(cvsRecords) > 1)
       {
-        CSVRecord csvRecord = cvsRecords.get(i);
+        Artist vanGogh = new Artist();
+        vanGogh.setName("Van Gogh");
         
-        Artwork vanGoghArtwork = new Artwork();
+        ArtistRepository artistRepository = new ArtistBatchInserterRepository();
         
-        vanGoghArtwork.setTitle(csvRecord.get(0));
-        vanGoghArtwork.setType(csvRecord.get(1));
-        vanGoghArtwork.setYear(csvRecord.get(2));
+        artistRepository.createIndexes();
+        artistRepository.saveArtist(vanGogh);
         
-        Calendar completionDate = Calendar.getInstance();
+        ArtworkRepository artworkRepository = new ArtworkBatchInserterRepository();
+        artworkRepository.createIndexes();
         
-        completionDate.set(Calendar.YEAR, Integer.parseInt(csvRecord.get(2)));
-        completionDate.set(Calendar.MONTH, Integer.parseInt(csvRecord.get(3)));
-        completionDate.set(Calendar.DAY_OF_MONTH, 1);
-        completionDate.set(Calendar.HOUR, 0);
-        completionDate.set(Calendar.MINUTE, 0);
-        completionDate.set(Calendar.SECOND, 0);
-        completionDate.set(Calendar.MILLISECOND, 0);
+        for (int i = 1; i < cvsRecords.size(); i++)
+        {
+          CSVRecord csvRecord = cvsRecords.get(i);
+          
+          Artwork vanGoghArtwork = new Artwork();
+          
+          vanGoghArtwork.setTitle(csvRecord.get(0));
+          vanGoghArtwork.setType(csvRecord.get(1));
+          vanGoghArtwork.setYear(csvRecord.get(2));
+          
+          Calendar completionDate = Calendar.getInstance();
+          
+          completionDate.set(Calendar.YEAR, Integer.parseInt(csvRecord.get(2)));
+          completionDate.set(Calendar.MONTH, Integer.parseInt(csvRecord.get(3)));
+          completionDate.set(Calendar.DAY_OF_MONTH, 1);
+          completionDate.set(Calendar.HOUR, 0);
+          completionDate.set(Calendar.MINUTE, 0);
+          completionDate.set(Calendar.SECOND, 0);
+          completionDate.set(Calendar.MILLISECOND, 0);
+          
+          vanGoghArtwork.setCompletionDate(completionDate.getTime());
+          vanGoghArtwork.setImageFile(csvRecord.get(4));
+          vanGoghArtwork.setCatalogue("F: " + csvRecord.get(5) + " - JH:" + csvRecord.get(6));
+          
+          vanGoghArtwork.setArtist(vanGogh);
+          
+          artworkRepository.saveArtwork(vanGoghArtwork);
+          artworkRepository.connectArtworkToArtist(vanGoghArtwork);
+        }
         
-        System.out.println(new SimpleDateFormat("dd/MM/yyyy").format(completionDate.getTime()));
-        
-        vanGoghArtwork.setCompletionDate(completionDate.getTime());
-        vanGoghArtwork.setImageFile(csvRecord.get(4));
-        vanGoghArtwork.setCatalogue("F: " + csvRecord.get(5) + " - JH:" + csvRecord.get(6));
-        
-        vanGoghArtwork.setArtist(vanGogh);
-        
-        Neo4ArtBatchInserterSingleton.createNode(vanGoghArtwork);
-        Neo4ArtBatchInserterSingleton.createRelationship(vanGogh.getNodeId(), vanGoghArtwork.getNodeId(), DynamicRelationshipType.withName("REALIZED"), null);
+        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX.name());
+        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name());
       }
-
+      
       csvParser.close();
     }
     catch (Exception e)
@@ -135,6 +148,9 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
       {
         logger.info(artworksURLsFromFile.size() + " artworks to be analyzed.");      
         
+        //FIXME remove
+        artworksURLsFromFile = artworksURLsFromFile.subList(0, 5);
+        
         List<ColourAnalysis> coloursAnalyses = artworksColoursAnalyzer.analyzeArtworksColours(artworksURLsFromFile);
         
         logger.info("Analysis done!");
@@ -143,11 +159,11 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
         {
           logger.info("Saving " + coloursAnalyses.size() + " analyses to graph...");
           
-          ColourService colourService = new ColourDefaultService();
+          ColourAnalysisService colourAnalysisService = new ColourAnalysisDefaultService();
           
           for (ColourAnalysis colourAnalysis : coloursAnalyses)
           {
-            colourService.saveColourAnalysis(colourAnalysis);
+            colourAnalysisService.saveColourAnalysis(colourAnalysis);
           }
           
           logger.info("Saved!");

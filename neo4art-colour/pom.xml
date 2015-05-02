@@ -23,6 +23,12 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Apache CSV -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>

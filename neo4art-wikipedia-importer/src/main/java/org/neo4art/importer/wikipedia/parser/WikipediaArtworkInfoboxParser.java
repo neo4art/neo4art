@@ -16,6 +16,7 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -131,7 +132,7 @@ public class WikipediaArtworkInfoboxParser
           artwork.setYear(infoboxYear(map.get(key)));
           break;
         case COMPLETION_DATE:
-          artwork.setCompletionDate(map.get(key));
+          artwork.setCompletionDate(toDate(map.get(key)));
           break;
         case CATALOGUE:
           artwork.setCatalogue(infoboxCatalogue(map.get(key)));
@@ -229,6 +230,16 @@ public class WikipediaArtworkInfoboxParser
     }
 
     return artwork;
+  }
+
+  /**
+   * @param string
+   * @return
+   */
+  private static Date toDate(String string)
+  {
+    //TODO not yet implemented
+    return null;
   }
 
   public static String[] infoboxCoordinate(String coo)

@@ -31,7 +31,7 @@ import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.colour.repository.ColourGraphDatabaseServiceRepository;
-import org.neo4art.colour.repository.ColourRepository;
+import org.neo4art.colour.repository.ColourAnalysisRepository;
 import org.neo4art.colour.service.ImageDefaultManager;
 import org.neo4art.colour.service.ImageManager;
 import org.neo4art.domain.Artist;
@@ -117,9 +117,9 @@ public class ArtworksDefaultColoursAnalyzer implements ArtworksColoursAnalyzer
     {
       Neo4ArtGraphDatabaseServiceSingleton.beginTransaction();
       
-      ColourRepository colourRepository = new ColourGraphDatabaseServiceRepository();
+      ColourAnalysisRepository colourAnalysisRepository = new ColourGraphDatabaseServiceRepository();
       
-      colourAnalyses = colourRepository.getColourAnalisysByArtist(artist);
+      colourAnalyses = colourAnalysisRepository.getColourAnalisysByArtist(artist);
       
       Neo4ArtGraphDatabaseServiceSingleton.commitTransaction();
     }

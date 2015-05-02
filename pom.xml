@@ -24,6 +24,7 @@
 
 	<modules>
 		<module>neo4art-commons</module>
+		<module>neo4art-core</module>
 		<module>neo4art-webapp</module>
 		<module>neo4art-services</module>
 		<module>neo4art-sentiment</module>

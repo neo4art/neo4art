@@ -23,7 +23,6 @@ import org.neo4art.colour.graphdb.ColourLegacyIndex;
 import org.neo4art.colour.graphdb.ColourRelationship;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4j.graphdb.index.IndexHits;
 
@@ -31,34 +30,10 @@ import org.neo4j.graphdb.index.IndexHits;
  * @author Lorenzo Speranzoni
  * @since 22 Apr 2015
  */
-public class ColourBatchInserterRepository implements ColourRepository
+public class ColourBatchInserterRepository implements ColourAnalysisRepository
 {
   /**
-   * @see org.neo4art.colour.repository.ColourRepository#createIndexes()
-   */
-  @Override
-  public void createIndexes()
-  {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT, Colour.RGB_PROPERTY_NAME, 1_500);
-  }
-
-  /**
-   * @see org.neo4art.literature.repository.DocumentRepository#saveDocument(org.neo4art.literature.domain.Document)
-   */
-  @Override
-  public long saveColour(Colour colour)
-  {
-    long colourNodeId = Neo4ArtBatchInserterSingleton.createNode(colour);
-
-    colour.setNodeId(colourNodeId);
-
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX.name(), colour);
-
-    return colourNodeId;
-  }
-
-  /**
-   * @see org.neo4art.colour.repository.ColourRepository#saveColourAnalysis(org.neo4art.colour.domain.ColourAnalysis)
+   * @see org.neo4art.colour.repository.ColourAnalysisRepository#saveColourAnalysis(org.neo4art.colour.domain.ColourAnalysis)
    */
   @Override
   public long saveColourAnalysis(ColourAnalysis colourAnalysis)
@@ -71,7 +46,7 @@ public class ColourBatchInserterRepository implements ColourRepository
   }
 
   /**
-   * @see org.neo4art.colour.repository.ColourRepository#connectColourAnalysisToArtwork(org.neo4art.colour.domain.ColourAnalysis)
+   * @see org.neo4art.colour.repository.ColourAnalysisRepository#connectColourAnalysisToArtwork(org.neo4art.colour.domain.ColourAnalysis)
    */
   @Override
   public void connectColourAnalysisToArtwork(ColourAnalysis colourAnalysis)
@@ -86,7 +61,7 @@ public class ColourBatchInserterRepository implements ColourRepository
   }
 
   /**
-   * @see org.neo4art.colour.repository.ColourRepository#connectColourAnalysisToClosestColours(org.neo4art.colour.domain.ColourAnalysis)
+   * @see org.neo4art.colour.repository.ColourAnalysisRepository#connectColourAnalysisToClosestColours(org.neo4art.colour.domain.ColourAnalysis)
    */
   @Override
   public void connectColourAnalysisToClosestColours(ColourAnalysis colourAnalysis)
@@ -125,7 +100,7 @@ public class ColourBatchInserterRepository implements ColourRepository
   }
 
   /**
-   * @see org.neo4art.colour.repository.ColourRepository#getColourAnalisysByArtist(org.neo4art.domain.Artist)
+   * @see org.neo4art.colour.repository.ColourAnalysisRepository#getColourAnalisysByArtist(org.neo4art.domain.Artist)
    */
   @Override
   public List<ColourAnalysis> getColourAnalisysByArtist(Artist artist)
