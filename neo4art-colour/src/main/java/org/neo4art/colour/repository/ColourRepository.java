@@ -15,6 +15,7 @@
  */
 package org.neo4art.colour.repository;
 
+import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.domain.Colour;
 
 /**
@@ -22,9 +23,34 @@ import org.neo4art.domain.Colour;
  * @author Lorenzo Speranzoni, Enrico De Benetti
  * @since 22.04.2015
  */
-public interface ColourRepository {
-
+public interface ColourRepository
+{
+  /**
+   * 
+   */
   void createIndexes();
-  
+
+  /**
+   * 
+   * @param colour
+   * @return
+   */
   long saveColour(Colour colour);
+
+  /**
+   * 
+   * @param colourAnalysis
+   * @return
+   */
+  long saveColourAnalysis(ColourAnalysis colourAnalysis);
+
+  /**
+   * @param colourAnalysis
+   */
+  void connectColourAnalysisToArtwork(ColourAnalysis colourAnalysis);
+
+  /**
+   * @param colourAnalysis
+   */
+  void connectColourAnalysisToClosestColours(ColourAnalysis colourAnalysis);
 }

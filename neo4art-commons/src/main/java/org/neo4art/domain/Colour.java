@@ -32,8 +32,8 @@ public class Colour implements Neo4ArtNode
 {
   private static final Label[] LABELS             = new Label[] { Neo4ArtLabel.Colour };
 
-  private static final String  NAME_PROPERTY_NAME = "name";
-  private static final String  RGB_PROPERTY_NAME  = "rgb";
+  public static final String  NAME_PROPERTY_NAME = "name";
+  public static final String  RGB_PROPERTY_NAME  = "rgb";
 
   private Long                 nodeId;
 
@@ -112,7 +112,7 @@ public class Colour implements Neo4ArtNode
     this.name = name;
   }
 
-  public Color getRgb()
+  public Color getColor()
   {
     return rgb;
   }

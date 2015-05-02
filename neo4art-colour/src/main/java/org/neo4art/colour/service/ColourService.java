@@ -18,6 +18,7 @@ package org.neo4art.colour.service;
 
 import java.util.List;
 
+import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.domain.Colour;
 
 /**
@@ -29,4 +30,6 @@ public interface ColourService
   void saveColours(List<Colour> colours);
   
   void saveColour(Colour colour);
+  
+  void saveColourAnalysis(ColourAnalysis colourAnalysis);
 }

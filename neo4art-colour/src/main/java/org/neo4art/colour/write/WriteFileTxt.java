@@ -62,12 +62,12 @@ public class WriteFileTxt implements IWriteFile
   {
     try
     {
-      String rAvg = "AVG RED: " + image.getAverageRGBColour().getRed() + " AVG GREEN: " + image.getAverageRGBColour().getGreen() + " AVG BLUE: " + image.getAverageRGBColour().getBlue() + "\n";
-      String rMin = "MIN RED: " + image.getMinimumRGBColour().getRed() + " MIN GREEN: " + image.getMinimumRGBColour().getGreen() + " MIN BLUE: " + image.getMinimumRGBColour().getBlue() + "\n";
-      String rMax = "MAX RED: " + image.getMaximumRGBColour().getRed() + " MAX GREEN: " + image.getMaximumRGBColour().getGreen() + " MAX BLUE: " + image.getMaximumRGBColour().getBlue() + "\n";
-      String rNameAvg = "NAME RGB AVG: " + image.getAverageColourName() + "\n";
-      String rNameMax = "NAME RGB MAX: " + image.getMaximumColourName() + "\n";
-      String rNameMin = "NAME RGB MIN: " + image.getMinimumColourName() + "\n";
+      String rAvg = "AVG RED: " + image.getAverageColour().getRed() + " AVG GREEN: " + image.getAverageColour().getGreen() + " AVG BLUE: " + image.getAverageColour().getBlue() + "\n";
+      String rMin = "MIN RED: " + image.getMinimumColour().getRed() + " MIN GREEN: " + image.getMinimumColour().getGreen() + " MIN BLUE: " + image.getMinimumColour().getBlue() + "\n";
+      String rMax = "MAX RED: " + image.getMaximumColour().getRed() + " MAX GREEN: " + image.getMaximumColour().getGreen() + " MAX BLUE: " + image.getMaximumColour().getBlue() + "\n";
+      String rNameAvg = "NAME RGB AVG: " + image.getAverageClosestColour().getName() + "\n";
+      String rNameMax = "NAME RGB MAX: " + image.getMaximumClosestColour().getName() + "\n";
+      String rNameMin = "NAME RGB MIN: " + image.getMinimumClosestColour().getName() + "\n";
       String increment = "INCREMENT: " + image.getIncrement();
       PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
       pw.print(rAvg);

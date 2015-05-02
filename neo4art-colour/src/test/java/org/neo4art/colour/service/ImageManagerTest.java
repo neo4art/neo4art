@@ -27,22 +27,22 @@ public class ImageManagerTest
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
       Color avg = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Black");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Black");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Black");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Black");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -61,23 +61,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(255, 255, 255);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(255, 255, 255);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 255);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "White");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "White");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "White");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "White");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "White");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "White");
     }
     catch (Exception e)
     {
@@ -96,23 +96,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(255, 0, 0);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(255, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 0, 0);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Red");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Red");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Red");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Red");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Red");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Red");
     }
     catch (Exception e)
     {
@@ -131,23 +131,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(0, 255, 0);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 255, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(0, 255, 0);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Electric green");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Electric green");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Electric green");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Electric green");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Electric green");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Electric green");
     }
     catch (Exception e)
     {
@@ -166,23 +166,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(0, 0, 255);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 255);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(0, 0, 255);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Blue");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Blue");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Blue");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Blue");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Blue");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Blue");
     }
     catch (Exception e)
     {
@@ -201,23 +201,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 255);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Black");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "White");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Black");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "White");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -236,23 +236,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(254, 254, 254);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 255);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "White");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "White");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "White");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "White");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -271,23 +271,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(137, 30, 26);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 248, 234);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Falu red");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Cosmic latte");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Falu red");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Cosmic latte");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -307,23 +307,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(104, 98, 74);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(12, 26, 9);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(212, 192, 131);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Wenge");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Burlywood");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Smoky black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Wenge");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Burlywood");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Smoky black");
     }
     catch (Exception e)
     {
@@ -342,23 +342,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(102, 123, 119);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 250, 242);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "AuroMetalSaurus");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Floral white");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "AuroMetalSaurus");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Floral white");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -375,23 +375,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(108, 116, 96);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 61, 94);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(247, 212, 156);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Dim gray");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Deep champagne");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Dark imperial blue");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Dim gray");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Deep champagne");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Dark imperial blue");
     }
     catch (Exception e)
     {
@@ -408,23 +408,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(123, 128, 85);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(9, 10, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 244);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Gold Fusion");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Ivory");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Smoky black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Gold Fusion");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Ivory");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Smoky black");
     }
     catch (Exception e)
     {
@@ -441,23 +441,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(185, 162, 97);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 3, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 240);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Camel");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Ivory");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Camel");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Ivory");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {
@@ -474,23 +474,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(122, 115, 86);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 14, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 246);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "Gold Fusion");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Baby powder");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Rich black (FOGRA39)");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Gold Fusion");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Baby powder");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Rich black (FOGRA39)");
     }
     catch (Exception e)
     {
@@ -507,23 +507,23 @@ public class ImageManagerTest
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
-      System.out.println("AVG name:" + analyzeImage.getAverageColourName());
-      System.out.println("MAX name:" + analyzeImage.getMaximumColourName());
-      System.out.println("MIN name:" + analyzeImage.getMinimumColourName());
-      System.out.println("AVG :" + analyzeImage.getAverageRGBColour().toString());
-      System.out.println("Max :" + analyzeImage.getMaximumRGBColour().toString());
-      System.out.println("Min :" + analyzeImage.getMinimumRGBColour().toString());
+      System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
+      System.out.println("MAX name:" + analyzeImage.getMaximumClosestColour().getName());
+      System.out.println("MIN name:" + analyzeImage.getMinimumClosestColour().getName());
+      System.out.println("AVG :" + analyzeImage.getAverageColour().toString());
+      System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
+      System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
       Color avg = new Color(97, 122, 128);
-      assertEquals(analyzeImage.getAverageRGBColour(), avg);
+      assertEquals(analyzeImage.getAverageColour(), avg);
       Color min = new Color(0, 0, 0);
-      assertEquals(analyzeImage.getMinimumRGBColour(), min);
+      assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(255, 255, 248);
-      assertEquals(analyzeImage.getMaximumRGBColour(), max);
+      assertEquals(analyzeImage.getMaximumColour(), max);
 
-      Assert.assertEquals(analyzeImage.getAverageColourName(), "AuroMetalSaurus");
-      Assert.assertEquals(analyzeImage.getMaximumColourName(), "Baby powder");
-      Assert.assertEquals(analyzeImage.getMinimumColourName(), "Black");
+      Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "AuroMetalSaurus");
+      Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Baby powder");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Black");
     }
     catch (Exception e)
     {

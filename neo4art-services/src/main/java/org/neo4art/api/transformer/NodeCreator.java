@@ -198,9 +198,9 @@ public class NodeCreator {
 	 node.setLink(null);
 	 node.setName(colour.getName());
 	 
-	 if(colour.getRgb() != null){
+	 if(colour.getColor() != null){
 		 
-	  String hex = String.format("#%02x%02x%02x", colour.getRgb().getRed(), colour.getRgb().getGreen(), colour.getRgb().getBlue());
+	  String hex = String.format("#%02x%02x%02x", colour.getColor().getRed(), colour.getColor().getGreen(), colour.getColor().getBlue());
 	  System.out.println("hex: "+hex);
 	  node.setThumbnail(hex);	 
 	 }

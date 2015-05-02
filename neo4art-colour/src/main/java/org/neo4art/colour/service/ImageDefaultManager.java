@@ -29,6 +29,7 @@ import javax.imageio.ImageIO;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.colour.utility.UtilityImage;
+import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
 
 /**
@@ -66,9 +67,13 @@ public class ImageDefaultManager implements ImageManager
 
     try
     {
+      Artwork artwork = new Artwork();
+
+      artwork.setTitle(imageName);
+
       this.image = ImageIO.read(url);
       imageColor = analyzeImage();
-      imageColor.setImageName(imageName);
+      imageColor.setArtwork(artwork);
       imageColor.setSource(url.toString());
     }
     catch (Exception e)
@@ -90,29 +95,29 @@ public class ImageDefaultManager implements ImageManager
     ArrayList<Colour> color = new ArrayList<Colour>();
     try
     {
-  
+
       ClassLoader classLoader = getClass().getClassLoader();
       File file = new File(classLoader.getResource("color.txt").getFile());
-  
+
       BufferedReader input = new BufferedReader(new FileReader(file));
-  
+
       int index = 0;
       String line;
       while ((line = input.readLine()) != null)
       {
-  
+
         String[] hex = line.split("#");
         red = Integer.parseInt(hex[1].substring(0, 2), 16);
         green = Integer.parseInt(hex[1].substring(2, 4), 16);
         blue = Integer.parseInt(hex[1].substring(4, 6), 16);
-  
+
         Colour colour = new Colour(line.replaceAll("#+[0-9A-z]*", "").replace("\t", ""), red, green, blue);
-  
+
         color.add(index, colour);
         index++;
       }
       input.close();
-  
+
     }
     catch (Exception e)
     {
@@ -133,12 +138,13 @@ public class ImageDefaultManager implements ImageManager
     operationImage();
     colorReport = getReportRgb(utility.pixelMatrix());
 
-    imageColor.setAverageColourName(getNameColor(colorReport[0]));
-    imageColor.setMaximumColourName(getNameColor(colorReport[2]));
-    imageColor.setMinimumColourName(getNameColor(colorReport[1]));
-    imageColor.setAverageRGBColour(colorReport[0]);
-    imageColor.setMaximumRGBColour(colorReport[2]);
-    imageColor.setMinimumRGBColour(colorReport[1]);
+    imageColor.setAverageClosestColour(getClosestColour(colorReport[0]));
+    imageColor.setMinimumClosestColour(getClosestColour(colorReport[1]));
+    imageColor.setMaximumClosestColour(getClosestColour(colorReport[2]));
+
+    imageColor.setAverageColour(colorReport[0]);
+    imageColor.setMinimumColour(colorReport[1]);
+    imageColor.setMaximumColour(colorReport[2]);
 
     return imageColor;
   }
@@ -183,11 +189,16 @@ public class ImageDefaultManager implements ImageManager
    * @param color
    * @return
    */
-  public String getNameColor(Color color)
+  public String getClosestColourName(Color color)
   {
-    String nome = "";
-    nome = getColorName(color.getRed(), color.getGreen(), color.getBlue());
-    return nome;
+    Colour colour = getClosestColour(color.getRed(), color.getGreen(), color.getBlue());
+
+    if (colour != null)
+    {
+      return colour.getName();
+    }
+
+    return null;
   }
 
   /**
@@ -197,11 +208,25 @@ public class ImageDefaultManager implements ImageManager
    * @param blue
    * @return
    */
-  public String getColorName(int red, int green, int blue)
+  public Colour getClosestColour(Color color)
+  {
+    return getClosestColour(color.getRed(), color.getGreen(), color.getBlue());
+  }
+
+  /**
+   * 
+   * @param red
+   * @param green
+   * @param blue
+   * @return
+   */
+  public Colour getClosestColour(int red, int green, int blue)
   {
     int maxPixel = Integer.MAX_VALUE;
     int valuePixel;
+
     Colour trovato = null;
+
     for (Colour colour : listColor)
     {
       valuePixel = ((red - colour.getRed()) * (red - colour.getRed()) + (green - colour.getGreen()) * (green - colour.getGreen()) + (blue - colour.getBlue()) * (blue - colour.getBlue())) / 3;
@@ -212,10 +237,12 @@ public class ImageDefaultManager implements ImageManager
         trovato = colour;
       }
     }
+
     if (trovato != null)
     {
-      return trovato.getName();
+      return trovato;
     }
+
     return null;
   }
 

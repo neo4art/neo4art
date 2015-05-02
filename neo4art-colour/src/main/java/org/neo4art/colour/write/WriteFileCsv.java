@@ -104,14 +104,14 @@ public class WriteFileCsv implements IWriteFile
       HSSFCell cell5 = row4.createCell(0);
       cell5.setCellStyle(cellStyle);
 
-      cell1.setCellValue(image.getAverageColourName());
-      cell3.setCellValue(image.getMaximumColourName());
-      cell4.setCellValue(image.getMinimumColourName());
+      cell1.setCellValue(image.getAverageClosestColour().getName());
+      cell3.setCellValue(image.getMaximumClosestColour().getName());
+      cell4.setCellValue(image.getMinimumClosestColour().getName());
       cell5.setCellValue(image.getIncrement());
 
-      temp[0] = image.getAverageRGBColour();
-      temp[1] = image.getMinimumRGBColour();
-      temp[2] = image.getMaximumRGBColour();
+      temp[0] = image.getAverageColour();
+      temp[1] = image.getMinimumColour();
+      temp[2] = image.getMaximumColour();
       int j = 1;
       for (int i = 0; i < 3; i++)
       {

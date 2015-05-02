@@ -19,6 +19,7 @@ package org.neo4art.colour.service;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.repository.ColourBatchInserterRepository;
 import org.neo4art.colour.repository.ColourRepository;
 import org.neo4art.domain.Colour;
@@ -53,5 +54,19 @@ public class ColorDefaultService implements ColourService
     ColourRepository colourRepository = new ColourBatchInserterRepository();
     
     colourRepository.saveColour(colour);
+  }
+
+  /**
+   * @see org.neo4art.colour.service.ColourService#saveColourAnalysis(org.neo4art.colour.domain.ColourAnalysis)
+   */
+  @Override
+  public void saveColourAnalysis(ColourAnalysis colourAnalysis)
+  {
+    ColourRepository colourRepository = new ColourBatchInserterRepository();
+    
+    colourRepository.saveColourAnalysis(colourAnalysis);
+    
+    colourRepository.connectColourAnalysisToArtwork(colourAnalysis);
+    colourRepository.connectColourAnalysisToClosestColours(colourAnalysis);
   }
 }

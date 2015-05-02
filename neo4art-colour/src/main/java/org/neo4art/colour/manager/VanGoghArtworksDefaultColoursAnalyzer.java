@@ -35,15 +35,15 @@ import org.neo4art.colour.service.ImageManager;
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public class VanGoghDefaultColoursAnalyzer implements VanGoghColoursAnalyzer
+public class VanGoghArtworksDefaultColoursAnalyzer implements VanGoghArtworksColoursAnalyzer
 {
-  private static Log logger = LogFactory.getLog(VanGoghDefaultColoursAnalyzer.class);
+  private static Log logger = LogFactory.getLog(VanGoghArtworksDefaultColoursAnalyzer.class);
   
   /**
-   * @see org.neo4art.colour.manager.VanGoghColoursAnalyzer#analyzeArtworksColors()
+   * @see org.neo4art.colour.manager.VanGoghArtworksColoursAnalyzer#analyzeArtworksColours()
    */
   @Override
-  public List<ColourAnalysis> analyzeArtworksColors() throws ImageParserException, IOException
+  public List<ColourAnalysis> analyzeArtworksColours() throws ImageParserException, IOException
   {
     List<ColourAnalysis> listVanGogImageColor = new ArrayList<ColourAnalysis>();
     

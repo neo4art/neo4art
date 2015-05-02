@@ -16,13 +16,15 @@
 
 package org.neo4art.colour.graphdb;
 
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4j.graphdb.RelationshipType;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum ColourLegacyIndex implements Neo4ArtLegacyIndex
+public enum ColourRelationship implements RelationshipType
 {
-  COLOUR_LEGACY_INDEX, COLOUR_ANALYSIS_LEGACY_INDEX
+  COLOUR_ANALYSIS,
+  
+  CLOSEST_MIN_COLOUR, CLOSEST_AVG_COLOUR, CLOSEST_MAX_COLOUR
 }

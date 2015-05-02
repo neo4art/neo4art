@@ -13,9 +13,9 @@ public class DefaultVanGoghColoursAnalyzerTest
   {
     try
     {
-      VanGoghColoursAnalyzer vanGoghColoursAnalyzer = new VanGoghDefaultColoursAnalyzer();
+      VanGoghArtworksColoursAnalyzer vanGoghArtworksColoursAnalyzer = new VanGoghArtworksDefaultColoursAnalyzer();
       
-      List<ColourAnalysis> analyseVanGoghImage = vanGoghColoursAnalyzer.analyzeArtworksColors();
+      List<ColourAnalysis> analyseVanGoghImage = vanGoghArtworksColoursAnalyzer.analyzeArtworksColours();
 
       Assert.assertNotNull(analyseVanGoghImage);
       Assert.assertEquals(827, analyseVanGoghImage.size());
@@ -23,13 +23,13 @@ public class DefaultVanGoghColoursAnalyzerTest
       for (ColourAnalysis imageColor : analyseVanGoghImage)
       {
 
-        System.out.println("Image Name: " + imageColor.getImageName());
-        System.out.println("AVG name:" + imageColor.getAverageColourName());
-        System.out.println("MAX name:" + imageColor.getMaximumColourName());
-        System.out.println("MIN name:" + imageColor.getMinimumColourName());
-        System.out.println("AVG :" + imageColor.getAverageRGBColour().toString());
-        System.out.println("Max :" + imageColor.getMaximumRGBColour().toString());
-        System.out.println("Min :" + imageColor.getMinimumRGBColour().toString());
+        System.out.println("Image Name: " + imageColor.getArtwork().getTitle());
+        System.out.println("AVG name:" + imageColor.getAverageClosestColour().getName());
+        System.out.println("MAX name:" + imageColor.getMaximumClosestColour().getName());
+        System.out.println("MIN name:" + imageColor.getMinimumClosestColour().getName());
+        System.out.println("AVG :" + imageColor.getAverageColour().toString());
+        System.out.println("Max :" + imageColor.getMaximumColour().toString());
+        System.out.println("Min :" + imageColor.getMinimumColour().toString());
         System.out.println("------------------------------------------------\n");
 
       }

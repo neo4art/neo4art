@@ -26,7 +26,7 @@ import org.neo4art.colour.exception.ImageParserException;
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public interface VanGoghColoursAnalyzer
+public interface VanGoghArtworksColoursAnalyzer
 {
-  List<ColourAnalysis> analyzeArtworksColors() throws ImageParserException, IOException;
+  List<ColourAnalysis> analyzeArtworksColours() throws ImageParserException, IOException;
 }

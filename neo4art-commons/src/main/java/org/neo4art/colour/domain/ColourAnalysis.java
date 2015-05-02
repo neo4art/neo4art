@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4art.colour.graphdb.ColourLabel;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
 import org.neo4art.graphdb.Neo4ArtNode;
 import org.neo4j.graphdb.Label;
 
@@ -34,21 +36,16 @@ public class ColourAnalysis implements Neo4ArtNode
 
   private Long                 nodeId;
 
-  private String               name;
+  private Artwork              artwork;
 
-  private String               imageName;
+  private Color                averageColour;
+  private Colour               averageClosestColour;
 
-  private String               averageColourName;
-
-  private Color                averageRGBColour;
-
-  private String               minimumColourName;
-
-  private Color                minimumRGBColour;
-
-  private String               maximumColourName;
-
-  private Color                maximumRGBColour;
+  private Color                minimumColour;
+  private Colour               minimumClosestColour;
+  
+  private Color                maximumColour;
+  private Colour               maximumClosestColour;
 
   private String               source;
 
@@ -58,11 +55,12 @@ public class ColourAnalysis implements Neo4ArtNode
   {
   }
 
-  public ColourAnalysis(Color rgbAverageColor, Color rgbMinimumColor, Color rgbMaximumColor, int increment)
+  public ColourAnalysis(Color averageColour, Color minimumColour, Color maximumColour, int increment)
   {
-    this.averageRGBColour = rgbAverageColor;
-    this.minimumRGBColour = rgbMinimumColor;
-    this.maximumRGBColour = rgbMaximumColor;
+    this.averageColour = averageColour;
+    this.minimumColour = minimumColour;
+    this.maximumColour = maximumColour;
+    
     this.increment = increment;
   }
 
@@ -83,49 +81,39 @@ public class ColourAnalysis implements Neo4ArtNode
   {
     Map<String, Object> properties = new HashMap<String, Object>();
 
-    if (this.name != null)
-    {
-      properties.put("name", this.name);
-    }
-
-    if (this.imageName != null)
-    {
-      properties.put("imageName", this.imageName);
-    }
-    
-    if (this.averageColourName != null)
-    {
-      properties.put("averageColourName", this.averageColourName);
-    }
-
-    if (this.averageRGBColour != null)
-    {
-      properties.put("averageRGBColour", this.averageRGBColour);
-    }
-
-    if (this.minimumColourName != null)
-    {
-      properties.put("minimumColourName", this.minimumColourName);
-    }
-    
-    if (this.minimumRGBColour != null)
-    {
-      properties.put("minimumRGBColour", this.minimumRGBColour);
-    }
-
-    if (this.maximumColourName != null)
-    {
-      properties.put("maximumColourName", this.maximumColourName);
-    }
-    
-    if (this.maximumRGBColour != null)
-    {
-      properties.put("maximumRGBColour", this.maximumRGBColour);
-    }
-
     if (this.source != null)
     {
       properties.put("source", this.source);
+    }
+
+    if (this.averageColour != null)
+    {
+      properties.put("averageColour", this.averageColour.getRGB());
+    }
+
+    if (this.averageClosestColour != null)
+    {
+      properties.put("averageClosestColour", this.averageClosestColour.getColor().getRGB());
+    }
+
+    if (this.minimumColour != null)
+    {
+      properties.put("minimumColour", this.minimumColour.getRGB());
+    }
+
+    if (this.minimumClosestColour != null)
+    {
+      properties.put("minimumClosestColour", this.minimumClosestColour.getColor().getRGB());
+    }
+
+    if (this.maximumColour != null)
+    {
+      properties.put("maximumColour", this.maximumColour.getRGB());
+    }
+
+    if (this.maximumClosestColour != null)
+    {
+      properties.put("maximumClosestColour", this.maximumClosestColour.getColor().getRGB());
     }
 
     return properties;
@@ -137,84 +125,74 @@ public class ColourAnalysis implements Neo4ArtNode
     return LABELS;
   }
 
-  public String getName()
+  public Artwork getArtwork()
   {
-    return name;
+    return artwork;
   }
 
-  public void setName(String name)
+  public void setArtwork(Artwork artwork)
   {
-    this.name = name;
+    this.artwork = artwork;
   }
 
-  public String getImageName()
+  public Color getAverageColour()
   {
-    return imageName;
+    return averageColour;
   }
 
-  public void setImageName(String imageName)
+  public void setAverageColour(Color averageColour)
   {
-    this.imageName = imageName;
+    this.averageColour = averageColour;
   }
 
-  public String getAverageColourName()
+  public Colour getAverageClosestColour()
   {
-    return averageColourName;
+    return averageClosestColour;
   }
 
-  public void setAverageColourName(String averageColourName)
+  public void setAverageClosestColour(Colour averageClosestColour)
   {
-    this.averageColourName = averageColourName;
+    this.averageClosestColour = averageClosestColour;
   }
 
-  public Color getAverageRGBColour()
+  public Color getMinimumColour()
   {
-    return averageRGBColour;
+    return minimumColour;
   }
 
-  public void setAverageRGBColour(Color averageRGBColour)
+  public void setMinimumColour(Color minimumColour)
   {
-    this.averageRGBColour = averageRGBColour;
+    this.minimumColour = minimumColour;
   }
 
-  public String getMinimumColourName()
+  public Colour getMinimumClosestColour()
   {
-    return minimumColourName;
+    return minimumClosestColour;
   }
 
-  public void setMinimumColourName(String minimumColourName)
+  public void setMinimumClosestColour(Colour minimumClosestColour)
   {
-    this.minimumColourName = minimumColourName;
+    this.minimumClosestColour = minimumClosestColour;
   }
 
-  public Color getMinimumRGBColour()
+  public Color getMaximumColour()
   {
-    return minimumRGBColour;
+    return maximumColour;
   }
 
-  public void setMinimumRGBColour(Color minimumRGBColour)
+  public void setMaximumColour(Color maximumColour)
   {
-    this.minimumRGBColour = minimumRGBColour;
+    this.maximumColour = maximumColour;
   }
 
-  public String getMaximumColourName()
+  public Colour getMaximumClosestColour()
   {
-    return maximumColourName;
+    return maximumClosestColour;
   }
 
-  public void setMaximumColourName(String maximumColourName)
+  public void setMaximumClosestColour(Colour maximumClosestColour)
   {
-    this.maximumColourName = maximumColourName;
-  }
-
-  public Color getMaximumRGBColour()
-  {
-    return maximumRGBColour;
-  }
-
-  public void setMaximumRGBColour(Color maximumRGBColour)
-  {
-    this.maximumRGBColour = maximumRGBColour;
+    this.maximumClosestColour = maximumClosestColour;
   }
 
   public String getSource()
@@ -227,11 +205,6 @@ public class ColourAnalysis implements Neo4ArtNode
     this.source = source;
   }
 
-  public void setNodeId(Long nodeId)
-  {
-    this.nodeId = nodeId;
-  }
-  
   public int getIncrement()
   {
     return increment;
@@ -240,5 +213,10 @@ public class ColourAnalysis implements Neo4ArtNode
   public void setIncrement(int increment)
   {
     this.increment = increment;
+  }
+
+  public void setNodeId(Long nodeId)
+  {
+    this.nodeId = nodeId;
   }
 }
