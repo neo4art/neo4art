@@ -15,10 +15,12 @@
  */
 package org.neo4art.api.transformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.neo4art.api.builder.mock.timeline.BuildTimeLineMock;
 import org.neo4art.api.domain.TimelineEvent;
+import org.neo4art.colour.domain.ColourAnalysis;
 
 /**
  * @author Enrico De Benetti
@@ -33,9 +35,25 @@ public class TimeLineTransformer {
 	 */
 	public static List<TimelineEvent> buildTimeLineEvents(){
 		
-        BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
+	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
+     BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
+     List<ColourAnalysis> colourAnalysisList = mockTimeLineEvent.getColourAnalysis();
+        
+      for (ColourAnalysis colourAnalysis : colourAnalysisList) {
+
+       TimelineEvent timelineEvent = new TimelineEvent(); 
+       timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
+       timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
+       //TODO VERIFICARE SE NON ESISTE IL COMPLETITION DATA USARE L'ANNO...    	  
+       timelineEvent.setStart(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getCompletionDate() : "");
+       timelineEvent.setThumbnail(colourAnalysis.getSource());
+       //TODO DA ELIMINARE..
+       timelineEvent.setEmotion("smile");
+    	  
+       timelineEventsList.add(timelineEvent);
+	  }  
 		
-	  return mockTimeLineEvent.getTimeLineList();
+	 return timelineEventsList;
 	}
 	
 }

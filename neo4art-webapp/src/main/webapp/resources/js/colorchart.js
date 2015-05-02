@@ -43,11 +43,11 @@ function parseURLParams() {
 
 function load(p) {
 	var parseDate = d3.time.format("%d-%b-%Y %H:%M").parse;
-	var serviceUrl = window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/search.json?searchInput="
+	var serviceUrl = window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/colours-analysis.json?searchInput="
 			+ p.query.toString().replace(/\+/g, " ");
 	$.ajax({
 		method : 'get',
-		url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/search.json?searchInput="
+		url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/colours-analysis.json?searchInput="
 				+ p.query.toString().replace(/\+/g, " "),
 		dataType : 'json',
 		success : function(graph) {

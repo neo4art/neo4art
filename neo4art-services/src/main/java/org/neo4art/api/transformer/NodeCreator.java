@@ -197,12 +197,7 @@ public class NodeCreator {
 	 node.setId(colour.getNodeId());
 	 node.setLink(null);
 	 node.setName(colour.getName());
-	 
-	 if(colour.getColor() != null){
-		 
-	  String hex = String.format("#%02x%02x%02x", colour.getColor().getRed(), colour.getColor().getGreen(), colour.getColor().getBlue());
-	  node.setThumbnail(hex);	 
-	 }
+	 node.setThumbnail(colour.getHexaDecimalColor());	 
 	 
 	 node.setType(Neo4ArtLabel.Colour.name());
 		 
