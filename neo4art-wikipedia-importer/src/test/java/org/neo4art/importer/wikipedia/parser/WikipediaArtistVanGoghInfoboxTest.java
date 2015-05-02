@@ -94,14 +94,6 @@ public class WikipediaArtistVanGoghInfoboxTest {
 	}
 	
 	@Test
-	public void infoboxImageUrlTest() throws MalformedURLException{
-		URL url = new URL("http://en.wikipedia.org/wiki/File:Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_(454045).jpg");
-		
-		Assert.assertEquals(url, WikipediaArtistInfoboxParser.infoboxImageUrl("Vincent van Gogh - Self-Portrait - Google Art Project (454045).jpg|\n"));
-
-	}
-	
-	@Test
 	public void infoboxCaptionTest() {	
 		
 		Assert.assertEquals("Self-Portrait, Spring 1887, Oil on pasteboard, 42 x 33.7 cm., Art Institute of Chicago (F 345)", WikipediaArtistInfoboxParser.infoboxCaption("''Self-Portrait'', Spring 1887, Oil on pasteboard, 42 x 33.7&nbsp;cm., [[Art Institute of Chicago]] (F 345)\n"));

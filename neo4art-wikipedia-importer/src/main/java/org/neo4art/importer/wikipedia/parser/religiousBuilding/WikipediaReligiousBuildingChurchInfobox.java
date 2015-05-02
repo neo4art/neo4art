@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -41,7 +40,7 @@ public class WikipediaReligiousBuildingChurchInfobox
   public static final String IMAGE  = "image";
   public static final String STYLE  = "infobox";
 
-  public static ReligiousBuilding parse(String text) throws MalformedURLException
+  public static ReligiousBuilding parse(String text)
   {
     ReligiousBuilding church = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
@@ -62,39 +61,34 @@ public class WikipediaReligiousBuildingChurchInfobox
           church.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
           break;
         case LATD:
-          coordinate.setLatD(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLatD(map.get(key));
           break;
         case LATM:
-          coordinate.setLatM(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLatM(map.get(key));
           break;
         case LATS:
-          coordinate.setLatS(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLatS(map.get(key));
           break;
         case LATNS:
           coordinate.setLatNS(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LONGD:
-          coordinate.setLongD(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLongD(map.get(key));
           break;
         case LONGM:
-          coordinate.setLongM(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLongM(map.get(key));
           break;
         case LONGS:
-          coordinate.setLongS(Double.parseDouble(map.get(key)));
-          church.setCoordinates(coordinate);
+          coordinate.setLongS(map.get(key));
           break;
         case LONGEW:
           coordinate.setLongEW(map.get(key));
-          church.setCoordinates(coordinate);
           break;
       }
+      
+      church.setCoordinates(coordinate);
     }
+    
     return church;
   }
 }

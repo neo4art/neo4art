@@ -18,6 +18,8 @@ package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
@@ -31,6 +33,7 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaReligiousBuildingInfoboxParser
 {
+  private static Log         logger                = LogFactory.getLog(WikipediaReligiousBuildingInfoboxParser.class);
 
   public static final String BUILDING_NAME         = "building_name";
   public static final String NATIVE_NAME           = "native_name";
@@ -151,13 +154,13 @@ public class WikipediaReligiousBuildingInfoboxParser
           break;
         case COORDINATES:
           String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLatM(Double.parseDouble(c[2]));
-          coordinate.setLatS(Double.parseDouble(c[3]));
-          coordinate.setLatNS(c[4]);
-          coordinate.setLongD(Double.parseDouble(c[5]));
-          coordinate.setLongM(Double.parseDouble(c[6]));
-          coordinate.setLongS(Double.parseDouble(c[7]));
+          // coordinate.setLatD(Double.parseDouble(c[1]));
+          // coordinate.setLatM(Double.parseDouble(c[2]));
+          // coordinate.setLatS(Double.parseDouble(c[3]));
+          // coordinate.setLatNS(c[4]);
+          // coordinate.setLongD(Double.parseDouble(c[5]));
+          // coordinate.setLongM(Double.parseDouble(c[6]));
+          // coordinate.setLongS(Double.parseDouble(c[7]));
           coordinate.setLongEW(c[8]);
           religiousBuilding.setCoordinates(coordinate);
           break;
@@ -319,105 +322,176 @@ public class WikipediaReligiousBuildingInfoboxParser
 
   public static String infoboxBuildingName(String name)
   {
-
-    String[] n = StringUtils.split(name, "<");
-
-    name = n[0];
-
-    name = name.replace("&nbsp;", " ");
-
-    return name;
+    try
+    {
+      String[] n = StringUtils.split(name, "<");
+      name = n[0];
+      name = name.replace("&nbsp;", " ");
+  
+      return name;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxCaption(String name)
   {
-
-    if (name.contains("|") || name.contains("["))
+    try
     {
-      String[] n = StringUtils.split(name, "[");
-      String[] n1 = StringUtils.split(n[1], "|");
-      name = n1[0];
+      if (name.contains("|") || name.contains("["))
+      {
+        String[] n = StringUtils.split(name, "[");
+        String[] n1 = StringUtils.split(n[1], "|");
+        name = n1[0];
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxLocation(String name)
   {
-
-    if (name.contains("]"))
+    try
     {
-      String[] n1 = StringUtils.split(name, "]");
-      name = n1[0];
-      name = WikipediaInfoboxUtils.removeAllParenthesis(name);
+      if (name.contains("]"))
+      {
+        String[] n1 = StringUtils.split(name, "]");
+        name = n1[0];
+        name = WikipediaInfoboxUtils.removeAllParenthesis(name);
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxWebsite(String name)
   {
-
-    if (name.contains(" "))
+    try
     {
-      String[] n1 = StringUtils.split(name, " ");
-      name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
+      if (name.contains(" "))
+      {
+        String[] n1 = StringUtils.split(name, " ");
+        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxStatus(String name)
   {
-
-    if (name.contains("#"))
+    try
     {
-      String[] n1 = StringUtils.split(name, "#");
-      name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
+      if (name.contains("#"))
+      {
+        String[] n1 = StringUtils.split(name, "#");
+        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxLeadership(String name)
   {
-
-    if (name.contains("["))
+    try
     {
-      String[] n1 = StringUtils.split(name, "[");
-      name = WikipediaInfoboxUtils.removeAllParenthesis(n1[1]);
+      if (name.contains("["))
+      {
+        String[] n1 = StringUtils.split(name, "[");
+        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[1]);
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxProvince(String name)
   {
-
-    String[] n1 = StringUtils.split(name, "|");
-
-    name = n1[0].replace("[", "");
-    name = name.replace("]", "");
-
-    return name;
+    try
+    {
+      String[] n1 = StringUtils.split(name, "|");
+  
+      name = n1[0].replace("[", "");
+      name = name.replace("]", "");
+  
+      return name;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
+    }
+    
+    return null;
   }
 
   public static String infoboxMisure(String name)
   {
-
-    name = name.replace("\n", "");
-
-    if (name.contains("|"))
+    try
     {
-
-      String[] n1 = StringUtils.split(name, "|");
-
-      name = n1[1].replace(" ", "");
+      name = name.replace("\n", "");
+  
+      if (name.contains("|"))
+      {
+        String[] n1 = StringUtils.split(name, "|");
+        name = n1[1].replace(" ", "");
+      }
+      
+      return name;
     }
-    return name;
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
+    }
+    
+    return null;
   }
 
   public static String[] infoboxRestingPlaceCoordinates(String coor)
   {
-
-    String[] c = StringUtils.split(coor, "|");
-
-    return c;
+    try
+    {
+      return StringUtils.split(coor, "|");
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
+    }
+    
+    return null;
   }
-
 }

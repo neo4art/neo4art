@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -24,7 +23,6 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
 
 public class WikipediaHistoricPlaceInfoboxParser
 {
-
   public static final String NAME      = "name";
   public static final String IMAGE     = "image";
   public static final String LATD      = "lat_degrees";
@@ -51,9 +49,8 @@ public class WikipediaHistoricPlaceInfoboxParser
   {
   }
 
-  public static HistoricPlace parse(String text) throws MalformedURLException
+  public static HistoricPlace parse(String text)
   {
-
     Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
 
     HistoricPlace historicPlace = new HistoricPlace();
@@ -61,10 +58,8 @@ public class WikipediaHistoricPlaceInfoboxParser
 
     for (String key : map.keySet())
     {
-
       switch (key)
       {
-
         case NAME:
           historicPlace.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
@@ -75,196 +70,52 @@ public class WikipediaHistoricPlaceInfoboxParser
           historicPlace.setType(WikipediaInfoboxUtils.getType(map.get(key)));
           break;
         case LATITUDE:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatD(map.get(key));
           break;
         case LONGITUDE:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongD(map.get(key));
           break;
         case LATD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatD(map.get(key));
           break;
         case LATM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatM(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatM(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatM(map.get(key));
           break;
         case LATS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatS(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatS(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatS(map.get(key));
           break;
         case LATDEG:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatD(map.get(key));
           break;
         case LATMIN:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatM(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatM(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatM(map.get(key));
           break;
         case LATSEC:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatS(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatS(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatS(map.get(key));
           break;
         case LATNS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatNS("");
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatNS(map.get(key));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLatNS(map.get(key));
           break;
         case LONGD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongD(map.get(key));
           break;
         case LONGM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongM(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongM(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongM(map.get(key));
           break;
         case LONGS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongS(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongS(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongS(map.get(key));
           break;
         case LONGDEG:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongD(map.get(key));
           break;
         case LONGMIN:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongM(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongM(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongM(map.get(key));
           break;
         case LONGSEC:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongS(0);
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongS(Double.parseDouble(map.get(key)));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongS(map.get(key));
           break;
         case LONGEW:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongEW("");
-            historicPlace.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongEW(map.get(key));
-            historicPlace.setCoordinate(coordinate);
-          }
+          coordinate.setLongEW(map.get(key));
           break;
         case WEB:
           historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
@@ -273,10 +124,10 @@ public class WikipediaHistoricPlaceInfoboxParser
           historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
           break;
       }
-
+      
+      historicPlace.setCoordinate(coordinate);
     }
 
     return historicPlace;
   }
-
 }

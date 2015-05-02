@@ -15,11 +15,11 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Monument;
 import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
@@ -32,6 +32,8 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaMonumentInfoboxParser
 {
+  private static Log         logger    = LogFactory.getLog(WikipediaMonumentInfoboxParser.class);
+  
   public static final String MONUMENT_NAME = "monument_name";
   public static final String NATIVE_NAME   = "native_name";
   public static final String IMAGE         = "image";
@@ -77,10 +79,8 @@ public class WikipediaMonumentInfoboxParser
 
     for (String key : map.keySet())
     {
-
       switch (key)
       {
-
         case MONUMENT_NAME:
           monument.setMonumentName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
@@ -88,21 +88,13 @@ public class WikipediaMonumentInfoboxParser
           monument.setNativeName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
-          monument.setImage(infoboxImageUrl(map.get(key)));
+          monument.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
           break;
         case CAPTION:
           monument.setCaption(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLatM(Double.parseDouble(c[2]));
-          coordinate.setLatS(Double.parseDouble(c[3]));
-          coordinate.setLatNS(c[4]);
-          coordinate.setLongD(Double.parseDouble(c[5]));
-          coordinate.setLongM(Double.parseDouble(c[6]));
-          coordinate.setLongS(Double.parseDouble(c[7]));
-          coordinate.setLongEW(c[8]);
+          infoboxRestingPlaceCoordinates(coordinate, map.get(key));
           monument.setCoordinates(coordinate);
           break;
         case LOCATION:
@@ -151,100 +143,28 @@ public class WikipediaMonumentInfoboxParser
           monument.setRelief(map.get(key));
           break;
         case LATD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatD(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLatD(map.get(key));
           break;
         case LATM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatM(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLatM(map.get(key));
           break;
         case LATS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatS(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLatS(map.get(key));
           break;
         case LATNS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLatNS("");
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case LONGD:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongD(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongD(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLongD(map.get(key));
           break;
         case LONGM:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongM(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongM(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLongM(map.get(key));
           break;
         case LONGS:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongS(0);
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongS(Double.parseDouble(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key))));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLongS(map.get(key));
           break;
         case LONGEW:
-          if (map.get(key).equals(""))
-          {
-            coordinate.setLongEW("");
-            monument.setCoordinate(coordinate);
-          }
-          else
-          {
-            coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-            monument.setCoordinate(coordinate);
-          }
+          coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case LAT:
           monument.setLat(map.get(key));
@@ -256,53 +176,49 @@ public class WikipediaMonumentInfoboxParser
           monument.setExtra(map.get(key));
           break;
       }
+      
+      monument.setCoordinate(coordinate);
     }
 
     return monument;
   }
 
-  public static URL infoboxImageUrl(String nameImage)
+  public static String[] infoboxRestingPlaceCoordinates(Coordinate coordinate, String coor)
   {
-    nameImage = nameImage.replaceAll(" ", "_");
-    nameImage = nameImage.replace("|", "");
-    nameImage = nameImage.replace("\n", "");
-    
-    if (nameImage.contains("File:"))
-    {
-      nameImage = "http://en.wikipedia.org/wiki/" + nameImage;
-    }
-    else
-    {
-      nameImage = "http://en.wikipedia.org/wiki/File:" + nameImage;
-    }
-
-    URL url = null;
-    
     try
     {
-      url = new URL(nameImage);
+      String c[] = StringUtils.split(coor, "|");
+      
+//    coordinate.setLatD(Double.parseDouble(c[1]));
+//    coordinate.setLatM(Double.parseDouble(c[2]));
+//    coordinate.setLatS(Double.parseDouble(c[3]));
+//    coordinate.setLatNS(c[4]);
+//    coordinate.setLongD(Double.parseDouble(c[5]));
+//    coordinate.setLongM(Double.parseDouble(c[6]));
+//    coordinate.setLongS(Double.parseDouble(c[7]));
+      coordinate.setLongEW(c[8]);
+
     }
-    catch (MalformedURLException e)
+    catch (Exception e)
     {
+      logger.error("Error parsing Monument infobox: " + e.getMessage());
     }
     
-    return url;
-  }
-
-  public static String[] infoboxRestingPlaceCoordinates(String coor)
-  {
-
-    String[] c = StringUtils.split(coor, "|");
-
-    return c;
+    return null;
   }
 
   public static String[] infoboxLocation(String coor)
   {
-
-    String[] c = StringUtils.split(coor, ",");
-
-    return c;
+    try
+    {
+      return StringUtils.split(coor, ",");
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Monument infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
 }

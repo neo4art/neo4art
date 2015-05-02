@@ -15,11 +15,12 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Coordinate;
@@ -35,6 +36,8 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaArtworkInfoboxParser
 {
+  private static Log         logger             = LogFactory.getLog(WikipediaArtworkInfoboxParser.class);
+
   public static final String TITLE              = "title";
   public static final String IMAGE_SIZE         = "image_size";
   public static final String ALT                = "alt";
@@ -208,15 +211,15 @@ public class WikipediaArtworkInfoboxParser
           artwork.setCity(country);
           break;
         case COORDINATES:
-          String[] c = infoboxCoordinate(map.get(key));
-          coordinate.setLatD(Double.parseDouble(c[1]));
-          coordinate.setLatM(Double.parseDouble(c[2]));
-          coordinate.setLatS(Double.parseDouble(c[3]));
-          coordinate.setLatNS(c[4]);
-          coordinate.setLongD(Double.parseDouble(c[5]));
-          coordinate.setLongM(Double.parseDouble(c[6]));
-          coordinate.setLongS(Double.parseDouble(c[7]));
-          coordinate.setLongEW(c[8]);
+          infoboxCoordinate(map.get(key));
+          // coordinate.setLatD(Double.parseDouble(c[1]));
+          // coordinate.setLatM(Double.parseDouble(c[2]));
+          // coordinate.setLatS(Double.parseDouble(c[3]));
+          // coordinate.setLatNS(c[4]);
+          // coordinate.setLongD(Double.parseDouble(c[5]));
+          // coordinate.setLongM(Double.parseDouble(c[6]));
+          // coordinate.setLongS(Double.parseDouble(c[7]));
+          // coordinate.setLongEW(c[8]);
           artwork.setCoordinates(coordinate);
           break;
         case URL:
@@ -230,72 +233,121 @@ public class WikipediaArtworkInfoboxParser
 
   public static String[] infoboxCoordinate(String coo)
   {
-    String[] c = StringUtils.split(coo, "|");
-
-    return c;
+    try
+    {
+      String[] c = StringUtils.split(coo, "|");
+  
+      return c;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static URL infoboxImageUrl(String nameImage)
   {
-    nameImage = nameImage.replaceAll(" ", "_");
-    nameImage = nameImage.replace("|", "");
-    nameImage = nameImage.replace("\n", "");
-    nameImage = "http://en.wikipedia.org/wiki/File:" + nameImage;
-    URL url = null;
     try
     {
-      url = new URL(nameImage);
+      nameImage = nameImage.replaceAll(" ", "_");
+      nameImage = nameImage.replace("|", "");
+      nameImage = nameImage.replace("\n", "");
+      nameImage = "http://en.wikipedia.org/wiki/File:" + nameImage;
+      URL url = new URL(nameImage);
+      return url;
     }
-    catch (MalformedURLException e)
+    catch (Exception e)
     {
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
     }
-    return url;
+    
+    return null;
   }
 
   public static String infoboxCountry(String city)
   {
-    city = WikipediaInfoboxUtils.removeAllParenthesis(city);
-
-    return city;
+    try
+    {
+      city = WikipediaInfoboxUtils.removeAllParenthesis(city);
+  
+      return city;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxCatalogue(String catalogue)
   {
-    catalogue = WikipediaInfoboxUtils.removeAllParenthesis(catalogue);
-
-    return catalogue;
+    try
+    {
+      return WikipediaInfoboxUtils.removeAllParenthesis(catalogue);
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxImperialWidth(String width)
   {
-    if (width.contains("|"))
+    try
     {
-      width = width.replace("{", "");
-      width = width.replace("}", "");
-      String[] im = StringUtils.split(width, "|");
-      im[0] = im[1] + im[2] + "/" + im[3];
-      im[0] = im[0].replace(" ", "");
-      return im[0];
+      if (width.contains("|"))
+      {
+        width = width.replace("{", "");
+        width = width.replace("}", "");
+        
+        String[] im = StringUtils.split(width, "|");
+        
+        im[0] = im[1] + im[2] + "/" + im[3];
+        im[0] = im[0].replace(" ", "");
+        
+        return im[0];
+      }
+      else
+      {
+        return width;
+      }
     }
-    else
+    catch (Exception e)
     {
-      return width;
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
     }
-
+    
+    return null;
   }
 
   public static String infoboxYear(String year)
   {
-    if (year.contains("|"))
+    try
     {
-      year = WikipediaInfoboxUtils.removeAllParenthesis(year);
-      String[] y = StringUtils.split(year, "|");
-      return y[1];
+      if (year.contains("|"))
+      {
+        year = WikipediaInfoboxUtils.removeAllParenthesis(year);
+        
+        String[] y = StringUtils.split(year, "|");
+        
+        return y[1];
+      }
+      else
+      {
+        return year;
+      }
     }
-    else
+    catch (Exception e)
     {
-      return year;
+      logger.error("Error parsing Artwork infobox: " + e.getMessage());
     }
+    
+    return null;
   }
 
 }
