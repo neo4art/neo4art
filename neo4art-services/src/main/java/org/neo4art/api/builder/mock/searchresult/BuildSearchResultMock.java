@@ -15,12 +15,19 @@
  */
 package org.neo4art.api.builder.mock.searchresult;
 
+import java.awt.Color;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.domain.Link;
-import org.neo4art.api.domain.Node;
-import org.neo4art.api.domain.SearchResult;
+import org.neo4art.colour.domain.Colour;
+import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Museum;
+import org.neo4art.graphdb.Neo4ArtGraph;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Neo4ArtRelationship;
+import org.neo4art.sentiment.domain.Word;
 
 /**
  * @author Enrico De Benetti
@@ -30,456 +37,369 @@ import org.neo4art.api.domain.SearchResult;
 public class BuildSearchResultMock {
 
 	
-	public SearchResult getSearchResult(){
+	public Neo4ArtGraph getSearchResult(){
 		
-		SearchResult searchResult = new SearchResult();
-        searchResult.setLinkList(getLinkList());
-        searchResult.setNodeList(getNodeList());
+	 List<Neo4ArtNode> listaSearch = new ArrayList<Neo4ArtNode>();	
+	 List<Neo4ArtRelationship> relationshpiList = new ArrayList<Neo4ArtRelationship>();
+	 
+	  try{
+		  
+		Artist artist = new Artist();
+		artist.setNodeId(0);
+		artist.setName("Van Gogh");
+		artist.setWebsite("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+
+		Artwork artwork1 = new Artwork();
+		artwork1.setNodeId(1);
+		artwork1.setTitle("Water Mill at Gennep I");
+		artwork1.setUrl(new URL("http://www.vggallery.com/painting/f_0046.jpg"));
 		
-	  return searchResult;	
+		Artwork artwork2 = new Artwork();
+		artwork2.setNodeId(2);
+		artwork2.setTitle("Village at Sunset");
+		artwork2.setUrl(new URL("http://www.vggallery.com/painting/f_0190.jpg"));
+		
+		Colour color = new Colour();
+		color.setNodeId(3);
+		color.setName("red");
+        color.setRgb(new Color(255, 0, 0));
+		
+		Word word = new Word();
+		word.setNodeId(4);
+		word.setWord("good");
+		word.setPolarity("positive");
+		
+		Artwork artwork3 = new Artwork();
+		artwork3.setNodeId(5);
+		artwork3.setTitle("Weaver, Interior with Three Small Windows");
+		artwork3.setUrl(new URL("http://www.vggallery.com/painting/f_0037.jpg"));
+		
+		Museum museum = new Museum();
+		museum.setNodeId(6);
+		museum.setName("Van Gogh Museum");
+		museum.setImage(new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Van_Gogh_Museum.jpg/1024px-Van_Gogh_Museum.jpg"));
+		museum.setWebsite("http://it.wikipedia.org/wiki/Van_Gogh_Museum");
+		
+		Artwork artwork4 = new Artwork();
+		artwork4.setNodeId(7);
+		artwork4.setTitle("Head of a Man I");
+		artwork4.setUrl(new URL("http://www.vggallery.com/painting/f_0179r.jpg"));
+		
+		Artwork artwork5 = new Artwork();
+		artwork5.setNodeId(8);
+		artwork5.setTitle("The Potato Eaters I");
+		artwork5.setUrl(new URL("http://www.vggallery.com/painting/f_0082.jpg"));
+		
+		Artwork artwork6 = new Artwork();
+		artwork6.setNodeId(9);
+		artwork6.setTitle("Landscape with Pollard Willows");
+		artwork6.setUrl(new URL("http://www.vggallery.com/painting/f_0031.jpg"));
+		
+		listaSearch.add(artist);
+		listaSearch.add(artwork1);
+		listaSearch.add(artwork2);
+		listaSearch.add(artwork3);
+		listaSearch.add(artwork4);
+		listaSearch.add(artwork5);
+		listaSearch.add(artwork6);
+		listaSearch.add(museum);
+		listaSearch.add(color);
+		listaSearch.add(word);
+		
+	   Neo4ArtRelationship relationship1 = new Neo4ArtRelationship();
+	   relationship1.setStartNode(artwork1);
+	   relationship1.setEndNode(artist);
+		
+	   Neo4ArtRelationship relationship2 = new Neo4ArtRelationship();
+	   relationship2.setStartNode(artwork2);
+	   relationship2.setEndNode(artist);
+	   
+	   Neo4ArtRelationship relationship3 = new Neo4ArtRelationship();
+	   relationship3.setStartNode(artwork3);
+	   relationship3.setEndNode(artist);
+	   
+	   Neo4ArtRelationship relationship4 = new Neo4ArtRelationship();
+	   relationship4.setStartNode(artwork4);
+	   relationship4.setEndNode(artist);
+	   
+	   Neo4ArtRelationship relationship5 = new Neo4ArtRelationship();
+	   relationship5.setStartNode(artwork5);
+	   relationship5.setEndNode(artist);
+	   
+	   Neo4ArtRelationship relationship6 = new Neo4ArtRelationship();
+	   relationship6.setStartNode(museum);
+	   relationship6.setEndNode(artwork4);
+	   
+	   Neo4ArtRelationship relationship7 = new Neo4ArtRelationship();
+	   relationship7.setStartNode(artwork6);
+	   relationship7.setEndNode(artwork4);
+	   
+	   Neo4ArtRelationship relationship8 = new Neo4ArtRelationship();
+	   relationship8.setStartNode(artwork3);
+	   relationship8.setEndNode(artwork6);
+	   
+	   Neo4ArtRelationship relationship9 = new Neo4ArtRelationship();
+	   relationship9.setStartNode(word);
+	   relationship9.setEndNode(artwork3);
+	   
+	   Neo4ArtRelationship relationship10 = new Neo4ArtRelationship();
+	   relationship10.setStartNode(color);
+	   relationship10.setEndNode(artwork3);
+	   
+	   Neo4ArtRelationship relationship11 = new Neo4ArtRelationship();
+	   relationship11.setStartNode(artwork4);
+	   relationship11.setEndNode(artwork3);
+	   
+	   Neo4ArtRelationship relationship12 = new Neo4ArtRelationship();
+	   relationship12.setStartNode(artwork1);
+	   relationship12.setEndNode(color);
+	   
+	   Neo4ArtRelationship relationship13 = new Neo4ArtRelationship();
+	   relationship13.setStartNode(artwork2);
+	   relationship13.setEndNode(color);
+	   
+	   Neo4ArtRelationship relationship14 = new Neo4ArtRelationship();
+	   relationship14.setStartNode(artwork6);
+	   relationship14.setEndNode(color);
+	   
+	   Neo4ArtRelationship relationship15 = new Neo4ArtRelationship();
+	   relationship15.setStartNode(artwork5);
+	   relationship15.setEndNode(color);
+	   
+	   Neo4ArtRelationship relationship16 = new Neo4ArtRelationship();
+	   relationship16.setStartNode(artwork6);
+	   relationship16.setEndNode(artist);
+	   
+	   Neo4ArtRelationship relationship17 = new Neo4ArtRelationship();
+	   relationship17.setStartNode(artwork6);
+	   relationship17.setEndNode(artwork2);
+	   
+	   Neo4ArtRelationship relationship18 = new Neo4ArtRelationship();
+	   relationship18.setStartNode(museum);
+	   relationship18.setEndNode(artwork6);
+	   
+	   Neo4ArtRelationship relationship19 = new Neo4ArtRelationship();
+	   relationship19.setStartNode(artwork4);
+	   relationship19.setEndNode(artwork6);
+	   
+	   Neo4ArtRelationship relationship20 = new Neo4ArtRelationship();
+	   relationship20.setStartNode(artwork5);
+	   relationship20.setEndNode(artwork6);
+	   
+	   relationshpiList.add(relationship1);
+	   relationshpiList.add(relationship2);
+	   relationshpiList.add(relationship3);
+	   relationshpiList.add(relationship4);
+	   relationshpiList.add(relationship5);
+	   relationshpiList.add(relationship6);
+	   relationshpiList.add(relationship7);
+	   relationshpiList.add(relationship8);
+	   relationshpiList.add(relationship9);
+	   relationshpiList.add(relationship10);
+	   relationshpiList.add(relationship11);
+	   relationshpiList.add(relationship12);
+	   relationshpiList.add(relationship13);
+	   relationshpiList.add(relationship14);
+	   relationshpiList.add(relationship15);
+	   relationshpiList.add(relationship16);
+	   relationshpiList.add(relationship17);
+	   relationshpiList.add(relationship18);
+	   relationshpiList.add(relationship19);
+	   relationshpiList.add(relationship20);
+	   
+	  }
+	  catch(Exception e){
+		  
+		  System.out.println("ERRORE: "+e.getMessage());
+	  }
+		
+	 Neo4ArtGraph neo4ArtGraph = new Neo4ArtGraph();
+	 neo4ArtGraph.setNodes(listaSearch);
+	 neo4ArtGraph.setRelationships(relationshpiList);
+		
+	 return neo4ArtGraph;	
 	}
 	
-    public SearchResult getDetailSearchNode(){
+    public Neo4ArtGraph getDetailSearchNode(){
 		
-		SearchResult searchResult = new SearchResult();
-        searchResult.setLinkList(getDetailLinkList());
-        searchResult.setNodeList(getDetailNodeList());
+     List<Neo4ArtNode> listaSearch = new ArrayList<Neo4ArtNode>();	
+     List<Neo4ArtRelationship> relationshpiList = new ArrayList<Neo4ArtRelationship>();
+    	 
+     try{	
+    	
+    	Artwork artwork1 = new Artwork();
+ 		artwork1.setNodeId(10);
+ 		artwork1.setTitle("Garden in Auvers");
+ 		artwork1.setUrl(new URL("http://www.vggallery.com/painting/f_0814.jpg"));
+    	 
+ 		Artwork artwork2 = new Artwork();
+ 		artwork2.setNodeId(11);
+ 		artwork2.setTitle("Plaster Statuette of a Female Torso VIII");
+ 		artwork2.setUrl(new URL("http://www.vggallery.com/painting/f_0216.jpg"));
+ 		
+ 		Artwork artwork3 = new Artwork();
+ 		artwork3.setNodeId(12);
+ 		artwork3.setTitle("Portrait of PÃ¨re Tanguy I");
+ 		artwork3.setUrl(new URL("http://www.vggallery.com/painting/f_0364.jpg"));
+ 		
+ 		Artwork artwork4 = new Artwork();
+ 		artwork4.setNodeId(13);
+ 		artwork4.setTitle("Still Life with Meadow Flowers and Roses");
+ 		artwork4.setUrl(new URL("http://www.vggallery.com/painting/f_0278.jpg"));
+ 				
+ 		Artwork artwork5 = new Artwork();
+ 		artwork5.setNodeId(14);
+ 		artwork5.setTitle("Portrait of a Man with a Skull Cap");
+ 		artwork5.setUrl(new URL("http://www.vggallery.com/painting/f_0289.jpg"));
+ 		
+ 		Artwork artwork6 = new Artwork();
+ 		artwork6.setNodeId(15);
+ 		artwork6.setTitle("Head of a Woman VIII");
+ 		artwork6.setUrl(new URL("http://www.vggallery.com/painting/f_0156.jpg"));
+ 		
+ 		Artwork artwork7 = new Artwork();
+ 		artwork7.setNodeId(16);
+ 		artwork7.setTitle("Thatched Cottages in Jorgus");
+ 		artwork7.setUrl(new URL("http://www.vggallery.com/painting/f_0758.jpg"));
+ 		
+ 		Artwork artwork8 = new Artwork();
+ 		artwork8.setNodeId(17);
+ 		artwork8.setTitle("Still Life: Glass with Carnations");
+ 		artwork8.setUrl(new URL("http://www.vggallery.com/painting/f_0598.jpg"));
+ 		
+ 		Artwork artwork9 = new Artwork();
+ 		artwork9.setNodeId(18);
+ 		artwork9.setTitle("Portrait of Adeline Ravoux II");
+ 		artwork9.setUrl(new URL("http://www.vggallery.com/painting/f_0768.jpg"));
+ 		
+ 		Artwork artwork10 = new Artwork();
+ 		artwork10.setNodeId(19);
+ 		artwork10.setTitle("The Fields");
+ 		artwork10.setUrl(new URL("http://www.vggallery.com/painting/f_0761.jpg"));
+ 		
+ 		listaSearch.add(artwork1);
+ 		listaSearch.add(artwork2);
+ 		listaSearch.add(artwork3);
+ 		listaSearch.add(artwork4);
+ 		listaSearch.add(artwork5);
+ 		listaSearch.add(artwork6);
+ 		listaSearch.add(artwork7);
+ 		listaSearch.add(artwork8);
+ 		listaSearch.add(artwork9);
+ 		listaSearch.add(artwork10);
+ 		
+ 		
+ 	   Neo4ArtRelationship relationship1 = new Neo4ArtRelationship();
+ 	   relationship1.setStartNode(artwork2);
+ 	   relationship1.setEndNode(artwork1);
+ 	   
+ 	   Neo4ArtRelationship relationship2 = new Neo4ArtRelationship();
+	   relationship2.setStartNode(artwork3);
+	   relationship2.setEndNode(artwork1);
+	   
+	   Neo4ArtRelationship relationship3 = new Neo4ArtRelationship();
+ 	   relationship3.setStartNode(artwork4);
+ 	   relationship3.setEndNode(artwork1);
+ 	   
+ 	   Neo4ArtRelationship relationship4 = new Neo4ArtRelationship();
+	   relationship4.setStartNode(artwork5);
+	   relationship4.setEndNode(artwork1);
+	   
+	   Neo4ArtRelationship relationship5 = new Neo4ArtRelationship();
+ 	   relationship5.setStartNode(artwork6);
+ 	   relationship5.setEndNode(artwork1);
+ 	   
+ 	   Neo4ArtRelationship relationship6 = new Neo4ArtRelationship();
+	   relationship6.setStartNode(artwork7);
+	   relationship6.setEndNode(artwork8);
+	   
+	   Neo4ArtRelationship relationship7 = new Neo4ArtRelationship();
+ 	   relationship7.setStartNode(artwork10);
+ 	   relationship7.setEndNode(artwork8);
+ 	   
+ 	   Neo4ArtRelationship relationship8 = new Neo4ArtRelationship();
+	   relationship8.setStartNode(artwork6);
+	   relationship8.setEndNode(artwork10);
+	   
+	   Neo4ArtRelationship relationship9 = new Neo4ArtRelationship();
+ 	   relationship9.setStartNode(artwork5);
+ 	   relationship9.setEndNode(artwork6);
+ 	   
+ 	   Neo4ArtRelationship relationship10 = new Neo4ArtRelationship();
+	   relationship10.setStartNode(artwork4);
+	   relationship10.setEndNode(artwork6);
+	   
+	   Neo4ArtRelationship relationship11 = new Neo4ArtRelationship();
+ 	   relationship11.setStartNode(artwork8);
+ 	   relationship11.setEndNode(artwork6);
+ 	   
+ 	   Neo4ArtRelationship relationship12 = new Neo4ArtRelationship();
+	   relationship12.setStartNode(artwork2);
+	   relationship12.setEndNode(artwork4);
+	   
+	   Neo4ArtRelationship relationship13 = new Neo4ArtRelationship();
+ 	   relationship13.setStartNode(artwork3);
+ 	   relationship13.setEndNode(artwork4);
+ 	   
+ 	   Neo4ArtRelationship relationship14 = new Neo4ArtRelationship();
+	   relationship14.setStartNode(artwork10);
+	   relationship14.setEndNode(artwork4);
+	   
+	   Neo4ArtRelationship relationship15 = new Neo4ArtRelationship();
+ 	   relationship15.setStartNode(artwork9);
+ 	   relationship15.setEndNode(artwork4);
+ 	   
+ 	   Neo4ArtRelationship relationship16 = new Neo4ArtRelationship();
+	   relationship16.setStartNode(artwork10);
+	   relationship16.setEndNode(artwork1);
+	   
+	   Neo4ArtRelationship relationship17 = new Neo4ArtRelationship();
+ 	   relationship17.setStartNode(artwork10);
+ 	   relationship17.setEndNode(artwork3);
+ 	   
+ 	   Neo4ArtRelationship relationship18 = new Neo4ArtRelationship();
+	   relationship18.setStartNode(artwork7);
+	   relationship18.setEndNode(artwork10);
+	   
+	   Neo4ArtRelationship relationship19 = new Neo4ArtRelationship();
+ 	   relationship19.setStartNode(artwork8);
+ 	   relationship19.setEndNode(artwork10);
+ 	   
+ 	   Neo4ArtRelationship relationship20 = new Neo4ArtRelationship();
+	   relationship20.setStartNode(artwork9);
+	   relationship20.setEndNode(artwork10);
+ 	   
+ 	   relationshpiList.add(relationship1);
+	   relationshpiList.add(relationship2);
+	   relationshpiList.add(relationship3);
+	   relationshpiList.add(relationship4);
+	   relationshpiList.add(relationship5);
+	   relationshpiList.add(relationship6);
+	   relationshpiList.add(relationship7);
+	   relationshpiList.add(relationship8);
+	   relationshpiList.add(relationship9);
+	   relationshpiList.add(relationship10);
+	   relationshpiList.add(relationship11);
+	   relationshpiList.add(relationship12);
+	   relationshpiList.add(relationship13);
+	   relationshpiList.add(relationship14);
+	   relationshpiList.add(relationship15);
+	   relationshpiList.add(relationship16);
+	   relationshpiList.add(relationship17);
+	   relationshpiList.add(relationship18);
+	   relationshpiList.add(relationship19);
+	   relationshpiList.add(relationship20);
+     }
+	  catch(Exception e){
+		  
+		  System.out.println("ERRORE: "+e.getMessage());
+	  }
 		
-	  return searchResult;	
+	 Neo4ArtGraph neo4ArtGraph = new Neo4ArtGraph();
+	 neo4ArtGraph.setNodes(listaSearch);
+	 neo4ArtGraph.setRelationships(relationshpiList);
+		
+	 return neo4ArtGraph;		
 	}
-	
-	
-	public static List<Node> getNodeList(){
-		
-		List<Node> nodeList = new ArrayList<Node>();
-		
-		Node nodo1 = new Node();
-		nodo1.setId(0);
-		nodo1.setName("Van Gogh");
-		nodo1.setThumbnail("");
-		nodo1.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo1.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo2 = new Node();
-		nodo2.setId(1);
-		nodo2.setName("Water Mill at Gennep I");
-		nodo2.setThumbnail("http://www.vggallery.com/painting/f_0046.jpg");
-		nodo2.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo2.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo3 = new Node();
-		nodo3.setId(2);
-		nodo3.setName("Village at Sunset");
-		nodo3.setThumbnail("http://www.vggallery.com/painting/f_0190.jpg");
-		nodo3.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo3.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo4 = new Node();
-		nodo4.setId(3);
-		nodo4.setName("red");
-		nodo4.setThumbnail("");
-		nodo4.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo4.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo5 = new Node();
-		nodo5.setId(4);
-		nodo5.setName("good");
-		nodo5.setThumbnail("");
-		nodo5.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo5.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo6 = new Node();
-		nodo6.setId(5);
-		nodo6.setName("Weaver, Interior with Three Small Windows");
-		nodo6.setThumbnail("http://www.vggallery.com/painting/f_0037.jpg");
-		nodo6.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo6.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo7 = new Node();
-		nodo7.setId(6);
-		nodo7.setName("Van Gogh Museum");
-		nodo7.setThumbnail("");
-		nodo7.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo7.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo8 = new Node();
-		nodo8.setId(7);
-		nodo8.setName("Head of a Man I");
-		nodo8.setThumbnail("http://www.vggallery.com/painting/f_0179r.jpg");
-		nodo8.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo8.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo9 = new Node();
-		nodo9.setId(8);
-		nodo9.setName("The Potato Eaters I");
-		nodo9.setThumbnail("http://www.vggallery.com/painting/f_0082.jpg");
-		nodo9.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo9.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo10 = new Node();
-		nodo10.setId(9);
-		nodo10.setName("Landscape with Pollard Willows");
-		nodo10.setThumbnail("http://www.vggallery.com/painting/f_0031.jpg");
-		nodo10.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo10.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		nodeList.add(nodo1);
-		nodeList.add(nodo2);
-		nodeList.add(nodo3);
-		nodeList.add(nodo4);
-		nodeList.add(nodo5);
-		nodeList.add(nodo6);
-		nodeList.add(nodo7);
-		nodeList.add(nodo8);
-		nodeList.add(nodo9);
-		nodeList.add(nodo10);
-		 
-	  return nodeList;
-	}
-	
-	public static List<Link> getLinkList(){
-		
-	 List<Link> linkList = new ArrayList<Link>();
-	
-	 Link link1 = new Link();
-	 link1.setLinkName("has painted");
-	 link1.setSource(1);
-	 link1.setTarget(0);
-	 
-	 
-	 Link link2 = new Link();
-	 link2.setLinkName("has painted");
-	 link2.setSource(2);
-	 link2.setTarget(0);
-	 
-	 Link link3 = new Link();
-	 link3.setLinkName("has painted");
-	 link3.setSource(3);
-	 link3.setTarget(0);
-	 
-	 Link link4 = new Link();
-	 link4.setLinkName("has painted");
-	 link4.setSource(4);
-	 link4.setTarget(0);
-	 
-	 Link link5 = new Link();
-	 link5.setLinkName("has painted");
-	 link5.setSource(5);
-	 link5.setTarget(0);
-	 
-	 Link link6 = new Link();
-	 link6.setLinkName("has painted");
-	 link6.setSource(6);
-	 link6.setTarget(7);
-	 
-	 Link link7 = new Link();
-	 link7.setLinkName("has painted");
-	 link7.setSource(9);
-	 link7.setTarget(7);
-	 
-	 Link link8 = new Link();
-	 link8.setLinkName("has painted");
-	 link8.setSource(5);
-	 link8.setTarget(9);
-	 
-	 Link link9 = new Link();
-	 link9.setLinkName("has painted");
-	 link9.setSource(4);
-	 link9.setTarget(5);
-	 
-	 Link link10 = new Link();
-	 link10.setLinkName("has painted");
-	 link10.setSource(3);
-	 link10.setTarget(5);
-	 
-	 Link link11 = new Link();
-	 link11.setLinkName("has painted");
-	 link11.setSource(7);
-	 link11.setTarget(5);
-	 
-	 Link link12 = new Link();
-	 link12.setLinkName("has painted");
-	 link12.setSource(1);
-	 link12.setTarget(3);
-	 
-	 Link link13 = new Link();
-	 link13.setLinkName("has painted");
-	 link13.setSource(2);
-	 link13.setTarget(3);
-	 
-	 Link link14 = new Link();
-	 link14.setLinkName("has painted");
-	 link14.setSource(9);
-	 link14.setTarget(3);
-	 
-	 Link link15 = new Link();
-	 link15.setLinkName("has painted");
-	 link15.setSource(8);
-	 link15.setTarget(3);
-	 
-	 Link link16 = new Link();
-	 link16.setLinkName("has painted");
-	 link16.setSource(9);
-	 link16.setTarget(0);
-	 
-	 Link link17 = new Link();
-	 link17.setLinkName("has painted");
-	 link17.setSource(9);
-	 link17.setTarget(2);
-	 
-	 Link link18 = new Link();
-	 link18.setLinkName("has painted");
-	 link18.setSource(6);
-	 link18.setTarget(9);
-	 
-	 Link link19 = new Link();
-	 link19.setLinkName("has painted");
-	 link19.setSource(7);
-	 link19.setTarget(9);
-	 
-	 Link link20 = new Link();
-	 link20.setLinkName("has painted");
-	 link20.setSource(8);
-	 link20.setTarget(9);
-	 
-	 linkList.add(link1);
-	 linkList.add(link2);
-	 linkList.add(link3);
-	 linkList.add(link4);
-	 linkList.add(link5);
-	 linkList.add(link6);
-	 linkList.add(link7);
-	 linkList.add(link8);
-	 linkList.add(link9);
-	 linkList.add(link10);
-	 linkList.add(link11);
-	 linkList.add(link12);
-	 linkList.add(link13);
-	 linkList.add(link14);
-	 linkList.add(link15);
-	 linkList.add(link16);
-	 linkList.add(link17);
-	 linkList.add(link18);
-	 linkList.add(link19);
-	 linkList.add(link20);
-	 
-     return linkList;		 
-	}
-	
-     public static List<Node> getDetailNodeList(){
-		
-		List<Node> nodeList = new ArrayList<Node>();
-		
-		Node nodo1 = new Node();
-		nodo1.setId(10);
-		nodo1.setName("Garden in Auvers");
-		nodo1.setThumbnail("http://www.vggallery.com/painting/f_0814.jpg");
-		nodo1.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo1.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo2 = new Node();
-		nodo2.setId(11);
-		nodo2.setName("Plaster Statuette of a Female Torso VIII");
-		nodo2.setThumbnail("http://www.vggallery.com/painting/f_0216.jpg");
-		nodo2.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo2.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo3 = new Node();
-		nodo3.setId(12);
-		nodo3.setName("Portrait of PÃ¨re Tanguy I");
-		nodo3.setThumbnail("http://www.vggallery.com/painting/f_0364.jpg");
-		nodo3.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo3.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo4 = new Node();
-		nodo4.setId(13);
-		nodo4.setName("Still Life with Meadow Flowers and Roses");
-		nodo4.setThumbnail("http://www.vggallery.com/painting/f_0278.jpg");
-		nodo4.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo4.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-				
-		Node nodo5 = new Node();
-		nodo5.setId(14);
-		nodo5.setName("Portrait of a Man with a Skull Cap");
-		nodo5.setThumbnail("http://www.vggallery.com/painting/f_0289.jpg");
-		nodo5.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo5.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo6 = new Node();
-		nodo6.setId(15);
-		nodo6.setName("Head of a Woman VIII");
-		nodo6.setThumbnail("http://www.vggallery.com/painting/f_0156.jpg");
-		nodo6.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo6.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo7 = new Node();
-		nodo7.setId(16);
-		nodo7.setName("Thatched Cottages in Jorgus");
-		nodo7.setThumbnail("http://www.vggallery.com/painting/f_0758.jpg");
-		nodo7.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo7.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo8 = new Node();
-		nodo8.setId(17);
-		nodo8.setName("Still Life: Glass with Carnations");
-		nodo8.setThumbnail("http://www.vggallery.com/painting/f_0598.jpg");
-		nodo8.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo8.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo9 = new Node();
-		nodo9.setId(18);
-		nodo9.setName("Portrait of Adeline Ravoux II");
-		nodo9.setThumbnail("http://www.vggallery.com/painting/f_0768.jpg");
-		nodo9.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo9.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		Node nodo10 = new Node();
-		nodo10.setId(19);
-		nodo10.setName("The Fields");
-		nodo10.setThumbnail("http://www.vggallery.com/painting/f_0761.jpg");
-		nodo10.setLink("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
-		nodo10.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales malesuada enim, et eleifend justo venenatis sit amet. Nam sem libero, lacinia id lorem eget, tincidunt aliquam ligula. Duis tempor ligula et venenatis malesuada. Proin pulvinar eget sem eu sagittis. Nunc diam ipsum, vestibulum nec feugiat et, dapibus eu erat. Nulla nunc orci, iaculis eget placerat quis, scelerisque at dui. Vivamus cursus dolor pharetra dignissim consectetur. Suspendisse rhoncus mi at nisi interdum aliquam. Etiam magna ante, auctor sed imperdiet nec, cursus sit amet diam. Vivamus ante ante, bibendum et varius a, sagittis a eros. Maecenas imperdiet sed lectus lacinia vulputate. Nunc turpis eros, eleifend maximus enim at, vehicula elementum diam.");
-		
-		nodeList.add(nodo1);
-		nodeList.add(nodo2);
-		nodeList.add(nodo3);
-		nodeList.add(nodo4);
-		nodeList.add(nodo5);
-		nodeList.add(nodo6);
-		nodeList.add(nodo7);
-		nodeList.add(nodo8);
-		nodeList.add(nodo9);
-		nodeList.add(nodo10);
-		 
-	  return nodeList;
-	}
-	
-	public static List<Link> getDetailLinkList(){
-		
-	 List<Link> linkList = new ArrayList<Link>();
-	
-	 Link link1 = new Link();
-	 link1.setLinkName("has painted");
-	 link1.setSource(11);
-	 link1.setTarget(10);
-	 
-	 Link link2 = new Link();
-	 link2.setLinkName("has painted");
-	 link2.setSource(12);
-	 link2.setTarget(10);
-	 
-	 Link link3 = new Link();
-	 link3.setLinkName("has painted");
-	 link3.setSource(13);
-	 link3.setTarget(10);
-	 
-	 Link link4 = new Link();
-	 link4.setLinkName("has painted");
-	 link4.setSource(14);
-	 link4.setTarget(10);
-	 
-	 Link link5 = new Link();
-	 link5.setLinkName("has painted");
-	 link5.setSource(15);
-	 link5.setTarget(10);
-	 
-	 Link link6 = new Link();
-	 link6.setLinkName("has painted");
-	 link6.setSource(16);
-	 link6.setTarget(17);
-	 
-	 Link link7 = new Link();
-	 link7.setLinkName("has painted");
-	 link7.setSource(19);
-	 link7.setTarget(17);
-	 
-	 Link link8 = new Link();
-	 link8.setLinkName("has painted");
-	 link8.setSource(15);
-	 link8.setTarget(19);
-	 
-	 Link link9 = new Link();
-	 link9.setLinkName("has painted");
-	 link9.setSource(14);
-	 link9.setTarget(15);
-	 
-	 Link link10 = new Link();
-	 link10.setLinkName("has painted");
-	 link10.setSource(13);
-	 link10.setTarget(15);
-	 
-	 Link link11 = new Link();
-	 link11.setLinkName("has painted");
-	 link11.setSource(17);
-	 link11.setTarget(15);
-	 
-	 Link link12 = new Link();
-	 link12.setLinkName("has painted");
-	 link12.setSource(11);
-	 link12.setTarget(13);
-	 
-	 Link link13 = new Link();
-	 link13.setLinkName("has painted");
-	 link13.setSource(12);
-	 link13.setTarget(13);
-	 
-	 Link link14 = new Link();
-	 link14.setLinkName("has painted");
-	 link14.setSource(19);
-	 link14.setTarget(13);
-	 
-	 Link link15 = new Link();
-	 link15.setLinkName("has painted");
-	 link15.setSource(18);
-	 link15.setTarget(13);
-	 
-	 Link link16 = new Link();
-	 link16.setLinkName("has painted");
-	 link16.setSource(19);
-	 link16.setTarget(10);
-	 
-	 Link link17 = new Link();
-	 link17.setLinkName("has painted");
-	 link17.setSource(19);
-	 link17.setTarget(12);
-	 
-	 Link link18 = new Link();
-	 link18.setLinkName("has painted");
-	 link18.setSource(16);
-	 link18.setTarget(19);
-	 
-	 Link link19 = new Link();
-	 link19.setLinkName("has painted");
-	 link19.setSource(17);
-	 link19.setTarget(19);
-	 
-	 Link link20 = new Link();
-	 link20.setLinkName("has painted");
-	 link20.setSource(18);
-	 link20.setTarget(19);
-	 
-	 linkList.add(link1);
-	 linkList.add(link2);
-	 linkList.add(link3);
-	 linkList.add(link4);
-	 linkList.add(link5);
-	 linkList.add(link6);
-	 linkList.add(link7);
-	 linkList.add(link8);
-	 linkList.add(link9);
-	 linkList.add(link10);
-	 linkList.add(link11);
-	 linkList.add(link12);
-	 linkList.add(link13);
-	 linkList.add(link14);
-	 linkList.add(link15);
-	 linkList.add(link16);
-	 linkList.add(link17);
-	 linkList.add(link18);
-	 linkList.add(link19);
-	 linkList.add(link20);
-	 
-     return linkList;		 
-	}
-	
+    
 }
