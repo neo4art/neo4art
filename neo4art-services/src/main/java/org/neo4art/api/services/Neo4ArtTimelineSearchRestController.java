@@ -40,9 +40,8 @@ public class Neo4ArtTimelineSearchRestController {
 	public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, 
 			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
 
-	 System.out.println("Input search: "+searchInput);
 	 //TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
-	 return TimeLineTransformer.buildTimeLineEvents();
+	 return TimeLineTransformer.buildTimeLineEvents(searchInput);
 	}
 	
 	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")

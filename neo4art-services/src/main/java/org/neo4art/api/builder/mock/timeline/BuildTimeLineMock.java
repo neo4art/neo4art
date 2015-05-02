@@ -17,6 +17,7 @@ package org.neo4art.api.builder.mock.timeline;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.neo4art.colour.domain.ColourAnalysis;
@@ -40,7 +41,6 @@ public class BuildTimeLineMock {
 		Artwork artwork1 = new Artwork();
 		artwork1.setTitle("Still Life with Cabbage and Clogs");
 		artwork1.setYear("1881");
-		//artwork1.setCompletionDate("10-Gen-1881 00:00");
 		colourAnalysis1.setArtwork(artwork1);
 		
 		ColourAnalysis colourAnalysis2 = new ColourAnalysis();
@@ -48,9 +48,15 @@ public class BuildTimeLineMock {
 		colourAnalysis2.setSource("http://www.vggallery.com/painting/f_0018.jpg");
 		Artwork artwork2 = new Artwork();
 		artwork2.setTitle("Farmhouses Among Trees");
-		artwork2.setCompletionDate("15-Sep-1883 00:00");
-		//artwork2.setCompletionDate("15/Sep/1883 00:00");
-		//artwork2.setCompletionDate("Nov 4, 2003");
+		
+		Calendar calendar2 = Calendar.getInstance();  
+		calendar2.set(Calendar.YEAR, 1883);  
+		calendar2.set(Calendar.MONTH, 8);  
+		calendar2.set(Calendar.DAY_OF_MONTH, 14);  
+		calendar2.set(Calendar.HOUR,12);
+		calendar2.set(Calendar.MINUTE,0);
+		
+		artwork2.setCompletionDate(calendar2.getTime());
 		colourAnalysis2.setArtwork(artwork2);
 		
 		ColourAnalysis colourAnalysis3 = new ColourAnalysis();
@@ -58,7 +64,15 @@ public class BuildTimeLineMock {
 		colourAnalysis3.setSource("http://www.vggallery.com/painting/f_0216i.jpg");
 		Artwork artwork3 = new Artwork();
 		artwork3.setTitle("Plaster Statuette of a Female Torso");
-		artwork3.setCompletionDate("10-Mar-1886 00:00");
+		
+		Calendar calendar3 = Calendar.getInstance();  
+		calendar3.set(Calendar.YEAR, 1886);  
+		calendar3.set(Calendar.MONTH, 2);  
+		calendar3.set(Calendar.DAY_OF_MONTH, 9);  
+		calendar3.set(Calendar.HOUR,12);
+		calendar3.set(Calendar.MINUTE,0);
+		
+		artwork3.setCompletionDate(calendar3.getTime());
 		colourAnalysis3.setArtwork(artwork3);
 		
 		ColourAnalysis colourAnalysis4 = new ColourAnalysis();
@@ -66,7 +80,15 @@ public class BuildTimeLineMock {
 		colourAnalysis4.setSource("http://www.vggallery.com/painting/f_0273.jpg");
 		Artwork artwork4 = new Artwork();
 		artwork4.setTitle("Le Moulin de Blute-Fin");
-		artwork4.setCompletionDate("10-Jun-1886 00:00");
+		
+		Calendar calendar4 = Calendar.getInstance();  
+		calendar4.set(Calendar.YEAR, 1886);  
+		calendar4.set(Calendar.MONTH, 5);  
+		calendar4.set(Calendar.DAY_OF_MONTH, 9);  
+		calendar4.set(Calendar.HOUR,12);
+		calendar4.set(Calendar.MINUTE,0);
+		
+		artwork4.setCompletionDate(calendar4.getTime());
 		colourAnalysis4.setArtwork(artwork4);
 		
 		colourAnalysisList.add(colourAnalysis1);
