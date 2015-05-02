@@ -28,8 +28,30 @@ import org.neo4art.domain.Colour;
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public class ColorDefaultService implements ColourService
+public class ColourDefaultService implements ColourService
 {
+  /**
+   * @see org.neo4art.colour.service.ColourService#createIndexes()
+   */
+  @Override
+  public void createIndexes()
+  {
+    ColourRepository colourRepository = new ColourBatchInserterRepository();
+    
+    colourRepository.createIndexes();
+  }
+
+  /**
+   * @see org.neo4art.colour.service.ColourService#getColours()
+   */
+  @Override
+  public List<Colour> getColours()
+  {
+    ImageManager imageManager = new ImageDefaultManager();
+    
+    return imageManager.getColorList();
+  }
+
   /**
    * @see org.neo4art.colour.service.ColourService#saveColours(java.util.List)
    */

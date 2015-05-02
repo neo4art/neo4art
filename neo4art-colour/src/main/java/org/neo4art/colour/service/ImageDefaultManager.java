@@ -20,12 +20,12 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.colour.utility.UtilityImage;
@@ -45,16 +45,24 @@ public class ImageDefaultManager implements ImageManager
   private Color             avg, min, max;
   private ArrayList<Colour> listColor = null;
 
-  public ImageDefaultManager() throws IOException
+  public ImageDefaultManager()
   {
     this.image = null;
-    this.listColor = getColorList();
+    
+    try
+    {
+      this.listColor = getColorList();
+    }
+    catch (Exception e)
+    {
+    }
   }
 
-  public ImageDefaultManager(BufferedImage image) throws IOException
+  public ImageDefaultManager(BufferedImage image)
   {
+    this();
+  
     this.image = image;
-    this.listColor = getColorList();
   }
 
   /**
@@ -92,36 +100,35 @@ public class ImageDefaultManager implements ImageManager
   public ArrayList<Colour> getColorList()
   {
     int red, green, blue;
+    
     ArrayList<Colour> color = new ArrayList<Colour>();
+    
     try
     {
-
       ClassLoader classLoader = getClass().getClassLoader();
       File file = new File(classLoader.getResource("color.txt").getFile());
 
       BufferedReader input = new BufferedReader(new FileReader(file));
 
-      int index = 0;
       String line;
+      
       while ((line = input.readLine()) != null)
       {
-
         String[] hex = line.split("#");
+        
         red = Integer.parseInt(hex[1].substring(0, 2), 16);
         green = Integer.parseInt(hex[1].substring(2, 4), 16);
         blue = Integer.parseInt(hex[1].substring(4, 6), 16);
 
-        Colour colour = new Colour(line.replaceAll("#+[0-9A-z]*", "").replace("\t", ""), red, green, blue);
-
-        color.add(index, colour);
-        index++;
+        color.add(new Colour(line.replaceAll("#+[0-9A-z]*", "").replace("\t", ""), red, green, blue));
       }
+      
       input.close();
-
     }
     catch (Exception e)
     {
     }
+    
     return color;
   }
 
@@ -227,22 +234,25 @@ public class ImageDefaultManager implements ImageManager
 
     Colour trovato = null;
 
-    for (Colour colour : listColor)
+    if (CollectionUtils.isNotEmpty(this.listColor))
     {
-      valuePixel = ((red - colour.getRed()) * (red - colour.getRed()) + (green - colour.getGreen()) * (green - colour.getGreen()) + (blue - colour.getBlue()) * (blue - colour.getBlue())) / 3;
-
-      if (valuePixel < maxPixel)
+      for (Colour colour : listColor)
       {
-        maxPixel = valuePixel;
-        trovato = colour;
+        valuePixel = ((red - colour.getRed()) * (red - colour.getRed()) + (green - colour.getGreen()) * (green - colour.getGreen()) + (blue - colour.getBlue()) * (blue - colour.getBlue())) / 3;
+  
+        if (valuePixel < maxPixel)
+        {
+          maxPixel = valuePixel;
+          trovato = colour;
+        }
+      }
+
+      if (trovato != null)
+      {
+        return trovato;
       }
     }
-
-    if (trovato != null)
-    {
-      return trovato;
-    }
-
+    
     return null;
   }
 

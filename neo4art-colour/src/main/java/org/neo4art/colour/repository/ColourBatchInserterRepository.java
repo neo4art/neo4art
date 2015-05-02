@@ -16,9 +16,12 @@
 
 package org.neo4art.colour.repository;
 
+import java.util.List;
+
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.graphdb.ColourLegacyIndex;
 import org.neo4art.colour.graphdb.ColourRelationship;
+import org.neo4art.domain.Artist;
 import org.neo4art.domain.Colour;
 import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
@@ -109,8 +112,24 @@ public class ColourBatchInserterRepository implements ColourRepository
       
       if (closestColourIndexHits != null)
       {
-        Neo4ArtBatchInserterSingleton.createRelationship(colourAnalysisNodeId, closestColourIndexHits.getSingle(), colourRelationship, null);
+        if (closestColourIndexHits.hasNext())
+        {
+          long closestColourIndexHit = closestColourIndexHits.next();
+          
+          Neo4ArtBatchInserterSingleton.createRelationship(colourAnalysisNodeId, closestColourIndexHit, colourRelationship, null);
+        }
       }
+      
+      closestColourIndexHits.close();
     }
+  }
+
+  /**
+   * @see org.neo4art.colour.repository.ColourRepository#getColourAnalisysByArtist(org.neo4art.domain.Artist)
+   */
+  @Override
+  public List<ColourAnalysis> getColourAnalisysByArtist(Artist artist)
+  {
+    throw new RuntimeException(new IllegalAccessException("Method yet implemented"));
   }
 }

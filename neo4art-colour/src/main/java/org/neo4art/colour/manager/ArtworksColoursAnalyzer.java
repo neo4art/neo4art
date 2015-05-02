@@ -19,14 +19,35 @@ package org.neo4art.colour.manager;
 import java.io.IOException;
 import java.util.List;
 
+import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
+import org.neo4art.domain.Artist;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public interface VanGoghArtworksColoursAnalyzer
+public interface ArtworksColoursAnalyzer
 {
-  List<ColourAnalysis> analyzeArtworksColours() throws ImageParserException, IOException;
+  /**
+   * @param fileName
+   * @return
+   * @throws IOException
+   */
+  List<ArtworkURL> loadArtworksURLsFromFile(String fileName) throws IOException;
+
+  /**
+   * @param artworksURLsFromFile
+   * @return
+   * @throws ImageParserException
+   */
+  List<ColourAnalysis> analyzeArtworksColours(List<ArtworkURL> artworksURLsFromFile) throws ImageParserException;
+  
+  /**
+   * 
+   * @param artist
+   * @return
+   */
+  List<ColourAnalysis> getColourAnalysisByArtist(Artist artist);
 }

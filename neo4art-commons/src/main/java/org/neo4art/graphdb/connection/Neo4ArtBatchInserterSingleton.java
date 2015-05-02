@@ -39,7 +39,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   private static BatchInserter                   batchInserter;
   private static BatchInserterIndexProvider      batchInserterIndexProvider;
 
-  private static Map<String, BatchInserterIndex> batchInserterIndexes = new HashMap<String, BatchInserterIndex>();
+  private static Map<String, BatchInserterIndex> batchInserterNodeIndexes = new HashMap<String, BatchInserterIndex>();
 
   protected Neo4ArtBatchInserterSingleton()
   {
@@ -127,24 +127,34 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   /**
    * 
    * @param indexName
+   * @return
+   */
+  public static boolean existsLegacyNodeIndex(String indexName)
+  {
+    return batchInserterNodeIndexes.get(indexName) != null;
+  }
+
+  /**
+   * 
+   * @param indexName
    * @param config
    */
   public static void createLegacyNodeIndex(String indexName, Map<String, String> config)
   {
     createLegacyNodeIndex(indexName, config, null, 0);
   }
-
+  
   /**
-   * MapUtil.stringMap("type", "exact") MapUtil.stringMap("type", "fulltext", "to_lower_case", "true")
    * 
    * @param indexName
    * @param config
+   * @param cacheKey
    * @param cacheSize
    * @return
    */
   public static void createLegacyNodeIndex(String indexName, Map<String, String> config, String cacheKey, int cacheSize)
   {
-    if (batchInserterIndexes.get(indexName) == null)
+    if (batchInserterNodeIndexes.get(indexName) == null)
     {
       BatchInserterIndexProvider batchInserterIndexProvider = getBatchInserterIndexProviderInstance();
 
@@ -155,12 +165,17 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
         index.setCacheCapacity(cacheKey, cacheSize);
       }
 
-      batchInserterIndexes.put(indexName, index);
+      batchInserterNodeIndexes.put(indexName, index);
+    }
+    else
+    {
+      throw new IllegalArgumentException("Index with name " + indexName + " already exists.");
     }
   }
 
   /**
    * TODO it's not necessary to provide key and value: we could also just pass a Neo4ArtNode 'cause we already know the key (defined at index creation time) 
+   * 
    * @param indexName
    * @param key
    * @param value
@@ -168,7 +183,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static IndexHits<Long> getFromLegacyNodeIndex(String indexName, String key, Object value)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
     
     if (batchInserterIndex == null)
     {
@@ -184,7 +199,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void addToLegacyNodeIndex(String indexName, Neo4ArtNode node)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
     
     if (batchInserterIndex == null)
     {
@@ -199,7 +214,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void flushLegacyNodeIndex(String indexName)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
     
     if (batchInserterIndex != null)
     {

@@ -16,44 +16,14 @@
 
 package org.neo4art.colour.manager;
 
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.neo4art.colour.domain.ColourAnalysis;
-
 /**
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public class VanGoghArtworksColoursManager
+public interface VanGoghArtworksColoursManager
 {
-  private static Log logger = LogFactory.getLog(VanGoghArtworksColoursManager.class);
-  
-  public void analyze()
-  {
-    try
-    {
-      logger.info("Starting Van Gogh's artworks colours analysis...");
-      
-      VanGoghArtworksColoursAnalyzer vanGoghArtworksColoursAnalyzer = new VanGoghArtworksDefaultColoursAnalyzer();
-      
-      List<ColourAnalysis> coloursAnalyses = vanGoghArtworksColoursAnalyzer.analyzeArtworksColours();
-      
-      logger.info("Analysis done! Saving it to graph...");
-      
-      if (CollectionUtils.isNotEmpty(coloursAnalyses))
-      {
-        for (ColourAnalysis colourAnalysis : coloursAnalyses)
-        {
-          
-        }
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-  }
+  /**
+   * 
+   */
+  void computeAndSaveColourAnalyses();
 }

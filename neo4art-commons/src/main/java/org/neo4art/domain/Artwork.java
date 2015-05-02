@@ -79,6 +79,11 @@ public class Artwork implements Neo4ArtNode
   {
   }
 
+  public Artwork(String title)
+  {
+    setTitle(title);
+  }
+  
   public String getTitle()
   {
     return title;

@@ -14,26 +14,51 @@
  * limitations under the License.
  */
 
-package org.neo4art.colour.service;
+package org.neo4art.colour.bean;
 
-import java.util.List;
+import java.net.URL;
 
-import org.neo4art.colour.domain.ColourAnalysis;
-import org.neo4art.domain.Colour;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public interface ColourService
+public class ArtworkURL
 {
-  void createIndexes();
+  private Artwork artwork;
   
-  List<Colour> getColours();
+  private URL url;
+
+  public ArtworkURL()
+  {
+  }
   
-  void saveColours(List<Colour> colours);
+  public ArtworkURL(Artwork artwork, URL url)
+  {
+    this.artwork = artwork;
+    this.url = url;
+  }
+
+  public Artwork getArtwork()
+  {
+    return artwork;
+  }
+
+  public void setArtwork(Artwork artwork)
+  {
+    this.artwork = artwork;
+  }
+
+  public URL getUrl()
+  {
+    return url;
+  }
+
+  public void setUrl(URL url)
+  {
+    this.url = url;
+  }
   
-  void saveColour(Colour colour);
   
-  void saveColourAnalysis(ColourAnalysis colourAnalysis);
 }

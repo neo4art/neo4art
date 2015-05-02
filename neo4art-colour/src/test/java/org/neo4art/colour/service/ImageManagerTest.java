@@ -302,7 +302,7 @@ public class ImageManagerTest
     try
     {
       ClassLoader classLoader = getClass().getClassLoader();
-      File file = new File(classLoader.getResource("The_Sower_-_painting_by_Van_Gogh.png").getFile());
+      File file = new File(classLoader.getResource("The_Sower_-_painting_by_Van_Gogh.jpg").getFile());
 
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
@@ -316,7 +316,7 @@ public class ImageManagerTest
 
       Color avg = new Color(104, 98, 74);
       assertEquals(analyzeImage.getAverageColour(), avg);
-      Color min = new Color(12, 26, 9);
+      Color min = new Color(12, 27, 9);
       assertEquals(analyzeImage.getMinimumColour(), min);
       Color max = new Color(212, 192, 131);
       assertEquals(analyzeImage.getMaximumColour(), max);
@@ -327,6 +327,8 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
+      
       Assert.fail(e.getMessage());
     }
   }
@@ -337,7 +339,7 @@ public class ImageManagerTest
     try
     {
       ClassLoader classLoader = getClass().getClassLoader();
-      File file = new File(classLoader.getResource("van-gogh-bridge.png").getFile());
+      File file = new File(classLoader.getResource("van-gogh-bridge.jpg").getFile());
 
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(file));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
@@ -362,6 +364,8 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
+      
       Assert.fail(e.getMessage());
     }
   }
@@ -382,16 +386,16 @@ public class ImageManagerTest
       System.out.println("Max :" + analyzeImage.getMaximumColour().toString());
       System.out.println("Min :" + analyzeImage.getMinimumColour().toString());
 
-      Color avg = new Color(108, 116, 96);
+      Color avg = new Color(108, 117, 96);
       assertEquals(analyzeImage.getAverageColour(), avg);
-      Color min = new Color(0, 61, 94);
+      Color min = new Color(0, 29, 6);
       assertEquals(analyzeImage.getMinimumColour(), min);
-      Color max = new Color(247, 212, 156);
+      Color max = new Color(247, 212, 157);
       assertEquals(analyzeImage.getMaximumColour(), max);
 
       Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Dim gray");
       Assert.assertEquals(analyzeImage.getMaximumClosestColour().getName(), "Deep champagne");
-      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Dark imperial blue");
+      Assert.assertEquals(analyzeImage.getMinimumClosestColour().getName(), "Rich black (FOGRA29)");
     }
     catch (Exception e)
     {

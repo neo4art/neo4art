@@ -15,7 +15,10 @@
  */
 package org.neo4art.colour.repository;
 
+import java.util.List;
+
 import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.domain.Artist;
 import org.neo4art.domain.Colour;
 
 /**
@@ -53,4 +56,11 @@ public interface ColourRepository
    * @param colourAnalysis
    */
   void connectColourAnalysisToClosestColours(ColourAnalysis colourAnalysis);
+  
+  /**
+   * 
+   * @param artist
+   * @return
+   */
+  List<ColourAnalysis> getColourAnalisysByArtist(Artist artist);
 }
