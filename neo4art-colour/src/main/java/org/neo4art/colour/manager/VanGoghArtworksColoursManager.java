@@ -25,5 +25,10 @@ public interface VanGoghArtworksColoursManager
   /**
    * 
    */
+  void saveArtworksSample();
+  
+  /**
+   * 
+   */
   void computeAndSaveColourAnalyses();
 }

@@ -17,6 +17,7 @@
 package org.neo4art.domain;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class Artwork implements Neo4ArtNode
   private String               otherTitle2;
   private Artist               artist;
   private String               year;
-  private String               completionDate;
+  private Date                 completionDate;
   private String               catalogue;
   private String               type;
   private String               material;
@@ -83,7 +84,7 @@ public class Artwork implements Neo4ArtNode
   {
     setTitle(title);
   }
-  
+
   public String getTitle()
   {
     return title;
@@ -204,12 +205,12 @@ public class Artwork implements Neo4ArtNode
     this.year = year;
   }
 
-  public String getCompletionDate()
+  public Date getCompletionDate()
   {
     return completionDate;
   }
 
-  public void setCompletionDate(String completionDate)
+  public void setCompletionDate(Date completionDate)
   {
     this.completionDate = completionDate;
   }
@@ -506,6 +507,31 @@ public class Artwork implements Neo4ArtNode
       properties.put("title", this.title);
     }
 
+    if (this.type != null)
+    {
+      properties.put("type", this.type);
+    }
+    
+    if (this.year != null)
+    {
+      properties.put("year", this.year);
+    }
+    
+    if (this.completionDate != null)
+    {
+      properties.put("completionDate", this.completionDate.getTime());
+    }
+    
+    if (this.imageFile != null)
+    {
+      properties.put("imageFile", this.imageFile);
+    }
+    
+    if (this.catalogue != null)
+    {
+      properties.put("catalogue", this.catalogue);
+    }
+    
     return properties;
   }
 

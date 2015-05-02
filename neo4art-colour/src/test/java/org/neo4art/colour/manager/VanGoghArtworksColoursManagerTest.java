@@ -21,7 +21,12 @@ public class VanGoghArtworksColoursManagerTest
     {
       FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabase.NEO4J_STORE_DIR));
      
-      System.out.println("STEP 1. Saving Colours into Graph...");
+      System.out.println("STEP 1. Saving Van Gogh artworks sample into Graph...");
+      
+      VanGoghArtworksColoursManager vanGoghArtworksColoursManager = new VanGoghArtworksColoursDefaultManager();
+      vanGoghArtworksColoursManager.saveArtworksSample();
+      
+      System.out.println("STEP 2. Saving Colours into Graph...");
       
       ColourService colourService = new ColourDefaultService();
       
@@ -30,8 +35,8 @@ public class VanGoghArtworksColoursManagerTest
       colourService.createIndexes();
       colourService.saveColours(colours);
       
-      
       new VanGoghArtworksColoursDefaultManager().computeAndSaveColourAnalyses();
+      
     }
     catch (Exception e)
     {
