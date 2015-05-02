@@ -148,9 +148,6 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
       {
         logger.info(artworksURLsFromFile.size() + " artworks to be analyzed.");      
         
-        //FIXME remove
-        artworksURLsFromFile = artworksURLsFromFile.subList(0, 5);
-        
         List<ColourAnalysis> coloursAnalyses = artworksColoursAnalyzer.analyzeArtworksColours(artworksURLsFromFile);
         
         logger.info("Analysis done!");
