@@ -14,8 +14,12 @@
 		<version>0.0.1.ALFA</version>
 	</parent>
 
+	<properties>
+		<start-class>org.neo4art.literature.configuration.SpringBootConfiguration</start-class>
+	</properties>
+
 	<dependencies>
-	
+
 		<!-- neo4art -->
 		<dependency>
 			<groupId>org.neo4art</groupId>
@@ -34,9 +38,33 @@
 			<artifactId>neo4art-sentiment</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 	<repositories>
 	</repositories>
 

@@ -24,8 +24,7 @@ package org.neo4art.graphdb.connection;
  */
 public class Neo4ArtGraphDatabase {
 
-  public static final String NEO4J_STORE_DIR = System.getProperty("NEO4J_STORE_DIR", "/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/database/neo4j-community-2.2.0/data/graph.db");
-  //public static final String NEO4J_STORE_DIR = System.getProperty("NEO4J_STORE_DIR", "target/graph.db");
+  public static final String NEO4J_STORE_DIR = System.getProperty("NEO4J_STORE_DIR", "target/graph.db");
 
   public static final String NEO4J_PATH = System.getProperty("NEO4J_PATH", "jdbc:neo4j:file:" + NEO4J_STORE_DIR);
   

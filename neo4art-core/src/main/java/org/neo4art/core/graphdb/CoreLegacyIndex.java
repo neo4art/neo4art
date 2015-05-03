@@ -25,5 +25,7 @@ import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 public enum CoreLegacyIndex implements Neo4ArtLegacyIndex
 {
   ARTIST_LEGACY_INDEX,
-  ARTWORK_LEGACY_INDEX
+  ARTWORK_LEGACY_INDEX,
+  
+  EMOTION_LEGACY_INDEX
 }

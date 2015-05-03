@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package org.neo4art.graphdb;
-
-import org.neo4j.graphdb.Label;
+package org.neo4art.domain;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 5 Apr 2015
+ * @since 3 May 2015
  */
-public enum Neo4ArtLabel implements Label
+public interface Polarity
 {
-  Artist, Artwork, ArtMovement,
-  
-  Museum, ReligiousBuilding, Monument, HistoricSite, HistoricPlace,
-
-  Country, Settlement,
-  
-  Colour, Emotion
+  public static final int POSITIVE = 1;
+  public static final int NEUTRAL  = 0;
+  public static final int NEGATIVE = -1;
 }
