@@ -27,7 +27,6 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Assert;
 import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.service.ColourAnalysisDefaultService;
@@ -121,8 +120,6 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
     catch (Exception e)
     {
       e.printStackTrace();
-      
-      Assert.fail(e.getMessage());
     }
   }
 
