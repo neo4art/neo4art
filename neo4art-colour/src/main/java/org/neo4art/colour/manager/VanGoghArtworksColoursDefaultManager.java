@@ -16,7 +16,7 @@
 
 package org.neo4art.colour.manager;
 
-import java.io.File;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.List;
@@ -62,10 +62,9 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
     {
       String fileName = "vangoghartworks/van-gogh-artworks.csv";
       
-      ClassLoader classLoader = getClass().getClassLoader();
-      File file = new File(classLoader.getResource(fileName).getFile());
+      URL url = getClass().getClassLoader().getResource(fileName);
       
-      CSVParser csvParser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.EXCEL.withDelimiter(',').withQuote('\'').withEscape('\\').withIgnoreSurroundingSpaces(true));
+      CSVParser csvParser = CSVParser.parse(url, Charset.defaultCharset(), CSVFormat.EXCEL.withDelimiter(',').withQuote('\'').withEscape('\\').withIgnoreSurroundingSpaces(true));
       List<CSVRecord> cvsRecords = csvParser.getRecords();
 
       if (CollectionUtils.isNotEmpty(cvsRecords) && CollectionUtils.size(cvsRecords) > 1)

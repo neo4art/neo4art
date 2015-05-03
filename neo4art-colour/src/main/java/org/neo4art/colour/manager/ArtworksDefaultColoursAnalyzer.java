@@ -17,9 +17,9 @@
 package org.neo4art.colour.manager;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,8 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
-import org.neo4art.colour.repository.ColourGraphDatabaseServiceRepository;
 import org.neo4art.colour.repository.ColourAnalysisRepository;
+import org.neo4art.colour.repository.ColourGraphDatabaseServiceRepository;
 import org.neo4art.colour.service.ImageDefaultManager;
 import org.neo4art.colour.service.ImageManager;
 import org.neo4art.domain.Artist;
@@ -58,11 +58,9 @@ public class ArtworksDefaultColoursAnalyzer implements ArtworksColoursAnalyzer
   {
     List<ArtworkURL> result = new ArrayList<ArtworkURL>();
     
-    ClassLoader classLoader = getClass().getClassLoader();
-    
-    File file = new File(classLoader.getResource(fileName).getFile());
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
 
-    BufferedReader input = new BufferedReader(new FileReader(file));
+    BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
     
     String line = null;
     

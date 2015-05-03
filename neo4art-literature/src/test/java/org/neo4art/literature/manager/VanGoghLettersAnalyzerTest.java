@@ -23,6 +23,7 @@ import org.apache.commons.io.FileUtils;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
 import org.neo4art.sentiment.service.DictionaryBasicService;
+import org.neo4art.sentiment.service.DictionaryService;
 
 /**
  * @author Lorenzo Speranzoni
@@ -36,15 +37,15 @@ public class VanGoghLettersAnalyzerTest
     {
       FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabase.NEO4J_STORE_DIR));
 
-      DictionaryBasicService dictionaryBasicService = new DictionaryBasicService(Locale.ENGLISH);
+      DictionaryService dictionaryService = new DictionaryBasicService(Locale.ENGLISH);
 
       // Step 1: Saving dictionary
       // ----------------------------------------------------------------------
-      dictionaryBasicService.saveDictionary();
+      dictionaryService.saveDictionary();
 
       // Step 2: Adding polarity to dictionary
       // ----------------------------------------------------------------------
-      dictionaryBasicService.addPolarity();
+      dictionaryService.addPolarity();
 
       // Step 3: Saving Van Gogh Letters with NLP
       // ----------------------------------------------------------------------

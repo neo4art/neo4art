@@ -18,8 +18,8 @@ package org.neo4art.colour.service;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -105,10 +105,9 @@ public class ImageDefaultManager implements ImageManager
     
     try
     {
-      ClassLoader classLoader = getClass().getClassLoader();
-      File file = new File(classLoader.getResource("color.txt").getFile());
+      InputStream inputStream = getClass().getClassLoader().getResourceAsStream("color.txt");
 
-      BufferedReader input = new BufferedReader(new FileReader(file));
+      BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
 
       String line;
       

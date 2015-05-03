@@ -14,51 +14,35 @@
  * limitations under the License.
  */
 
-package org.neo4art.core.batch;
-
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.List;
+package org.neo4art.literature.batch;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.core.service.ColourDefaultService;
-import org.neo4art.core.service.ColourService;
-import org.neo4art.domain.Colour;
+import org.neo4art.core.repository.ColourBatchInserterRepository;
+import org.neo4art.core.repository.ColourRepository;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 3 May 2015
  */
-public class ColourBatchLoader
+public class DictionaryIndexCreator
 {
-  private static Log logger = LogFactory.getLog(ColourBatchLoader.class);
-
+  private static Log logger = LogFactory.getLog(DictionaryIndexCreator.class);
+  
   public static void main(String[] args)
   {
     try
     {
-      ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-      URL[] urls = ((URLClassLoader) cl).getURLs();
-
-      for (URL url : urls)
-      {
-        System.out.println(url.getFile());
-      }
+      ColourRepository colourRepository = new ColourBatchInserterRepository();
       
-      ColourService colourService = new ColourDefaultService();
-
-      List<Colour> colours = colourService.getColours();
-
-      colourService.saveColours(colours);
+      colourRepository.createColourLegacyIndex();
     }
     catch (Exception e)
     {
       e.printStackTrace();
-
-      logger.error("Error saving list of colours into neo4j: " + e.getMessage());
+      
+      logger.error("Error creating legacy index for colours: " + e.getMessage());
     }
     finally
     {

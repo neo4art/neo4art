@@ -16,8 +16,8 @@
 
 package org.neo4art.core.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.neo4art.core.repository.ColourBatchInserterRepository;
 import org.neo4art.core.repository.ColourRepository;
 import org.neo4art.domain.Colour;
@@ -56,9 +58,8 @@ public class ColourDefaultService implements ColourService
   {
     List<Colour> result = null;
     
-    ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("colours.csv").getFile());
-    CSVParser csvParser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.EXCEL.withDelimiter(',').withQuote('\'').withEscape('\\').withIgnoreSurroundingSpaces(true));
+    URL url = getClass().getClassLoader().getResource("colours.csv");
+    CSVParser csvParser = CSVParser.parse(url, Charset.defaultCharset(), CSVFormat.EXCEL.withDelimiter(',').withQuote('\'').withEscape('\\').withIgnoreSurroundingSpaces(true));
 
     List<CSVRecord> records = csvParser.getRecords();
 

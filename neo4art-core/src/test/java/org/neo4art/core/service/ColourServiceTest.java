@@ -14,28 +14,21 @@
  * limitations under the License.
  */
 
-package org.neo4art.core.batch;
+package org.neo4art.core.service;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.neo4art.core.service.ColourDefaultService;
-import org.neo4art.core.service.ColourService;
-import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+import org.junit.Test;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 3 May 2015
  */
-public class ColourBatchLoader
+public class ColourServiceTest
 {
-  private static Log logger = LogFactory.getLog(ColourBatchLoader.class);
-
-  public static void main(String[] args)
+  @Test
+  public void shouldSaveColours()
   {
     try
     {
@@ -47,22 +40,9 @@ public class ColourBatchLoader
       {
         System.out.println(url.getFile());
       }
-      
-      ColourService colourService = new ColourDefaultService();
-
-      List<Colour> colours = colourService.getColours();
-
-      colourService.saveColours(colours);
     }
     catch (Exception e)
     {
-      e.printStackTrace();
-
-      logger.error("Error saving list of colours into neo4j: " + e.getMessage());
-    }
-    finally
-    {
-      Neo4ArtBatchInserterSingleton.shutdownBatchInserterInstance();
     }
   }
 }
