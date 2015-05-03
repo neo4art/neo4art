@@ -19,7 +19,7 @@ import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 public class VanGoghArtworksColoursManagerTest
 {
   @Test
-  public void shouldComputeAndSaveColourAnalyses()
+  public void shouldComputeAndSaveColourAnalyses() 
   {
     try
     {

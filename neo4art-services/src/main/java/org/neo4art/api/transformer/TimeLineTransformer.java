@@ -18,10 +18,12 @@ package org.neo4art.api.transformer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.builder.mock.timeline.BuildTimeLineMock;
+import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.util.ServicesUtil;
 import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
+import org.neo4art.domain.Artist;
 
 /**
  * @author Enrico De Benetti
@@ -37,12 +39,16 @@ public class TimeLineTransformer {
 	public static List<TimelineEvent> buildTimeLineEvents(String inputSearch){
 		
 	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
-     BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
-     List<ColourAnalysis> colourAnalysisList = mockTimeLineEvent.getColourAnalysis();
-     ServicesUtil servicesUtil = ServicesUtil.getInstance();
-        
-      for (ColourAnalysis colourAnalysis : colourAnalysisList) {
+	 ServicesUtil servicesUtil = ServicesUtil.getInstance();
+	 ArtworksDefaultColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
+	 Artist artist = new Artist();
+	 artist.setName(inputSearch);
+	 List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);
+	 
+	 if(!CollectionUtils.isEmpty(colourAnalysisByArtist)){
 
+      for (ColourAnalysis colourAnalysis : colourAnalysisByArtist) {
+    	  
        TimelineEvent timelineEvent = new TimelineEvent(); 
        timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
        timelineEvent.setClosestAverageColorName(colourAnalysis.getAverageClosestColour() != null ? colourAnalysis.getAverageClosestColour().getName() : "");
@@ -51,9 +57,11 @@ public class TimeLineTransformer {
        timelineEvent.setThumbnail(colourAnalysis.getSource());
        //TODO DA ELIMINARE..
        timelineEvent.setEmotion("smile");
+       
        timelineEventsList.add(timelineEvent);
 	  }  
-		
+	 }
+      
 	 return timelineEventsList;
 	}
 	
