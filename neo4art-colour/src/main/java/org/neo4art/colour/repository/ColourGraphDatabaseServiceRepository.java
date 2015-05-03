@@ -18,6 +18,7 @@ package org.neo4art.colour.repository;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +83,8 @@ public class ColourGraphDatabaseServiceRepository implements ColourAnalysisRepos
                        "(artwork)-[:" + ColourRelationship.COLOUR_ANALYSIS + "]->(colourAnalysis:" + ColourLabel.ColourAnalysis + "), " +
                        "(colourAnalysis)-[:" + ColourRelationship.CLOSEST_AVG_COLOUR + "]->(averageClosestColour:" + Neo4ArtLabel.Colour + ") " +
                  "WHERE artist.name={name} " +
-                 "RETURN artwork, colourAnalysis, averageClosestColour";
+                 "RETURN artwork, colourAnalysis, averageClosestColour "+
+                 "ORDER BY artwork.completionDate,artwork.year ASC ";
         
     Result result = graphDatabaseService.execute(cql, MapUtil.map("name", artist.getName()));
     
@@ -102,6 +104,8 @@ public class ColourGraphDatabaseServiceRepository implements ColourAnalysisRepos
       Artwork artwork = new Artwork();
       artwork.setArtist(artist);
       artwork.setTitle((String) artworkNode.getProperty("title"));
+      artwork.setYear((String) artworkNode.getProperty("year"));
+      artwork.setCompletionDate(new Date((Long) artworkNode.getProperty("completionDate")));
       
       Colour averageClosestColour = new Colour();
       averageClosestColour.setName((String) averageClosestColourNode.getProperty("name"));

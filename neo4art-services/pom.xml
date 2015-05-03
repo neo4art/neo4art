@@ -34,9 +34,15 @@
         
         <!-- neo4art -->
 		<dependency>
-			<groupId>org.neo4art</groupId>
-			<artifactId>neo4art-commons</artifactId>
-			<version>${project.version}</version>
+		  <groupId>org.neo4art</groupId>
+		  <artifactId>neo4art-commons</artifactId>
+		  <version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+		  <groupId>org.neo4art</groupId>
+		  <artifactId>neo4art-colour</artifactId>
+		  <version>${project.version}</version>
 		</dependency>
 		
 		<!-- Jackson JSON Mapper -->

@@ -26,4 +26,5 @@ public interface Document extends Neo4ArtNode
 {
   String getTitle();
   String getContent();
+  String getDate();
 }
