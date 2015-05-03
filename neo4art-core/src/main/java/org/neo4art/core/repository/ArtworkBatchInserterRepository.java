@@ -30,10 +30,10 @@ import org.neo4j.graphdb.index.IndexHits;
 public class ArtworkBatchInserterRepository implements ArtworkRepository
 {
   /**
-   * @see org.neo4art.core.repository.ArtworkRepository#createIndexes()
+   * @see org.neo4art.core.repository.ArtworkRepository#createArtworkLegacyIndex()
    */
   @Override
-  public void createIndexes()
+  public void createArtworkLegacyIndex()
   {
     Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT);
   }

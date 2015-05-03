@@ -27,7 +27,7 @@ public interface ColourRepository
   /**
    * 
    */
-  void createIndexes();
+  void createColourLegacyIndex();
 
   /**
    * 

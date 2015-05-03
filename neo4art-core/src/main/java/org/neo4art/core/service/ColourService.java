@@ -27,11 +27,27 @@ import org.neo4art.domain.Colour;
  */
 public interface ColourService
 {
+  /**
+   * 
+   */
   void createIndexes();
   
+  /**
+   * 
+   * @return
+   * @throws IOException
+   */
   List<Colour> getColours() throws IOException;
   
+  /**
+   * 
+   * @param colours
+   */
   void saveColours(List<Colour> colours);
   
+  /**
+   * 
+   * @param colour
+   */
   void saveColour(Colour colour);
 }

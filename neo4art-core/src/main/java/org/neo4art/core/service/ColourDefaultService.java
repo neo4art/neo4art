@@ -44,7 +44,7 @@ public class ColourDefaultService implements ColourService
   {
     ColourRepository colourRepository = new ColourBatchInserterRepository();
     
-    colourRepository.createIndexes();
+    colourRepository.createColourLegacyIndex();
   }
 
   /**

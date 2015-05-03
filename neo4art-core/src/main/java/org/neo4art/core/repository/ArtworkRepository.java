@@ -27,7 +27,7 @@ public interface ArtworkRepository
   /**
    * 
    */
-  void createIndexes();
+  void createArtworkLegacyIndex();
   
   /**
    * @param artwork

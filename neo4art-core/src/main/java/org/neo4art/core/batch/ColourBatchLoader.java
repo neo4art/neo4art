@@ -14,10 +14,15 @@
  * limitations under the License.
  */
 
-package org.neo4art.core.loader;
+package org.neo4art.core.batch;
+
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.neo4art.core.service.ColourDefaultService;
+import org.neo4art.core.service.ColourService;
+import org.neo4art.domain.Colour;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
@@ -32,12 +37,17 @@ public class ColourBatchLoader
   {
     try
     {
+      ColourService colourService = new ColourDefaultService();
+      
+      List<Colour> colours = colourService.getColours();
+      
+      colourService.saveColours(colours);
     }
     catch (Exception e)
     {
       e.printStackTrace();
       
-      logger.error("Error loading list of colours: " + e.getMessage());
+      logger.error("Error creating legacy index for colours: " + e.getMessage());
     }
     finally
     {

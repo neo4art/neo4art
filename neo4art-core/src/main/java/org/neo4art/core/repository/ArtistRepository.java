@@ -27,7 +27,7 @@ public interface ArtistRepository
   /**
    * 
    */
-  void createIndexes();
+  void createArtistLegacyIndex();
   
   /**
    * @param artist

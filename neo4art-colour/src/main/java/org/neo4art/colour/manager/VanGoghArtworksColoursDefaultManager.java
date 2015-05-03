@@ -75,11 +75,11 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
         
         ArtistRepository artistRepository = new ArtistBatchInserterRepository();
         
-        artistRepository.createIndexes();
+        artistRepository.createArtistLegacyIndex();
         artistRepository.saveArtist(vanGogh);
         
         ArtworkRepository artworkRepository = new ArtworkBatchInserterRepository();
-        artworkRepository.createIndexes();
+        artworkRepository.createArtworkLegacyIndex();
         
         for (int i = 1; i < cvsRecords.size(); i++)
         {

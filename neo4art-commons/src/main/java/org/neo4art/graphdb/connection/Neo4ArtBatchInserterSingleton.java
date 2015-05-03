@@ -19,6 +19,7 @@ package org.neo4art.graphdb.connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.neo4art.graphdb.Neo4ArtNode;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4j.graphdb.Label;
@@ -97,6 +98,14 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void shutdownBatchInserterInstance()
   {
+    if (MapUtils.isNotEmpty(batchInserterNodeIndexes))
+    {
+      for (String indexName : batchInserterNodeIndexes.keySet())
+      {
+        batchInserterNodeIndexes.get(indexName).flush();
+      }
+    }
+    
     if (batchInserterIndexProvider != null)
     {
       batchInserterIndexProvider.shutdown();

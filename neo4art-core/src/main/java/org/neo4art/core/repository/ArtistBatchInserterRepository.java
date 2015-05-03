@@ -29,10 +29,10 @@ import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 public class ArtistBatchInserterRepository implements ArtistRepository
 {
   /**
-   * @see org.neo4art.core.repository.ArtistRepository#createIndexes()
+   * @see org.neo4art.core.repository.ArtistRepository#createArtistLegacyIndex()
    */
   @Override
-  public void createIndexes()
+  public void createArtistLegacyIndex()
   {
     Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT);
   }

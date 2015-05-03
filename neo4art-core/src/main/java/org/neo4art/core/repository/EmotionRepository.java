@@ -28,7 +28,7 @@ public interface EmotionRepository
   /**
    * 
    */
-  void createIndexes();
+  void createEmotionLegacyIndex();
 
   /**
    * 

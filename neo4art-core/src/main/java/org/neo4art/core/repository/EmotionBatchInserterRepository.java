@@ -17,7 +17,6 @@
 package org.neo4art.core.repository;
 
 import org.neo4art.core.graphdb.CoreLegacyIndex;
-import org.neo4art.domain.Colour;
 import org.neo4art.domain.Emotion;
 import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
@@ -26,26 +25,29 @@ import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
  * @author Lorenzo Speranzoni
  * @since 22 Apr 2015
  */
-public class EmotionBatchInserterRepository implements ColourRepository
+public class EmotionBatchInserterRepository implements EmotionRepository
 {
   /**
-   * @see org.neo4art.colour.repository.ColourRepository#createIndexes()
+   * @see org.neo4art.core.repository.EmotionRepository#createEmotionLegacyIndex()
    */
   @Override
-  public void createIndexes()
+  public void createEmotionLegacyIndex()
   {
     Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT, Emotion.NAME_PROPERTY_NAME, 1_500);
   }
 
+  /**
+   * @see org.neo4art.core.repository.EmotionRepository#saveEmotion(org.neo4art.domain.Emotion)
+   */
   @Override
-  public long saveColour(Colour colour)
+  public long saveEmotion(Emotion emotion)
   {
-    long colourNodeId = Neo4ArtBatchInserterSingleton.createNode(colour);
+    long nodeId = Neo4ArtBatchInserterSingleton.createNode(emotion);
 
-    colour.setNodeId(colourNodeId);
+    emotion.setNodeId(nodeId);
 
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX.name(), colour);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX.name(), emotion);
 
-    return colourNodeId;
+    return nodeId;
   }
 }
