@@ -14,21 +14,34 @@
  * limitations under the License.
  */
 
-package org.neo4art.graphdb;
+package org.neo4art.core.loader;
 
-import org.neo4j.graphdb.Label;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 5 Apr 2015
+ * @since 3 May 2015
  */
-public enum Neo4ArtLabel implements Label
+public class ColourBatchLoader
 {
-  Artist, Artwork, ArtMovement,
+  private static Log logger = LogFactory.getLog(ColourBatchLoader.class);
   
-  Museum, ReligiousBuilding, Monument, HistoricSite, HistoricPlace,
-
-  Country, Settlement,
-  
-  Colour, Emotion
+  public static void main(String[] args)
+  {
+    try
+    {
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+      
+      logger.error("Error loading list of colours: " + e.getMessage());
+    }
+    finally
+    {
+      Neo4ArtBatchInserterSingleton.shutdownBatchInserterInstance();
+    }
+  }
 }

@@ -14,76 +14,57 @@
  * limitations under the License.
  */
 
-package org.neo4art.sentiment.domain;
+package org.neo4art.domain;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.neo4art.graphdb.Neo4ArtLabel;
 import org.neo4art.graphdb.Neo4ArtNode;
-import org.neo4art.sentiment.graphdb.NLPLabel;
 import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 26 Apr 2015
+ * @since 3 May 2015
  */
-public class Word implements Neo4ArtNode
+public class Emotion implements Neo4ArtNode
 {
-  private static final Label[] LABELS = new Label[] { NLPLabel.Word };
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Emotion };
   
-  public static final String WORD_PROPERTY_NAME     = "word";
-  public static final String LANGUAGE_PROPERTY_NAME = "lang";
+  public static final String NAME_PROPERTY_NAME = "name";
   public static final String POLARITY_PROPERTY_NAME = "polarity";
 
-  private Long               nodeId;
+  private Long nodeId;
   
-  private String             word;
-  private String             lang;
-  private String             polarity;
+  private String name;
+  private String polarity;
 
-
-  public Word()
+  public Emotion()
   {
-    this.nodeId = null;
-    this.word = null;
-    this.lang = null;
-    this.polarity = null;
-  }
-
-  public Word(String word, String lang)
-  {
-    this.nodeId = null;
-    this.word = word;
-    this.lang = lang;
+    this.name = null;
     this.polarity = null;
   }
   
-  public Word(String word, String lang, String polarity)
+  public Emotion(String name)
   {
-    this.nodeId = null;
-    this.word = word;
-    this.lang = lang;
-    this.polarity = polarity;
+    this.name = name;
+    this.polarity = null;
+  }
+  
+  public Emotion(String name, String polarity)
+  {
+    this.name = name;
+    this.polarity = null;
   }
 
-  public String getWord()
+  public String getName()
   {
-    return word;
+    return name;
   }
 
-  public void setWord(String word)
+  public void setName(String name)
   {
-    this.word = word;
-  }
-
-  public String getLang()
-  {
-    return lang;
-  }
-
-  public void setLang(String lang)
-  {
-    this.lang = lang;
+    this.name = name;
   }
 
   public String getPolarity()
@@ -95,32 +76,36 @@ public class Word implements Neo4ArtNode
   {
     this.polarity = polarity;
   }
-  
+
+  /**
+   * @see org.neo4art.graphdb.Neo4ArtNode#getNodeId()
+   */
   @Override
   public Long getNodeId()
   {
     return this.nodeId;
   }
-  
+
+  /**
+   * @see org.neo4art.graphdb.Neo4ArtNode#setNodeId(long)
+   */
   @Override
   public void setNodeId(long nodeId)
   {
     this.nodeId = nodeId;
   }
-  
+
+  /**
+   * @see org.neo4art.graphdb.Neo4ArtNode#getProperties()
+   */
   @Override
   public Map<String, Object> getProperties()
   {
     Map<String, Object> properties = new HashMap<String, Object>();
     
-    if (this.word != null)
+    if (this.name != null)
     {
-      properties.put(WORD_PROPERTY_NAME, this.word);
-    }
-    
-    if (this.lang != null)
-    {
-      properties.put(LANGUAGE_PROPERTY_NAME, this.lang);      
+      properties.put(NAME_PROPERTY_NAME, this.name);
     }
     
     if (this.polarity != null)
@@ -131,6 +116,9 @@ public class Word implements Neo4ArtNode
     return properties;
   }
 
+  /**
+   * @see org.neo4art.graphdb.Neo4ArtNode#getLabels()
+   */
   @Override
   public Label[] getLabels()
   {

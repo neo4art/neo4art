@@ -14,21 +14,26 @@
  * limitations under the License.
  */
 
-package org.neo4art.graphdb;
+package org.neo4art.core.repository;
 
-import org.neo4j.graphdb.Label;
+import org.neo4art.domain.Emotion;
+
 
 /**
  * @author Lorenzo Speranzoni
- * @since 5 Apr 2015
+ * @since 3 May 2015
  */
-public enum Neo4ArtLabel implements Label
+public interface EmotionRepository
 {
-  Artist, Artwork, ArtMovement,
-  
-  Museum, ReligiousBuilding, Monument, HistoricSite, HistoricPlace,
+  /**
+   * 
+   */
+  void createIndexes();
 
-  Country, Settlement,
-  
-  Colour, Emotion
+  /**
+   * 
+   * @param emotion
+   * @return
+   */
+  long saveEmotion(Emotion emotion);
 }

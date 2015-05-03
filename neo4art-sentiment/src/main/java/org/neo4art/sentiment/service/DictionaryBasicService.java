@@ -25,6 +25,7 @@ import org.apache.commons.io.LineIterator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.neo4art.domain.Polarity;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.domain.Word;
 import org.neo4art.sentiment.graphdb.NLPLegacyIndex;
@@ -91,8 +92,8 @@ public class DictionaryBasicService implements DictionaryService
   @Override 
   public void addPolarity() throws IOException
   {
-    addPolarity("word-polarity" + File.separator + locale.getLanguage() + File.separator + "negative-words.txt", Word.NEGATIVE_WORD);
-    addPolarity("word-polarity" + File.separator + locale.getLanguage() + File.separator + "positive-words.txt", Word.POSITIVE_WORD);
+    addPolarity("word-polarity" + File.separator + locale.getLanguage() + File.separator + "negative-words.txt", Polarity.NEGATIVE);
+    addPolarity("word-polarity" + File.separator + locale.getLanguage() + File.separator + "positive-words.txt", Polarity.POSITIVE);
   }
 
   /**
