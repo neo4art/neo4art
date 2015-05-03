@@ -1,7 +1,6 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -34,7 +33,7 @@ public class WikipediaArtistAndyInfoboxTest
     Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
   
     SimpleDateFormat formatDate = new SimpleDateFormat("yyyy M d"); 
-    URL url = new URL("http://en.wikipedia.org/wiki/File:Andy_Warhol_by_Jack_Mitchell.jpg");
+    //URL url = new URL("http://en.wikipedia.org/wiki/File:Andy_Warhol_by_Jack_Mitchell.jpg");
     
     String test = "";
     ArrayList<Artwork> work = artist.getNotableWorks();

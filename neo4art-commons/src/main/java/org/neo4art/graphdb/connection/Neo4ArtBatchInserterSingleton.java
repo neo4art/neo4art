@@ -19,10 +19,8 @@ package org.neo4art.graphdb.connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
 import org.neo4art.graphdb.Neo4ArtNode;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
-import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
@@ -39,8 +37,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
 {
   private static BatchInserter                   batchInserter;
   private static BatchInserterIndexProvider      batchInserterIndexProvider;
-
-  private static Map<String, BatchInserterIndex> batchInserterNodeIndexes = new HashMap<String, BatchInserterIndex>();
 
   protected Neo4ArtBatchInserterSingleton()
   {
@@ -98,14 +94,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void shutdownBatchInserterInstance()
   {
-    if (MapUtils.isNotEmpty(batchInserterNodeIndexes))
-    {
-      for (String indexName : batchInserterNodeIndexes.keySet())
-      {
-        batchInserterNodeIndexes.get(indexName).flush();
-      }
-    }
-    
     if (batchInserterIndexProvider != null)
     {
       batchInserterIndexProvider.shutdown();
@@ -136,16 +124,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   /**
    * 
    * @param indexName
-   * @return
-   */
-  public static boolean existsLegacyNodeIndex(String indexName)
-  {
-    return batchInserterNodeIndexes.get(indexName) != null;
-  }
-
-  /**
-   * 
-   * @param indexName
    * @param config
    */
   public static void createLegacyNodeIndex(String indexName, Map<String, String> config)
@@ -163,22 +141,13 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void createLegacyNodeIndex(String indexName, Map<String, String> config, String cacheKey, int cacheSize)
   {
-    if (batchInserterNodeIndexes.get(indexName) == null)
+    BatchInserterIndexProvider batchInserterIndexProvider = getBatchInserterIndexProviderInstance();
+
+    BatchInserterIndex index = batchInserterIndexProvider.nodeIndex(indexName, config);
+
+    if (cacheSize != 0)
     {
-      BatchInserterIndexProvider batchInserterIndexProvider = getBatchInserterIndexProviderInstance();
-
-      BatchInserterIndex index = batchInserterIndexProvider.nodeIndex(indexName, config);
-
-      if (cacheSize != 0)
-      {
-        index.setCacheCapacity(cacheKey, cacheSize);
-      }
-
-      batchInserterNodeIndexes.put(indexName, index);
-    }
-    else
-    {
-      throw new IllegalArgumentException("Index with name " + indexName + " already exists.");
+      index.setCacheCapacity(cacheKey, cacheSize);
     }
   }
 
@@ -192,7 +161,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static IndexHits<Long> getFromLegacyNodeIndex(String indexName, String key, Object value)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -208,7 +177,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void addToLegacyNodeIndex(String indexName, Neo4ArtNode node)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -223,7 +192,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void flushLegacyNodeIndex(String indexName)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterNodeIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex != null)
     {
@@ -243,21 +212,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
     long nodeId = batchInserter.createNode(node.getProperties(), node.getLabels());
     
     node.setNodeId(nodeId);
-    
-    return nodeId;
-  }
-  
-  /**
-   * 
-   * @param node
-   * @return
-   */
-  @Deprecated
-  public static long createNode(Map<String, Object> properties, Label... labels)
-  {
-    BatchInserter batchInserter = getBatchInserterInstance();
-    
-    long nodeId = batchInserter.createNode(properties, labels);
     
     return nodeId;
   }
