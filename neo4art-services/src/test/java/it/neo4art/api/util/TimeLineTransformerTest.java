@@ -21,6 +21,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.transformer.TimeLineTransformer;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.colour.manager.ArtworksColoursAnalyzer;
+import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
+import org.neo4art.domain.Artist;
 
 /**
  * @author Enrico De Benetti
@@ -32,7 +36,12 @@ public class TimeLineTransformerTest {
   @Test
   public void testBuildTimeLineEvents(){
 	  
-	  List<TimelineEvent> buildTimeLineEvents = TimeLineTransformer.buildTimeLineEvents("Van Gogh");
+	  ArtworksColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
+      Artist artist = new Artist();
+	  artist.setName("Van Gogh");
+	  List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);	
+	  
+	  List<TimelineEvent> buildTimeLineEvents = TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
 	  Assert.assertNotNull(buildTimeLineEvents);
 	  Assert.assertEquals(703, buildTimeLineEvents.size());
 	  

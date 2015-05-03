@@ -22,8 +22,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.util.ServicesUtil;
 import org.neo4art.colour.domain.ColourAnalysis;
-import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
-import org.neo4art.domain.Artist;
 
 /**
  * @author Enrico De Benetti
@@ -36,14 +34,10 @@ public class TimeLineTransformer {
 	 * 
 	 * @return
 	 */
-	public static List<TimelineEvent> buildTimeLineEvents(String inputSearch){
+	public static List<TimelineEvent> buildTimeLineEvents(List<ColourAnalysis> colourAnalysisByArtist){
 		
 	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
 	 ServicesUtil servicesUtil = ServicesUtil.getInstance();
-	 ArtworksDefaultColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
-	 Artist artist = new Artist();
-	 artist.setName(inputSearch);
-	 List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);
 	 
 	 if(!CollectionUtils.isEmpty(colourAnalysisByArtist)){
 

@@ -19,6 +19,10 @@ import java.util.List;
 
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.transformer.TimeLineTransformer;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.colour.manager.ArtworksColoursAnalyzer;
+import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
+import org.neo4art.domain.Artist;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,8 +44,13 @@ public class Neo4ArtTimelineSearchRestController {
 	public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, 
 			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
 
-	 //TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
-	 return TimeLineTransformer.buildTimeLineEvents(searchInput);
+	
+	  ArtworksColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
+      Artist artist = new Artist();
+	  artist.setName(searchInput);
+	  List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);	
+		
+	 return TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
 	}
 	
 	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
