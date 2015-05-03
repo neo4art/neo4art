@@ -15,7 +15,7 @@
 	</parent>
 
 	<properties>
-	    <start-class>org.neo4art.importer.wikipedia.configuration.SpringBootConfiguration</start-class>
+	    <start-class>org.neo4art.sentiment.configuration.SpringBootConfiguration</start-class>
 	</properties>
 
 	<dependencies>
