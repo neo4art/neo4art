@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package org.neo4art.colour.service;
+package org.neo4art.core.service;
 
-import org.neo4art.colour.domain.ColourAnalysis;
+import java.util.List;
+
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 2 May 2015
+ * @since 4 May 2015
  */
-public interface ColourAnalysisService
+public interface ArtworkService
 {
   /**
-   * It stores a colour analysis node in the graph, connect it to the closest minimum, average, maximum colour nodes and to the artwork node.
-   *  
-   * @param colourAnalysis
+   * @param artwork
+   * @return 
    */
-  void saveColourAnalysis(ColourAnalysis colourAnalysis);
+  long saveArtwork(Artwork artwork);
+  
+  /**
+   * @param artworks
+   */
+  void saveArtworks(List<Artwork> artworks);
 }

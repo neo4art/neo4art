@@ -16,13 +16,13 @@
 
 package org.neo4art.colour.manager;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
-import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
 
 /**
  * @author Lorenzo Speranzoni
@@ -31,18 +31,12 @@ import org.neo4art.domain.Artist;
 public interface ArtworksColoursAnalyzer
 {
   /**
-   * @param fileName
-   * @return
-   * @throws IOException
-   */
-  List<ArtworkURL> loadArtworksURLsFromFile(String fileName) throws IOException;
-
-  /**
-   * @param artworksURLsFromFile
+   * @param artworks
    * @return
    * @throws ImageParserException
+   * @throws MalformedURLException 
    */
-  List<ColourAnalysis> analyzeArtworksColours(List<ArtworkURL> artworksURLsFromFile) throws ImageParserException;
+  List<ColourAnalysis> analyzeArtworksColours(List<Artwork> artworks);
   
   /**
    * 

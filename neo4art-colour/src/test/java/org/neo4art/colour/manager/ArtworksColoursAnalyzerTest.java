@@ -1,13 +1,11 @@
 package org.neo4art.colour.manager;
 
 import java.awt.Color;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.domain.Artwork;
 
@@ -18,12 +16,16 @@ public class ArtworksColoursAnalyzerTest
   {
     try
     {
-      List<ArtworkURL> artworksURLsFromFile = new ArrayList<ArtworkURL>();
-      artworksURLsFromFile.add(new ArtworkURL(new Artwork("Water Mill at Gennep I"), new URL("http://www.vggallery.com/painting/f_0046.jpg")));
+      Artwork artwork = new Artwork();
+      artwork.setTitle("Water Mill at Gennep I");
+      artwork.setImageFile("http://www.vggallery.com/painting/f_0046.jpg");
+      
+      List<Artwork> artworks = new ArrayList<Artwork>();
+      artworks.add(artwork);
       
       ArtworksColoursAnalyzer artworksColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
       
-      List<ColourAnalysis> analyzeArtworksColours = artworksColoursAnalyzer.analyzeArtworksColours(artworksURLsFromFile);
+      List<ColourAnalysis> analyzeArtworksColours = artworksColoursAnalyzer.analyzeArtworksColours(artworks);
       
       Assert.assertEquals(1, analyzeArtworksColours.size());
       
@@ -47,41 +49,5 @@ public class ArtworksColoursAnalyzerTest
 
       Assert.fail(e.getMessage());
     }
-  }
-  
-  @Test
-  public void shouldAnalyzeAllVanGoghArtworks()
-  {
-    try
-    {
-      ArtworksColoursAnalyzer artworksColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
-      
-      List<ArtworkURL> artworksURLsFromFile = artworksColoursAnalyzer.loadArtworksURLsFromFile("vangoghartworks/vangoghartworks.txt");
-      
-      List<ColourAnalysis> analyseVanGoghImage = artworksColoursAnalyzer.analyzeArtworksColours(artworksURLsFromFile);
-      
-      Assert.assertNotNull(analyseVanGoghImage);
-      Assert.assertEquals(827, analyseVanGoghImage.size());
-      
-      for (ColourAnalysis imageColor : analyseVanGoghImage)
-      {
-        
-        System.out.println("Image Name: " + imageColor.getArtwork().getTitle());
-        System.out.println("AVG name:" + imageColor.getAverageClosestColour().getName());
-        System.out.println("MAX name:" + imageColor.getMaximumClosestColour().getName());
-        System.out.println("MIN name:" + imageColor.getMinimumClosestColour().getName());
-        System.out.println("AVG :" + imageColor.getAverageColour().toString());
-        System.out.println("Max :" + imageColor.getMaximumColour().toString());
-        System.out.println("Min :" + imageColor.getMinimumColour().toString());
-        System.out.println("------------------------------------------------\n");
-        
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-      
-      Assert.fail(e.getMessage());
-    }
-  }
+  }  
 }

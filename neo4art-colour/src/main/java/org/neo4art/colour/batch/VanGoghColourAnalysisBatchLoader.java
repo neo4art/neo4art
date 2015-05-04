@@ -16,9 +16,18 @@
 
 package org.neo4art.colour.batch;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.colour.manager.VanGoghArtworksColoursDefaultManager;
+import org.neo4art.colour.manager.VanGoghArtworksColourAnalysisDefaultManager;
+import org.neo4art.colour.manager.VanGoghArtworksColourAnalysisManager;
+import org.neo4art.core.repository.ArtistBatchInserterRepository;
+import org.neo4art.core.repository.ArtistRepository;
+import org.neo4art.core.service.ArtworkDefaultService;
+import org.neo4art.core.service.ArtworkService;
+import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
@@ -31,9 +40,36 @@ public class VanGoghColourAnalysisBatchLoader
 
   public static void main(String[] args)
   {
+    String fileName = "vangoghartworks/van-gogh-artworks.csv";
+    
     try
     {
-      new VanGoghArtworksColoursDefaultManager().computeAndSaveColourAnalyses();
+      logger.info("Step 1. Saving Van Gogh artist...");
+      
+      Artist artist = new Artist();
+      artist.setName("Vincent van Gogh");
+      
+      ArtistRepository artistRepository = new ArtistBatchInserterRepository();
+      artistRepository.saveArtist(artist);
+      
+      logger.info("Step 2. Loading artworks from file: " + fileName + "...");
+      
+      VanGoghArtworksColourAnalysisManager vanGoghArtworksColourAnalysisDefaultManager = new VanGoghArtworksColourAnalysisDefaultManager();
+      List<Artwork> artworks = vanGoghArtworksColourAnalysisDefaultManager.loadArtworksFromFile(fileName);
+      
+      for (Artwork artwork : artworks)
+      {
+        artwork.setArtist(artist);
+      }
+     
+      logger.info("Step 3. Saving artworks...");
+      
+      ArtworkService artworkService = new ArtworkDefaultService();
+      artworkService.saveArtworks(artworks);
+      
+      logger.info("Step 4. Computing and saving colour analyses...");
+      
+      vanGoghArtworksColourAnalysisDefaultManager.computeAndSaveColourAnalyses(artworks);
     }
     catch (Exception e)
     {
@@ -45,5 +81,7 @@ public class VanGoghColourAnalysisBatchLoader
     {
       Neo4ArtBatchInserterSingleton.shutdownBatchInserterInstance();
     }
+    
+    logger.info("Done!");
   }
 }

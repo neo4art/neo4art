@@ -16,10 +16,6 @@
 
 package org.neo4art.colour.manager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +23,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.colour.bean.ArtworkURL;
 import org.neo4art.colour.domain.ColourAnalysis;
-import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.colour.repository.ColourAnalysisRepository;
 import org.neo4art.colour.repository.ColourGraphDatabaseServiceRepository;
 import org.neo4art.colour.service.ImageDefaultManager;
@@ -51,58 +45,41 @@ public class ArtworksDefaultColoursAnalyzer implements ArtworksColoursAnalyzer
   }
   
   /**
-   * @see org.neo4art.colour.manager.ArtworksColoursAnalyzer#loadArtworksURLsFromFile(java.lang.String)
-   */
-  @Override
-  public List<ArtworkURL> loadArtworksURLsFromFile(String fileName) throws IOException
-  {
-    List<ArtworkURL> result = new ArrayList<ArtworkURL>();
-    
-    InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
-
-    BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
-    
-    String line = null;
-    
-    while ((line = input.readLine()) != null)
-    {
-      String[] splitLine = line.split("-");
-      
-      result.add(new ArtworkURL(new Artwork(splitLine[0]), new URL(splitLine[1])));
-    }
-    
-    input.close();
-    
-    return result;
-  }
-
-  /**
    * @see org.neo4art.colour.manager.ArtworksColoursAnalyzer#analyzeArtworksColours(java.util.List)
    */
   @Override
-  public List<ColourAnalysis> analyzeArtworksColours(List<ArtworkURL> artworksURLsFromFile) throws ImageParserException
+  public List<ColourAnalysis> analyzeArtworksColours(List<Artwork> artworks)
   {
-    List<ColourAnalysis> artworksColours = null;
+    List<ColourAnalysis> colourAnalyses = null;
     
-    if (CollectionUtils.isNotEmpty(artworksURLsFromFile))
+    if (CollectionUtils.isNotEmpty(artworks))
     {
-      artworksColours = new ArrayList<ColourAnalysis>();
+      colourAnalyses = new ArrayList<ColourAnalysis>();
       
       ImageManager imageManager = new ImageDefaultManager();
   
-      for (ArtworkURL artworkURL : artworksURLsFromFile)
+      for (Artwork artwork : artworks)
       {
-        logger.info("Starting colour analysis for " + artworkURL.getArtwork().getTitle() + " from " + artworkURL.getUrl());
-
-        ColourAnalysis colourAnalysis = imageManager.analyzeImageByUrl(artworkURL.getUrl(), artworkURL.getArtwork().getTitle());
-        
-        logger.info("Colour analysis for " + artworkURL.getArtwork().getTitle() + " from " + artworkURL.getUrl() + " done.");
-        
-        artworksColours.add(colourAnalysis);
+        try
+        {
+          logger.info("Starting colour analysis for " + artwork.getTitle() + " from " + artwork.getImageFile());
+  
+          ColourAnalysis colourAnalysis = imageManager.analyzeImageByUrl(new URL(artwork.getImageFile()), artwork.getTitle());
+          
+          colourAnalysis.setArtwork(artwork);
+          
+          logger.info("Done!");
+          
+          colourAnalyses.add(colourAnalysis);
+        }
+        catch (Exception e)
+        {
+          logger.error("Colour analysis failed for " + artwork.getTitle() + " from " + artwork.getImageFile() + ". Cause: " + e.getMessage());
+        }
       }    
     }
 
-    return artworksColours;
+    return colourAnalyses;
   }
 
   /* (non-Javadoc)

@@ -16,19 +16,27 @@
 
 package org.neo4art.colour.manager;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.neo4art.domain.Artwork;
+
 /**
  * @author Lorenzo Speranzoni
  * @since 2 May 2015
  */
-public interface VanGoghArtworksColoursManager
+public interface VanGoghArtworksColourAnalysisManager
 {
   /**
-   * 
+   * @param fileName
+   * @return
+   * @throws IOException
    */
-  void saveArtworksSample();
-  
+  List<Artwork> loadArtworksFromFile(String fileName) throws IOException;
+
   /**
    * 
+   * @param artworks
    */
-  void computeAndSaveColourAnalyses();
+  void computeAndSaveColourAnalyses(List<Artwork> artworks);
 }

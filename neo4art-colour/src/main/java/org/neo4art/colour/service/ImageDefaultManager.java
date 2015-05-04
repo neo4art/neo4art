@@ -29,7 +29,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.exception.ImageParserException;
 import org.neo4art.colour.utility.UtilityImage;
-import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
 
 /**
@@ -75,13 +74,9 @@ public class ImageDefaultManager implements ImageManager
 
     try
     {
-      Artwork artwork = new Artwork();
-
-      artwork.setTitle(imageName);
-
       this.image = ImageIO.read(url);
+
       imageColor = analyzeImage();
-      imageColor.setArtwork(artwork);
       imageColor.setSource(url.toString());
     }
     catch (Exception e)
