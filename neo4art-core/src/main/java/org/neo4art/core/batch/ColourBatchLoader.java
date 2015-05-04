@@ -16,8 +16,6 @@
 
 package org.neo4art.core.batch;
 
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -39,15 +37,6 @@ public class ColourBatchLoader
   {
     try
     {
-      ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-      URL[] urls = ((URLClassLoader) cl).getURLs();
-
-      for (URL url : urls)
-      {
-        System.out.println(url.getFile());
-      }
-      
       ColourService colourService = new ColourDefaultService();
 
       List<Colour> colours = colourService.getColours();

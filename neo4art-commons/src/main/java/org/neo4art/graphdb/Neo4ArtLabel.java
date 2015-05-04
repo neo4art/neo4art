@@ -24,11 +24,13 @@ import org.neo4j.graphdb.Label;
  */
 public enum Neo4ArtLabel implements Label
 {
-  Artist, Artwork, ArtMovement,
+  Artist, Artwork, ArtMovement, Tecnique,
   
   Museum, ReligiousBuilding, Monument, HistoricSite, HistoricPlace,
 
   Country, Settlement,
   
-  Colour, Emotion
+  Colour,
+  
+  Emotion
 }
