@@ -214,10 +214,20 @@ function theGraph() {
 			 */.call(drag);
 
 		nodeEnter.append("circle").attr("r", function(d) {
-			return d.radius;// + 2;
-		}).style("fill", function(d) {
-			return color(1 / d.rating);
-		});
+            return d.radius;
+        }).style("fill", function(d) {
+            if (d.type == "Colour") {
+                return "#" + d.thumbnail;
+            } else {
+                return color(1 / d.rating);
+            }
+        });
+
+        nodeEnter.append("clipPath").attr('id', function(d, i) {
+            return "clip" + i
+        }).append("circle").attr("class", "clip-path").attr("r", function(d) {
+            return d.radius;
+        });
 
 		nodeEnter.append("clipPath").attr('id', function(d, i) {
 			return "clip" + i
