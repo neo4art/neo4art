@@ -88,8 +88,6 @@ public class Neo4ArtSearchRestController {
 	public @ResponseBody SearchResult getDetailNodeSearch(Model model,
 			                                     @RequestParam(value="nodeId", required=true) Long nodeId) {
 
-	 System.out.println("Input nodeId: "+nodeId);
-		
 	 return SearchResultTransformer.buildDetailNodeSearch();
 	}
 	

@@ -41,30 +41,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/api/services/timeline")
-public class Neo4ArtTimelineSearchRestController {
+public class Neo4ArtTimelineSearchRestController
+{
 
-	@RequestMapping(value = "/colours-analysis.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, 
-			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
+  @RequestMapping(value = "/colours-analysis.json", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, @RequestParam(value = "searchInput", required = true) String searchInput)
+  {
 
-	
-	  ArtworksColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
-      Artist artist = new Artist();
-	  artist.setName(searchInput);
-	  List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);	
-		
-	 return TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
-	}
-	
-	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<SentimentEvent> getSentimentAnalysis(Model model, 
-			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
+    ArtworksColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
+    Artist artist = new Artist();
+    artist.setName(searchInput);
+    List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);
 
-	 System.out.println("Input search: "+searchInput);
-	 BuildSentimentMock buildSentimentMock = new BuildSentimentMock();
-	 List<SentimentAnalysis> sentimentAnalisys = buildSentimentMock.getSentimentAnalisys(searchInput);
-	 
-	 return TimeLineTransformer.buildSentimentsEvent(sentimentAnalisys);
-	}
-	
+    return TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
+  }
+
+  @RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
+  public @ResponseBody List<SentimentEvent> getSentimentAnalysis(Model model, @RequestParam(value = "searchInput", required = true) String searchInput)
+  {
+
+    BuildSentimentMock buildSentimentMock = new BuildSentimentMock();
+    List<SentimentAnalysis> sentimentAnalisys = buildSentimentMock.getSentimentAnalisys(searchInput);
+
+    return TimeLineTransformer.buildSentimentsEvent(sentimentAnalisys);
+  }
+
 }

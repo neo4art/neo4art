@@ -16,8 +16,11 @@
 package org.neo4art.api.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.neo4art.domain.Artwork;
 import org.neo4art.literature.domain.Document;
@@ -31,15 +34,18 @@ public class ServicesUtil
 {
 
   private static ServicesUtil instance                      = null;
+
   private SimpleDateFormat    format;
-  private SimpleDateFormat documentFormat;
+  private SimpleDateFormat    documentFormat;
+  Map<String, Integer>        mappaComletitionDay;
   private static final String DATE_FORMAT_COMPLETITION_DATE = "dd-MMM-yyyy HH:mm";
-  private static final String DATE_FORMAT_DOCUMENT_DATE = "E, dd MMM yyyy";
+  private static final String DATE_FORMAT_DOCUMENT_DATE     = "E, dd MMM yyyy";
 
   private ServicesUtil()
   {
     documentFormat = new SimpleDateFormat(DATE_FORMAT_DOCUMENT_DATE, Locale.ENGLISH);
     format = new SimpleDateFormat(DATE_FORMAT_COMPLETITION_DATE, Locale.ENGLISH);
+    mappaComletitionDay = new HashMap<String, Integer>();
   }
 
   public static ServicesUtil getInstance()
@@ -64,13 +70,7 @@ public class ServicesUtil
 
       if (artwork != null && artwork.getCompletionDate() != null)
       {
-        //TODO Verificare date con stesso giorno!!!
-        //prendo giorno mese e anno
-        //- verifico se ho già gg per mese anno
-        //  - se si add di uno il gg e salvo in mappa il gg
-        //- 
-        
-        result = format.format(artwork.getCompletionDate());
+        result = this.splitDaySameMonthAndYear(artwork);
       }
       else if (artwork != null)
       {
@@ -81,6 +81,45 @@ public class ServicesUtil
     {
     }
 
+    return result;
+  }
+
+  /**
+   * @param artwork
+   * @return
+   */
+  private String splitDaySameMonthAndYear(Artwork artwork)
+  {
+    String result = "";
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(artwork.getCompletionDate());
+    int mm = calendar.get(Calendar.MONTH);
+    int yy = calendar.get(Calendar.YEAR);
+    int gg = calendar.get(Calendar.DATE);
+
+    if (this.mappaComletitionDay.get(yy + "_" + mm) == null)
+    {
+      mappaComletitionDay.put(yy + "_" + mm, gg);
+      result = format.format(artwork.getCompletionDate());
+    }
+    else
+    {
+      int newgg = this.mappaComletitionDay.get(yy + "_" + mm) + 1;
+      mappaComletitionDay.put(yy + "_" + mm, newgg);
+
+      Calendar calendarNewDay = Calendar.getInstance();
+      calendarNewDay.set(Calendar.YEAR, yy);
+      calendarNewDay.set(Calendar.MONTH, mm);
+      calendarNewDay.set(Calendar.DAY_OF_MONTH, newgg);
+      calendarNewDay.set(Calendar.HOUR, 0);
+      calendarNewDay.set(Calendar.MINUTE, 0);
+      calendarNewDay.set(Calendar.SECOND, 0);
+      calendarNewDay.set(Calendar.MILLISECOND, 0);
+
+      result = format.format(calendarNewDay.getTime());
+    }
+    
     return result;
   }
 
@@ -100,7 +139,7 @@ public class ServicesUtil
     }
     catch (Exception e)
     {
-      System.out.println("ERRORE: "+e.getMessage());
+      System.out.println("ERRORE: " + e.getMessage());
     }
 
     return result;

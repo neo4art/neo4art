@@ -49,7 +49,58 @@ public class ServicesUtilTest
     artwork.setCompletionDate(calendar.getTime());
 
     String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork);
-    Assert.assertEquals("15-Sep-1883 00:00", verifyArtworkDate);
+    Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
+  }
+  
+  @Test
+  public void testDateFormatCompletionDateSplitSameDays()
+  {
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.YEAR, 1883);
+    calendar.set(Calendar.MONTH, 8);
+    calendar.set(Calendar.DAY_OF_MONTH, 15);
+    calendar.set(Calendar.HOUR, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+
+    ServicesUtil serviceUtil = ServicesUtil.getInstance();
+    Artwork artwork = new Artwork();
+    artwork.setCompletionDate(calendar.getTime());
+
+    String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork);
+    Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
+    
+    Calendar calendar1 = Calendar.getInstance();
+    calendar1.set(Calendar.YEAR, 1883);
+    calendar1.set(Calendar.MONTH, 8);
+    calendar1.set(Calendar.DAY_OF_MONTH, 15);
+    calendar1.set(Calendar.HOUR, 0);
+    calendar1.set(Calendar.MINUTE, 0);
+    calendar1.set(Calendar.SECOND, 0);
+    calendar1.set(Calendar.MILLISECOND, 0);
+
+    Artwork artwork1 = new Artwork();
+    artwork1.setCompletionDate(calendar1.getTime());
+
+    String verifyArtworkDateNextDay = serviceUtil.verifyArtworkDate(artwork);
+    Assert.assertEquals("16-Sep-1883 12:00", verifyArtworkDateNextDay);
+    
+    Calendar calendar2 = Calendar.getInstance();
+    calendar2.set(Calendar.YEAR, 1883);
+    calendar2.set(Calendar.MONTH, 8);
+    calendar2.set(Calendar.DAY_OF_MONTH, 15);
+    calendar2.set(Calendar.HOUR, 0);
+    calendar2.set(Calendar.MINUTE, 0);
+    calendar2.set(Calendar.SECOND, 0);
+    calendar2.set(Calendar.MILLISECOND, 0);
+
+    Artwork artwork3 = new Artwork();
+    artwork3.setCompletionDate(calendar2.getTime());
+
+    String verifyArtworkDateNextNextDay = serviceUtil.verifyArtworkDate(artwork);
+    Assert.assertEquals("17-Sep-1883 12:00", verifyArtworkDateNextNextDay);
   }
   
   @Test
