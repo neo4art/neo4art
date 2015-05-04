@@ -214,10 +214,20 @@ function theGraph() {
 			 */.call(drag);
 
 		nodeEnter.append("circle").attr("r", function(d) {
-			return d.radius;// + 2;
-		}).style("fill", function(d) {
-			return color(1 / d.rating);
-		});
+            return d.radius;
+        }).style("fill", function(d) {
+            if (d.type == "Colour") {
+                return "#" + d.thumbnail;
+            } else {
+                return color(1 / d.rating);
+            }
+        });
+
+        nodeEnter.append("clipPath").attr('id', function(d, i) {
+            return "clip" + i
+        }).append("circle").attr("class", "clip-path").attr("r", function(d) {
+            return d.radius;
+        });
 
 		nodeEnter.append("clipPath").attr('id', function(d, i) {
 			return "clip" + i
@@ -405,10 +415,10 @@ function theGraph() {
 		clearDiv("data");
 		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
 		var data = float.select("#data");
-		data.append("div").attr("class", "title").append("h1").text(d.name);
+//		data.append("div").attr("class", "title").append("h1").text(d.name);
 		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
-		data.append("div").attr("class", "description").text(d.description);
-		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+//		data.append("div").attr("class", "description").text(d.description);
+//		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
 		var frame = float.select("iframe");
 		frame.attr("src", d.link);
 		$("#floating").perfectScrollbar();
