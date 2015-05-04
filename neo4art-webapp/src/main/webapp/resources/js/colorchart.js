@@ -1,7 +1,13 @@
 // ################################## TIMELINE ##############################à
 var timeline;
 var bigData;
+$(document).ajaxStart(function() {
+    $("#loader").show();
+});
 
+$(document).ajaxStop(function() {
+    $("#loader").hide();
+});
 $(document).ready(function(d) {
 	p = parseURLParams();
 	if (p != undefined) {
@@ -211,16 +217,17 @@ function drawColorChart(data, parseColors) {
 		}
 		return txt;
 	}
-	function showData(obj, d) {
-		var coord = d3.mouse(obj);
-		var infobox = d3.select(".infobox");
-		// now we just position the infobox roughly where our mouse is
-		infobox.style("left", (coord[0] - 40) + "px");
-		infobox.style("top", (coord[1] - 220) + "px");
-		$(".infobox").html("&nbsp;&nbsp;");
-		$(".infobox").show();
-		$(".infobox").css("background-color", "#" + d.toString(16));
-	}
+	function showData(obj, d ) {
+        var coord = d3.mouse(obj);
+        var infobox = d3.select(".infobox");
+        // now we just position the infobox roughly where our mouse is
+        infobox.style("left", (coord[0] - 40) + "px");
+        infobox.style("top", (coord[1] - 220) + "px");
+        //Showing the closest color name
+        $(".infobox").html("<span class='text-stroked'>"+d.closestAverageColorName+"</span>");
+        $(".infobox").show();
+        $(".infobox").css("background-color", "#" + d.averageRgb.toString(16));
+    }
 	function hideData() {
 		$(".infobox").hide();
 	}
@@ -278,7 +285,7 @@ function drawColorChart(data, parseColors) {
 	svg.selectAll("circle").data(data).enter().append("circle").attr("fill", function(d) {
 		return "#" + d.averageRgb.toString(16);
 	}).attr("r", 10).attr("cx", xx).attr("cy", yy).on("mouseover", function(d) {
-		showData(this, d.averageRgb);
+		showData(this, d);
 	}).on("mouseout", function() {
 		hideData();
 	}).attr("class", "pallino");
