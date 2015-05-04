@@ -24,7 +24,5 @@ import org.neo4j.graphdb.Label;
  */
 public enum SentymentLabel implements Label{
 
-  SentimentAnalysis,
-	
-  PositveSentiment, NegativeSentiment, NeutralSentiment
+  SentimentAnalysis
 }

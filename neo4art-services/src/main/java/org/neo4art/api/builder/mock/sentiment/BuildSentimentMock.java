@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.sentiment.domain.SentimentAnalysis;
-import org.neo4art.sentiment.graphdb.SentymentLabel;
 
 /**
  * @author Enrico De Benetti
@@ -36,35 +35,35 @@ public class BuildSentimentMock {
 		
 	  SentimentAnalysis sentimentAnalysis1 = new SentimentAnalysis();
 	  sentimentAnalysis1.setNodeId(1);
-	  sentimentAnalysis1.setPolarity(SentymentLabel.PositveSentiment.toString());
+	  sentimentAnalysis1.setPolarity("positive");
 	  Letter sourceDocument1 = new Letter();
 	  sourceDocument1.setDate("Sunday, 29 September 1872");
 	  sentimentAnalysis1.setSource(sourceDocument1);
 	  
 	  SentimentAnalysis sentimentAnalysis2 = new SentimentAnalysis();
 	  sentimentAnalysis2.setNodeId(2);
-	  sentimentAnalysis2.setPolarity(SentymentLabel.NegativeSentiment.toString());
+	  sentimentAnalysis2.setPolarity("negative");
 	  Letter sourceDocument2 = new Letter();
 	  sourceDocument2.setDate("Sunday, 29 September 1872");
 	  sentimentAnalysis2.setSource(sourceDocument2);
 	  
 	  SentimentAnalysis sentimentAnalysis3 = new SentimentAnalysis();
 	  sentimentAnalysis3.setNodeId(3);
-	  sentimentAnalysis3.setPolarity(SentymentLabel.PositveSentiment.toString());
+	  sentimentAnalysis3.setPolarity("positive");
 	  Letter sourceDocument3 = new Letter();
 	  sourceDocument3.setDate("Saturday, 26 October 1872");
 	  sentimentAnalysis3.setSource(sourceDocument3);
 	  
 	  SentimentAnalysis sentimentAnalysis4 = new SentimentAnalysis();
 	  sentimentAnalysis4.setNodeId(4);
-	  sentimentAnalysis4.setPolarity(SentymentLabel.NegativeSentiment.toString());
+	  sentimentAnalysis4.setPolarity("negative");
 	  Letter sourceDocument4 = new Letter();
 	  sourceDocument4.setDate("Friday, 13 December 1872");
 	  sentimentAnalysis4.setSource(sourceDocument4);
 	  
 	  SentimentAnalysis sentimentAnalysis5 = new SentimentAnalysis();
 	  sentimentAnalysis5.setNodeId(5);
-	  sentimentAnalysis5.setPolarity(SentymentLabel.NeutralSentiment.toString());
+	  sentimentAnalysis5.setPolarity("negative");
 	  Letter sourceDocument5 = new Letter();
 	  sourceDocument5.setDate("Tuesday, 28 January 1873");
 	  sentimentAnalysis5.setSource(sourceDocument5);	
