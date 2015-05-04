@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4art.graphdb.Neo4ArtNode;
-import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
+import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
@@ -161,7 +161,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static IndexHits<Long> getFromLegacyNodeIndex(String indexName, String key, Object value)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
+    BatchInserterIndex batchInserterIndex = getBatchInserterIndexProviderInstance().nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -177,7 +177,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void addToLegacyNodeIndex(String indexName, Neo4ArtNode node)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
+    BatchInserterIndex batchInserterIndex = getBatchInserterIndexProviderInstance().nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -192,7 +192,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void flushLegacyNodeIndex(String indexName)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
+    BatchInserterIndex batchInserterIndex = getBatchInserterIndexProviderInstance().nodeIndex(indexName, null);
     
     if (batchInserterIndex != null)
     {
@@ -264,13 +264,13 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   }
 
   /**
-   * @param wikipediaLabel
-   * @param string
+   * @param label
+   * @param property
    */
-  public static void createDeferredSchemaIndex(WikipediaLabel wikipediaLabel, String string)
+  public static void createDeferredSchemaIndex(Label label, String property)
   {
     BatchInserter batchInserter = getBatchInserterInstance();
     
-    batchInserter.createDeferredSchemaIndex(wikipediaLabel).on("title").create();
+    batchInserter.createDeferredSchemaIndex(label).on(property).create();
   }
 }

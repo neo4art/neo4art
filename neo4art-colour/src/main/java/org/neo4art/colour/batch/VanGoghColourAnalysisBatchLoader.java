@@ -39,7 +39,7 @@ public class VanGoghColourAnalysisBatchLoader
     {
       e.printStackTrace();
 
-      logger.error("Error saving list of colours into neo4j: " + e.getMessage());
+      logger.error("Error computing and saving Van Gogh colours analyses into neo4j: " + e.getMessage());
     }
     finally
     {
