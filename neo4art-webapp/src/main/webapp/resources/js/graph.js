@@ -415,10 +415,10 @@ function theGraph() {
 		clearDiv("data");
 		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
 		var data = float.select("#data");
-		data.append("div").attr("class", "title").append("h1").text(d.name);
+//		data.append("div").attr("class", "title").append("h1").text(d.name);
 		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
-		data.append("div").attr("class", "description").text(d.description);
-		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+//		data.append("div").attr("class", "description").text(d.description);
+//		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
 		var frame = float.select("iframe");
 		frame.attr("src", d.link);
 		$("#floating").perfectScrollbar();

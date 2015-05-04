@@ -3,6 +3,14 @@
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+#loader{
+	text-align:center;
+	margin:50px;
+}
+.spinner-big{
+	font-size:3em !important;
+	color:#ccc;
+}
 
 .timeline-page {
 	width: 100%;
@@ -61,8 +69,9 @@
 }
 
 .infobox {
-	width:25px;
+	width:auto;
 	height:25px;
+	line-height:25px;
 	border: 1px solid #333;
 	border-radius: 4px;
 	box-shadow: #dfdfdf 0 4px 16px;
@@ -74,6 +83,15 @@
 	left: 0px;
 	z-index: 10500;
 	font-weight: bold;
+}
+.infobox .text-stroked{
+	color:white;
+	-webkit-text-stroke: 1px 0 #000;
+	text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 }
 .pallino{
 	stroke:#555;
