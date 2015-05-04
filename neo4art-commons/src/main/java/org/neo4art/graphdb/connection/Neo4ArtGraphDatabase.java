@@ -24,11 +24,11 @@ package org.neo4art.graphdb.connection;
  */
 public class Neo4ArtGraphDatabase {
 
-  public static final String NEO4J_STORE_DIR = System.getProperty("NEO4J_STORE_DIR", "target/graph.db");
+  public static final String NEO4J_STORE_DIR = System.getenv("NEO4J_STORE_DIR") != null ? System.getenv("NEO4J_STORE_DIR") : "target/graph.db";
 
-  public static final String NEO4J_PATH = System.getProperty("NEO4J_PATH", "jdbc:neo4j:file:" + NEO4J_STORE_DIR);
+  public static final String NEO4J_PATH = System.getenv("NEO4J_PATH") != null ? System.getenv("NEO4J_PATH") : "jdbc:neo4j:file:" + NEO4J_STORE_DIR;
   
-  public static final String NEO4J_URL = System.getProperty("NEO4J_URL", "http://localhost:7474");
-  public static final String NEO4J_USR = System.getProperty("NEO4J_USR", "neo4j");
-  public static final String NEO4J_PWD = System.getProperty("NEO4J_PWD", "neo4art");
+  public static final String NEO4J_URL = System.getenv("NEO4J_URL") != null ? System.getenv("NEO4J_URL") : "http://localhost:7474";
+  public static final String NEO4J_USR = System.getenv("NEO4J_USR") != null ? System.getenv("NEO4J_USR") : "neo4j";
+  public static final String NEO4J_PWD = System.getenv("NEO4J_PWD") != null ? System.getenv("NEO4J_PWD") : "neo4art";
 }
