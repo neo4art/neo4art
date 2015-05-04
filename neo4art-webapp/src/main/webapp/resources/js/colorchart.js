@@ -1,12 +1,13 @@
 // ################################## TIMELINE ##############################à
 var timeline;
 var bigData;
+var emotionData;
 $(document).ajaxStart(function() {
-    $("#loader").show();
+	$("#loader").show();
 });
 
 $(document).ajaxStop(function() {
-    $("#loader").hide();
+	$("#loader").hide();
 });
 $(document).ready(function(d) {
 	p = parseURLParams();
@@ -49,47 +50,56 @@ function parseURLParams() {
 
 function load(p) {
 	var parseDate = d3.time.format("%d-%b-%Y %H:%M").parse;
-	var serviceUrl = window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/colours-analysis.json?searchInput="
-			+ p.query.toString().replace(/\+/g, " ");
 	$.ajax({
 		method : 'get',
-		url : window.location.protocol+'//'+window.location.host+"/neo4art-services/api/services/timeline/colours-analysis.json?searchInput="
-				+ p.query.toString().replace(/\+/g, " "),
+		url : window.location.protocol + '//' + window.location.host
+				+ "/neo4art-services/api/services/timeline/colours-analysis.json?searchInput=" + p.query.toString().replace(/\+/g, " "),
 		dataType : 'json',
 		success : function(graph) {
-			// specify options
-			var minData = new Date(graph[0].start);
-			minData.setMonth(-1);
-			var maxData = new Date(graph[graph.length - 1].start);
-			maxData.setMonth(13);
-			var options = {
-				width : "100%",
-				height : "300px",
-				editable : false,
-				"min" : minData, // lower limit of visible range
-				"max" : maxData,
-				layout : "box"
-			};
-			// Instantiate our timeline object.
-			timeline = new links.Timeline(document.getElementById('mytimeline'), options);
-			// }
-			// }
-			// d3.json("dati.json", function(error, graph) {
-			$.each(graph, function() {
-				this.start = parseDate(this.start);
-				if (this.end != undefined) {
-					this.end = parseDate(this.end);
-				}
-				if (this.thumbnail != undefined && this.description != undefined) {
-					this.content = "<img src='"+this.thumbnail+"' height='50px' width='50px' title='"+this.description+"'/>";
+			$.ajax({
+				method : 'get',
+				url : window.location.protocol + '//' + window.location.host
+						+ "/neo4art-services/api/services/timeline/sentiments-analysis.json?searchInput="
+						+ p.query.toString().replace(/\+/g, " "),
+				dataType : 'json',
+				success : function(emotions) {
+					// specify options
+					var minData = new Date(graph[0].start);
+					minData.setMonth(-1);
+					var maxData = new Date(graph[graph.length - 1].start);
+					maxData.setMonth(13);
+					var options = {
+						width : "100%",
+						height : "300px",
+						editable : false,
+						"min" : minData, // lower limit of visible range
+						"max" : maxData,
+						layout : "box"
+					};
+					// Instantiate our timeline object.
+					timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+					// }
+					// }
+					// d3.json("dati.json", function(error, graph) {
+					$.each(graph, function() {
+						this.start = parseDate(this.start);
+						if (this.end != undefined) {
+							this.end = parseDate(this.end);
+						}
+						if (this.thumbnail != undefined && this.description != undefined) {
+							this.content = "<img src='" + this.thumbnail + "' height='50px' width='50px' title='" + this.description
+									+ "'/>";
+						}
+					});
+					links.events.addListener(timeline, 'rangechange', onRangeChange);
+					links.events.addListener(timeline, 'rangechanged', onRangeChanged);
+					// Draw our timeline with the created data and options
+					bigData = graph;
+					emotionData = emotions;
+					timeline.draw(graph);
+					drawColorChart(graph, true, emotions);
 				}
 			});
-			links.events.addListener(timeline, 'rangechange', onRangeChange);
-			links.events.addListener(timeline, 'rangechanged', onRangeChanged);
-			// Draw our timeline with the created data and options
-			bigData = graph;
-			timeline.draw(graph);
-			drawColorChart(graph, true);
 		},
 		error : function(error) {
 			console.log(error.status);
@@ -112,7 +122,7 @@ function onRangeChange() {
 function onRangeChanged() {
 	// $(".color-chart").position().left;
 	actualLeft = null;
-	drawColorChart(bigData);
+	drawColorChart(bigData, false, emotionData);
 }
 
 /**
@@ -156,7 +166,7 @@ function moveToCurrentTime() {
 }
 // ############################################# END TIMELINE
 
-function drawColorChart(data, parseColors) {
+function drawColorChart(data, parseColors, emotions) {
 	d3.select(".color-chart").selectAll("*").remove();
 	d3.select(".emotion-chart").selectAll("*").remove();
 	var firstVisibleMilliseconds = timeline.getVisibleChartRange().start.valueOf();
@@ -206,28 +216,28 @@ function drawColorChart(data, parseColors) {
 	}
 	function emotion(e) {
 		var txt;
-		if (e.emotion == "frown") {
+		if (e.emotion == "negative") {
 			txt = "\uf119";
 		}
-		if (e.emotion == "meh") {
+		if (e.emotion == "neutral") {
 			txt = "\uf11A";
 		}
-		if (e.emotion == "smile") {
+		if (e.emotion == "positive") {
 			txt = "\uf118";
 		}
 		return txt;
 	}
-	function showData(obj, d ) {
-        var coord = d3.mouse(obj);
-        var infobox = d3.select(".infobox");
-        // now we just position the infobox roughly where our mouse is
-        infobox.style("left", (coord[0] - 40) + "px");
-        infobox.style("top", (coord[1] - 220) + "px");
-        //Showing the closest color name
-        $(".infobox").html("<span class='text-stroked'>"+d.closestAverageColorName+"</span>");
-        $(".infobox").show();
-        $(".infobox").css("background-color", "#" + d.averageRgb.toString(16));
-    }
+	function showData(obj, d) {
+		var coord = d3.mouse(obj);
+		var infobox = d3.select(".infobox");
+		// now we just position the infobox roughly where our mouse is
+		infobox.style("left", (coord[0] - 40) + "px");
+		infobox.style("top", (coord[1] - 220) + "px");
+		// Showing the closest color name
+		$(".infobox").html("<span class='text-stroked'>" + d.closestAverageColorName + "</span>");
+		$(".infobox").show();
+		$(".infobox").css("background-color", "#" + d.averageRgb.toString(16));
+	}
 	function hideData() {
 		$(".infobox").hide();
 	}
@@ -256,6 +266,16 @@ function drawColorChart(data, parseColors) {
 			content : "",
 			averageRgb : "FFFFFF"
 		});
+		emotions.push({
+			start : dateMax.getDate() + "-" + monthNames[dateMax.getMonth() - 1] + "-" + dateMax.getFullYear() + " " + dateMax.getHours()
+			+ ":" + minMax,
+			emotion : ""
+		});
+		emotions.splice(0, 0, {
+			start : dateMin.getDate() + "-" + monthNames[dateMin.getMonth() - 1] + "-" + dateMin.getFullYear() + " " + dateMin.getHours()
+					+ ":" + minMin,
+			emotion : ""
+		});
 	}
 	$.each(data, function(i, d) {
 		if (typeof d.start == "string") {
@@ -265,6 +285,11 @@ function drawColorChart(data, parseColors) {
 			d.averageRgb = parseInt(d.averageRgb, 16);
 		}
 	});
+	$.each(emotions, function(i, d) {
+		if (typeof d.start == "string") {
+			d.start = parseDate(d.start);
+		}
+	});
 
 	x.domain(d3.extent(data, function(d) {
 		return d.start;
@@ -272,7 +297,7 @@ function drawColorChart(data, parseColors) {
 	y.domain(d3.extent(data, function(d) {
 		return d.averageRgb;
 	}));
-	var emog = emo.selectAll("g").data(data).enter().append("g").attr("transform", xxt);
+	var emog = emo.selectAll("g").data(emotions).enter().append("g").attr("transform", xxt);
 	emog.append("circle").attr("fill", "#FFFFFF").attr("r", 15);// .attr("cx",
 	// xx);
 	emog.append("text").text(emotion).attr("class", "icon-text").attr("x", -13).attr("y", 11).attr("fill", "#444444");
