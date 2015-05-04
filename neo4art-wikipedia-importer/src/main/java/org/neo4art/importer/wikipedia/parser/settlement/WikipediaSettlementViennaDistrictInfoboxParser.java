@@ -19,7 +19,10 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Settlement;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxTypeParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxWebsiteParserUtil;
 
 /**
  * 
@@ -60,7 +63,7 @@ public class WikipediaSettlementViennaDistrictInfoboxParser
 
   public static Settlement parse(String text)
   {
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     Settlement settlement = new Settlement();
     Coordinate coordinate = new Coordinate();
@@ -70,27 +73,29 @@ public class WikipediaSettlementViennaDistrictInfoboxParser
       switch (key)
       {
         case NAME:
-          settlement.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case STYLE:
-          settlement.setType(WikipediaInfoboxUtils.getType(map.get(key)));
+          settlement.setType(InfoboxTypeParserUtil.getType(map.get(key)));
           break;
         case OFFICIAL_NAME:
-          settlement.setOfficialName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setOfficialName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case NATIVE_NAME:
-          settlement.setNativeName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setNativeName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case NATIVE_NAME_LANG:
-          settlement.setNativeNameLang(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setNativeNameLang(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case OTHER_NAME:
-          settlement.setOtherName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setOtherName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case SETTLEMENT_TYPE:
-          settlement.setSettlementType(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          settlement.setSettlementType(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case LATITUDE:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
           break;
         case LONGITUDE:
@@ -99,6 +104,8 @@ public class WikipediaSettlementViennaDistrictInfoboxParser
           settlement.setCoordinate(coordinate);
           break;
         case LATD:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
           break;
         case LATM:
@@ -112,6 +119,8 @@ public class WikipediaSettlementViennaDistrictInfoboxParser
           settlement.setCoordinate(coordinate);
           break;
         case LATDEG:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
           break;
         case LATMIN:
@@ -165,10 +174,10 @@ public class WikipediaSettlementViennaDistrictInfoboxParser
           settlement.setCoordinate(coordinate);
           break;
         case WEB:
-          settlement.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
+          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
           break;
         case WEBSITE:
-          settlement.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
+          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
           break;
       }
     }

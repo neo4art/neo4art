@@ -6,7 +6,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.HistoricPlace;
-import org.neo4art.importer.wikipedia.parser.WikipediaHistoricPlaceInfoboxParser;
 
 public class WikipediaNRHPManzanarInfoboxTest {
 

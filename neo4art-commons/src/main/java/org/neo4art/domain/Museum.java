@@ -37,6 +37,7 @@ public class Museum implements Neo4ArtNode
   private String               name;
   private int                  area;
   private String               nativeName;
+  private String               buildingName;
   private String               nativeNameLang;
   private URL                  image;
   private String               imagesize;
@@ -94,6 +95,16 @@ public class Museum implements Neo4ArtNode
   public String getName()
   {
     return name;
+  }
+
+  public void setBuildingName(String buildingName)
+  {
+    this.buildingName = buildingName;
+  }
+  
+  public String getBuildingName()
+  {
+    return buildingName;
   }
 
   public void setName(String name)

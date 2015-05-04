@@ -17,13 +17,20 @@ package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxArchitecturalParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxCaptionParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxCoordinateParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxLeadershipParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxNameParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxPlaceParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUnitsMeasurementParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxWebsiteParserUtil;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_religious_building">Template:Infobox_religious_building</a>
@@ -33,7 +40,6 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaReligiousBuildingInfoboxParser
 {
-  private static Log         logger                = LogFactory.getLog(WikipediaReligiousBuildingInfoboxParser.class);
 
   public static final String BUILDING_NAME         = "building_name";
   public static final String NATIVE_NAME           = "native_name";
@@ -105,7 +111,7 @@ public class WikipediaReligiousBuildingInfoboxParser
 
   public static ReligiousBuilding parse(String text)
   {
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     ReligiousBuilding religiousBuilding = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
@@ -116,7 +122,7 @@ public class WikipediaReligiousBuildingInfoboxParser
       switch (key)
       {
         case BUILDING_NAME:
-          religiousBuilding.setBuildingName(infoboxBuildingName(map.get(key)));
+          religiousBuilding.setBuildingName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
           break;
         case STYLE:
           religiousBuilding.setType(map.get(key));
@@ -128,7 +134,7 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setNativeNameLang(map.get(key));
           break;
         case IMAGE:
-          religiousBuilding.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          religiousBuilding.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case IMAGE_SIZE:
           religiousBuilding.setImageSize(map.get(key));
@@ -137,7 +143,7 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setAlt(map.get(key));
           break;
         case CAPTION:
-          religiousBuilding.setCaption(infoboxCaption(map.get(key)));
+          religiousBuilding.setCaption(InfoboxCaptionParser.infoboxCaption(map.get(key)));
           break;
         case MAP_TYPE:
           religiousBuilding.setMapType(map.get(key));
@@ -149,22 +155,15 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setMapCaption(map.get(key));
           break;
         case LOCATION:
-          settlement.setName(infoboxLocation(map.get(key)));
+          settlement.setName(InfoboxPlaceParser.infoboxLocation(map.get(key)));
           religiousBuilding.setLocation(settlement);
           break;
         case COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          // coordinate.setLatD(Double.parseDouble(c[1]));
-          // coordinate.setLatM(Double.parseDouble(c[2]));
-          // coordinate.setLatS(Double.parseDouble(c[3]));
-          // coordinate.setLatNS(c[4]);
-          // coordinate.setLongD(Double.parseDouble(c[5]));
-          // coordinate.setLongM(Double.parseDouble(c[6]));
-          // coordinate.setLongS(Double.parseDouble(c[7]));
-          coordinate.setLongEW(c[8]);
-          religiousBuilding.setCoordinates(coordinate);
+          religiousBuilding.setCoordinates(InfoboxCoordinateParser.infoboxCoordinate(coordinate, map.get(key)));
           break;
         case LATITUDE:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
           religiousBuilding.setLatitude(map.get(key));
           break;
         case LONGITUDE:
@@ -174,10 +173,10 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setCoordinatesRegion(map.get(key));
           break;
         case RELIGIOUS_AFFILIATION:
-          religiousBuilding.setReligiousAffiliation(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setReligiousAffiliation(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case RITE:
-          religiousBuilding.setRite(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setRite(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case REGION:
           religiousBuilding.setRegion(map.get(key));
@@ -186,7 +185,7 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setState(map.get(key));
           break;
         case PROVINCE:
-          religiousBuilding.setProvince(infoboxProvince(map.get(key)));
+          religiousBuilding.setProvince(InfoboxPlaceParser.infoboxProvince(map.get(key)));
           break;
         case TERRITORY:
           religiousBuilding.setTerritory(map.get(key));
@@ -210,7 +209,7 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setConsecrationYear(map.get(key));
           break;
         case STATUS:
-          religiousBuilding.setStatus(infoboxStatus(map.get(key)));
+          religiousBuilding.setStatus(map.get(key));
           break;
         case FUNCTIONAL_STATUS:
           religiousBuilding.setFunctionalStatus(map.get(key));
@@ -219,37 +218,37 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setHeritageDesignation(map.get(key));
           break;
         case LEADERSHIP:
-          religiousBuilding.setLeadership(infoboxLeadership(map.get(key)));
+          religiousBuilding.setLeadership(InfoboxLeadershipParserUtil.infoboxLeadership(map.get(key)));
           break;
         case PATRON:
           religiousBuilding.setPatron(map.get(key));
           break;
         case WEBSITE:
-          religiousBuilding.setWebsite(infoboxWebsite(map.get(key)));
+          religiousBuilding.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
           break;
         case ARCHITECTURE:
-          religiousBuilding.setArchitecture(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setArchitecture(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case ARCHITECT:
-          religiousBuilding.setArchitect(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setArchitect(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case ARCHITECTURE_TYPE:
-          religiousBuilding.setArchitectureType(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setArchitectureType(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case ARCHITECTURE_STYLE:
-          religiousBuilding.setArchitectureStyle(infoboxProvince(map.get(key)));
+          religiousBuilding.setArchitectureStyle(InfoboxArchitecturalParser.infoboxArchitecturalStyle(map.get(key)));
           break;
         case GENERAL_CONTRACTOR:
           religiousBuilding.setGeneralContractor(map.get(key));
           break;
         case FACADE_DIRECTION:
-          religiousBuilding.setFacadeDirection(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setFacadeDirection(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case GROUNDBREAKING:
-          religiousBuilding.setGroundbreaking(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setGroundbreaking(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case YEAR_COMPLETED:
-          religiousBuilding.setYearCompleted(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setYearCompleted(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case CONSTRUCTION_COST:
           religiousBuilding.setConstructionCost(map.get(key));
@@ -258,25 +257,25 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setSpecifications(map.get(key));
           break;
         case CAPACITY:
-          religiousBuilding.setCapacity(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setCapacity(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case LENGTH:
-          religiousBuilding.setLength(infoboxMisure(map.get(key)));
+          religiousBuilding.setLength(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case WIDTH:
-          religiousBuilding.setWidth(infoboxMisure(map.get(key)));
+          religiousBuilding.setWidth(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case WIDTH_NAVE:
-          religiousBuilding.setWidthNave(infoboxMisure(map.get(key)));
+          religiousBuilding.setWidthNave(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case HEIGHT_MAX:
-          religiousBuilding.setHeightMax(infoboxMisure(map.get(key)));
+          religiousBuilding.setHeightMax(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case DOME_QUANTITY:
           religiousBuilding.setDomeQuantity(map.get(key));
           break;
         case DOME_HEIGHT_OUTER:
-          religiousBuilding.setDomeHeightOuter(infoboxMisure(map.get(key)));
+          religiousBuilding.setDomeHeightOuter(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case DOME_HEIGHT_INNER:
           religiousBuilding.setDomeHeightInner(map.get(key));
@@ -294,13 +293,13 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setMinaretHeight(map.get(key));
           break;
         case SPIRE_QUANTITY:
-          religiousBuilding.setSpireQuantity(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setSpireQuantity(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case SPIRE_HEIGHT:
-          religiousBuilding.setSpireHeight(infoboxMisure(map.get(key)));
+          religiousBuilding.setSpireHeight(InfoboxUnitsMeasurementParser.infoboxMisure(map.get(key)));
           break;
         case MATERIALS:
-          religiousBuilding.setMaterials(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          religiousBuilding.setMaterials(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case NRHP:
           religiousBuilding.setNrhp(map.get(key));
@@ -320,178 +319,4 @@ public class WikipediaReligiousBuildingInfoboxParser
     return religiousBuilding;
   }
 
-  public static String infoboxBuildingName(String name)
-  {
-    try
-    {
-      String[] n = StringUtils.split(name, "<");
-      name = n[0];
-      name = name.replace("&nbsp;", " ");
-  
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxCaption(String name)
-  {
-    try
-    {
-      if (name.contains("|") || name.contains("["))
-      {
-        String[] n = StringUtils.split(name, "[");
-        String[] n1 = StringUtils.split(n[1], "|");
-        name = n1[0];
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing Artist infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxLocation(String name)
-  {
-    try
-    {
-      if (name.contains("]"))
-      {
-        String[] n1 = StringUtils.split(name, "]");
-        name = n1[0];
-        name = WikipediaInfoboxUtils.removeAllParenthesis(name);
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxWebsite(String name)
-  {
-    try
-    {
-      if (name.contains(" "))
-      {
-        String[] n1 = StringUtils.split(name, " ");
-        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxStatus(String name)
-  {
-    try
-    {
-      if (name.contains("#"))
-      {
-        String[] n1 = StringUtils.split(name, "#");
-        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[0]);
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxLeadership(String name)
-  {
-    try
-    {
-      if (name.contains("["))
-      {
-        String[] n1 = StringUtils.split(name, "[");
-        name = WikipediaInfoboxUtils.removeAllParenthesis(n1[1]);
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());
-    }
-    
-    return null;
-  }
-
-  public static String infoboxProvince(String name)
-  {
-    try
-    {
-      String[] n1 = StringUtils.split(name, "|");
-  
-      name = n1[0].replace("[", "");
-      name = name.replace("]", "");
-  
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
-    }
-    
-    return null;
-  }
-
-  public static String infoboxMisure(String name)
-  {
-    try
-    {
-      name = name.replace("\n", "");
-  
-      if (name.contains("|"))
-      {
-        String[] n1 = StringUtils.split(name, "|");
-        name = n1[1].replace(" ", "");
-      }
-      
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
-    }
-    
-    return null;
-  }
-
-  public static String[] infoboxRestingPlaceCoordinates(String coor)
-  {
-    try
-    {
-      return StringUtils.split(coor, "|");
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ReligiousBuilding infobox: " + e.getMessage());      
-    }
-    
-    return null;
-  }
 }

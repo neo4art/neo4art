@@ -18,7 +18,7 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.neo4art.domain.ArtMovement;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
@@ -45,7 +45,7 @@ public class WikipediaArtMovementInfoboxParser
 
   public static ArtMovement parse(String text)
   {
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     ArtMovement artMovement = new ArtMovement();
 
