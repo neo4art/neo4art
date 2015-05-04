@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.neo4art.api.transformer;
+package org.neo4art.api.creator;
 
 import org.neo4art.api.domain.Node;
 import org.neo4art.colour.domain.ColourAnalysis;

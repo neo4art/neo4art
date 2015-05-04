@@ -25,6 +25,7 @@ import org.neo4art.api.builder.mock.BuildMockNegativeAOSentiment;
 import org.neo4art.api.builder.mock.BuildMockNegativePZSentiment;
 import org.neo4art.api.builder.mock.BuildMockPositiveSentiment;
 import org.neo4art.api.builder.mock.BuildMockVanGoghArtworks;
+import org.neo4art.api.creator.SearchDomainCreator;
 import org.neo4art.api.domain.SearchDomain;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;

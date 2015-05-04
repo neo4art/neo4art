@@ -17,12 +17,15 @@ package org.neo4art.api.services;
 
 import java.util.List;
 
+import org.neo4art.api.builder.mock.sentiment.BuildSentimentMock;
+import org.neo4art.api.domain.SentimentEvent;
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.transformer.TimeLineTransformer;
 import org.neo4art.colour.domain.ColourAnalysis;
 import org.neo4art.colour.manager.ArtworksColoursAnalyzer;
 import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
 import org.neo4art.domain.Artist;
+import org.neo4art.sentiment.domain.SentimentAnalysis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,12 +57,14 @@ public class Neo4ArtTimelineSearchRestController {
 	}
 	
 	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String getSentimentAnalysis(Model model, 
+	public @ResponseBody List<SentimentEvent> getSentimentAnalysis(Model model, 
 			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
 
 	 System.out.println("Input search: "+searchInput);
+	 BuildSentimentMock buildSentimentMock = new BuildSentimentMock();
+	 List<SentimentAnalysis> sentimentAnalisys = buildSentimentMock.getSentimentAnalisys(searchInput);
 	 
-	 return "";
+	 return TimeLineTransformer.buildSentimentsEvent(sentimentAnalisys);
 	}
 	
 }
