@@ -39,7 +39,7 @@ import org.neo4art.domain.Colour;
  */
 public class ImageDefaultManager implements ImageManager
 {
-  private BufferedImage     image, nuovaImage;
+  private BufferedImage     image;
   private UtilityImage      utility;
   private Color[][]         mappaPixel;
   private Color             avg, min, max;
@@ -162,8 +162,8 @@ public class ImageDefaultManager implements ImageManager
   private void operationImage() throws ImageParserException
   {
     utility = new UtilityImage(image);
-    nuovaImage = utility.resizeImage(image);
-    utility = new UtilityImage(nuovaImage);
+    //BufferedImage nuovaImage = utility.resizeImage(image);
+    //utility = new UtilityImage(nuovaImage);
     utility.initializeMatrix();
   }
 
