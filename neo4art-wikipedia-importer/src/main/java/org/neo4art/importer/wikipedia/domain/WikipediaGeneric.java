@@ -152,7 +152,6 @@ public class WikipediaGeneric implements WikipediaElement
   @Override
   public boolean addCategory(WikipediaCategory wikipediaCategory)
   {
-
     if (CollectionUtils.isEmpty(categories))
     {
       this.categories = new HashSet<WikipediaCategory>();
@@ -174,7 +173,6 @@ public class WikipediaGeneric implements WikipediaElement
 
   public WikipediaElement from(WikiArticle article)
   {
-
     WikipediaElementTransformer.toWikipediaElement(this, article);
 
     return this;
@@ -203,10 +201,8 @@ public class WikipediaGeneric implements WikipediaElement
   @Override
   public String[] getCategoriesAsArray()
   {
-
     if (CollectionUtils.isNotEmpty(this.categories))
     {
-
       List<String> result = new ArrayList<String>();
 
       Iterator<WikipediaCategory> iterator = this.categories.iterator();

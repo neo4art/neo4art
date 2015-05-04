@@ -41,8 +41,9 @@ public interface NLPService
   /**
    * @param documentNodeId
    * @param nlpLinkedListStartingNodeId
+   * @param nlpSentenceLength
    * @return
    */
-  long connectDocumentToNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId);
+  long connectDocumentToNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId, int nlpSentenceLength);
 
 }

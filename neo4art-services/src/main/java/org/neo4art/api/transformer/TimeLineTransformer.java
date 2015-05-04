@@ -15,10 +15,13 @@
  */
 package org.neo4art.api.transformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.builder.mock.timeline.BuildTimeLineMock;
+import org.apache.commons.collections.CollectionUtils;
 import org.neo4art.api.domain.TimelineEvent;
+import org.neo4art.api.util.ServicesUtil;
+import org.neo4art.colour.domain.ColourAnalysis;
 
 /**
  * @author Enrico De Benetti
@@ -31,11 +34,30 @@ public class TimeLineTransformer {
 	 * 
 	 * @return
 	 */
-	public static List<TimelineEvent> buildTimeLineEvents(){
+	public static List<TimelineEvent> buildTimeLineEvents(List<ColourAnalysis> colourAnalysisByArtist){
 		
-        BuildTimeLineMock mockTimeLineEvent = new BuildTimeLineMock();
-		
-	  return mockTimeLineEvent.getTimeLineList();
+	 List<TimelineEvent> timelineEventsList = new ArrayList<TimelineEvent>();
+	 ServicesUtil servicesUtil = ServicesUtil.getInstance();
+	 
+	 if(!CollectionUtils.isEmpty(colourAnalysisByArtist)){
+
+      for (ColourAnalysis colourAnalysis : colourAnalysisByArtist) {
+    	  
+       TimelineEvent timelineEvent = new TimelineEvent(); 
+       timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
+       timelineEvent.setClosestAverageColorName(colourAnalysis.getAverageClosestColour() != null ? colourAnalysis.getAverageClosestColour().getName() : "");
+       timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
+       timelineEvent.setStart(servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork()));
+       timelineEvent.setThumbnail(colourAnalysis.getSource());
+       //TODO DA ELIMINARE..
+       timelineEvent.setEmotion("smile");
+       
+       timelineEventsList.add(timelineEvent);
+	  }  
+	 }
+      
+	 return timelineEventsList;
 	}
+	
 	
 }

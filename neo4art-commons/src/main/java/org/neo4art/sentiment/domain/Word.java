@@ -31,10 +31,6 @@ public class Word implements Neo4ArtNode
 {
   private static final Label[] LABELS = new Label[] { NLPLabel.Word };
   
-  public static final int POSITIVE_WORD = 1;
-  public static final int POLARITY_PROPERY_VALUE_NEUTRAL_WORD  = 0;
-  public static final int NEGATIVE_WORD = -1;
-
   public static final String WORD_PROPERTY_NAME     = "word";
   public static final String LANGUAGE_PROPERTY_NAME = "lang";
   public static final String POLARITY_PROPERTY_NAME = "polarity";

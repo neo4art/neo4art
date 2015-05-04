@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.neo4art.graphdb.Neo4ArtNode;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
-import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
@@ -38,8 +37,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
 {
   private static BatchInserter                   batchInserter;
   private static BatchInserterIndexProvider      batchInserterIndexProvider;
-
-  private static Map<String, BatchInserterIndex> batchInserterIndexes = new HashMap<String, BatchInserterIndex>();
 
   protected Neo4ArtBatchInserterSingleton()
   {
@@ -133,34 +130,30 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   {
     createLegacyNodeIndex(indexName, config, null, 0);
   }
-
+  
   /**
-   * MapUtil.stringMap("type", "exact") MapUtil.stringMap("type", "fulltext", "to_lower_case", "true")
    * 
    * @param indexName
    * @param config
+   * @param cacheKey
    * @param cacheSize
    * @return
    */
   public static void createLegacyNodeIndex(String indexName, Map<String, String> config, String cacheKey, int cacheSize)
   {
-    if (batchInserterIndexes.get(indexName) == null)
+    BatchInserterIndexProvider batchInserterIndexProvider = getBatchInserterIndexProviderInstance();
+
+    BatchInserterIndex index = batchInserterIndexProvider.nodeIndex(indexName, config);
+
+    if (cacheSize != 0)
     {
-      BatchInserterIndexProvider batchInserterIndexProvider = getBatchInserterIndexProviderInstance();
-
-      BatchInserterIndex index = batchInserterIndexProvider.nodeIndex(indexName, config);
-
-      if (cacheSize != 0)
-      {
-        index.setCacheCapacity(cacheKey, cacheSize);
-      }
-
-      batchInserterIndexes.put(indexName, index);
+      index.setCacheCapacity(cacheKey, cacheSize);
     }
   }
 
   /**
    * TODO it's not necessary to provide key and value: we could also just pass a Neo4ArtNode 'cause we already know the key (defined at index creation time) 
+   * 
    * @param indexName
    * @param key
    * @param value
@@ -168,7 +161,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static IndexHits<Long> getFromLegacyNodeIndex(String indexName, String key, Object value)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -184,7 +177,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void addToLegacyNodeIndex(String indexName, Neo4ArtNode node)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex == null)
     {
@@ -199,7 +192,7 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
    */
   public static void flushLegacyNodeIndex(String indexName)
   {
-    BatchInserterIndex batchInserterIndex = batchInserterIndexes.get(indexName);
+    BatchInserterIndex batchInserterIndex = batchInserterIndexProvider.nodeIndex(indexName, null);
     
     if (batchInserterIndex != null)
     {
@@ -219,21 +212,6 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
     long nodeId = batchInserter.createNode(node.getProperties(), node.getLabels());
     
     node.setNodeId(nodeId);
-    
-    return nodeId;
-  }
-  
-  /**
-   * 
-   * @param node
-   * @return
-   */
-  @Deprecated
-  public static long createNode(Map<String, Object> properties, Label... labels)
-  {
-    BatchInserter batchInserter = getBatchInserterInstance();
-    
-    long nodeId = batchInserter.createNode(properties, labels);
     
     return nodeId;
   }

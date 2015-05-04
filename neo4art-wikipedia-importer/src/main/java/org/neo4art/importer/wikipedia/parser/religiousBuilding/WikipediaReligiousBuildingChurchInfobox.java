@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -41,7 +40,7 @@ public class WikipediaReligiousBuildingChurchInfobox
   public static final String IMAGE  = "image";
   public static final String STYLE  = "infobox";
 
-  public static ReligiousBuilding parse(String text) throws MalformedURLException
+  public static ReligiousBuilding parse(String text)
   {
     ReligiousBuilding church = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
@@ -63,38 +62,33 @@ public class WikipediaReligiousBuildingChurchInfobox
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LATM:
           coordinate.setLatM(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LATS:
           coordinate.setLatS(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LATNS:
           coordinate.setLatNS(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LONGD:
           coordinate.setLongD(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LONGM:
           coordinate.setLongM(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LONGS:
           coordinate.setLongS(map.get(key));
-          church.setCoordinates(coordinate);
           break;
         case LONGEW:
           coordinate.setLongEW(map.get(key));
-          church.setCoordinates(coordinate);
           break;
       }
+      
+      church.setCoordinates(coordinate);
     }
+    
     return church;
   }
 }

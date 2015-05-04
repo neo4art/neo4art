@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artist;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaArtistPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaArtistPage.class);
-  
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage };
 
   private Artist               artist;
@@ -65,14 +61,7 @@ public class WikipediaArtistPage extends WikipediaPage implements WikipediaEleme
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.artist = WikipediaArtistInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing Artist infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.artist = WikipediaArtistInfoboxParser.parse(infobox);
     }
 
     return this;

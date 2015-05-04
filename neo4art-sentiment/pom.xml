@@ -15,7 +15,7 @@
 	</parent>
 
 	<properties>
-	    <start-class>org.neo4art.importer.wikipedia.configuration.SpringBootConfiguration</start-class>
+	    <start-class>org.neo4art.sentiment.configuration.SpringBootConfiguration</start-class>
 	</properties>
 
 	<dependencies>
@@ -28,20 +28,6 @@
 		</dependency>
 		
 		<!-- Natural Language Processing -->
-		
-		<!-- Stanford implementation requires java 1.8 -->
-		<dependency>
-			<groupId>edu.stanford.nlp</groupId>
-			<artifactId>stanford-corenlp</artifactId>
-			<version>3.5.1</version>
-		</dependency>
-		<dependency>
-			<groupId>edu.stanford.nlp</groupId>
-			<artifactId>stanford-corenlp</artifactId>
-			<version>3.5.1</version>
-			<classifier>models</classifier>
-		</dependency>
-		
 		<dependency>
 			<groupId>org.apache.opennlp</groupId>
 			<artifactId>opennlp-tools</artifactId>
@@ -76,12 +62,6 @@
 	</build>
 
 	<repositories>
-
-		<repository>
-			<id>sonatype</id>
-			<url>https://oss.sonatype.org/content/groups/public/</url>
-		</repository>
-
 	</repositories>
 
 </project>

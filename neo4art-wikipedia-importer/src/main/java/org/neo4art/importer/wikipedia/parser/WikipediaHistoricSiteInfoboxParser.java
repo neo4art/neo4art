@@ -15,7 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -50,7 +49,7 @@ public class WikipediaHistoricSiteInfoboxParser
   public static final String CAPTION = "caption";
   public static final String STYLE   = "infobox";
 
-  public static HistoricSite parse(String text) throws MalformedURLException
+  public static HistoricSite parse(String text)
   {
     HistoricSite historicSite = new HistoricSite();
     Coordinate coordinate = new Coordinate();
@@ -75,70 +74,57 @@ public class WikipediaHistoricSiteInfoboxParser
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATM:
           coordinate.setLatM(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATS:
           coordinate.setLatS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATNS:
           coordinate.setLatNS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGD:
           coordinate.setLongD(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGM:
           coordinate.setLongM(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGS:
           coordinate.setLongS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGEW:
           coordinate.setLongEW(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATDL:
           coordinate.setLatD(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATML:
           coordinate.setLatM(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATSL:
           coordinate.setLatS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LATNSL:
           coordinate.setLatNS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGDL:
           coordinate.setLongD(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGML:
           coordinate.setLongM(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGSL:
           coordinate.setLongS(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
         case LONGEWL:
           coordinate.setLongEW(map.get(key));
-          historicSite.setCoordinate(coordinate);
           break;
       }
+      
+      historicSite.setCoordinate(coordinate);
     }
+    
     return historicSite;
   }
 }

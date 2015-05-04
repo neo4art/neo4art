@@ -28,5 +28,7 @@ public enum Neo4ArtLabel implements Label
   
   Museum, ReligiousBuilding, Monument, HistoricSite, HistoricPlace,
 
-  Country, Settlement
+  Country, Settlement,
+  
+  Colour, Emotion
 }

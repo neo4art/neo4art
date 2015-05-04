@@ -18,6 +18,8 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Country;
 import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
@@ -30,6 +32,8 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaCountryInfoboxParser
 {
+  private static Log         logger                 = LogFactory.getLog(WikipediaCountryInfoboxParser.class);
+
   // public static final String MICRONATION = "micronation";
   public static final String CONVENTIONAL_LONG_NAME = "conventional_long_name";
   public static final String NATIVE_NAME            = "native_name";
@@ -209,46 +213,34 @@ public class WikipediaCountryInfoboxParser
           country.setCommonName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           break;
         case LATD:
-
           coordinate.setLatD(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LATM:
-
-
           coordinate.setLatM(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LATS:
-
-
           coordinate.setLatS(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LATNS:
-
-
           coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           country.setCoordinate(coordinate);
           break;
         case LONGD:
-
           coordinate.setLongD(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LONGM:
-
           coordinate.setLongM(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LONGS:
-
-
           coordinate.setLongS(map.get(key));
           country.setCoordinate(coordinate);
           break;
         case LONGEW:
-
           coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
           country.setCoordinate(coordinate);
           break;
@@ -260,19 +252,31 @@ public class WikipediaCountryInfoboxParser
 
   public static String infoboxNativeName(String name)
   {
-
-    if (name.contains("|"))
+    try
     {
-      String[] n = StringUtils.split(name, "|");
-      name = n[2];
-      name = WikipediaInfoboxUtils.removeAllParenthesis(name);
-      if (name.contains("<"))
+      if (name.contains("|"))
       {
-        String[] n1 = StringUtils.split(name, "<");
-        name = n1[0];
+        String[] n = StringUtils.split(name, "|");
+        
+        name = n[2];
+        name = WikipediaInfoboxUtils.removeAllParenthesis(name);
+        
+        if (name.contains("<"))
+        {
+          String[] n1 = StringUtils.split(name, "<");
+          name = n1[0];
+        }
       }
+      
+      name = WikipediaInfoboxUtils.removeLink(name);
+      
+      return name.trim();
     }
-    name = WikipediaInfoboxUtils.removeLink(name);
-    return name.trim();
+    catch (Exception e)
+    {
+      logger.error("Error parsing Country infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 }

@@ -19,6 +19,10 @@ import java.util.List;
 
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.transformer.TimeLineTransformer;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.colour.manager.ArtworksColoursAnalyzer;
+import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
+import org.neo4art.domain.Artist;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,14 +40,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/api/services/timeline")
 public class Neo4ArtTimelineSearchRestController {
 
-	@RequestMapping(value = "/search.json", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<TimelineEvent> search(Model model, 
+	@RequestMapping(value = "/colours-analysis.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<TimelineEvent> getColoursAnalysis(Model model, 
 			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
 
-		System.out.println("Input search: "+searchInput);
-		//TODO LA LISTA CHE TORNO DEVE ESSERE ORDINATA
-		return TimeLineTransformer.buildTimeLineEvents();
+	
+	  ArtworksColoursAnalyzer artworksDefaultColoursAnalyzer = new ArtworksDefaultColoursAnalyzer();
+      Artist artist = new Artist();
+	  artist.setName(searchInput);
+	  List<ColourAnalysis> colourAnalysisByArtist = artworksDefaultColoursAnalyzer.getColourAnalysisByArtist(artist);	
+		
+	 return TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
 	}
 	
+	@RequestMapping(value = "/sentiments-analysis.json", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String getSentimentAnalysis(Model model, 
+			                                        @RequestParam(value="searchInput", required=true) String searchInput ) {
+
+	 System.out.println("Input search: "+searchInput);
+	 
+	 return "";
+	}
 	
 }

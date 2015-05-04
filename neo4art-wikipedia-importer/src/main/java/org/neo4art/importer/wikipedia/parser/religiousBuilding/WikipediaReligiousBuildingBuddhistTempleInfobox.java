@@ -12,9 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */package org.neo4art.importer.wikipedia.parser.religiousBuilding;
+ */
+package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
-import java.net.MalformedURLException;
 import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
@@ -40,7 +40,7 @@ public class WikipediaReligiousBuildingBuddhistTempleInfobox
   public static final String IMAGE  = "img";
   public static final String STYLE  = "infobox";
 
-  public static ReligiousBuilding parse(String text) throws MalformedURLException
+  public static ReligiousBuilding parse(String text)
   {
     ReligiousBuilding buddhistTemple = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
@@ -62,38 +62,33 @@ public class WikipediaReligiousBuildingBuddhistTempleInfobox
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LATM:
           coordinate.setLatM(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LATS:
           coordinate.setLatS(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LATNS:
           coordinate.setLatNS(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LONGD:
           coordinate.setLongD(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LONGM:
           coordinate.setLongM(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LONGS:
           coordinate.setLongS(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
         case LONGEW:
           coordinate.setLongEW(map.get(key));
-          buddhistTemple.setCoordinates(coordinate);
           break;
       }
+      
+      buddhistTemple.setCoordinates(coordinate);
     }
+    
     return buddhistTemple;
   }
 }

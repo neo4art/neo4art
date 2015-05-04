@@ -100,6 +100,6 @@ public class RedundancyCounterServiceTest
     
     long nlpLinkedListStartingNodeId = nlpService.saveNLPAsLinkedList(nlpDocument);
     
-    nlpService.connectDocumentToNLPLinkedList(letter001NodeId, nlpLinkedListStartingNodeId);
+    nlpService.connectDocumentToNLPLinkedList(letter001NodeId, nlpLinkedListStartingNodeId, nlpDocument.getLength());
   }
 }

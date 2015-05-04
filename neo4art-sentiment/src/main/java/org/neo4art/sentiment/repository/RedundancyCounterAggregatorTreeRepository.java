@@ -53,14 +53,14 @@ public class RedundancyCounterAggregatorTreeRepository implements RedundancyCoun
   {
     GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
     
-    // POSSO SAPERE LA LUNGHEZZA DELLA LISTA A PRIORI E MEMORIZZARLA NEL PRIMO NODO O NELL'ARCO CHE COLLEGA IL DOCUMENTO AL PRIMO NODO
+    //TODO We can try to optime this statement by adding a vertex to the last nlp sentence node, to make the computation of p easier
     
-    String cql = "MATCH (document:" + document.getLabels()[0].name() + ")-[:" + NLPRelationship.TOKENIZED_IN_POS + "]->(startingNode:Nlp), p = (startingNode:Nlp)-[*0..]->() " +
+    String cql = "MATCH (document:" + document.getLabels()[0].name() + ")-[r:" + NLPRelationship.TOKENIZED_IN_POS + "]->(startingNode:Nlp) " +
                  "WHERE id(document) = " + document.getNodeId() + " " +
-                 "WITH document, collect(p) AS paths, max(length(p)) AS maxLength " + 
-                 "WITH document, filter(path IN paths WHERE length(path) = maxLength) as longestPath " +
-                 "UNWIND longestPath AS unwindedLongestPath " +
-                 "UNWIND nodes(unwindedLongestPath) AS wordsInDocument " +
+                 "WITH r.nlpSentenceLength -1 as nlpPathLength, startingNode " +
+                 "MATCH p = (startingNode:Nlp)-[r*]->() " +
+                 "WHERE length(p) = nlpPathLength " +
+                 "UNWIND nodes(p) AS wordsInDocument " +
                  "MATCH redundantWordsPath = (wordsInDocument)-[*" + (minWordCount - 1) + ".." + (maxWordCount - 1) + "]->() " +
                  "WITH reduce(redundantWords = \"\", redundantWord in nodes(redundantWordsPath) | redundantWords + lower(redundantWord." + NLP.POS_PROPERTY_NAME + ") + \" \") as redundantPath " +
                  "MERGE (redundancyNode:" + RedundancyTreeLabel.RedundancyTree + "{" + RedundancyCounter.REDUNDANT_PATH_PROPERTY_NAME + ": redundantPath}) " +

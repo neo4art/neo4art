@@ -49,7 +49,9 @@ public class WikipediaCategory extends WikipediaGeneric implements WikipediaElem
   public void setTitle(String title)
   {
     if (!StringUtils.startsWith(title, new Namespace().CATEGORY.getCanonicalName()))
+    {
       title = new Namespace().CATEGORY.getCanonicalName() + ":" + title;
+    }
     
     super.setTitle(title);
   }

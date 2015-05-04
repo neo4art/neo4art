@@ -53,7 +53,6 @@ public class WikipediaReligiousBuildingArchabasilicaInfoboxTest {
 		Assert.assertEquals("300px", religiousBuilding.getImageSize());
 		Assert.assertEquals("Façade of the Archbasilica of St. John Lateran", religiousBuilding.getCaption());
 		Assert.assertEquals("Rome", religiousBuilding.getLocation().getName());
-		System.out.println(religiousBuilding.getCoordinates().getLatitude());
 		Assert.assertEquals("Roman Catholic", religiousBuilding.getReligiousAffiliation());
 		Assert.assertEquals("Latin Rite" , religiousBuilding.getRite());
 		Assert.assertEquals("Rome" , religiousBuilding.getProvince());

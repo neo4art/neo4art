@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtMovementInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaArtMovementPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaArtMovementPage.class);
-  
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtMovementPage };
 
   private ArtMovement          artMovement;
@@ -65,14 +61,7 @@ public class WikipediaArtMovementPage extends WikipediaPage implements Wikipedia
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.artMovement = WikipediaArtMovementInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing ArtMovement infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.artMovement = WikipediaArtMovementInfoboxParser.parse(infobox);
     }
 
     return this;

@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Monument;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.WikipediaMonumentInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaMonumentPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaMonumentPage.class);
-  
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMonumentPage };
 
   private Monument monument;
@@ -61,19 +57,11 @@ public class WikipediaMonumentPage extends WikipediaPage implements WikipediaEle
 
   public WikipediaElement from(WikiArticle article)
   {
-
     String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.monument = WikipediaMonumentInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing Monument infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.monument = WikipediaMonumentInfoboxParser.parse(infobox);
     }
 
     return this;

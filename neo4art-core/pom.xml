@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>neo4art-core</artifactId>
+
+	<description>neo4art core services</description>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.neo4art</groupId>
+		<artifactId>neo4art-parent</artifactId>
+		<version>0.0.1.ALFA</version>
+	</parent>
+
+	<properties>
+		<start-class>org.neo4art.core.configuration.SpringBootConfiguration</start-class>
+	</properties>
+
+	<dependencies>
+
+		<!-- neo4art -->
+		<dependency>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-commons</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Apache CSV -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+	</repositories>
+
+</project>

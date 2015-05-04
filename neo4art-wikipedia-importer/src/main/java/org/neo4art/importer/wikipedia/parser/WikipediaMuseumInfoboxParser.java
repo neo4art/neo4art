@@ -19,6 +19,8 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Museum;
 import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
@@ -26,11 +28,13 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_museum">Template :Infobox_museum</a>
  * 
- * @author Lorenzo Speranzoni
+ * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 20 Mar 2015
  */
 public class WikipediaMuseumInfoboxParser
 {
+  private static Log         logger              = LogFactory.getLog(WikipediaMuseumInfoboxParser.class);
+
   public static final String NAME                = "name";
   public static final String BUILDING_NAME       = "building_name";
   public static final String NATIVE_NAME         = "native_name";
@@ -142,57 +146,34 @@ public class WikipediaMuseumInfoboxParser
           museum.setMapDotLabel(map.get(key));
           break;
         case LATITUDE:
-
-
           coordinate.setLatD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LONGITUDE:
-
-
           coordinate.setLongD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_DEG:
-
           coordinate.setLatD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_MIN:
-
-
           coordinate.setLatM(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_SEC:
-
           coordinate.setLatS(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LAT_DIR:
-
           coordinate.setLatNS(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          museum.setCoordinate(coordinate);
           break;
         case LON_DEG:
-
           coordinate.setLongD(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_MIN:
-
           coordinate.setLongM(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_SEC:
-
           coordinate.setLongS(map.get(key));
-          museum.setCoordinate(coordinate);
           break;
         case LON_DIR:
-
           coordinate.setLongEW(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-          museum.setCoordinate(coordinate);
           break;
         case COORDINATES_TYPE:
           museum.setCoordinatesType(map.get(key));
@@ -207,8 +188,7 @@ public class WikipediaMuseumInfoboxParser
           museum.setCoordinatesDisplay(map.get(key));
           break;
         case COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          museum.setCoordinates(coordinate);
+          infoboxRestingPlaceCoordinates(map.get(key));
           break;
         case FORMER_NAME:
           museum.setFormerName(map.get(key));
@@ -280,6 +260,8 @@ public class WikipediaMuseumInfoboxParser
           museum.setEmbedded(map.get(key));
           break;
       }
+      
+      museum.setCoordinates(coordinate);
     }
 
     return museum;
@@ -287,63 +269,129 @@ public class WikipediaMuseumInfoboxParser
 
   public static String infoboxEstablished(String dateString)
   {
-    if (dateString.contains("<"))
+    try
     {
-      String[] da1 = StringUtils.split(dateString, "<");
-      return da1[0];
+      if (dateString.contains("<"))
+      {
+        String[] da1 = StringUtils.split(dateString, "<");
+
+        return da1[0];
+      }
+
+      if (dateString.contains("|"))
+      {
+        String[] da = StringUtils.split(dateString, "|");
+
+        return da[1];
+      }
+
+      return dateString;
     }
-    if (dateString.contains("|"))
+    catch (Exception e)
     {
-      String[] da = StringUtils.split(dateString, "|");
-      return da[1];
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
     }
-    return dateString;
+
+    return null;
   }
 
   public static String infoboxCaption(String coll)
   {
-    String[] da = StringUtils.split(coll, "<");
-    coll = da[0].replace("&nbsp;", " ");
-    return coll;
+    try
+    {
+      String[] da = StringUtils.split(coll, "<");
+
+      coll = da[0].replace("&nbsp;", " ");
+
+      return coll;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
+    }
+
+    return null;
   }
 
   public static String infoboxCollectionCount(String coll)
   {
-    String[] da = StringUtils.split(coll, "<");
-    return da[0];
+    try
+    {
+      String[] da = StringUtils.split(coll, "<");
+
+      return da[0];
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
+    }
+
+    return null;
   }
 
   public static int infoboxArea(String area)
   {
-    int count;
-    String[] da = StringUtils.split(area, "|| ");
-    count = Integer.parseInt(da[1]);
-    return count;
+    try
+    {
+      int count;
+
+      String[] da = StringUtils.split(area, "|| ");
+
+      count = Integer.parseInt(da[1]);
+
+      return count;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
+    }
+
+    return 0;
   }
 
   public static String infoboxVisitors(String visitors)
   {
-    if (visitors.contains("<br/>"))
+    try
     {
-      visitors = visitors.replace("<br/>", "");
-      String[] da = StringUtils.split(visitors, "<");
-      return da[0];
+      if (visitors.contains("<br/>"))
+      {
+        visitors = visitors.replace("<br/>", "");
+
+        String[] da = StringUtils.split(visitors, "<");
+
+        return da[0];
+      }
+
+      if (visitors.contains("<"))
+      {
+        String[] da = StringUtils.split(visitors, "<");
+
+        return da[0];
+      }
+
+      return visitors;
     }
-    if (visitors.contains("<"))
+    catch (Exception e)
     {
-      String[] da = StringUtils.split(visitors, "<");
-      return da[0];
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
     }
 
-    return visitors;
+    return null;
   }
 
   public static String[] infoboxRestingPlaceCoordinates(String coor)
   {
+    try
+    {
+      String[] c = StringUtils.split(coor, "|");
 
-    String[] c = StringUtils.split(coor, "|");
+      return c;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Museum infobox: " + e.getMessage());
+    }
 
-    return c;
+    return null;
   }
-
 }

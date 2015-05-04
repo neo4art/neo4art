@@ -16,9 +16,12 @@
 
 package org.neo4art.sentiment.repository;
 
+import java.util.Map;
+
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.domain.NLP;
 import org.neo4art.sentiment.graphdb.NLPRelationship;
+import org.neo4j.helpers.collection.MapUtil;
 
 /**
  * @author Lorenzo Speranzoni
@@ -58,11 +61,13 @@ public class NLPBatchInserterRepository implements NLPRepository
   }
 
   /**
-   * @see org.neo4art.sentiment.repository.NLPRepository#addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long, long)
+   * @see org.neo4art.sentiment.repository.NLPRepository#addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long, long, int)
    */
   @Override
-  public long addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId)
+  public long addRelationshipBetweenOriginalDocumentAndNLPLinkedList(long documentNodeId, long nlpLinkedListStartingNodeId, int nlpSentenceLength)
   {
-    return Neo4ArtBatchInserterSingleton.createRelationship(documentNodeId, nlpLinkedListStartingNodeId, NLPRelationship.TOKENIZED_IN_POS, null);
+    Map<String, Object> properties = MapUtil.map("nlpSentenceLength", nlpSentenceLength);
+    
+    return Neo4ArtBatchInserterSingleton.createRelationship(documentNodeId, nlpLinkedListStartingNodeId, NLPRelationship.TOKENIZED_IN_POS, properties);
   }
 }

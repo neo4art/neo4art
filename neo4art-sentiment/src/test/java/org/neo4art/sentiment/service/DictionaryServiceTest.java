@@ -23,6 +23,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.neo4art.domain.Polarity;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
 import org.neo4art.sentiment.domain.Word;
@@ -83,7 +84,7 @@ public class DictionaryServiceTest
         Long loveNodeId = indexHitsForWordLove.getSingle();
         Assert.assertTrue(loveNodeId > 0);
         Map<String, Object> loveNodeProperties = Neo4ArtBatchInserterSingleton.getNodeProperties(loveNodeId);
-        Assert.assertEquals(Word.POSITIVE_WORD, (int) loveNodeProperties.get(Word.POLARITY_PROPERTY_NAME));
+        Assert.assertEquals(Polarity.POSITIVE, (int) loveNodeProperties.get(Word.POLARITY_PROPERTY_NAME));
         indexHitsForWordLove.close();
       }
       
@@ -93,7 +94,7 @@ public class DictionaryServiceTest
         Long hateNodeId = indexHitsForWordHate.getSingle();
         Assert.assertTrue(hateNodeId > 0);
         Map<String, Object> hateNodeProperties = Neo4ArtBatchInserterSingleton.getNodeProperties(hateNodeId);
-        Assert.assertEquals(Word.NEGATIVE_WORD, (int) hateNodeProperties.get(Word.POLARITY_PROPERTY_NAME));
+        Assert.assertEquals(Polarity.NEGATIVE, (int) hateNodeProperties.get(Word.POLARITY_PROPERTY_NAME));
         indexHitsForWordHate.close();
       }
     }

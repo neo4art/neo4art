@@ -30,6 +30,8 @@ public class TimelineEvent {
 	
 	private String averageRgb;
 	
+	private String closestAverageColorName;
+	
 	private String emotion;
 
 	public String getStart() {
@@ -70,6 +72,14 @@ public class TimelineEvent {
 
 	public void setEmotion(String emotion) {
 		this.emotion = emotion;
+	}
+
+	public String getClosestAverageColorName() {
+		return closestAverageColorName;
+	}
+
+	public void setClosestAverageColorName(String closestAverageColorName) {
+		this.closestAverageColorName = closestAverageColorName;
 	}
 	
 }

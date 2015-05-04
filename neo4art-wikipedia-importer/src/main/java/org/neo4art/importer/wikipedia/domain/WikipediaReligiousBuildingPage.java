@@ -19,8 +19,6 @@ package org.neo4art.importer.wikipedia.domain;
 import info.bliki.wiki.dump.WikiArticle;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.parser.religiousBuilding.WikipediaReligiousBuildingInfoboxParser;
@@ -33,8 +31,6 @@ import org.neo4j.graphdb.Label;
  */
 public class WikipediaReligiousBuildingPage extends WikipediaPage implements WikipediaElement
 {
-  private static Log logger = LogFactory.getLog(WikipediaReligiousBuildingPage.class);
-  
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaReligiousBuildingPage };
 
   private ReligiousBuilding religiousBuilding;
@@ -61,19 +57,11 @@ public class WikipediaReligiousBuildingPage extends WikipediaPage implements Wik
 
   public WikipediaElement from(WikiArticle article)
   {
-
     String infobox = WikipediaElementTransformer.toWikipediaElement(this, article);
 
     if (StringUtils.isNoneEmpty(infobox))
     {
-      try
-      {
-        this.religiousBuilding = WikipediaReligiousBuildingInfoboxParser.parse(infobox);
-      }
-      catch (Exception e)
-      {
-        logger.error("Error parsing ReligiousBuilding infobox for page: " + article.getTitle() + ". Cause: " + e.getMessage());
-      }
+      this.religiousBuilding = WikipediaReligiousBuildingInfoboxParser.parse(infobox);
     }
 
     return this;

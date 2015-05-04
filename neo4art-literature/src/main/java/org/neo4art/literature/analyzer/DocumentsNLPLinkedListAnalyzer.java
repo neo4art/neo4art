@@ -123,7 +123,7 @@ public class DocumentsNLPLinkedListAnalyzer implements DocumentsAnalyzer
         
         nlpService.saveNLPAsLinkedList(nlpDocument);
         
-        nlpService.connectDocumentToNLPLinkedList(document.getNodeId(), nlpDocument.getFirstNodeId());
+        nlpService.connectDocumentToNLPLinkedList(document.getNodeId(), nlpDocument.getFirstNodeId(), nlpDocument.getLength());
         
         nlpDocuments.add(nlpDocument);
       }

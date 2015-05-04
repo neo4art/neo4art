@@ -15,12 +15,16 @@
  */
 package org.neo4art.importer.wikipedia.parser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
@@ -36,6 +40,8 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaArtistInfoboxParser
 {
+  private static Log logger = LogFactory.getLog(WikipediaArtistInfoboxParser.class);
+  
   public static final String HONORIFIC_PREFIX          = "honorific_prefix";
   public static final String NAME                      = "name";
   public static final String HONORIFIC_SUFFIX          = "honorific_suffix";
@@ -130,8 +136,7 @@ public class WikipediaArtistInfoboxParser
           artist.setBirthPlace(infoboxPlaceBirth(map.get(key)));
           break;
         case DEATH_DATE:
-          Calendar date = parseInfoboxDateDeath(map.get(key));
-          artist.setDeathDate(date);
+          artist.setDeathDate(parseInfoboxDateDeath(map.get(key)));
           break;
         case DEATH_PLACE:
           artist.setDeathPlace(infoboxPlaceDeath(map.get(key)));
@@ -141,10 +146,8 @@ public class WikipediaArtistInfoboxParser
           artist.setRestingPlace(coordinate);
           break;
         case RESTING_PLACE_COORDINATES:
-          String[] c = infoboxRestingPlaceCoordinates(map.get(key));
-          coordinate.setLatD(c[1]);
-          coordinate.setLongD(c[2]);
-          artist.setRestingPlaceCoordinates(coordinate);
+            infoboxRestingPlaceCoordinates(coordinate, map.get(key));
+            artist.setRestingPlaceCoordinates(coordinate);
           break;
         case NATIONALITY:
           country.setCommonName(map.get(key));
@@ -167,13 +170,16 @@ public class WikipediaArtistInfoboxParser
           break;
         case MOVEMENT:
           String[] work = infoboxMovement(map.get(key));
-          for (int i = 0; i < work.length; i++)
+          if (work != null)
           {
-            artMovement = new ArtMovement();
-            artMovement.setName(work[i]);
-            artworks.add(artMovement);
+            for (int i = 0; i < work.length; i++)
+            {
+              artMovement = new ArtMovement();
+              artMovement.setName(work[i]);
+              artworks.add(artMovement);
+            }
+            artist.setMovement(artworks);
           }
-          artist.setMovement(artworks);
           break;
         case SPOUSE:
           artist.setSpouse(map.get(key));
@@ -201,181 +207,355 @@ public class WikipediaArtistInfoboxParser
 
   public static Calendar parseInfoboxDateDeath(String date)
   {
-    date = date.replace("\n", "");
-    date = date.replace("{", "");
-    date = date.replace("}", "");
-    if (date.contains("|| df=yes"))
+    try
     {
-      date = date.replace("|| df=yes", "");
+      date = date.replace("\n", "");
+      date = date.replace("{", "");
+      date = date.replace("}", "");
+      
+      if (date.contains("|| df=yes"))
+      {
+        date = date.replace("|| df=yes", "");
+      }
+      
+      date = date.replace("death date||", "");
+      date = date.replace("death date ||", "");
+      date = date.replace("Death date||", "");
+      date = date.replace("Death date ||", "");
+      date = date.replace("death date and age||", "");
+      date = date.replace("death date and age ||", "");
+      date = date.replace("Death date and age||", "");
+      date = date.replace("Death date and age ||", "");
+  
+      String[] dateSplit = StringUtils.split(date, "|| ");
+      
+      if (dateSplit.length == 0)
+        return null;
+      
+      int year   = Integer.parseInt(dateSplit[0]);
+      int month = (dateSplit.length > 1) ? Integer.parseInt(dateSplit[1]) : 0;
+      int day   = (dateSplit.length > 2) ? Integer.parseInt(dateSplit[2]) : 0;
+      
+      Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+      
+      return dateClean;
     }
-    date = date.replace("death date and age||", "");
-    date = date.replace("Death date and age||", "");
-
-    String[] dateSplit = StringUtils.split(date, "|| ");
-    int year = Integer.parseInt(dateSplit[0]);
-    int month = Integer.parseInt(dateSplit[1]);
-    int day = Integer.parseInt(dateSplit[2]);
-    Calendar dateClean = new GregorianCalendar(year, month - 1, day);
-    return dateClean;
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static Calendar parseInfoboxDateBirth(String date)
   {
-    date = date.replace("March", "3");
-    date = date.replace("\n", "");
-    date = date.replace("{", "");
-    date = date.replace("}", "");
-    if (date.contains("|| df=yes") || date.contains("|| mf=yes"))
+    try
     {
-      date = date.replace("|| df=yes", "");
-      date = date.replace("|| mf=yes", "");
+      date = date.replace("March", "3");
+      date = date.replace("\n", "");
+      date = date.replace("{", "");
+      date = date.replace("}", "");
+      
+      if (date.contains("|| df=yes") || date.contains("|| mf=yes"))
+      {
+        date = date.replace("|| df=yes", "");
+        date = date.replace("|| mf=yes", "");
+      }
+      
+      date = date.replace("birth date||", "");
+      date = date.replace("birth date ||", "");
+      date = date.replace("Birth date||", "");
+      date = date.replace("Birth date ||", "");
+      date = date.replace("birth date and age||", "");
+      date = date.replace("birth date and age ||", "");
+      date = date.replace("Birth date and age||", "");
+      date = date.replace("Birth date and age ||", "");
+  
+      if (date.contains("|| "))
+      {
+        String[] dateSplit = StringUtils.split(date, "|| ");
+        
+        int year  = Integer.parseInt(dateSplit[0]);
+        int month = Integer.parseInt(dateSplit[1]);
+        int day   = Integer.parseInt(dateSplit[2]);
+        
+        Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+        
+        return dateClean;
+      }
+      else
+      {
+        String[] dateSplit = StringUtils.split(date, " ");
+        
+        int year  = (dateSplit.length == 1) ? Integer.parseInt(dateSplit[0]) : Integer.parseInt(dateSplit[2]);
+        int month = 0;
+        
+        if (dateSplit.length > 1)
+        {          
+          try
+          {
+            month = Integer.parseInt(dateSplit[1]);
+          }
+          catch (Exception e)
+          {
+            try
+            {
+              Calendar x = Calendar.getInstance();
+              x.setTime(new SimpleDateFormat("MMM", Locale.ENGLISH).parse(dateSplit[1]));
+              month = x.get(Calendar.MONTH);
+            }
+            catch (Exception e2)
+            {
+              return null;
+            }
+          }
+        }
+        
+        int day = (dateSplit.length > 2) ? Integer.parseInt(dateSplit[0]) : 0;
+        
+        Calendar dateClean = new GregorianCalendar(year, month - 1, day);
+        
+        return dateClean;
+      }
     }
-    date = date.replace("birth date||", "");
-    date = date.replace("Birth date||", "");
-    if (date.contains("|| "))
+    catch (Exception e)
     {
-      String[] dateSplit = StringUtils.split(date, "|| ");
-      int year = Integer.parseInt(dateSplit[0]);
-      int month = Integer.parseInt(dateSplit[1]);
-      int day = Integer.parseInt(dateSplit[2]);
-      Calendar dateClean = new GregorianCalendar(year, month - 1, day);
-      return dateClean;
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
     }
-    else
-    {
-      String[] dateSplit = StringUtils.split(date, " ");
-      int year = Integer.parseInt(dateSplit[2]);
-      int month = Integer.parseInt(dateSplit[1]);
-      int day = Integer.parseInt(dateSplit[0]);
-      Calendar dateClean = new GregorianCalendar(year, month - 1, day);
-      return dateClean;
-    }
+    
+    return null;
   }
 
   public static String infoboxPlaceDeath(String place)
   {
-
-    place = place.replace("\n", "");
-    place = place.replace("[", "");
-    place = place.replace("]", "");
-    place = place.replace("|", " ");
-    String[] p = StringUtils.split(place, ",");
-
-    return p[0];
+    try
+    {
+      if (place != null)
+      {
+        place = place.replace("\n", "");
+        place = place.replace("[", "");
+        place = place.replace("]", "");
+        place = place.replace("|", " ");
+  
+        if (place.indexOf(",") != -1)
+        {
+          String[] p = StringUtils.split(place, ",");
+          
+          return p[0];
+        }
+      }
+  
+      return place;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
-  public static String[] infoboxRestingPlaceCoordinates(String coor)
+  public static String[] infoboxRestingPlaceCoordinates(Coordinate coordinate, String coor)
   {
+    try
+    {
+      String[] c = StringUtils.split(coor, "|");
 
-    String[] c = StringUtils.split(coor, "|");
+      coordinate.setLatD(c[1]);
+      coordinate.setLongD(c[2]);
 
-    return c;
+      return c;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxPlaceBirth(String place)
   {
-
-    place = place.replace("\n", "");
-    place = place.replace("[", "");
-    place = place.replace("]", "");
-    place = place.replace("|", " ");
-
-    return place;
+    try
+    {
+      place = place.replace("\n", "");
+      place = place.replace("[", "");
+      place = place.replace("]", "");
+      place = place.replace("|", " ");
+      
+      return place;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String[] infoboxMovement(String movement)
   {
-
-    movement = movement.replace("[", "");
-    movement = movement.replace("]", "");
-    movement = movement.replace("\n", "");
-
-    String[] mov = StringUtils.split(movement, ",");
-
-    return mov;
+    try
+    {
+      movement = movement.replace("[", "");
+      movement = movement.replace("]", "");
+      movement = movement.replace("\n", "");
+  
+      String[] mov = StringUtils.split(movement, ",");
+  
+      return mov;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static ArrayList<Artwork> infoboxWorks(String work)
   {
-
-    work = work.replace("[", "");
-    work = work.replace("]", "");
-    work = work.replace("'", "");
-    work = work.replace("\n", "");
-    ArrayList<Artwork> worksArray = new ArrayList<Artwork>();
-    if (work.contains("<br />"))
+    try
     {
-      work = work.replace("br />", "");
-      work = work.replace("||", "");
-      String[] works = StringUtils.split(work, "<");
-      for (int i = 0; i < works.length; i++)
+      work = work.replace("[", "");
+      work = work.replace("]", "");
+      work = work.replace("'", "");
+      work = work.replace("\n", "");
+      
+      ArrayList<Artwork> worksArray = new ArrayList<Artwork>();
+      
+      if (work.contains("<br />"))
       {
-        Artwork art = new Artwork();
-        art.setTitle(works[i]);
-        worksArray.add(art);
+        work = work.replace("br />", "");
+        work = work.replace("||", "");
+        
+        String[] works = StringUtils.split(work, "<");
+        
+        for (int i = 0; i < works.length; i++)
+        {
+          Artwork art = new Artwork();
+          art.setTitle(works[i]);
+          worksArray.add(art);
+        }
+        
+        return worksArray;
       }
-      return worksArray;
-    }
-    else
-    {
-      String[] works = StringUtils.split(work, ",");
-      // System.out.println(""+work);
-      for (int i = 0; i < works.length; i++)
+      else
       {
-        Artwork art = new Artwork();
-        art.setTitle(works[i]);
-        worksArray.add(art);
-      }
-      return worksArray;
-    }
+        String[] works = StringUtils.split(work, ",");
 
+        for (int i = 0; i < works.length; i++)
+        {
+          Artwork art = new Artwork();
+          art.setTitle(works[i]);
+          worksArray.add(art);
+        }
+        
+        return worksArray;
+      }
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxPatron(String patron)
   {
-
-    patron = patron.replace("[", "");
-    patron = patron.replace("]", "");
-    patron = patron.replace("'", "");
-    patron = patron.replace("}", "");
-    patron = patron.replace("|", "");
-    patron = patron.replace("\n", "");
-
-    return patron;
+    try
+    {
+      patron = patron.replace("[", "");
+      patron = patron.replace("]", "");
+      patron = patron.replace("'", "");
+      patron = patron.replace("}", "");
+      patron = patron.replace("|", "");
+      patron = patron.replace("\n", "");
+  
+      return patron;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxCaption(String caption)
   {
-
-    caption = caption.replace("[", "");
-    caption = caption.replace("]", "");
-    caption = caption.replace("'", "");
-    caption = caption.replace("&nbsp;", " ");
-    caption = caption.replace("\n", "");
-
-    return caption;
+    try
+    {
+      caption = caption.replace("[", "");
+      caption = caption.replace("]", "");
+      caption = caption.replace("'", "");
+      caption = caption.replace("&nbsp;", " ");
+      caption = caption.replace("\n", "");
+  
+      return caption;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxAlt(String alt)
   {
-    alt = alt.replace("\n", "");
-    return alt;
+    try
+    {
+       alt = alt.replace("\n", "");
+       
+       return alt;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxTraining(String trainer)
   {
-
-    trainer = trainer.replace("[", "");
-    trainer = trainer.replace("]", "");
-    trainer = trainer.replace("\n", "");
-    trainer = trainer.replace("<br /> ", "");
-
-    return trainer;
+    try
+    {
+      trainer = trainer.replace("[", "");
+      trainer = trainer.replace("]", "");
+      trainer = trainer.replace("\n", "");
+      trainer = trainer.replace("<br /> ", "");
+  
+      return trainer;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 
   public static String infoboxBirthName(String name)
   {
-    String[] field = StringUtils.split(name, "<");
-    return field[0];
+    try
+    {
+      if (name != null && name.indexOf("<") != -1)
+      {
+        String[] field = StringUtils.split(name, "<");
+        return field[0];
+      }
+  
+      return name;
+    }
+    catch (Exception e)
+    {
+      logger.error("Error parsing Artist infobox: " + e.getMessage());
+    }
+    
+    return null;
   }
 }

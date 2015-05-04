@@ -15,8 +15,29 @@
  */
 package org.neo4art.api.transformer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.neo4art.api.builder.mock.searchresult.BuildSearchResultMock;
+import org.neo4art.api.domain.Link;
+import org.neo4art.api.domain.Node;
 import org.neo4art.api.domain.SearchResult;
+import org.neo4art.colour.domain.ColourAnalysis;
+import org.neo4art.domain.ArtMovement;
+import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
+import org.neo4art.domain.HistoricPlace;
+import org.neo4art.domain.HistoricSite;
+import org.neo4art.domain.Monument;
+import org.neo4art.domain.Museum;
+import org.neo4art.domain.ReligiousBuilding;
+import org.neo4art.domain.Settlement;
+import org.neo4art.graphdb.Neo4ArtGraph;
+import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Neo4ArtRelationship;
+import org.neo4art.literature.domain.Letter;
+import org.neo4art.sentiment.domain.Word;
 
 /**
  * @author Enrico De Benetti
@@ -32,10 +53,110 @@ public class SearchResultTransformer {
 	public static SearchResult buildSearchResult(){
 		
 	  BuildSearchResultMock mockSearchResult = new BuildSearchResultMock();
+	  Neo4ArtGraph neo4ArtGraph = mockSearchResult.getSearchResult();
 	  
-	  return mockSearchResult.getSearchResult();
+	  List<Node> nodeList = new ArrayList<Node>();
+	  List<Link> linkList = new ArrayList<Link>();
+	  
+	  for (Neo4ArtNode neo4ArtNode : neo4ArtGraph.getNodes()) {
+		  
+		  Node node = createNodeFromEntity(neo4ArtNode);
+		  nodeList.add(node);
+	  }
+	  
+	  for (Neo4ArtRelationship neo4ArtRelationship : neo4ArtGraph.getRelationships()) {
+		  
+		  LinkCreator linkCreator = LinkCreator.getInstance();
+		  Link link =linkCreator.createLink(neo4ArtRelationship);
+		  linkList.add(link);
+	  }
+	  
+	  SearchResult searchResult = new SearchResult();
+      searchResult.setLinkList(linkList);
+      searchResult.setNodeList(nodeList);
+	  
+      
+	  return searchResult;
 	}
 	
+	/**
+	 * @param neo4ArtNode
+	 * @return
+	 */
+	private static Node createNodeFromEntity(Neo4ArtNode neo4ArtNode) {
+		
+	 NodeCreator nodeCreator = NodeCreator.getInstance();
+	 Node result = null;
+		  
+	 if(neo4ArtNode instanceof Artist){
+			  
+	   result = nodeCreator.createNodeFromArtist((Artist) neo4ArtNode);
+	 }
+		  
+	 if(neo4ArtNode instanceof ArtMovement){
+		  
+	   result = nodeCreator.createNodeFromArtMovement((ArtMovement) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Artwork){
+		  
+	   result = nodeCreator.createNodeFromArtwork((Artwork) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Museum){
+		  
+	  result = nodeCreator.createNodeFromMuseum((Museum) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Monument){
+		  
+	   result = nodeCreator.createNodeFromMonument((Monument) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof HistoricPlace){
+		  
+	   result = nodeCreator.createNodeFromHistoricPlace((HistoricPlace) neo4ArtNode);
+	 }
+	
+	 if(neo4ArtNode instanceof HistoricSite){
+		  
+	   result = nodeCreator.createNodeFromHistoricSite((HistoricSite) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof ReligiousBuilding){
+		  
+	   result = nodeCreator.createNodeFromReligiousBuilding((ReligiousBuilding) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Settlement){
+		  
+	   result = nodeCreator.createNodeFromSettlement((Settlement) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Letter){
+		  
+	   result = nodeCreator.createNodeFromLetter((Letter) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Word){
+		  
+	   result = nodeCreator.createNodeFromWord((Word) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof Colour){
+		  
+	   result = nodeCreator.createNodeFromColour((Colour) neo4ArtNode);
+	 }
+	 
+	 if(neo4ArtNode instanceof ColourAnalysis){
+		  
+	   result = nodeCreator.createNodeFromColourAnalysis((ColourAnalysis) neo4ArtNode);
+	 }
+		  
+		  
+	 return result;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -43,8 +164,30 @@ public class SearchResultTransformer {
 	public static SearchResult buildDetailNodeSearch(){
 		
 	  BuildSearchResultMock mockSearchResult = new BuildSearchResultMock();
+	  Neo4ArtGraph neo4ArtGraph = mockSearchResult.getDetailSearchNode();
 	  
-	  return mockSearchResult.getDetailSearchNode();
+	  List<Node> nodeList = new ArrayList<Node>();
+	  List<Link> linkList = new ArrayList<Link>();
+	  
+	  for (Neo4ArtNode neo4ArtNode : neo4ArtGraph.getNodes()) {
+		  
+		  Node node = createNodeFromEntity(neo4ArtNode);
+		  nodeList.add(node);
+	  }
+	  
+	  for (Neo4ArtRelationship neo4ArtRelationship : neo4ArtGraph.getRelationships()) {
+		  
+		  LinkCreator linkCreator = LinkCreator.getInstance();
+		  Link link =linkCreator.createLink(neo4ArtRelationship);
+		  linkList.add(link);
+	  }
+	  
+	  SearchResult searchResult = new SearchResult();
+      searchResult.setLinkList(linkList);
+      searchResult.setNodeList(nodeList);
+	  
+      
+	  return searchResult;
 	}
 	
 	
