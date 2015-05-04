@@ -41,6 +41,11 @@ public class SentimentAnalysis implements Neo4ArtNode{
    
    private List<Word>           redundancy;
   
+   public SentimentAnalysis(){
+	   
+	   
+   }
+   
    public SentimentAnalysis(String polarity)
    {
     this.polarity = polarity;
