@@ -16,6 +16,9 @@
 
 package org.neo4art.importer.wikipedia.graphdb;
 
+import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
+
 
 /**
  * @author Lorenzo Speranzoni
@@ -23,5 +26,18 @@ package org.neo4art.importer.wikipedia.graphdb;
  */
 public class WikipediaIndexManager
 {
-  public static final String WIKIPEDIA_LEGACY_INDEX_NAME = "wikipedia-title";
+  public static final Neo4ArtLegacyIndex WIKIPEDIA_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "WIKIPEDIA";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
 }

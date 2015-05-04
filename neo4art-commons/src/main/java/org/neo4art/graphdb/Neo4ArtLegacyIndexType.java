@@ -21,9 +21,7 @@ package org.neo4art.graphdb;
  * @author Lorenzo Speranzoni
  * @since 29 Apr 2015
  */
-public interface Neo4ArtLegacyIndex
+public enum Neo4ArtLegacyIndexType
 {
-  String getName();
-  
-  Neo4ArtLegacyIndexType getType();
+  TYPE_EXACT, TYPE_FULLTEXT, TYPE_FULLTEXT_CASE_INSENSITIVE;
 }

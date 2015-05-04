@@ -17,12 +17,71 @@
 package org.neo4art.sentiment.graphdb;
 
 import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum NLPLegacyIndex implements Neo4ArtLegacyIndex
+public interface NLPLegacyIndex
 {
-  WORD_LEGACY_INDEX, POSITIVE_WORD_LEGACY_INDEX, NEGATIVE_WORD_LEGACY_INDEX, NEGATION_WORD_LEGACY_INDEX
+  public static final Neo4ArtLegacyIndex WORD_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "WORD";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
+  
+  public static final Neo4ArtLegacyIndex POSITIVE_WORD_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "POSITIVE_WORD";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
+  
+  public static final Neo4ArtLegacyIndex NEGATIVE_WORD_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "NEGATIVE_WORD";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
+  
+  public static final Neo4ArtLegacyIndex NEGATION_WORD_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "NEGATION_WORD";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
 }

@@ -92,6 +92,8 @@ public class ArtworksDefaultColoursAnalyzer implements ArtworksColoursAnalyzer
   
       for (ArtworkURL artworkURL : artworksURLsFromFile)
       {
+        logger.info("Starting colour analysis for " + artworkURL.getArtwork().getTitle() + " from " + artworkURL.getUrl());
+
         ColourAnalysis colourAnalysis = imageManager.analyzeImageByUrl(artworkURL.getUrl(), artworkURL.getArtwork().getTitle());
         
         logger.info("Colour analysis for " + artworkURL.getArtwork().getTitle() + " from " + artworkURL.getUrl() + " done.");

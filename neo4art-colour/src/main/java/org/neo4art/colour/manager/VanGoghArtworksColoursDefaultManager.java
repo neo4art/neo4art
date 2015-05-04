@@ -110,8 +110,8 @@ public class VanGoghArtworksColoursDefaultManager implements VanGoghArtworksColo
           artworkRepository.connectArtworkToArtist(vanGoghArtwork);
         }
         
-        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX.name());
-        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name());
+        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX);
+        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX);
       }
       
       csvParser.close();

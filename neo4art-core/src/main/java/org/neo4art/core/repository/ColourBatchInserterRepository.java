@@ -18,7 +18,6 @@ package org.neo4art.core.repository;
 
 import org.neo4art.colour.graphdb.ColourLegacyIndex;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
@@ -33,7 +32,7 @@ public class ColourBatchInserterRepository implements ColourRepository
   @Override
   public void createColourLegacyIndex()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT, Colour.RGB_PROPERTY_NAME, 1_500);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX, Colour.RGB_PROPERTY_NAME, 1_500);
   }
 
   @Override
@@ -43,7 +42,7 @@ public class ColourBatchInserterRepository implements ColourRepository
 
     colour.setNodeId(nodeId);
 
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX.name(), colour);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX, colour);
 
     return nodeId;
   }

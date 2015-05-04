@@ -21,7 +21,6 @@ import java.io.File;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
 import org.neo4art.sentiment.domain.Word;
@@ -44,11 +43,11 @@ public class NLPIndexManagerTest
 
       long neo4artNodeId = Neo4ArtBatchInserterSingleton.createNode(word);
 
-      Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT);
-      Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), word);
-      Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name());
+      Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX);
+      Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, word);
+      Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX);
 
-      IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), "word", "neo4art");
+      IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, "word", "neo4art");
 
       Assert.assertEquals(1, indexHits.size());
       Assert.assertEquals(neo4artNodeId, indexHits.getSingle().longValue());

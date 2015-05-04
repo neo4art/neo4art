@@ -83,7 +83,7 @@ public class ColourBatchInserterRepository implements ColourAnalysisRepository
   {
     if (closestColour != null)
     {
-      IndexHits<Long> closestColourIndexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX.name(), Colour.RGB_PROPERTY_NAME, closestColour.getColor().getRGB());
+      IndexHits<Long> closestColourIndexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(ColourLegacyIndex.COLOUR_LEGACY_INDEX, Colour.RGB_PROPERTY_NAME, closestColour.getColor().getRGB());
       
       if (closestColourIndexHits != null)
       {

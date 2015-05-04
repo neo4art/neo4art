@@ -78,7 +78,7 @@ public class WikipediaBatchImporter implements WikipediaImporter
 
     {
       long indexFlushingStartDate = Calendar.getInstance().getTimeInMillis();
-      Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX_NAME);
+      Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX);
       long indexFlushingEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Index flushed in " + (indexFlushingEndDate - indexFlushingStartDate) + " ms.");
     }

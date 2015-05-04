@@ -26,12 +26,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Polarity;
+import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.domain.Word;
 import org.neo4art.sentiment.graphdb.NLPLegacyIndex;
 import org.neo4art.sentiment.util.DictionaryUtils;
 import org.neo4j.graphdb.index.IndexHits;
-import org.neo4j.helpers.collection.MapUtil;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -55,10 +55,10 @@ public class DictionaryBasicService implements DictionaryService
   @Override
   public void createLegacyIndexes()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name()         , MapUtil.stringMap("type", "exact"), "word", 200_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.POSITIVE_WORD_LEGACY_INDEX.name(), MapUtil.stringMap("type", "exact"), "word",  20_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATIVE_WORD_LEGACY_INDEX.name(), MapUtil.stringMap("type", "exact"), "word",  20_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATION_WORD_LEGACY_INDEX.name(), MapUtil.stringMap("type", "exact"), "word",     100);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX         , "word", 200_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.POSITIVE_WORD_LEGACY_INDEX, "word",  20_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATIVE_WORD_LEGACY_INDEX, "word",  20_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATION_WORD_LEGACY_INDEX, "word",     100);
   }
   
   /**
@@ -83,7 +83,7 @@ public class DictionaryBasicService implements DictionaryService
       }
     }
 
-    Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name());
+    Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX);
   }
 
   /**
@@ -118,7 +118,7 @@ public class DictionaryBasicService implements DictionaryService
       }
     }
   
-    Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name());
+    Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX);
   }
 
   /**
@@ -153,9 +153,9 @@ public class DictionaryBasicService implements DictionaryService
   {
     String escapedWord = DictionaryUtils.escapeWordForLuceneSearch(word).toLowerCase();
 
-    String indexName = NLPLegacyIndex.WORD_LEGACY_INDEX.name();
+    Neo4ArtLegacyIndex index = NLPLegacyIndex.WORD_LEGACY_INDEX;
     
-    IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(indexName, Word.WORD_PROPERTY_NAME, escapedWord);
+    IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(index, Word.WORD_PROPERTY_NAME, escapedWord);
 
     Long newWordNodeId = indexHits.getSingle();
 
@@ -165,11 +165,11 @@ public class DictionaryBasicService implements DictionaryService
       
       newWordNodeId = Neo4ArtBatchInserterSingleton.createNode(newWord);
 
-      Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(indexName, newWord);
+      Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(index, newWord);
 
       if (flush)
       {
-        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(indexName);
+        Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(index);
       }
 
       indexHits.close();

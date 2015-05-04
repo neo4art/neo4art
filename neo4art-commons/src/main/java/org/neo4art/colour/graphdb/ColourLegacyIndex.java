@@ -17,12 +17,26 @@
 package org.neo4art.colour.graphdb;
 
 import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum ColourLegacyIndex implements Neo4ArtLegacyIndex
+public interface ColourLegacyIndex
 {
-  COLOUR_LEGACY_INDEX, COLOUR_ANALYSIS_LEGACY_INDEX
+  public static final Neo4ArtLegacyIndex COLOUR_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "COLOUR";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
 }

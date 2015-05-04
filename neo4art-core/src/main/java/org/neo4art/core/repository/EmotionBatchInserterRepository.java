@@ -18,7 +18,6 @@ package org.neo4art.core.repository;
 
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.domain.Emotion;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 /**
@@ -33,7 +32,7 @@ public class EmotionBatchInserterRepository implements EmotionRepository
   @Override
   public void createEmotionLegacyIndex()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT, Emotion.NAME_PROPERTY_NAME, 1_500);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX, Emotion.NAME_PROPERTY_NAME, 250);
   }
 
   /**
@@ -46,7 +45,7 @@ public class EmotionBatchInserterRepository implements EmotionRepository
 
     emotion.setNodeId(nodeId);
 
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX.name(), emotion);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.EMOTION_LEGACY_INDEX, emotion);
 
     return nodeId;
   }

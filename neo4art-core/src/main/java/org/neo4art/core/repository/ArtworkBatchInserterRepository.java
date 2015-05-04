@@ -19,7 +19,6 @@ package org.neo4art.core.repository;
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.core.graphdb.CoreRelationship;
 import org.neo4art.domain.Artwork;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4j.graphdb.index.IndexHits;
 
@@ -35,7 +34,7 @@ public class ArtworkBatchInserterRepository implements ArtworkRepository
   @Override
   public void createArtworkLegacyIndex()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX);
   }
 
   /**
@@ -46,7 +45,7 @@ public class ArtworkBatchInserterRepository implements ArtworkRepository
   {
     long nodeId = Neo4ArtBatchInserterSingleton.createNode(artwork);
 
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name(), artwork);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX, artwork);
 
     artwork.setNodeId(nodeId);
 
@@ -61,7 +60,7 @@ public class ArtworkBatchInserterRepository implements ArtworkRepository
   {
     Long nodeId = null;
 
-    IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX.name(), "title", title);
+    IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(CoreLegacyIndex.ARTWORK_LEGACY_INDEX, "title", title);
 
     if (indexHits.hasNext())
     {

@@ -18,7 +18,6 @@ package org.neo4art.core.repository;
 
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.domain.Artist;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 
 
@@ -34,7 +33,7 @@ public class ArtistBatchInserterRepository implements ArtistRepository
   @Override
   public void createArtistLegacyIndex()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX.name(), Neo4ArtLegacyIndex.TYPE_EXACT);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX);
   }
 
   /**
@@ -45,7 +44,7 @@ public class ArtistBatchInserterRepository implements ArtistRepository
   {
     long nodeId = Neo4ArtBatchInserterSingleton.createNode(artist);
     
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX.name(), artist);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(CoreLegacyIndex.ARTIST_LEGACY_INDEX, artist);
     
     artist.setNodeId(nodeId);
     

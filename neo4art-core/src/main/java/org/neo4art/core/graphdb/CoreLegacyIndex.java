@@ -17,15 +17,59 @@
 package org.neo4art.core.graphdb;
 
 import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public enum CoreLegacyIndex implements Neo4ArtLegacyIndex
+public interface CoreLegacyIndex
 {
-  ARTIST_LEGACY_INDEX,
-  ARTWORK_LEGACY_INDEX,
-  
-  EMOTION_LEGACY_INDEX
+
+  public static final Neo4ArtLegacyIndex ARTIST_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "ARTIST";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
+
+
+  public static final Neo4ArtLegacyIndex ARTWORK_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "ARTWORK";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
+
+
+  public static final Neo4ArtLegacyIndex EMOTION_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "EMOTION";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
 }

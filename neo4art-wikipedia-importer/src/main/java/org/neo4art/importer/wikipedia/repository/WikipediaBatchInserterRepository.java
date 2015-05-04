@@ -16,7 +16,6 @@
 
 package org.neo4art.importer.wikipedia.repository;
 
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
 import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtMovementPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtistPage;
@@ -222,11 +221,11 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository
 
   private long addWikipediaNode(WikipediaElement wikipediaElement)
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX_NAME, Neo4ArtLegacyIndex.TYPE_EXACT, "hashcode", 20_000_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX, "hashcode", 20_000_000);
 
     long nodeId = Neo4ArtBatchInserterSingleton.createNode(wikipediaElement);
 
-    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX_NAME, wikipediaElement);
+    Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX, wikipediaElement);
 
     return nodeId;
   }
@@ -234,8 +233,8 @@ public class WikipediaBatchInserterRepository implements WikipediaRepository
   @Override
   public long addRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship)
   {
-    IndexHits<Long> nodeIdFrom = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX_NAME, "hashcode", wikipediaElementFrom.getHashCode());
-    IndexHits<Long> nodeIdTo   = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX_NAME, "hashcode", wikipediaElementTo.getHashCode());
+    IndexHits<Long> nodeIdFrom = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX, "hashcode", wikipediaElementFrom.getHashCode());
+    IndexHits<Long> nodeIdTo   = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX, "hashcode", wikipediaElementTo.getHashCode());
 
     if (nodeIdFrom.hasNext() && nodeIdTo.hasNext())
     {

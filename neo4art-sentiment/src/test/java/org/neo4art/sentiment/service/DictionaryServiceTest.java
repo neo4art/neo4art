@@ -48,7 +48,7 @@ public class DictionaryServiceTest
       dictionaryService.createLegacyIndexes();
       dictionaryService.saveDictionary();
       
-      IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), "word", "art");
+      IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, "word", "art");
 
       Assert.assertEquals(1, indexHits.size());
       Assert.assertTrue(indexHits.getSingle() > 0);
@@ -79,7 +79,7 @@ public class DictionaryServiceTest
       dictionaryService.addPolarity();
 
       {
-        IndexHits<Long> indexHitsForWordLove = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), "word", "love");
+        IndexHits<Long> indexHitsForWordLove = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, "word", "love");
         Assert.assertEquals(1, indexHitsForWordLove.size());
         Long loveNodeId = indexHitsForWordLove.getSingle();
         Assert.assertTrue(loveNodeId > 0);
@@ -89,7 +89,7 @@ public class DictionaryServiceTest
       }
       
       {
-        IndexHits<Long> indexHitsForWordHate = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX.name(), "word", "hate");
+        IndexHits<Long> indexHitsForWordHate = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, "word", "hate");
         Assert.assertEquals(1, indexHitsForWordHate.size());
         Long hateNodeId = indexHitsForWordHate.getSingle();
         Assert.assertTrue(hateNodeId > 0);

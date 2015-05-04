@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-package org.neo4art.graphdb;
+package org.neo4art.colour.graphdb;
 
+import org.neo4art.graphdb.Neo4ArtLegacyIndex;
+import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 29 Apr 2015
+ * @since 29 Mar 2015
  */
-public interface Neo4ArtLegacyIndex
+public interface ColourAnalysisLegacyIndex
 {
-  String getName();
-  
-  Neo4ArtLegacyIndexType getType();
+  public static final Neo4ArtLegacyIndex COLOUR_ANALYSIS_LEGACY_INDEX = new Neo4ArtLegacyIndex()
+  {
+    @Override
+    public String getName()
+    {
+      return "COLOUR_ANALYSIS";
+    }
+    
+    @Override
+    public Neo4ArtLegacyIndexType getType()
+    {
+      return Neo4ArtLegacyIndexType.TYPE_EXACT;
+    }
+  }; 
 }
