@@ -16,6 +16,20 @@ $(document).ready(function(d) {
 	} else {
 		console.log("non faccio niente");
 	}
+	$("#dialog").dialog({
+		closeOnEscape:true,
+		draggable:false,
+		autoOpen : false,
+//		title : "Legend",
+		minWidth : 600,
+		resizable : false,
+		beforeClose: function(event,ui){
+			if(timeline!=undefined){
+				timeline.setSelection([]);
+			}
+		},
+		position:{my:"center top", at: "center top"}
+	});
 });
 function wantsGraph() {
 	p = parseURLParams();
@@ -76,6 +90,7 @@ function load(p) {
 						"min" : minData,
 						"max" : maxData,
 						layout : "box",
+						unselectable:true,
 //						cluster: true,
 //						clusterMaxItems: 4,
 						eventMargin:5
@@ -96,6 +111,7 @@ function load(p) {
 					});
 					links.events.addListener(timeline, 'rangechange', onRangeChange);
 					links.events.addListener(timeline, 'rangechanged', onRangeChanged);
+					links.events.addListener(timeline, 'select', onSelect);
 					// Draw our timeline with the created data and options
 					bigData = graph;
 					emotionData = emotions;
@@ -110,6 +126,20 @@ function load(p) {
 	});
 }
 var actualLeft = null;
+
+function onSelect(){
+	var sel = timeline.getSelection();
+	if(sel.length){
+		if(sel[0].row != undefined){
+			var row = sel[0].row;
+			var element = bigData[row+1];
+			$("#dialog").html("<img src='"+ element.original+"'/>");
+			$("#dialog").dialog( "option", { title: element.description } );
+			$("#dialog").dialog("open");
+			$("#dialog").dialog("moveToTop");
+		}
+	}
+}
 function onRangeChange() {
 	var range = timeline.getVisibleChartRange();
 	if (actualLeft == null) {
@@ -189,7 +219,7 @@ function drawColorChart(data, parseColors, emotions) {
 	var margin = {
 		top : 20,
 		right : 0,
-		bottom : 30,
+		bottom : 0,
 		left : 0
 	}, width = chartWidth - margin.left - margin.right, height = containerHeight - margin.top - margin.bottom;
 
@@ -304,7 +334,7 @@ function drawColorChart(data, parseColors, emotions) {
 	emog.append("circle").attr("fill", "#FFFFFF").attr("r", 15);// .attr("cx",
 	// xx);
 	emog.append("text").text(emotion).attr("class", "icon-text").attr("x", -13).attr("y", 11).attr("fill", "#444444");
-	svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
+//	svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
 	svg.append("path").datum(data).attr("class", "line").attr("d", line);
 	svg.selectAll("circle").data(data).enter().append("circle").attr("fill", function(d) {
 		return "#" + d.averageRgb.toString(16);
