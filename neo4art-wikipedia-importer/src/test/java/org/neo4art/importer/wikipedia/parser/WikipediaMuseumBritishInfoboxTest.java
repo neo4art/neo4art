@@ -6,7 +6,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Museum;
-import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 
 public class WikipediaMuseumBritishInfoboxTest {
 
@@ -42,8 +41,8 @@ public class WikipediaMuseumBritishInfoboxTest {
 		Assert.assertEquals(807000, museum.getArea());
 		Assert.assertEquals("United Kingdom Central London", museum.getMapType());
 		Assert.assertEquals("Location within central London", museum.getMapCaption());
-		Assert.assertEquals("51.519459",""+ museum.getCoordinate().getLatD());
-		Assert.assertEquals("-0.126931",""+ museum.getCoordinate().getLongD());
+		Assert.assertEquals("51.519459",""+ museum.getCoordinates().getLatD());
+		Assert.assertEquals("-0.126931",""+ museum.getCoordinates().getLongD());
 		Assert.assertEquals("6,701,043 (2014)", museum.getVisitors());
 		Assert.assertEquals("http://www.britishmuseum.org/", museum.getWebsite());
 		

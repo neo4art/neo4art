@@ -117,9 +117,10 @@ public class ServicesUtil
       calendarNewDay.set(Calendar.SECOND, 0);
       calendarNewDay.set(Calendar.MILLISECOND, 0);
 
+      mappaComletitionDay.put(calendarNewDay.get(Calendar.YEAR) + "_" + calendarNewDay.get(Calendar.MONTH), newgg);
       result = format.format(calendarNewDay.getTime());
     }
-    
+
     return result;
   }
 
@@ -139,10 +140,14 @@ public class ServicesUtil
     }
     catch (Exception e)
     {
-      System.out.println("ERRORE: " + e.getMessage());
     }
 
     return result;
+  }
+
+  public void cleanMemory()
+  {
+    this.mappaComletitionDay.clear();
   }
 
 }

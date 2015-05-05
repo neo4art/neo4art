@@ -45,6 +45,12 @@ public class TimeLineTransformerTest {
 	  Assert.assertNotNull(buildTimeLineEvents);
 	  Assert.assertEquals(703, buildTimeLineEvents.size());
 	  
+	  
+	  for (TimelineEvent timelineEvent : buildTimeLineEvents)
+    {
+      System.out.println("Start: "+timelineEvent.getStart()+" artwork: "+timelineEvent.getDescription());
+    }
+	  
   }
 	
 }

@@ -11,7 +11,9 @@
 	font-size:3em !important;
 	color:#ccc;
 }
-
+.aligned-right{
+	float:right;
+}
 .timeline-page {
 	width: 100%;
 	height: 100%;

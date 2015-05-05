@@ -19,7 +19,11 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.HistoricPlace;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxTypeParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxWebsiteParserUtil;
 
 public class WikipediaHistoricPlaceInfoboxParser
 {
@@ -51,7 +55,7 @@ public class WikipediaHistoricPlaceInfoboxParser
 
   public static HistoricPlace parse(String text)
   {
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     HistoricPlace historicPlace = new HistoricPlace();
     Coordinate coordinate = new Coordinate();
@@ -61,13 +65,13 @@ public class WikipediaHistoricPlaceInfoboxParser
       switch (key)
       {
         case NAME:
-          historicPlace.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          historicPlace.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
-          historicPlace.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          historicPlace.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case STYLE:
-          historicPlace.setType(WikipediaInfoboxUtils.getType(map.get(key)));
+          historicPlace.setType(InfoboxTypeParserUtil.getType(map.get(key)));
           break;
         case LATITUDE:
           coordinate.setLatD(map.get(key));
@@ -118,10 +122,10 @@ public class WikipediaHistoricPlaceInfoboxParser
           coordinate.setLongEW(map.get(key));
           break;
         case WEB:
-          historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
+          historicPlace.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
           break;
         case WEBSITE:
-          historicPlace.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
+          historicPlace.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
           break;
       }
       

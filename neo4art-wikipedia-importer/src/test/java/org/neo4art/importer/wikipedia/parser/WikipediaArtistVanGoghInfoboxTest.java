@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
 
 public class WikipediaArtistVanGoghInfoboxTest {
 
@@ -32,7 +31,6 @@ public class WikipediaArtistVanGoghInfoboxTest {
         "| works         =  ''[[The Starry Night|Starry Night]]'', ''[[Sunflowers (Van Gogh series)|Sunflowers]]'', ''[[Bedroom in Arles]]'', ''[[Portrait of Dr. Gachet]]'', ''[[Sien (Van Gogh series)|Sorrow]]''\n" +
         "| patron        = [[Theo van Gogh (art dealer)|Theo van Gogh]]}}";
 	
-	private static String works ="''[[The Starry Night|Starry Night]]'', ''[[Sunflowers (Van Gogh series)|Sunflowers]]'', ''[[Bedroom in Arles]]'', ''[[Portrait of Dr. Gachet]]'', ''[[Sien (Van Gogh series)|Sorrow]]''\n";
 	
 	@Test
 	public void shouldParseArtistInfobox() throws MalformedURLException {
@@ -72,46 +70,4 @@ public class WikipediaArtistVanGoghInfoboxTest {
 		Assert.assertEquals("Anton Mauve", artist.getTrainer());
 		
 	}
-	
-	@Test
-	public void infoboxMovementTest() {
-		
-		Assert.assertEquals("Post-Impressionism", WikipediaArtistInfoboxParser.infoboxPlaceDeath("[[Post-Impressionism]]\n"));
-	}
-	
-	@Test
-	public void infoboxWorksTest(){
-		String test = "";
-		ArrayList<Artwork> work = WikipediaArtistInfoboxParser.infoboxWorks(works);
-		for(int i = 0; i < work.size(); i++){
-			test = test + work.get(i).getTitle() +",";
-		}
-		int leng = test.length();
-		test = test.substring(0, leng-1);
-		
-		Assert.assertEquals("The Starry Night|Starry Night, Sunflowers (Van Gogh series)|Sunflowers, Bedroom in Arles, Portrait of Dr. Gachet, Sien (Van Gogh series)|Sorrow", test);
-
-	}
-	
-	@Test
-	public void infoboxCaptionTest() {	
-		
-		Assert.assertEquals("Self-Portrait, Spring 1887, Oil on pasteboard, 42 x 33.7 cm., Art Institute of Chicago (F 345)", WikipediaArtistInfoboxParser.infoboxCaption("''Self-Portrait'', Spring 1887, Oil on pasteboard, 42 x 33.7&nbsp;cm., [[Art Institute of Chicago]] (F 345)\n"));
-
-	}
-	
-	@Test
-	public void infoboxAltTest() {	
-		
-		Assert.assertEquals("An intense man with close cropped hair and red beard gazes to the left.", WikipediaArtistInfoboxParser.infoboxAlt("An intense man with close cropped hair and red beard gazes to the left.\n"));
-
-	}
-	
-	@Test
-	public void infoboxTrainingTest() {	
-		
-		Assert.assertEquals("Anton Mauve", WikipediaArtistInfoboxParser.infoboxTraining("[[Anton Mauve]]\n"));
-
-	}
-
 }

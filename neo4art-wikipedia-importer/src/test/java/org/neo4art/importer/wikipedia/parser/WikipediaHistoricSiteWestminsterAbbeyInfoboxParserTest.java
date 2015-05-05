@@ -6,7 +6,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.HistoricSite;
-import org.neo4art.importer.wikipedia.parser.WikipediaHistoricSiteInfoboxParser;
 
 public class WikipediaHistoricSiteWestminsterAbbeyInfoboxParserTest {
 

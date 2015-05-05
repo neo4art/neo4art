@@ -55,11 +55,10 @@ public class TimeLineTransformer
         timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
         timelineEvent.setStart(servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork()));
         timelineEvent.setThumbnail(colourAnalysis.getSource());
-        // TODO DA ELIMINARE..
-        timelineEvent.setEmotion("smile");
-
         timelineEventsList.add(timelineEvent);
       }
+      
+      servicesUtil.cleanMemory();
     }
 
     return timelineEventsList;

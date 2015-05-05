@@ -1,11 +1,12 @@
-.container-page{
-	height:100%;
-	width:100%;
-	position:relative;
+.container-page {
+	height: 100%;
+	width: 100%;
+	position: relative;
 }
+
 .graph-page {
-	width:100%;
-/* 	left: 100%; */
+	width: 100%;
+	/* 	left: 100%; */
 	-webkit-transition: left 0.8s;
 	-moz-transition: left 0.8s;
 	-o-transition: left 0.8s;
@@ -15,8 +16,8 @@
 
 .logo {
 	text-align: center;
-	margin-top:40px;
-	margin-bottom:30px;
+	margin-top: 40px;
+	margin-bottom: 30px;
 }
 
 #graph {
@@ -57,9 +58,26 @@
 	stroke: #FF5555;
 	stroke-width: 3px;
 }
+
 .node-active-green {
 	stroke: #55FF55;
 	stroke-width: 3px;
+}
+
+.text-inside-node {
+	stroke: none;
+	font-family: Raleway;
+	font-weight: 700;
+	color: #333;
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }
 
 .link {
@@ -71,10 +89,12 @@
 	stroke: #FF5555;
 	stroke-opacity: 1;
 }
+
 .link-active-green {
 	stroke: #55FF55;
 	stroke-opacity: 1;
 }
+
 #floating {
 	position: fixed;
 	overflow-y: scroll;
@@ -93,8 +113,8 @@
 	-o-transition: left 0.8s;
 	transition: left 0.8s;
 	text-align: center;
-	display:flex;
-	flex-direction:column;
+	display: flex;
+	flex-direction: column;
 }
 
 #floating.visible {
@@ -108,8 +128,9 @@
 	-o-transition: left 0s;
 	transition: left 0s;
 }
-iframe{
-	flex:1;
+
+iframe {
+	flex: 1;
 }
 
 .ics {

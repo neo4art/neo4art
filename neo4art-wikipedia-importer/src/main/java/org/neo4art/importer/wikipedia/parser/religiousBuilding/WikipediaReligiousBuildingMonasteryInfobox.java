@@ -19,7 +19,9 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
 
 /**
  * 
@@ -45,20 +47,20 @@ public class WikipediaReligiousBuildingMonasteryInfobox
     ReligiousBuilding monastery = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
 
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     for (String key : map.keySet())
     {
       switch (key)
       {
         case NAME:
-          monastery.setBuildingName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          monastery.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case STYLE:
           monastery.setType(map.get(key));
           break;
         case IMAGE:
-          monastery.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          monastery.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
