@@ -22,9 +22,9 @@ $(document).ready(function() {
 	}
 	$("#dialog").dialog({
 		autoOpen : false,
-		title:"Legend",
-		width: 500,
-		resizable: false
+		title : "Legend",
+		width : 500,
+		resizable : false
 	});
 	$("#legendOpener").click(function() {
 		$("#dialog").dialog("open");
@@ -204,41 +204,38 @@ function theGraph() {
 		var node = nodeContainer.selectAll(".node").data(nodeList, function(d) {
 			return d.name;
 		});
-		nodeEnter = node.enter().append("g").attr("class", "node").attr("id", function(d, i) {
-			// d.id = i;
+		nodeEnter = node.enter().append("g").attr("class", "node").attr("id", function(d) {
 			d.radius = radius;
 			return d.id; // TODO CHECK
-		})/*
-			 * .attr("transform", function(d) { d.radius = radius;// d.weight +
-			 * 12; // RAGGIO return "translate(" + d.x + "," + d.y + ")"; })
-			 */.call(drag);
+		}).call(drag);
 
 		nodeEnter.append("circle").attr("r", function(d) {
-            return d.radius;
-        }).style("fill", function(d) {
-            if (d.type == "Colour") {
-                return "#" + d.thumbnail;
-            } else {
-                return color(1 / d.rating);
-            }
-        });
-
-        nodeEnter.append("clipPath").attr('id', function(d, i) {
-            return "clip" + i
-        }).append("circle").attr("class", "clip-path").attr("r", function(d) {
-            return d.radius;
-        });
+			return d.radius;
+		}).style("fill", function(d) {
+			type = d.type;
+			if (d.type == "Colour") {
+				return "#" + d.thumbnail;
+			} else {
+				return color(1 / d.id);
+			}
+		});
+		nodeEnter.append("clipPath").attr('id', function(d, i) {
+			return "clip" + i
+		}).append("circle").attr("class", "clip-path").attr("r", function(d) {
+			return d.radius;
+		});
 
 		nodeEnter.append("clipPath").attr('id', function(d, i) {
 			return "clip" + i
 		}).append("circle").attr("class", "clip-path").attr("r", function(d) {
 			return d.radius;
 		}).style("fill", function(d) {
-			return color(1 / d.rating);
+			return color(1/d.rating);
 		});
-
 		var img = nodeEnter.append("svg:image").attr("class", "circle").attr("xlink:href", function(d) {
-			return d.thumbnail;
+			if (d.type != "Colour") {
+				return d.thumbnail;
+			}
 		}).attr("clip-path", function(d, i) {
 			return "url(#clip" + i + ")"
 		}).attr("x", function(d) {
@@ -250,10 +247,20 @@ function theGraph() {
 		}).attr("height", function(d) {
 			return d.radius * 2;
 		}).attr("preserveAspectRatio", "xMidYMid slice");
-
 		nodeEnter.append("title").text(function(d) {
 			return d.name;
 		});
+		
+		var textInside = nodeEnter.append("text").attr("class","text-inside-node").style("text-anchor","middle").attr("x", 0).attr("y", 2)
+		.text(function(d){
+			if(d.type=="Word"){
+				return d.name;
+			}else{
+				return "";
+			}
+		}).attr("clip-path", function(d, i) {
+			return "url(#clip" + i + ")"
+		}).style("font-size","10px");
 
 		var linkedByIndex = {};
 		linkList.forEach(function(d) {
@@ -287,6 +294,7 @@ function theGraph() {
 						});
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 1.5).attr("y", -d.radius * 1.5)
 								.attr("width", (d.radius * 2) * 1.5).attr("height", (d.radius * 2) * 1.5);
+						d3.select(this).select("text").transition().duration(750).style("font-size","20px").attr("y", 4);
 					}
 				}).on(
 				"mouseout",
@@ -303,6 +311,7 @@ function theGraph() {
 						});
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius).attr("y", -d.radius).attr("width",
 								d.radius * 2).attr("height", d.radius * 2);
+						d3.select(this).select("text").transition().duration(750).style("font-size","10px").attr("y",2);
 					}
 				});
 
@@ -331,6 +340,7 @@ function theGraph() {
 							d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 5 / currentZoom).attr("y",
 									-d.radius * 5 / currentZoom).attr("width", d.radius * 2 * 5 / currentZoom).attr("height",
 									d.radius * 2 * 5 / currentZoom);
+							d3.select(this).select("text").transition().duration(750).style("font-size","50px").attr("y", 15);
 							console.log("w:" + width + " d.x:" + d.x + " ctx:" + currentTranslateX + " calc:"
 									+ ((width / 4 / currentZoom) - d.x + (currentTranslateX / currentZoom)) + " z:" + currentZoom);
 							container
@@ -415,10 +425,13 @@ function theGraph() {
 		clearDiv("data");
 		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
 		var data = float.select("#data");
-//		data.append("div").attr("class", "title").append("h1").text(d.name);
-		data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
-//		data.append("div").attr("class", "description").text(d.description);
-//		data.append("div").attr("class", "link").html("</br><a href='" + d.link + "'>" + d.link + "</a>");
+		// data.append("div").attr("class", "title").append("h1").text(d.name);
+		if (d.type != "Colour") {
+			data.append("div").attr("class", "thumbnail").append("img").attr("src", d.thumbnail);
+		}
+		// data.append("div").attr("class", "description").text(d.description);
+		// data.append("div").attr("class", "link").html("</br><a href='" +
+		// d.link + "'>" + d.link + "</a>");
 		var frame = float.select("iframe");
 		frame.attr("src", d.link);
 		$("#floating").perfectScrollbar();
@@ -443,6 +456,7 @@ function theGraph() {
 		selectedD.clicked = false;
 		selectedNode.select("image").transition().duration(750).attr("x", -radius).attr("y", -radius).attr("width", radius * 2).attr(
 				"height", radius * 2);
+		selectedNode.select("text").transition().duration(750).style("font-size","10px").attr("y", 2);
 	}
 
 }
