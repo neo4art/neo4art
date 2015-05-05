@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.util.ServicesUtil;
 import org.neo4art.domain.Artwork;
 import org.neo4art.literature.domain.Letter;
@@ -35,6 +36,7 @@ public class ServicesUtilTest
   public void testDateFormatCompletionDate()
   {
 
+    TimelineEvent timelineEvent = new TimelineEvent();
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, 1883);
     calendar.set(Calendar.MONTH, 8);
@@ -48,14 +50,14 @@ public class ServicesUtilTest
     Artwork artwork = new Artwork();
     artwork.setCompletionDate(calendar.getTime());
 
-    String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork);
+    String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
   }
   
   @Test
   public void testDateFormatCompletionDateSplitSameDays()
   {
-
+    TimelineEvent timelineEvent = new TimelineEvent();
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, 1883);
     calendar.set(Calendar.MONTH, 8);
@@ -69,7 +71,7 @@ public class ServicesUtilTest
     Artwork artwork = new Artwork();
     artwork.setCompletionDate(calendar.getTime());
 
-    String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork);
+    String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
     
     Calendar calendar1 = Calendar.getInstance();
@@ -84,7 +86,7 @@ public class ServicesUtilTest
     Artwork artwork1 = new Artwork();
     artwork1.setCompletionDate(calendar1.getTime());
 
-    String verifyArtworkDateNextDay = serviceUtil.verifyArtworkDate(artwork);
+    String verifyArtworkDateNextDay = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("16-Sep-1883 12:00", verifyArtworkDateNextDay);
     
     Calendar calendar2 = Calendar.getInstance();
@@ -99,7 +101,7 @@ public class ServicesUtilTest
     Artwork artwork3 = new Artwork();
     artwork3.setCompletionDate(calendar2.getTime());
 
-    String verifyArtworkDateNextNextDay = serviceUtil.verifyArtworkDate(artwork);
+    String verifyArtworkDateNextNextDay = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("17-Sep-1883 12:00", verifyArtworkDateNextNextDay);
   }
   

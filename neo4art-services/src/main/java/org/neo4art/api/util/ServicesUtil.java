@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.domain.Artwork;
 import org.neo4art.literature.domain.Document;
 
@@ -37,7 +38,7 @@ public class ServicesUtil
 
   private SimpleDateFormat    format;
   private SimpleDateFormat    documentFormat;
-  Map<String, Integer>        mappaComletitionDay;
+  Map<String, Date>        mappaComletitionDay;
   private static final String DATE_FORMAT_COMPLETITION_DATE = "dd-MMM-yyyy HH:mm";
   private static final String DATE_FORMAT_DOCUMENT_DATE     = "E, dd MMM yyyy";
 
@@ -45,7 +46,7 @@ public class ServicesUtil
   {
     documentFormat = new SimpleDateFormat(DATE_FORMAT_DOCUMENT_DATE, Locale.ENGLISH);
     format = new SimpleDateFormat(DATE_FORMAT_COMPLETITION_DATE, Locale.ENGLISH);
-    mappaComletitionDay = new HashMap<String, Integer>();
+    mappaComletitionDay = new HashMap<String, Date>();
   }
 
   public static ServicesUtil getInstance()
@@ -60,7 +61,7 @@ public class ServicesUtil
     return instance;
   }
 
-  public String verifyArtworkDate(Artwork artwork)
+  public String verifyArtworkDate(Artwork artwork,TimelineEvent timelineEvent)
   {
 
     String result = "";
@@ -70,11 +71,12 @@ public class ServicesUtil
 
       if (artwork != null && artwork.getCompletionDate() != null)
       {
-        result = this.splitDaySameMonthAndYear(artwork);
+        result = this.splitDaySameMonthAndYear(artwork,timelineEvent);
       }
       else if (artwork != null)
       {
         result = "10-Jan-" + artwork.getYear() + " 00:00";
+        timelineEvent.setStart(result);
       }
     }
     catch (Exception e)
@@ -88,7 +90,7 @@ public class ServicesUtil
    * @param artwork
    * @return
    */
-  private String splitDaySameMonthAndYear(Artwork artwork)
+  private String splitDaySameMonthAndYear(Artwork artwork,TimelineEvent timelineEvent)
   {
     String result = "";
 
@@ -96,31 +98,30 @@ public class ServicesUtil
     calendar.setTime(artwork.getCompletionDate());
     int mm = calendar.get(Calendar.MONTH);
     int yy = calendar.get(Calendar.YEAR);
-    int gg = calendar.get(Calendar.DATE);
-
+    
     if (this.mappaComletitionDay.get(yy + "_" + mm) == null)
     {
-      mappaComletitionDay.put(yy + "_" + mm, gg);
+      mappaComletitionDay.put(yy + "_" + mm, artwork.getCompletionDate());
       result = format.format(artwork.getCompletionDate());
+      timelineEvent.setStart(result);
+      timelineEvent.setDateOrder(artwork.getCompletionDate());
     }
     else
     {
-      int newgg = this.mappaComletitionDay.get(yy + "_" + mm) + 1;
-      mappaComletitionDay.put(yy + "_" + mm, newgg);
+      Date parseDate = this.mappaComletitionDay.get(yy + "_" + mm);
 
       Calendar calendarNewDay = Calendar.getInstance();
-      calendarNewDay.set(Calendar.YEAR, yy);
-      calendarNewDay.set(Calendar.MONTH, mm);
-      calendarNewDay.set(Calendar.DAY_OF_MONTH, newgg);
-      calendarNewDay.set(Calendar.HOUR, 0);
-      calendarNewDay.set(Calendar.MINUTE, 0);
-      calendarNewDay.set(Calendar.SECOND, 0);
-      calendarNewDay.set(Calendar.MILLISECOND, 0);
+      calendarNewDay.setTime(parseDate);
+      calendarNewDay.add(Calendar.DATE, 1);
 
-      mappaComletitionDay.put(calendarNewDay.get(Calendar.YEAR) + "_" + calendarNewDay.get(Calendar.MONTH), newgg);
+      mappaComletitionDay.put(yy + "_" + mm, calendarNewDay.getTime());
+      mappaComletitionDay.put(calendarNewDay.get(Calendar.YEAR) + "_" + calendarNewDay.get(Calendar.MONTH), calendarNewDay.getTime());
+      
       result = format.format(calendarNewDay.getTime());
+      timelineEvent.setStart(result);
+      timelineEvent.setDateOrder(calendarNewDay.getTime());
     }
-
+    
     return result;
   }
 

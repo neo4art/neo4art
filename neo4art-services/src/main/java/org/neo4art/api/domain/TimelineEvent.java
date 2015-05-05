@@ -15,12 +15,14 @@
  */
 package org.neo4art.api.domain;
 
+import java.util.Date;
+
 /**
  * @author Enrico De Benetti
  * @since 29 Apr 2015
  *
  */
-public class TimelineEvent {
+public class TimelineEvent implements Comparable<TimelineEvent>{
 	
 	private String start;
 	
@@ -35,6 +37,8 @@ public class TimelineEvent {
 	private String closestAverageColorName;
 	
 	private String emotion;
+	
+	private Date dateOrder;
 
 	public String getStart() {
 		return start;
@@ -93,5 +97,35 @@ public class TimelineEvent {
   {
     this.original = original;
   }
-	
+
+  public Date getDateOrder()
+  {
+    return dateOrder;
+  }
+
+  public void setDateOrder(Date dateOrder)
+  {
+    this.dateOrder = dateOrder;
+  }
+
+  /* (non-Javadoc)
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
+   */
+  @Override
+  public int compareTo(TimelineEvent event)
+  {
+    
+    int result = 0;
+    
+    if(this.getDateOrder().after(event.getDateOrder())){
+      
+      result = 1;
+    }
+    else{
+      result = -1;
+    }
+    
+    
+    return result;
+  }
 }

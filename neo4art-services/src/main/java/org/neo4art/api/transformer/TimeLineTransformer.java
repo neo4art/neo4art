@@ -16,6 +16,7 @@
 package org.neo4art.api.transformer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -53,7 +54,9 @@ public class TimeLineTransformer
         timelineEvent.setAverageRgb(colourAnalysis.getHexaDecimalAverageColor());
         timelineEvent.setClosestAverageColorName(colourAnalysis.getAverageClosestColour() != null ? colourAnalysis.getAverageClosestColour().getName() : "");
         timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
-        timelineEvent.setStart(servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork()));
+        
+        servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork(),timelineEvent);
+        
         String imageURL = colourAnalysis.getSource();
         timelineEvent.setOriginal(imageURL);
         timelineEvent.setThumbnail(imageURL!=null ? imageURL.replace("http://www.", "http://neo4art.org/resources/images/") : "");
@@ -63,6 +66,8 @@ public class TimeLineTransformer
       servicesUtil.cleanMemory();
     }
 
+    Collections.sort(timelineEventsList);
+    
     return timelineEventsList;
   }
 
