@@ -40,7 +40,28 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
     if (graphDatabaseServiceInstance == null)
     {
       graphDatabaseServiceInstance = new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_STORE_DIR);
+
+      registerShutdownHook(graphDatabaseServiceInstance);
     }
+  }
+
+  /**
+   * 
+   * @param graphDb
+   */
+  private static void registerShutdownHook(final GraphDatabaseService graphDb)
+  {
+    Runtime.getRuntime().addShutdownHook(new Thread()
+    {
+      @Override
+      public void run()
+      {
+        if (graphDb != null && graphDb.isAvailable(1000))
+        {
+          graphDb.shutdown();
+        }
+      }
+    });
   }
 
   /**
@@ -63,7 +84,7 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
     {
       transactionInstance.success();
       transactionInstance.close();
-      
+
       transactionInstance = null;
     }
   }
@@ -77,9 +98,9 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
     {
       transactionInstance.failure();
       transactionInstance.close();
-      
+
       transactionInstance = null;
-    }    
+    }
   }
 
   /**
@@ -90,9 +111,9 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
     if (graphDatabaseServiceInstance != null)
     {
       rollbackTransaction();
-      
+
       graphDatabaseServiceInstance.shutdown();
-      
+
       graphDatabaseServiceInstance = null;
     }
   }
@@ -139,7 +160,7 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
 
     return relationship.getId();
   }
-  
+
   /**
    * 
    * @return

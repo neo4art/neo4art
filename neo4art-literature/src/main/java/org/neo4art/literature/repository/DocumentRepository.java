@@ -22,7 +22,7 @@ import org.neo4art.literature.domain.Document;
  * @author Lorenzo Speranzoni, Enrico De Benetti
  * @since 22.04.2015
  */
-public interface DocumentRepository {
-
+public interface DocumentRepository
+{
   long saveDocument(Document document);
 }

@@ -25,17 +25,16 @@ import org.neo4art.literature.domain.Document;
  */
 public class DocumentBatchInserterRepository implements DocumentRepository
 {
-  /*
-   * (non-Javadoc)
+  /** 
    * @see org.neo4art.literature.repository.DocumentRepository#saveDocument(org.neo4art.literature.domain.Document)
    */
   @Override
   public long saveDocument(Document document)
   {
     long documentNodeId = Neo4ArtBatchInserterSingleton.createNode(document);
-    
+
     document.setNodeId(documentNodeId);
-    
+
     return documentNodeId;
   }
 }

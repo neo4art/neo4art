@@ -18,9 +18,10 @@ package org.neo4art.sentiment.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -32,7 +33,6 @@ import org.neo4art.sentiment.domain.Word;
 import org.neo4art.sentiment.graphdb.NLPLegacyIndex;
 import org.neo4art.sentiment.util.DictionaryUtils;
 import org.neo4j.graphdb.index.IndexHits;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * @author Lorenzo Speranzoni
@@ -55,27 +55,27 @@ public class DictionaryBasicService implements DictionaryService
   @Override
   public void createLegacyIndexes()
   {
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX         , "word", 200_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.POSITIVE_WORD_LEGACY_INDEX, "word",  20_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATIVE_WORD_LEGACY_INDEX, "word",  20_000);
-    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATION_WORD_LEGACY_INDEX, "word",     100);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX, "word", 200_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.POSITIVE_WORD_LEGACY_INDEX, "word", 20_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATIVE_WORD_LEGACY_INDEX, "word", 20_000);
+    Neo4ArtBatchInserterSingleton.createLegacyNodeIndex(NLPLegacyIndex.NEGATION_WORD_LEGACY_INDEX, "word", 100);
   }
-  
+
   /**
    * @see org.neo4art.sentiment.service.DictionaryService#saveDictionary()
    */
   @Override
   public void saveDictionary() throws IOException
   {
-    File dictionaryDirectory = new ClassPathResource("dictionary" + File.separator + locale.getLanguage()).getFile();
+    String alphabet[] = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
-    File[] dictionaryFiles = dictionaryDirectory.listFiles();
-
-    for (File dictionaryFile : dictionaryFiles)
+    for (int i = 0; i < alphabet.length; i++)
     {
-      logger.info("Importing dictionary file: " + dictionaryFile.getName());
-
-      LineIterator dictionaryFileIterator = FileUtils.lineIterator(dictionaryFile);
+      String dictionaryFile = "dictionary" + File.separator + this.locale.getLanguage() + File.separator + alphabet[i] + " Words.txt";
+      
+      logger.info("Importing dictionary file: " + dictionaryFile);
+      
+      LineIterator dictionaryFileIterator = IOUtils.lineIterator(getClass().getClassLoader().getResourceAsStream(dictionaryFile), Charset.defaultCharset());
 
       while (dictionaryFileIterator.hasNext())
       {
@@ -89,7 +89,7 @@ public class DictionaryBasicService implements DictionaryService
   /**
    * @see org.neo4art.sentiment.service.DictionaryService#addPolarity()
    */
-  @Override 
+  @Override
   public void addPolarity() throws IOException
   {
     addPolarity("word-polarity" + File.separator + locale.getLanguage() + File.separator + "negative-words.txt", Polarity.NEGATIVE);
@@ -104,20 +104,22 @@ public class DictionaryBasicService implements DictionaryService
    */
   private void addPolarity(String file, int polarity) throws IOException
   {
-    LineIterator polarityFile = FileUtils.lineIterator(new ClassPathResource(file).getFile());
-  
+    logger.info("Adding polarity from file: " + file);
+    
+    LineIterator polarityFile = IOUtils.lineIterator(getClass().getClassLoader().getResourceAsStream(file), Charset.defaultCharset());
+
     while (polarityFile.hasNext())
     {
       String word = polarityFile.nextLine();
-  
+
       if (StringUtils.isNotEmpty(word) && !StringUtils.startsWith(word, ";"))
       {
         Long wordNodeId = this.mergeWordWithoutFlushing(DictionaryUtils.escapeWordForLuceneSearch(word));
-  
+
         Neo4ArtBatchInserterSingleton.setNodeProperty(wordNodeId, Word.POLARITY_PROPERTY_NAME, polarity);
       }
     }
-  
+
     Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(NLPLegacyIndex.WORD_LEGACY_INDEX);
   }
 
@@ -154,7 +156,7 @@ public class DictionaryBasicService implements DictionaryService
     String escapedWord = DictionaryUtils.escapeWordForLuceneSearch(word).toLowerCase();
 
     Neo4ArtLegacyIndex index = NLPLegacyIndex.WORD_LEGACY_INDEX;
-    
+
     IndexHits<Long> indexHits = Neo4ArtBatchInserterSingleton.getFromLegacyNodeIndex(index, Word.WORD_PROPERTY_NAME, escapedWord);
 
     Long newWordNodeId = indexHits.getSingle();
@@ -162,7 +164,7 @@ public class DictionaryBasicService implements DictionaryService
     if (newWordNodeId == null)
     {
       Word newWord = new Word(escapedWord, this.locale.getLanguage());
-      
+
       newWordNodeId = Neo4ArtBatchInserterSingleton.createNode(newWord);
 
       Neo4ArtBatchInserterSingleton.addToLegacyNodeIndex(index, newWord);
@@ -173,7 +175,7 @@ public class DictionaryBasicService implements DictionaryService
       }
 
       indexHits.close();
-      
+
       logger.trace("Added word " + word + " [node id: " + newWordNodeId + "][escape: " + escapedWord + "] not found in the dictionary");
     }
 

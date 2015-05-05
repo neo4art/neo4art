@@ -52,6 +52,8 @@ public class DictionaryServiceTest
 
       Assert.assertEquals(1, indexHits.size());
       Assert.assertTrue(indexHits.getSingle() > 0);
+      
+      indexHits.close();
     }
     catch (Exception e)
     {
