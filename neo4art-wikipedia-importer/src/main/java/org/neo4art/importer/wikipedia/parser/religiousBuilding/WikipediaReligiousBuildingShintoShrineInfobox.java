@@ -17,12 +17,11 @@ package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxNameParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
 
 /**
  * 
@@ -31,7 +30,6 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaReligiousBuildingShintoShrineInfobox
 {
-  private static Log logger = LogFactory.getLog(WikipediaReligiousBuildingShintoShrineInfobox.class);
   
   public static final String NAME   = "name";
   public static final String LATD   = "latd";
@@ -55,20 +53,20 @@ public class WikipediaReligiousBuildingShintoShrineInfobox
     ReligiousBuilding shintoShrine = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
 
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     for (String key : map.keySet())
     {
       switch (key)
       {
         case NAME:
-          shintoShrine.setBuildingName(infoboxName(map.get(key)));
+          shintoShrine.setBuildingName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
           break;
         case STYLE:
           shintoShrine.setType(map.get(key));
           break;
         case IMAGE:
-          shintoShrine.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          shintoShrine.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
@@ -100,23 +98,5 @@ public class WikipediaReligiousBuildingShintoShrineInfobox
     }
     
     return shintoShrine;
-  }
-
-  public static String infoboxName(String name)
-  {
-    try
-    {
-      String[] n = StringUtils.split(name, "<");
-      name = n[0];
-      name = name.replace("'", "");
-  
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing ShintoShrine infobox: " + e.getMessage());      
-    }
-    
-    return null;
   }
 }

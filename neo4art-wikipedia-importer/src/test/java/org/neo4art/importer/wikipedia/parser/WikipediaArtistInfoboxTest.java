@@ -1,10 +1,11 @@
 package org.neo4art.importer.wikipedia.parser;
 
 
+import java.text.SimpleDateFormat;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artist;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
 
 public class WikipediaArtistInfoboxTest {
 
@@ -28,12 +29,14 @@ public class WikipediaArtistInfoboxTest {
 	
 	@Test
 	public void shouldParseArtistInfobox() {
-		Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
+	  SimpleDateFormat formatDate = new SimpleDateFormat("yyyy M dd");
+	  
+	  Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Vincent van Gogh", artist.getName());
-		Assert.assertEquals("30 March 1853", artist.getBirthDate());
-		Assert.assertEquals("[[Zundert]], [[Netherlands]]", artist.getBirthPlace());
-		Assert.assertEquals("{{Death date and age|df=yes|1890|7|29|1853|3|30}}", artist.getDeathDate());
-		Assert.assertEquals("[[Auvers-sur-Oise]], [[French Third Republic|France]]", artist.getDeathPlace());
+		Assert.assertEquals("1853 3 30", formatDate.format(artist.getBirthDate().getTime()));
+		Assert.assertEquals("Zundert, Netherlands", artist.getBirthPlace());
+		Assert.assertEquals("1890 7 29", formatDate.format(artist.getDeathDate().getTime()));
+		Assert.assertEquals("Auvers-sur-Oise", artist.getDeathPlace());
 	}
 }

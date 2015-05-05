@@ -17,12 +17,11 @@ package org.neo4art.importer.wikipedia.parser.religiousBuilding;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxNameParser;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
 
 /**
  * 
@@ -31,7 +30,6 @@ import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
  */
 public class WikipediaReligiousBuildingMosqueInfobox
 {
-  private static Log logger = LogFactory.getLog(WikipediaReligiousBuildingMosqueInfobox.class);
   
   public static final String NAME      = "name";
   public static final String LATD      = "latd";
@@ -57,17 +55,17 @@ public class WikipediaReligiousBuildingMosqueInfobox
     ReligiousBuilding mosque = new ReligiousBuilding();
     Coordinate coordinate = new Coordinate();
 
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     for (String key : map.keySet())
     {
       switch (key)
       {
         case NAME:
-          mosque.setBuildingName(infoboxName(map.get(key)));
+          mosque.setBuildingName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
           break;
         case IMAGE:
-          mosque.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          mosque.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case STYLE:
           mosque.setType(map.get(key));
@@ -108,23 +106,5 @@ public class WikipediaReligiousBuildingMosqueInfobox
     }
     
     return mosque;
-  }
-
-  public static String infoboxName(String name)
-  {
-    try
-    {
-      String[] n = StringUtils.split(name, "<");
-      name = n[0];
-      name = name.replace("'", "");
-  
-      return name;
-    }
-    catch (Exception e)
-    {
-      logger.error("Error parsing Mosque infobox: " + e.getMessage());      
-    }
-    
-    return null;
   }
 }

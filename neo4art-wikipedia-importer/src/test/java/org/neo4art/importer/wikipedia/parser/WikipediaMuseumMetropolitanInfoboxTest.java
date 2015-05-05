@@ -6,7 +6,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Museum;
-import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 
 public class WikipediaMuseumMetropolitanInfoboxTest {
 
@@ -40,8 +39,8 @@ public class WikipediaMuseumMetropolitanInfoboxTest {
 		Assert.assertEquals("Facade of imposing building with Greek columns. Large colored banners hang from the building's top. A crowd of people is in front.", museum.getAlt());
 		Assert.assertEquals("United States Manhattan", museum.getMapType());
 		Assert.assertEquals("Location in Manhattan", museum.getMapCaption());
-		Assert.assertEquals("40.779447",""+ museum.getCoordinate().getLatD());
-		Assert.assertEquals("-73.96311",""+ museum.getCoordinate().getLongD());
+		Assert.assertEquals("40.779447",""+ museum.getCoordinates().getLatD());
+		Assert.assertEquals("-73.96311",""+ museum.getCoordinates().getLongD());
 		Assert.assertEquals("April 13, 1870", museum.getEstablished());
 		Assert.assertEquals("1000 Fifth Avenue (Manhattan) 5th Avenue, New York City, New York NY 10028", museum.getLocation());
 		Assert.assertEquals("5.2 million (2008)", museum.getVisitors());

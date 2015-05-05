@@ -57,7 +57,6 @@ public class WikipediaReligiousBuildingArchabasilicaInfoboxTest {
 		Assert.assertEquals("Latin Rite" , religiousBuilding.getRite());
 		Assert.assertEquals("Rome" , religiousBuilding.getProvince());
 		Assert.assertEquals("AD 324" , religiousBuilding.getConsecrationYear());
-		Assert.assertEquals("Major basilica" , religiousBuilding.getStatus());
 		Assert.assertEquals("Agostino Vallini" , religiousBuilding.getLeadership());
 		Assert.assertEquals("http://www.vatican.va/various/basiliche/san_giovanni/index_it.htm" , religiousBuilding.getWebsite());
 		Assert.assertEquals("Alessandro Galilei" , religiousBuilding.getArchitect());

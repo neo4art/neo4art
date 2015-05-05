@@ -4,239 +4,197 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.Settlement;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxTypeParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxWebsiteParserUtil;
 
-public class WikipediaSettlementCityJapanInfoboxParser {
-	
-	public static final String NAME = "name";
-	public static final String NAMEN = "Name";
-	public static final String OFFICIAL_NAME = "official_name";
-	public static final String NATIVE_NAME = "native_name";
-	public static final String NATIVE_NAME_LANG = "native_name_lang";
-	public static final String OTHER_NAME = "other_name";
-	public static final String SETTLEMENT_TYPE = "settlement_type";
-	public static final String LATD = "latd";
-	public static final String LATM = "latm";
-	public static final String LATS = "lats";
-	public static final String LATNS = "latNS";
-	public static final String LONGD = "longd";
-	public static final String LONGM = "longm";
-	public static final String LONGS = "longs";
-	public static final String LATDL = "LatitudeDegrees";
-	public static final String LATML = "LatitudeMinutes";
-	public static final String LATSL = "LatitudeSeconds";
-	public static final String LONGDL = "LongtitudeDegrees";
-	public static final String LONGML = "LongtitudeMinutes";
-	public static final String LONGSL = "LongtitudeSeconds";
-	public static final String LONGEW = "longEW";
-	public static final String LATDEG = "lat_deg";
-	public static final String LATMIN = "lat_min";
-	public static final String LATSEC = "lat_sec";
-	public static final String LONGDEG = "lon_deg";
-	public static final String LONGMIN = "lon_min";
-	public static final String LONGSEC = "lon_sec";
-	public static final String LATITUDE = "latitude";
-	public static final String LONGITUDE = "longitude";
-	public static final String WEBSITE = "website";
-	public static final String WEB = "web";
-	public static final String WEBS = "CityHallLink";
-	public static final String STYLE = "infobox";
-	
-	public WikipediaSettlementCityJapanInfoboxParser() {
-	}
+public class WikipediaSettlementCityJapanInfoboxParser
+{
 
-	public static Settlement parse(String text) {
+  public static final String NAME             = "name";
+  public static final String NAMEN            = "Name";
+  public static final String OFFICIAL_NAME    = "official_name";
+  public static final String NATIVE_NAME      = "native_name";
+  public static final String NATIVE_NAME_LANG = "native_name_lang";
+  public static final String OTHER_NAME       = "other_name";
+  public static final String SETTLEMENT_TYPE  = "settlement_type";
+  public static final String LATD             = "latd";
+  public static final String LATM             = "latm";
+  public static final String LATS             = "lats";
+  public static final String LATNS            = "latNS";
+  public static final String LONGD            = "longd";
+  public static final String LONGM            = "longm";
+  public static final String LONGS            = "longs";
+  public static final String LATDL            = "LatitudeDegrees";
+  public static final String LATML            = "LatitudeMinutes";
+  public static final String LATSL            = "LatitudeSeconds";
+  public static final String LONGDL           = "LongtitudeDegrees";
+  public static final String LONGML           = "LongtitudeMinutes";
+  public static final String LONGSL           = "LongtitudeSeconds";
+  public static final String LONGEW           = "longEW";
+  public static final String LATDEG           = "lat_deg";
+  public static final String LATMIN           = "lat_min";
+  public static final String LATSEC           = "lat_sec";
+  public static final String LONGDEG          = "lon_deg";
+  public static final String LONGMIN          = "lon_min";
+  public static final String LONGSEC          = "lon_sec";
+  public static final String LATITUDE         = "latitude";
+  public static final String LONGITUDE        = "longitude";
+  public static final String WEBSITE          = "website";
+  public static final String WEB              = "web";
+  public static final String WEBS             = "CityHallLink";
+  public static final String STYLE            = "infobox";
 
-		Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+  public WikipediaSettlementCityJapanInfoboxParser()
+  {
+  }
 
-		Settlement settlement = new Settlement();
-		Coordinate coordinate = new Coordinate();
+  public static Settlement parse(String text)
+  {
 
-		for (String key : map.keySet()) {
+    Map<String, String> map = InfoboxMap.asMap(text);
 
-			switch (key) {
+    Settlement settlement = new Settlement();
+    Coordinate coordinate = new Coordinate();
 
-			case NAME:
-				settlement
-						.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-				break;
-			case NAMEN:
-				settlement
-						.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-				break;
-			case STYLE:
-				settlement
-						.setType(WikipediaInfoboxUtils.getType(map.get(key)));
-				break;
-			case OFFICIAL_NAME:
-				settlement.setOfficialName(WikipediaInfoboxUtils.removeAllParenthesis(map
-						.get(key)));
-				break;
-			case NATIVE_NAME:
-				settlement.setNativeName(WikipediaInfoboxUtils.removeAllParenthesis(map
-						.get(key)));
-				break;
-			case NATIVE_NAME_LANG:
-				settlement.setNativeNameLang(WikipediaInfoboxUtils
-						.removeAllParenthesis(map.get(key)));
-				break;
-			case OTHER_NAME:
-				settlement.setOtherName(WikipediaInfoboxUtils.removeAllParenthesis(map
-						.get(key)));
-				break;
-			case SETTLEMENT_TYPE:
-				settlement.setSettlementType(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
-				break;
-			case LATITUDE:
-					
-				break;
-			case LONGITUDE:
-				
-					
-					coordinate.setLongD(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATD:
-					
-				break;
-			case LATM:
-				
-					
+    for (String key : map.keySet())
+    {
 
-					coordinate.setLatM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATS:
-				
-				
+      switch (key)
+      {
 
-					coordinate.setLatS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATDL:
-					
-				break;
-			case LATML:
-				
-					
+        case NAME:
+          settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case NAMEN:
+          settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case STYLE:
+          settlement.setType(InfoboxTypeParserUtil.getType(map.get(key)));
+          break;
+        case OFFICIAL_NAME:
+          settlement.setOfficialName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case NATIVE_NAME:
+          settlement.setNativeName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case NATIVE_NAME_LANG:
+          settlement.setNativeNameLang(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case OTHER_NAME:
+          settlement.setOtherName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case SETTLEMENT_TYPE:
+          settlement.setSettlementType(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          break;
+        case LATITUDE:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
-					coordinate.setLatM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATSL:
-				
-				
+          break;
+        case LONGITUDE:
+          coordinate.setLongD(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATD:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
-					coordinate.setLatS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATDEG:
-				
-					
+          break;
+        case LATM:
+          coordinate.setLatM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATS:
 
-					
-				break;
-			case LATMIN:
-				
-					
+          coordinate.setLatS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATDL:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATML:
+          coordinate.setLatM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATSL:
 
-					coordinate.setLatM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATSEC:
-				
-				
+          coordinate.setLatS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATDEG:
+          coordinate.setLatD(map.get(key));
+          settlement.setCoordinate(coordinate);
 
-					coordinate.setLatS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LATNS:
-				
-					
+          break;
+        case LATMIN:
+          coordinate.setLatM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATSEC:
 
-					coordinate.setLatNS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGD:
-				
-					
-					coordinate.setLongD(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGM:
-				
-					
+          coordinate.setLatS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LATNS:
+          coordinate.setLatNS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGD:
+          coordinate.setLongD(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGM:
+          coordinate.setLongM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGS:
+          coordinate.setLongS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGDL:
+          coordinate.setLongD(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGML:
+          coordinate.setLongM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGSL:
+          coordinate.setLongS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGDEG:
+          coordinate.setLongD(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGMIN:
+          coordinate.setLongM(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGSEC:
+          coordinate.setLongS(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case LONGEW:
+          coordinate.setLongEW(map.get(key));
+          settlement.setCoordinate(coordinate);
+          break;
+        case WEB:
+          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+          break;
+        case WEBS:
+          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+          break;
+        case WEBSITE:
+          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+          break;
+      }
 
-					coordinate.setLongM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGS:
-				
-					
+    }
 
-					coordinate.setLongS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGDL:
-				
-					
-					coordinate.setLongD(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGML:
-				
-					
-
-					coordinate.setLongM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGSL:
-				
-					
-
-					coordinate.setLongS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGDEG:
-				
-					
-					coordinate.setLongD(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGMIN:
-				
-					
-
-					coordinate.setLongM(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGSEC:
-				
-					
-
-					coordinate.setLongS(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case LONGEW:
-				
-					
-
-					coordinate.setLongEW(map.get(key));
-					settlement.setCoordinate(coordinate);
-				break;
-			case WEB:
-				settlement.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
-				break;
-			case WEBS:
-				settlement.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
-				break;
-			case WEBSITE:
-				settlement.setWebsite(WikipediaInfoboxUtils.getWebsite(map.get(key)));
-				break;
-			}
-			
-		}
-
-		return settlement;
-	}
+    return settlement;
+  }
 }

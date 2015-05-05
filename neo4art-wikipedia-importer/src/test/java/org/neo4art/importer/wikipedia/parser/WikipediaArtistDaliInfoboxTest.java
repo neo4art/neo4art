@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
 
 public class WikipediaArtistDaliInfoboxTest {
 

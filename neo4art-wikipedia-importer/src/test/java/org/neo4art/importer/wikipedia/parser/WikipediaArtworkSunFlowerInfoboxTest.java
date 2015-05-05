@@ -5,7 +5,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artwork;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtworkInfoboxParser;
 
 public class WikipediaArtworkSunFlowerInfoboxTest {
 
@@ -49,12 +48,5 @@ public class WikipediaArtworkSunFlowerInfoboxTest {
 		Assert.assertEquals("National Gallery (London)", artwork.getMuseum().getName());
 		Assert.assertEquals("London", artwork.getCity().getCommonName());
 	
-	}
-	
-	@Test
-	public void infoboxArtworkUrlTest() throws MalformedURLException{
-		URL url = new URL("http://en.wikipedia.org/wiki/File:Vincent_Willem_van_Gogh_127.jpg");
-		
-		Assert.assertEquals(url, WikipediaArtworkInfoboxParser.infoboxImageUrl("Vincent Willem van Gogh 127.jpg\n"));
 	}
 }

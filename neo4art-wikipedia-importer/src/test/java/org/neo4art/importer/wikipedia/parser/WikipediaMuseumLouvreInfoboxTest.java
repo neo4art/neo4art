@@ -6,7 +6,6 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Museum;
-import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 
 public class WikipediaMuseumLouvreInfoboxTest {
 
@@ -46,8 +45,8 @@ public class WikipediaMuseumLouvreInfoboxTest {
 		Assert.assertEquals("1792", museum.getEstablished());
 		Assert.assertEquals("Jean-Luc Martinez", museum.getDirector());
 		Assert.assertEquals("Musée du Louvre, 75001 Paris, France", museum.getLocation());
-		Assert.assertEquals("48.860339",""+ museum.getCoordinate().getLatD());
-		Assert.assertEquals("2.337599", ""+museum.getCoordinate().getLongD());
+		Assert.assertEquals("48.860339",""+ museum.getCoordinates().getLatD());
+		Assert.assertEquals("2.337599", ""+museum.getCoordinates().getLongD());
 		Assert.assertEquals("9.7 million (2012)", museum.getVisitors());
 		Assert.assertEquals("Marie-Laure de Rochebrune", museum.getCurator());
 		Assert.assertEquals("http://www.louvre.fr/en/homepage", museum.getWebsite());

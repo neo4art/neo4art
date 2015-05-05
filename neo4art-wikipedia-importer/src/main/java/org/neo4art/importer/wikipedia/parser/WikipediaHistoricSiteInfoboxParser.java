@@ -19,7 +19,9 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinate;
 import org.neo4art.domain.HistoricSite;
-import org.neo4art.importer.wikipedia.util.WikipediaInfoboxUtils;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxParserUtil;
+import org.neo4art.importer.wikipedia.parser.util.InfoboxUrlParser;
 
 /**
  * 
@@ -54,14 +56,14 @@ public class WikipediaHistoricSiteInfoboxParser
     HistoricSite historicSite = new HistoricSite();
     Coordinate coordinate = new Coordinate();
 
-    Map<String, String> map = WikipediaInfoboxUtils.asMap(text);
+    Map<String, String> map = InfoboxMap.asMap(text);
 
     for (String key : map.keySet())
     {
       switch (key)
       {
         case NAME:
-          historicSite.setName(WikipediaInfoboxUtils.removeAllParenthesis(map.get(key)));
+          historicSite.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case STYLE:
           historicSite.setType(map.get(key));
@@ -70,7 +72,7 @@ public class WikipediaHistoricSiteInfoboxParser
           historicSite.setCaption(map.get(key));
           break;
         case IMAGE:
-          historicSite.setImage(WikipediaInfoboxUtils.infoboxImageUrl(map.get(key)));
+          historicSite.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case LATD:
           coordinate.setLatD(map.get(key));
