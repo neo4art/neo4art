@@ -70,23 +70,26 @@ function load(p) {
 					maxData.setMonth(13);
 					var options = {
 						width : "100%",
-						height : "300px",
+						height : "400px",
 						editable : false,
-						"min" : minData, // lower limit of visible range
+						zoomMin:7200000,
+						"min" : minData,
 						"max" : maxData,
-						layout : "box"
+						layout : "box",
+//						cluster: true,
+//						clusterMaxItems: 4,
+						eventMargin:5
 					};
 					// Instantiate our timeline object.
 					timeline = new links.Timeline(document.getElementById('mytimeline'), options);
-					// }
-					// }
-					// d3.json("dati.json", function(error, graph) {
 					$.each(graph, function() {
 						this.start = parseDate(this.start);
 						if (this.end != undefined) {
 							this.end = parseDate(this.end);
 						}
 						if (this.thumbnail != undefined && this.description != undefined) {
+							path = this.thumbnail.split("/");
+							filename = path[path.length-1];
 							this.content = "<img src='" + this.thumbnail + "' height='50px' width='50px' title='" + this.description
 									+ "'/>";
 						}
@@ -302,10 +305,6 @@ function drawColorChart(data, parseColors, emotions) {
 	// xx);
 	emog.append("text").text(emotion).attr("class", "icon-text").attr("x", -13).attr("y", 11).attr("fill", "#444444");
 	svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis);
-	// svg.append("g").attr("class", "y
-	// axis").call(yAxis).append("text").attr("transform",
-	// "rotate(-90)").attr("y", 6)
-	// .attr("dy", ".71em").style("text-anchor", "end").text("Price ($)");
 	svg.append("path").datum(data).attr("class", "line").attr("d", line);
 	svg.selectAll("circle").data(data).enter().append("circle").attr("fill", function(d) {
 		return "#" + d.averageRgb.toString(16);
