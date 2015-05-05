@@ -26,6 +26,8 @@ public class TimelineEvent {
 	
 	private String thumbnail;
 	
+	private String original;
+	
 	private String description;
 	
 	private String averageRgb;
@@ -81,5 +83,15 @@ public class TimelineEvent {
 	public void setClosestAverageColorName(String closestAverageColorName) {
 		this.closestAverageColorName = closestAverageColorName;
 	}
+
+  public String getOriginal()
+  {
+    return original;
+  }
+
+  public void setOriginal(String original)
+  {
+    this.original = original;
+  }
 	
 }

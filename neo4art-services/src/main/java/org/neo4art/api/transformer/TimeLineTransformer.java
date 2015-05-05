@@ -54,7 +54,9 @@ public class TimeLineTransformer
         timelineEvent.setClosestAverageColorName(colourAnalysis.getAverageClosestColour() != null ? colourAnalysis.getAverageClosestColour().getName() : "");
         timelineEvent.setDescription(colourAnalysis.getArtwork() != null ? colourAnalysis.getArtwork().getTitle() : "");
         timelineEvent.setStart(servicesUtil.verifyArtworkDate(colourAnalysis.getArtwork()));
-        timelineEvent.setThumbnail(colourAnalysis.getSource());
+        String imageURL = colourAnalysis.getSource();
+        timelineEvent.setOriginal(imageURL);
+        timelineEvent.setThumbnail(imageURL!=null ? imageURL.replace("http://www.", "http://neo4art.org/resources/images/") : "");
         timelineEventsList.add(timelineEvent);
       }
       
