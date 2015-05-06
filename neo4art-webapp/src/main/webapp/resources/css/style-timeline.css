@@ -23,8 +23,6 @@
 	-o-transition: left 0.8s;
 	transition: left 0.8s;
 	position: absolute;
-	/* da tolgliere */
-	/* 	background-color:rgba(255, 255, 255, 0.9); */
 }
 
 .color-chart-container {
@@ -70,7 +68,7 @@
 	stroke-width: 1.5px;
 }
 
-button{
+.arrow{
 	width:auto;
 	height:30px;
 	padding-bottom: 2px;
@@ -79,9 +77,11 @@ button{
 	border:1px solid #bbb;
 	border-radius:0;
 	margin:2px;
+	margin-bottom:4px;
 	font-family:Raleway;
 	color:#333;
-	background-color:#e4e4e4;
+	background-color:#fafafa;
+	text-shadow:0 1px 3px #ccc;
 }
 
 .infobox {

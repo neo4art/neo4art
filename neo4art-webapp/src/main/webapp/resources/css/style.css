@@ -9,6 +9,21 @@ body {
 	padding: 0;
 	margin: 0;
 }
+.palette-dark-blue{
+	color:#2b699b;
+}
+.palette-blue{
+	color:#3494D2;
+}
+.palette-orange{
+	color:#F8B90F;
+}
+.border-three-color{
+	border-top:1px solid #2b699b; /* dark blue */
+	border-right:1px solid #3494D2; /* blue */
+	border-bottom: 1px solid #F8B90F; /* orange */
+	border-left: 1px solid #ccc;
+}
 .top-bar {
 	background: #f8f8f8;
 	border-bottom: 1px solid #b6b6b6;

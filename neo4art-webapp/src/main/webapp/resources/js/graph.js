@@ -420,7 +420,7 @@ function theGraph() {
 		var bttX = float.append("div").attr("class", "ics").text("X");
 		bttX.on("click", closeWindow);
 		float.append("div").attr("id", "data");
-		float.append("iframe").attr("width", "100%").attr("id","wikiFrame");
+		float.append("iframe").attr("width", "100%");
 	}
 
 	function openWindow(d) {
@@ -436,6 +436,7 @@ function theGraph() {
 		// d.link + "'>" + d.link + "</a>");
 		var frame = float.select("iframe");
 		frame.attr("src", d.link);
+//		$("iframe").scrollbar();
 	}
 
 	function closeWindow() {

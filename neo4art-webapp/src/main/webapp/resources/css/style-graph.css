@@ -1,8 +1,3 @@
-/* .container-page { */
-/* 	height: 100%; */
-/* 	width: 100%; */
-/* 	position: relative; */
-/* } */
 .graph-page {
 	width: 100%;
 	/* 	left: 100%; */
@@ -97,7 +92,7 @@
 
 #floating {
 	position: fixed;
-	overflow-y: scroll;
+	overflow-y: none;
 	left: 100%;
 	width: 50%;
 	height: 98%;
@@ -131,21 +126,18 @@
 
 iframe {
 	flex: 1;
+	border:none;
+	border-top:1px solid #3494D2;
 }
 
 .ics {
 	position: fixed;
 	margin: 10px 0 0 10px;
-	/* 	width: 14px; */
-	/* 	height: 14px; */
 	font-size: 14px;
 	vertical-align: middle;
 	text-align: center;
 	font-weight: bold;
 	color: #999999;
-	/* 	border-right: 1px solid #333; */
-	/* 	border-bottom: 1px solid #333; */
-	/* 	background-color: #ddd; */
 }
 
 .ics:hover {
