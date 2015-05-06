@@ -1,5 +1,6 @@
-html {
+html, body {
 	height: 100%;
+	width:100%;
 }
 
 body {
@@ -7,8 +8,6 @@ body {
 	font-weight: normal;
 	padding: 0;
 	margin: 0;
-	width: 100%;
-	height: 100%;
 }
 .top-bar {
 	background: #f8f8f8;
@@ -69,6 +68,16 @@ body {
 	padding-right:5px;
 	border:1px solid #b6b6b6;
 }
+
+.container-page {
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+}
+.container-page.scrollbar-macosx {
+    max-height: none;
+}
+
 
 input[type="search"]::-webkit-search-cancel-button {
 	-webkit-appearance:none;

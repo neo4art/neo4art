@@ -20,7 +20,6 @@ $(document).ready(function(d) {
 		closeOnEscape:true,
 		draggable:false,
 		autoOpen : false,
-//		title : "Legend",
 		minWidth : 600,
 		resizable : false,
 		beforeClose: function(event,ui){
@@ -30,6 +29,7 @@ $(document).ready(function(d) {
 		},
 		position:{my:"center top", at: "center top"}
 	});
+	$(".container-page").scrollbar();
 });
 function wantsGraph() {
 	p = parseURLParams();
@@ -125,7 +125,7 @@ function load(p) {
 		}
 	});
 }
-var actualLeft = null;
+//var actualLeft = null;
 
 function onSelect(){
 	var sel = timeline.getSelection();
@@ -141,20 +141,17 @@ function onSelect(){
 	}
 }
 function onRangeChange() {
-	var range = timeline.getVisibleChartRange();
-	if (actualLeft == null) {
-		actualLeft = $(".color-chart").position().left;
-	}
-	var left = timeline.dom.items.frame.style.left;
-	$(".color-chart").css("left", (actualLeft + parseFloat(left.substring(0, left.length - 2))));
-	$(".emotion-chart").css("left", (actualLeft + parseFloat(left.substring(0, left.length - 2))));
-	// vis2.setVisibleChartRange(range.start, range.end);
-	// document.getElementById('info').innerHTML += 'rangechanged ' +
-	// properties.start + ' - ' + properties.end + '<br>';
+//	var range = timeline.getVisibleChartRange();
+//	if (actualLeft == null) {
+//		actualLeft = $(".color-chart").position().left;
+//	}
+//	var left = timeline.dom.items.frame.style.left;
+//	$(".color-chart").css("left", (actualLeft + parseFloat(left.substring(0, left.length - 2))));
+//	$(".emotion-chart").css("left", (actualLeft + parseFloat(left.substring(0, left.length - 2))));
+	drawColorChart(bigData,false,emotionData);
 }
 function onRangeChanged() {
-	// $(".color-chart").position().left;
-	actualLeft = null;
+//	actualLeft = null;
 	drawColorChart(bigData, false, emotionData);
 }
 

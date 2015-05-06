@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="resources/css/style.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="resources/css/style-timeline.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="resources/css/perfect-scrollbar.css" />
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript" src="resources/js/timeline/timeline.js"></script>
 <link rel="stylesheet" type="text/css" href="resources/js/timeline/timeline.css">
 <link rel="stylesheet" type="text/css" href="resources/css/font-awesome-4.3.0/css/font-awesome.min.css" />
 <script src="resources/js/jquery/jquery-2.1.3.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="resources/js/colorchart.js"></script>
 <script src="resources/js/jquery/ui/jquery-ui.js"></script>
 <link href="resources/js/jquery/ui/jquery-ui.css" rel="stylesheet">
-<script src="resources/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="resources/js/jquery.scrollbar.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="resources/css/jquery.scrollbar.css" />
+<script src="resources/js/colorchart.js"></script>
 <!-- GOOGLE ANALYTICS -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -29,7 +29,7 @@
 <title>neo4Art - Timeline</title>
 </head>
 <body>
-	<div class="container-page">
+	<div class="container-page scrollbar-macosx">
 		<div class="top-bar">
 			<div class="search-bar-container">
 				<form method="get" action="timeline.html" name="query">
@@ -56,8 +56,8 @@
 		<div class="buttons"><button onclick="move(-0.5)">&lt;&lt;</button><button onclick="move(-0.2)">&lt;</button><button class="aligned-right" onclick="move(0.5)">&gt;&gt;</button><button class="aligned-right" onclick="move(0.2)">&gt;</button></div>
 			<div id="mytimeline"></div>
 		</div>
-		<div class="version top-left">Version 0.8.0-alpha</div>
-	</div>
+		<div class="version top-left">Version 0.8.1-alpha</div>
 	<div id="dialog"></div>
+	</div>
 </body>
 </html>
