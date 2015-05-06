@@ -50,8 +50,8 @@ public class TimeLineTransformerTest
 
     List<TimelineEvent> buildTimeLineEvents = TimeLineTransformer.buildTimeLineEvents(colourAnalysisByArtist);
     Assert.assertNotNull(buildTimeLineEvents);
-    //Assert.assertEquals(703, buildTimeLineEvents.size());
-    System.out.println(buildTimeLineEvents.size());
+    Assert.assertEquals(827, buildTimeLineEvents.size());
+    System.out.println("Total: "+buildTimeLineEvents.size());
     
     SimpleDateFormat formatDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.ENGLISH);
     Date firstDate = formatDate.parse(buildTimeLineEvents.get(0).getStart());
@@ -63,7 +63,7 @@ public class TimeLineTransformerTest
     {
 
       Date parse = formatDate.parse(timelineEvent.getStart());
-      if (parse.after(firstDate) /*|| parse.equals(firstDate)*/)
+      if (parse.after(firstDate))
       {
 
         firstDate = parse;
@@ -76,13 +76,13 @@ public class TimeLineTransformerTest
       System.out.println("Start: "+timelineEvent.getStart()+" artwork: "+timelineEvent.getDescription());
     }
     
-    //if(error.size() > 1)
-    //{
+    if(error.size() > 1)
+    {
       for (String errore : error)
       {
         System.out.println("ERROR: "+errore);
       }  
-    //}
+    }
     
 
     Assert.assertEquals(1, error.size());

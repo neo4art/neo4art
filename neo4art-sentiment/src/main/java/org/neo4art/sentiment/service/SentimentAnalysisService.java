@@ -16,8 +16,12 @@
 
 package org.neo4art.sentiment.service;
 
+import java.util.List;
+
+import org.neo4art.domain.Artist;
 import org.neo4art.sentiment.bean.NLPDocument;
 import org.neo4art.sentiment.bean.SentimentAnalysisResult;
+import org.neo4art.sentiment.domain.SentimentAnalysis;
 
 /**
  * @author Lorenzo Speranzoni
@@ -30,4 +34,7 @@ public interface SentimentAnalysisService
    * @return
    */
   SentimentAnalysisResult computeSentiment(NLPDocument nlpDocument);
+  
+  List<SentimentAnalysis> makeSentimentAnalisysByArtist(Artist artist);
+  
 }

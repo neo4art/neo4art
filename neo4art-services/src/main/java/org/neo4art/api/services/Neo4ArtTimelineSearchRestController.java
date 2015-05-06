@@ -17,7 +17,6 @@ package org.neo4art.api.services;
 
 import java.util.List;
 
-import org.neo4art.api.builder.mock.sentiment.BuildSentimentMock;
 import org.neo4art.api.domain.SentimentEvent;
 import org.neo4art.api.domain.TimelineEvent;
 import org.neo4art.api.transformer.TimeLineTransformer;
@@ -26,6 +25,8 @@ import org.neo4art.colour.manager.ArtworksColoursAnalyzer;
 import org.neo4art.colour.manager.ArtworksDefaultColoursAnalyzer;
 import org.neo4art.domain.Artist;
 import org.neo4art.sentiment.domain.SentimentAnalysis;
+import org.neo4art.sentiment.service.SentimentAnalysisPOSTagPatternService;
+import org.neo4art.sentiment.service.SentimentAnalysisService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,8 +61,13 @@ public class Neo4ArtTimelineSearchRestController
   public @ResponseBody List<SentimentEvent> getSentimentAnalysis(Model model, @RequestParam(value = "searchInput", required = true) String searchInput)
   {
 
-    BuildSentimentMock buildSentimentMock = new BuildSentimentMock();
-    List<SentimentAnalysis> sentimentAnalisys = buildSentimentMock.getSentimentAnalisys(searchInput);
+//    BuildSentimentMock buildSentimentMock = new BuildSentimentMock();
+//    List<SentimentAnalysis> sentimentAnalisys = buildSentimentMock.getSentimentAnalisys(searchInput);
+    
+    SentimentAnalysisService sentimentAnalysisService = new SentimentAnalysisPOSTagPatternService();
+    Artist artist = new Artist();
+    artist.setName(searchInput);
+    List<SentimentAnalysis> sentimentAnalisys = sentimentAnalysisService.makeSentimentAnalisysByArtist(artist);
 
     return TimeLineTransformer.buildSentimentsEvent(sentimentAnalisys);
   }

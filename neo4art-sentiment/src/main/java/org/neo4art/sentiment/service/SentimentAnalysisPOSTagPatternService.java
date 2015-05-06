@@ -16,8 +16,16 @@
 
 package org.neo4art.sentiment.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.neo4art.domain.Artist;
+import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.sentiment.bean.NLPDocument;
 import org.neo4art.sentiment.bean.SentimentAnalysisResult;
+import org.neo4art.sentiment.domain.SentimentAnalysis;
+import org.neo4art.sentiment.repository.DefaultSentimentAnalisysRepository;
+import org.neo4art.sentiment.repository.SentimentAnalysisRepository;
 
 /**
  * @author Lorenzo Speranzoni
@@ -27,13 +35,39 @@ public class SentimentAnalysisPOSTagPatternService implements SentimentAnalysisS
 {
 
   /**
-   * @see org.neo4art.sentiment.service.SentimentAnalysisService#computeSentiment(org.neo4art.sentiment.bean.NLPDocument)
+   * @see org.neo4art.sentiment.service.SentimentAnalysisServiceTest#computeSentiment(org.neo4art.sentiment.bean.NLPDocument)
    */
   @Override
   public SentimentAnalysisResult computeSentiment(NLPDocument nlpDocument)
   {
     // TODO Auto-generated method stub
     throw new RuntimeException(new IllegalAccessException("Method not yet implemented."));
+  }
+
+  /* (non-Javadoc)
+   * @see org.neo4art.sentiment.service.SentimentAnalysisService#makeSentimentAnalisysByArtist(org.neo4art.domain.Artist)
+   */
+  @Override
+  public List<SentimentAnalysis> makeSentimentAnalisysByArtist(Artist artist)
+  {
+    List<SentimentAnalysis> results = new ArrayList<SentimentAnalysis>();
+    
+    try
+    {
+      Neo4ArtGraphDatabaseServiceSingleton.beginTransaction();
+      
+      SentimentAnalysisRepository sentimentAnalysisRepository = new DefaultSentimentAnalisysRepository();
+      
+      results = sentimentAnalysisRepository.makeSentimentAnalisysByArtist(artist);
+      
+      Neo4ArtGraphDatabaseServiceSingleton.commitTransaction();
+    }
+    catch (Exception e)
+    {
+      Neo4ArtGraphDatabaseServiceSingleton.rollbackTransaction();
+    }
+    
+    return results;
   }
 
 }

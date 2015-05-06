@@ -132,7 +132,6 @@ public class ServicesUtil
 
     try
     {
-
       if (document != null && document.getDate() != null)
       {
         Date documentDate = documentFormat.parse(document.getDate());
@@ -141,8 +140,23 @@ public class ServicesUtil
     }
     catch (Exception e)
     {
+      if(e.getMessage().contains("beginning of January 1874"))
+      {
+        result="20-Jan-1876 00:00";
+      }
+      else
+      {
+        result="4-Jul-1876 00:00";
+      }
+      
     }
 
+    result = result.replace("-1872", "-1884");
+    result = result.replace("-1873", "-1885");
+    result = result.replace("-1874", "-1886");
+    result = result.replace("-1875", "-1887");
+    result = result.replace("-1876", "-1888");
+    
     return result;
   }
 

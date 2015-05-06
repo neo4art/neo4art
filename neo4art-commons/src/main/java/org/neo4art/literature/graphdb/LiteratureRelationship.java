@@ -24,4 +24,5 @@ import org.neo4j.graphdb.RelationshipType;
  */
 public enum LiteratureRelationship implements RelationshipType {
   
+  HAS_SENTIMENT
 }

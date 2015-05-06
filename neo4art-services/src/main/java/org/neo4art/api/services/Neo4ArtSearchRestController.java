@@ -78,8 +78,6 @@ public class Neo4ArtSearchRestController {
 	public @ResponseBody SearchResult getResults(Model model,
 			                                     @RequestParam(value="searchInput", required=true) String searchInput) {
 
-	 System.out.println("Input search: "+searchInput);
-		
 	 return SearchResultTransformer.buildSearchResult();
 	}
 	

@@ -17,14 +17,22 @@
 package org.neo4art.literature.manager;
 
 import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.neo4art.literature.analyzer.DocumentsAnalyzer;
 import org.neo4art.literature.analyzer.DocumentsNLPLinkedListAnalyzer;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.literature.exception.LetterParserException;
 import org.neo4art.literature.service.LetterDefaultService;
+import org.neo4art.sentiment.domain.SentimentAnalysis;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -61,4 +69,54 @@ public class VanGoghLettersManager
                      .computeNLPAnalysis()
                      .computeRedundancyStats(5, 15);
   }
+    
+   public List<SentimentAnalysis> loadSentimentsFromFile(String fileName) throws IOException
+   {
+     
+     List<SentimentAnalysis>  sentimentAnalysisList = new ArrayList<SentimentAnalysis>();
+     
+     URL url = getClass().getClassLoader().getResource(fileName);
+
+     CSVParser csvParser = CSVParser.parse(url, Charset.defaultCharset(), CSVFormat.EXCEL.withIgnoreSurroundingSpaces(true));
+
+     List<CSVRecord> cvsRecords = csvParser.getRecords();
+
+     if (CollectionUtils.isNotEmpty(cvsRecords) && CollectionUtils.size(cvsRecords) > 1)
+     {
+
+       for (int i = 1; i < cvsRecords.size(); i++)
+       {
+         CSVRecord csvRecord = cvsRecords.get(i);
+
+         SentimentAnalysis sentimentAnalysis = new SentimentAnalysis();
+         Letter letter = new Letter();
+         letter.setTitle(csvRecord.get(0));
+		     String polarityType = csvRecord.get(1);
+		     String polarity="";
+		     
+		     if(polarityType.equalsIgnoreCase("0"))
+		     {
+		       polarity = "neutral";
+		     }
+		     else if(polarityType.equalsIgnoreCase("1") || polarityType.equalsIgnoreCase("2"))
+		     {
+		       polarity = "negative";
+		     }
+		     else if(polarityType.equalsIgnoreCase("3") || polarityType.equalsIgnoreCase("4"))
+		     {
+		       polarity = "positive";
+		     }
+
+		     letter.setDate(csvRecord.get(2));
+		     
+		     sentimentAnalysis.setPolarity(polarity);
+         sentimentAnalysis.setSource(letter);
+
+         sentimentAnalysisList.add(sentimentAnalysis);
+       }
+     }
+     
+     return sentimentAnalysisList;
+   }
+  
 }

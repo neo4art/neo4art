@@ -15,6 +15,8 @@
  */
 package org.neo4art.literature.repository;
 
+import java.util.List;
+
 import org.neo4art.literature.domain.Document;
 
 /**
@@ -25,4 +27,6 @@ import org.neo4art.literature.domain.Document;
 public interface DocumentRepository
 {
   long saveDocument(Document document);
+  
+  void saveDocuments(List<Document> documentList);
 }
