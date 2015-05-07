@@ -29,21 +29,31 @@
 </head>
 <body>
 	<div class="container">
+		<div class="top-bar">
+			<ul>
+				<li><a href="about.html">ABOUT</a></li>
+				<li><a href="genesis.html">GENESIS</a></li>
+				<li><a href="team.html">TEAM</a></li>
+				<li><a href="team.html" title="The graph chart"><i class="fa fa-share-alt"></i></a></li>
+				<li><a href="javascript:void(0)" onClick="wantsTimeline();" title="The timeline &amp; color chart"><i class="fa fa-bar-chart"></i></a></li>
+			</ul>
+		</div>
 		<div class="logo">
-			<img src="resources/img/neo4art-logo-big.png" />
+			<a href="index.html"><img src="resources/img/neo4art-logo-big.png" /></a>
+				<div class="motto">Traversing Art through its connections</div>
 		</div>
 		<div class="search-section">
-		<form action="graph.html" method="get" name="searchForm">
-			<div id="search-bar-container" class="search-bar">
-				<div class="search-bar-inner">
-					<span class="icon"><i class="fa fa-search"></i></span> <input id="search-bar" type="search" placeholder="Search . . ." name="query"
-						required onFocus="focused()" onBlur="unfocused()" onKeyPress="keyPressed()" onInput="keyPressed()">
+			<form action="graph.html" method="get" name="searchForm">
+				<div id="search-bar-container" class="search-bar">
+					<div class="search-bar-inner">
+						<span class="icon"><i class="fa fa-search"></i></span> <input id="search-bar" type="search" placeholder="Search . . ." name="query"
+							required onFocus="focused()" onBlur="unfocused()" onKeyPress="keyPressed()" onInput="keyPressed()">
+					</div>
 				</div>
+			</form>
+			<div class="buttons">
+				<button onClick="clicked()">Submit</button>
 			</div>
-		</form>
-		<div class="buttons">
-			<button onClick="clicked()">Submit</button>
-		</div>
 		</div>
 		<div class="links">
 			<a href="//www.iubenda.com/privacy-policy/430975" class="iubenda-white iubenda-embed" title="Privacy Policy">Privacy Policy</a>
@@ -63,7 +73,9 @@
 					}
 				})(window, document);
 			</script>
-		</div> <!-- END links -->
-	</div> <!-- END container -->
+		</div>
+		<!-- END links -->
+	</div>
+	<!-- END container -->
 </body>
 </html>

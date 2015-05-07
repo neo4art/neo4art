@@ -11,6 +11,10 @@
 
 .logo {
 	margin:auto;
+	border-bottom-style: solid;
+	border-bottom-color: #ADADAD;
+	padding-bottom:20px;
+	border-width: 1px;
 }
 .search-section{
 	margin:auto;
@@ -19,13 +23,6 @@
 	margin:auto;
 	margin-bottom:10px;
 	margin-right:10px;
-}
-
-.logo img {
-	border-bottom-style: solid;
-	border-bottom-color: #ADADAD;
-	padding-bottom:20px;
-	border-width: 1px;
 }
 
 .search-bar {
