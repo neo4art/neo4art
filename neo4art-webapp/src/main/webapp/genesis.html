@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it-IT">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" media="screen" href="resources/css/style.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/font-awesome-4.3.0/css/font-awesome.min.css" />
+<script src="resources/js/jquery/jquery-2.1.3.min.js"></script>
+<script src="resources/js/jquery.scrollbar.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="resources/css/jquery.scrollbar.css" />
+<!-- GOOGLE ANALYTICS -->
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+	ga('create', 'UA-62452077-1', 'auto');
+	ga('send', 'pageview');
+</script>
+
+<title>neo4Art - The genesis of the project</title>
+</head>
+<body>
+	<div class="container-page scrollbar-macosx">
+		<div class="content">
+			<div class="logo">
+				<a href="index.html"><img src="resources/img/neo4art-logo-big.png" /></a>
+				<div class="motto">Traversing Art through its connections</div>
+			</div>
+			<div class="menu">
+				<ul>
+					<li><a href="index.html">HOME</a></li>
+					<li><a href="about.html">ABOUT</a></li>
+					<li><a href="genesis.html" class="current">GENESIS</a></li>
+					<li><a href="team.html">TEAM</a></li>
+				</ul>
+			</div>
+			<div class="text">
+				<h1>The genesis</h1>
+				<p>
+					This project starts from a precedent work called <strong>&quot;Neo4Art – Van Gogh’s Journey (in a Neo4j Graph Database)&quot;</strong>
+					developed by Lorenzo Speranzoni between 2013 and 2014.
+				</p>
+				<p>
+					Hereafter we summarize part of the work done, seen as a starting point to work up our ambitious project neo4<span
+						class="palette-dark-blue">A</span><span class="palette-blue">r</span><span class="palette-orange">t</span>.
+				</p>
+				<h2>Preface</h2>
+				<div class="img-float-right">
+					<figure>
+						<img src="resources/img/sulle-tracce-di-van-gogh.png" class="border-three-color" />
+						<figcaption>The present</figcaption>
+					</figure>
+				</div>
+				<p>When I was young I really loved to listen to my uncle Luciano talking about art. He was an art history teacher. Sitting at his
+					desk, he described me Vincent Van Gogh’s artworks.</p>
+				<p>
+					Vincent Van Gogh is widely considered one of the most important neo-impressionist painters. In 1990, I received the book “Sulle tracce
+					di Van Gogh“ (in the footsteps of Van Gogh) as a gift from my uncle. By reading that book, I understood that one fundamental aspect of
+					his artwork was his continuous research for colours: <em>&quot;during his early adulthood, while living between The Netherlands
+						and Belgium, his palette consisted mainly of somber earth tones and showed no sign of the vivid coloration that distinguished his
+						later work. In March 1886, he moved to Paris and discovered the French Impressionists. Later, he moved to the south of France and was
+						influenced by the strong sunlight he found there. His work grew brighter in color, and he developed the unique and highly recognizable
+						style that became fully realized during his stay in Arles in 1888&quot;</em> [Ref. 4]
+				</p>
+				<p>So how would I go about putting Van Gogh’s journey into Neo4j?</p>
+				<h2>Introduction</h2>
+				<p>First, I started with collecting the data: The Vincent Van Gogh Gallery has a complete list of his paintings. So i saved more
+					specific informations, such as cities where he lived, with province, region, latitude and longitude; and so every art movement he
+					adhered like ‘Post-Impressionism’ (more correctly, he was one of its founder). With just with this little amount of data we can see
+					firsts connections were borning.</p>
+					<div class="block-image border-three-color"><img src="resources/img/first-connections.png"/></div>
+				<h2>Journey's stages</h2>
+				<p>
+					On December 1883, Van Gogh began his journey by moving to Neuen, North Brabant, Netherlands. He lived there until November 1885.<br />In
+					december 1885, Van Gogh moved to Antwerp, Belgium, where he lived until February 1886. The artist lived in Paris, France from March
+					1886 to February 1888. Van Gogh moved to Arles, France in February 1888 and stayed there until May 1889. Then he moved to Saint-Rémy de
+					Provence, France in May 1889 and stayed there until May 1890. Vincent Van Gogh ended his trip, and also his life by committing suicide,
+					in Auvers-sur-Oise, France where he had lived from May to July 1890.
+				</p>
+				<p>Inserted those informations, we are able to to visualize Van Gogh’s journey:</p>
+				<div class="block-image border-three-color"><img src="resources/img/van-gogh-journey.png"/></div>
+				<h2>Influencers</h2>
+				<p>
+					Describing his journey, there’s another fundamental aspect about Van Gogh’s artwork: his influencers. <em>&quot;During his 2nd
+						stage in Antwerp he applied himself to the study of colour theory and spent time in museums, particularly studying the work of Peter
+						Paul Rubens, gaining encouragement to broaden his palette to carmine, cobalt and emerald green&quot;</em> [Ref. 4]
+				</p>
+				<p>
+					<em>&quot;The two years Van Gogh spent in Paris were arguably the most pivotal of his career as an artist. Van Gogh went to Paris
+						as a mean of saving money (by living with his brother, Theo) and also to explore the radically new approach to art which had been
+						ushered in by the Impressionists&quot;</em> [Ref. 5]
+				</p>
+				<p>
+					<em>&quot;Vincent encountered many of the giants of Impressionism during his time in Paris: Henri de Toulouse-Lautrec, Emile
+						Bernard, Camille Pissarro, Georges Seurat and, of course, Paul Gauguin. While Vincent didn’t fully accept many of the theories put
+						forth by the Impressionists (on many occasions he would passionately argue with his contemporaries late into the night in the cafes of
+						Montmartre), he nevertheless adapted some of their techniques in a manner that would further define his own unique style. In Paris,
+						Van Gogh’s palette came alive&quot;</em> [Ref. 4]
+				</p>
+				<p>In Arles, Van Gogh was introduced to Eugène Boch, a Belgian painter who stayed at times in Fontvieille, and the two exchanged
+					visits for some times. So we start inserting data of every artist who has a related connection between Van Gogh.</p>
+				<p>And now we are able to graphically see who and where influenced Van Gogh’s artwork:</p>
+				<div class="block-image border-three-color"><img src="resources/img/artwork-influence.png"/></div>
+				<h2>Artwork</h2>
+				<p>Van Gogh’s artwork is about painting, so we specified that and relate our artist with this kind of art. From the studies we
+					extract all of his works, for example: In Neuen, Van Gogh &quot;completed what is generally considered his first major work, The Potato
+					Eaters, the culmination of several years work painting peasant character studies&quot;. During his stage in Antwerp, among others, he
+					depicted Backyards of Old Houses in Antwerp in the Snow. &quot;During his stay in Paris, he collected more Japanese ukiyo-e woodblock
+					prints; he became interested in such works, when in 1885 in Antwerp he used them to decorate the walls of his studio. He collected
+					hundreds of prints, which are visible in the backgrounds of several of his paintings. In his 1887 Portrait of Père Tanguy several can
+					be seen hanging on the wall behind the main figure&quot;. In Arles, &quot;his project at this time was a series of paintings including Van Gogh’s
+					Chair (1888), Bedroom in Arles (1888), The Night Café (1888), Cafe Terrace at Night (September 1888), Starry Night Over the Rhone
+					(1888), Still Life: Vase with Twelve Sunflowers (1888), all intended to form the décoration for the Yellow House&quot;</p>
+					<p>In Saint-Rémy de
+					Provence, Van Gogh painted Starry Night, in Auvers-sur-Oise he painted Wheat Field with Crows.</p><p>Again, inserting this data in the
+					system, we visualize when and where Van Gogh painted his artworks:</p>
+					<div class="block-image border-three-color"><img src="resources/img/location-period-artworks.png"/></div>
+					<h2>Artwork</h2><p>Ok, I believe it’s time to get up from my chair to start
+					admiring his paintings around the world. Let's insert museums data (<strong>neo4<span class="palette-dark-blue">A</span><span
+							class="palette-blue">r</span><span class="palette-orange">t</span></strong> system could be able to track artworks’ movement from
+					official location: I really suffer when my family and me plan to visit a museum to admire an artwork and we discover it’s on loan
+					).</p><p>Now I’m able to ask the system which Van Gogh’s artworks are in dutch museums:</p>
+					<div class="block-image border-three-color"><img src="resources/img/artworks-in-dutch-museums.png"/></div>
+					<h2>Add some social</h2><p>Of course in an age of social
+					networking, we couldn’t finish this spike without some forms of &quot;I LIKE&quot;, posting some photos and inquiry for LIKES and POSTS
+					from Italian people.</p><p>The result:</p>
+					<div class="block-image border-three-color"><img src="resources/img/graph-and-social.png"/></div><p>Now imagine doing this with all the informations about art that can be found online, saving data from
+					encyclopedias like Wikipedia and more others art portals; and visualize them in an Awesome User Interface, to let you navigate throw
+					artists, museums, artworks, cities and a lot of other stuffs, using connections between them!</p><p class="big">That will be <strong>neo4<span class="palette-dark-blue">A</span><span
+							class="palette-blue">r</span><span class="palette-orange">t</span></strong></p>
+			</div>
+			<div class="footer">
+				&copy; 2015 neo4<span class="palette-dark-blue">A</span><span class="palette-blue">r</span><span class="palette-orange">t</span> - All
+				rights reserved &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="//www.iubenda.com/privacy-policy/430975" class="iubenda-white iubenda-embed"
+					title="Privacy Policy">Privacy Policy</a>
+				<script type="text/javascript">
+					(function(w, d) {
+						var loader = function() {
+							var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0];
+							s.src = "//cdn.iubenda.com/iubenda.js";
+							tag.parentNode.insertBefore(s, tag);
+						};
+						if (w.addEventListener) {
+							w.addEventListener("load", loader, false);
+						} else if (w.attachEvent) {
+							w.attachEvent("onload", loader);
+						} else {
+							w.onload = loader;
+						}
+					})(window, document);
+				</script>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
