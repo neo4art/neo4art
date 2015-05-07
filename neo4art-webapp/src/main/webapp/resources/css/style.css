@@ -153,6 +153,10 @@ input[type="search"]::-webkit-search-cancel-button:after{
 	font-size:18px;
 	letter-spacing:4px;
 }
+.logo img{
+	width:100%;
+	max-width:482px;
+}
 
 /* INDEX */
 .draggable {
