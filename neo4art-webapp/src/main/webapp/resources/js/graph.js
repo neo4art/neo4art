@@ -29,6 +29,7 @@ $(document).ready(function() {
 	$("#legendOpener").click(function() {
 		$("#dialog").dialog("open");
 	});
+	$(".container-page").scrollbar();
 });
 
 function wantsTimeline() {
@@ -230,7 +231,7 @@ function theGraph() {
 		}).append("circle").attr("class", "clip-path").attr("r", function(d) {
 			return d.radius;
 		}).style("fill", function(d) {
-			return color(1/d.rating);
+			return color(1 / d.rating);
 		});
 		var img = nodeEnter.append("svg:image").attr("class", "circle").attr("xlink:href", function(d) {
 			if (d.type != "Colour") {
@@ -250,17 +251,17 @@ function theGraph() {
 		nodeEnter.append("title").text(function(d) {
 			return d.name;
 		});
-		
-		var textInside = nodeEnter.append("text").attr("class","text-inside-node").style("text-anchor","middle").attr("x", 0).attr("y", 2)
-		.text(function(d){
-			if(d.type=="Word"){
-				return d.name;
-			}else{
-				return "";
-			}
-		}).attr("clip-path", function(d, i) {
-			return "url(#clip" + i + ")"
-		}).style("font-size","10px");
+
+		var textInside = nodeEnter.append("text").attr("class", "text-inside-node").style("text-anchor", "middle").attr("x", 0)
+				.attr("y", 2).text(function(d) {
+					if (d.type == "Word") {
+						return d.name;
+					} else {
+						return "";
+					}
+				}).attr("clip-path", function(d, i) {
+					return "url(#clip" + i + ")"
+				}).style("font-size", "10px");
 
 		var linkedByIndex = {};
 		linkList.forEach(function(d) {
@@ -294,7 +295,7 @@ function theGraph() {
 						});
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 1.5).attr("y", -d.radius * 1.5)
 								.attr("width", (d.radius * 2) * 1.5).attr("height", (d.radius * 2) * 1.5);
-						d3.select(this).select("text").transition().duration(750).style("font-size","20px").attr("y", 4);
+						d3.select(this).select("text").transition().duration(750).style("font-size", "20px").attr("y", 4);
 					}
 				}).on(
 				"mouseout",
@@ -311,7 +312,7 @@ function theGraph() {
 						});
 						d3.select(this).select("image").transition().duration(750).attr("x", -d.radius).attr("y", -d.radius).attr("width",
 								d.radius * 2).attr("height", d.radius * 2);
-						d3.select(this).select("text").transition().duration(750).style("font-size","10px").attr("y",2);
+						d3.select(this).select("text").transition().duration(750).style("font-size", "10px").attr("y", 2);
 					}
 				});
 
@@ -319,6 +320,7 @@ function theGraph() {
 				.on(
 						"contextmenu",
 						function(d) {
+							closeWindow();
 							// PUTS THE NODE IN ORDER SO AS THE
 							// CLICKED IS ON TOP
 							nodeContainer.selectAll("g").sort(function(a, b) {
@@ -340,7 +342,7 @@ function theGraph() {
 							d3.select(this).select("image").transition().duration(750).attr("x", -d.radius * 5 / currentZoom).attr("y",
 									-d.radius * 5 / currentZoom).attr("width", d.radius * 2 * 5 / currentZoom).attr("height",
 									d.radius * 2 * 5 / currentZoom);
-							d3.select(this).select("text").transition().duration(750).style("font-size","50px").attr("y", 15);
+							d3.select(this).select("text").transition().duration(750).style("font-size", "50px").attr("y", 15);
 							console.log("w:" + width + " d.x:" + d.x + " ctx:" + currentTranslateX + " calc:"
 									+ ((width / 4 / currentZoom) - d.x + (currentTranslateX / currentZoom)) + " z:" + currentZoom);
 							container
@@ -434,10 +436,7 @@ function theGraph() {
 		// d.link + "'>" + d.link + "</a>");
 		var frame = float.select("iframe");
 		frame.attr("src", d.link);
-		$("#floating").perfectScrollbar();
-		$("#floating").perfectScrollbar('update');
-		$("iframe").perfectScrollbar();
-		$("iframe").perfectScrollbar('update');
+//		$("iframe").scrollbar();
 	}
 
 	function closeWindow() {
@@ -453,10 +452,14 @@ function theGraph() {
 			else
 				return radius;// + 2
 		});
-		selectedD.clicked = false;
-		selectedNode.select("image").transition().duration(750).attr("x", -radius).attr("y", -radius).attr("width", radius * 2).attr(
-				"height", radius * 2);
-		selectedNode.select("text").transition().duration(750).style("font-size","10px").attr("y", 2);
+		if (selectedD != undefined) {
+			selectedD.clicked = false;
+		}
+		if (selectedNode != undefined) {
+			selectedNode.select("image").transition().duration(750).attr("x", -radius).attr("y", -radius).attr("width", radius * 2).attr(
+					"height", radius * 2);
+			selectedNode.select("text").transition().duration(750).style("font-size", "10px").attr("y", 2);
+		}
 	}
 
 }
