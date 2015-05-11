@@ -16,9 +16,8 @@ public class InfoboxLeadershipParserUtil
       {
         String[] n1 = StringUtils.split(name, "[");
         name = InfoboxParserUtil.removeAllParenthesis(n1[1]);
+        return name;
       }
-      
-      return name;
     }
     catch (Exception e)
     {

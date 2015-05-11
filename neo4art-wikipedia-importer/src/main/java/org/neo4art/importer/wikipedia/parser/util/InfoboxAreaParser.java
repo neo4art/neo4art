@@ -17,13 +17,16 @@ public class InfoboxAreaParser
   {
     try
     {
-      int count;
+      if(area.contains("|"))
+      {
+        int count;
 
-      String[] da = StringUtils.split(area, "|| ");
+        String[] da = StringUtils.split(area, "|| ");
 
-      count = Integer.parseInt(da[1]);
+        count = Integer.parseInt(da[1]);
 
-      return count;
+        return count;
+      }
     }
     catch (Exception e)
     {

@@ -30,22 +30,60 @@ public class InfoboxNameParser
   
   public static String infoboxNativeName(String name)
   {
+    String ciao = name;
     try
     {
+      if(!name.contains("}}"))
+      {
+        return null;
+      }
+      if(name.contains("unbulleted"))
+      {
+        name = name.replace("}}}}", "}}");
+        String[] n = StringUtils.split(name, "{{");
+        if(n.length == 1)
+        {
+          String[] h = StringUtils.split(n[0], "||");
+          name = h[2];
+          name = name.replace("'", "");
+          name = InfoboxParserUtil.removeAllParenthesis(name);
+          return name.trim();
+        }
+        if(n.length == 2)
+        {
+          String[] h = StringUtils.split(n[1], "||");
+          name = h[2];
+          name = name.replace("'", "");
+          name = InfoboxParserUtil.removeAllParenthesis(name);
+          return name.trim();
+        }
+        if(n.length == 3)
+        {
+          String[] h = StringUtils.split(n[2], "||");
+          name = h[2];
+          name = name.replace("'", "");
+          name = InfoboxParserUtil.removeAllParenthesis(name);
+          return name.trim();
+        }
+        if(n.length == 5)
+        {
+          String[] h = StringUtils.split(n[4], "||");
+          int k = h.length;
+          name = h[k];
+          name = name.replace("'", "");
+          name = InfoboxParserUtil.removeAllParenthesis(name);
+          return name.trim();
+        }
+      }
       if (name.contains("|"))
       {
-        if (name.contains("<br/>"))
+        if (name.contains("''"))
         {
-          String[] n1 = StringUtils.split(name, ">");
+          String[] n1 = StringUtils.split(name, "''");
           if(n1 != null)
           {
-            name = n1[1].trim();
-            name = name.replace("'", "");
-            return name;
-          }
-          else
-          {
-            name = null;
+            name = n1[0].trim();
+            return name.trim();
           }
         }
         
@@ -60,21 +98,17 @@ public class InfoboxNameParser
           {
             name = n1[0].trim();
           }
-          else
-          {
-            name = null;
-          }
         }
       }
       
       name = InfoboxParserUtil.removeLink(name);
 
       
-      return name;
+      return name.trim();
     }
     catch (Exception e)
     {
-      logger.error("Error parsing NativeName infobox: " + e.getMessage());
+      logger.error("Error parsing NativeName infobox: " + ciao);
     }
     
     return null;

@@ -62,18 +62,18 @@ public class InfoboxPlaceParser
     return null;
   }
   
-  public static String infoboxLocation(String name)
+  public static String infoboxLocation(String place)
   {
     try
     {
-      if (name.contains("]"))
+      if (place.contains("]"))
       {
-        String[] n1 = StringUtils.split(name, "]");
-        name = n1[0];
-        name = InfoboxParserUtil.removeAllParenthesis(name);
+        String[] n1 = StringUtils.split(place, "]");
+        place = n1[0];
+        place = InfoboxParserUtil.removeAllParenthesis(place);
       }
       
-      return name;
+      return place;
     }
     catch (Exception e)
     {
@@ -83,16 +83,29 @@ public class InfoboxPlaceParser
     return null;
   }
 
-  public static String infoboxProvince(String name)
+  public static String infoboxProvince(String place)
   {
     try
     {
-      String[] n1 = StringUtils.split(name, "|");
-  
-      name = n1[0].replace("[", "");
-      name = name.replace("]", "");
-  
-      return name;
+      if(place.length() == 0)
+      {
+        return null;
+      }
+      else
+      {
+        if(place.contains("|"))
+        {
+          String[] n1 = StringUtils.split(place, "|");
+          
+          place = n1[0].replace("[", "");
+          place = place.replace("]", "");
+      
+          return place;
+        }
+        place = InfoboxParserUtil.removeAllParenthesis(place);
+        return place;
+      }
+      
     }
     catch (Exception e)
     {

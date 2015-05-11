@@ -10,31 +10,38 @@ public class InfoboxWebsiteParserUtil
 
   public static String getWebsite(String web)
   {
-    try{
-    if (web.contains("|"))
+    try
     {
-      String[] w = StringUtils.split(web, "|");
-      web = InfoboxParserUtil.removeAllParenthesis(w[1]);
-      return web.trim();
-    }
-    if (web.contains("/"))
-    {
-      String[] w = StringUtils.split(web, "/");
-      web = w[0] + "//" + w[1];
-      for (int i = 2; i < w.length; i++)
+      if (web.contains("/"))
       {
-        web = web + "/" + w[i];
-      }
+        String[] w = StringUtils.split(web, "/");
+        web = w[0] + "//" + w[1];
+        for (int i = 2; i < w.length; i++)
+        {
+          web = web + "/" + w[i];
+        }
 
-      web = InfoboxParserUtil.removeAllParenthesis(web);
+        web = InfoboxParserUtil.removeAllParenthesis(web);
+      }
+      if (web.contains(" "))
+      {
+        String[] w = StringUtils.split(web, " ");
+        if(w[0].contains("http://"))
+        {
+          return w[0].trim();
+        }
+        else
+        {
+          web = w[1];
+          web = InfoboxParserUtil.removeAllParenthesis(web);
+          if (!(web.contains("www.") || web.contains("http://")))
+          {
+            web = "http://www." + web;
+          }
+        }
+      }
     }
-    if (web.contains(" "))
-    {
-      String[] w = StringUtils.split(web, " ");
-      web = w[0];
-    }
-    }
-    catch(Exception e)
+    catch (Exception e)
     {
       logger.error("Error parsing Website infobox: " + e.getMessage());
     }

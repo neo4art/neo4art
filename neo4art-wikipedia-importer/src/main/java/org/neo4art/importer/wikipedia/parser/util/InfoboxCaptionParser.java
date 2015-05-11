@@ -12,6 +12,8 @@ public class InfoboxCaptionParser
   {
     try
     {
+      if(caption.contains("birth_name"))
+        return null;
       if (caption.contains("<"))
       {
         String[] n = StringUtils.split(caption, "<");

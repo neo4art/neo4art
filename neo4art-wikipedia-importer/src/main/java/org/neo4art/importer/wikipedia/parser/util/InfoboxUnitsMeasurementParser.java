@@ -30,10 +30,6 @@ public class InfoboxUnitsMeasurementParser
         
         return im[0];
       }
-      else
-      {
-        return width;
-      }
     }
     catch (Exception e)
     {
@@ -53,9 +49,9 @@ public class InfoboxUnitsMeasurementParser
       {
         String[] n1 = StringUtils.split(name, "|");
         name = n1[1].replace(" ", "");
+        return name;
       }
       
-      return name;
     }
     catch (Exception e)
     {

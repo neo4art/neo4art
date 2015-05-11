@@ -57,6 +57,9 @@ public class InfoboxDateParser
       date = date.replace("death date and age ||", "");
       date = date.replace("Death date and age||", "");
       date = date.replace("Death date and age ||", "");
+      date = date.replace("death year and age||", "");
+      date = date.replace("death year and age ||", "");
+      
   
       String[] dateSplit = StringUtils.split(date, "|| ");
       
@@ -73,7 +76,7 @@ public class InfoboxDateParser
     }
     catch (Exception e)
     {
-      logger.error("Error parsing Date infobox: " + e.getMessage());
+      logger.error("Error parsing Date Death infobox: " + e.getMessage());
     }
     
     return null;
@@ -103,6 +106,13 @@ public class InfoboxDateParser
       {
         date = date.replace("|| df=yes", "");
         date = date.replace("|| mf=yes", "");
+      }
+      
+      if(date.contains("c."))
+      {
+        date = date.replace("c. ", "");
+        Calendar dateClean = new GregorianCalendar(Integer.parseInt(date), 1, 1);
+        return dateClean;
       }
       
       date = date.replace("birth date||", "");
