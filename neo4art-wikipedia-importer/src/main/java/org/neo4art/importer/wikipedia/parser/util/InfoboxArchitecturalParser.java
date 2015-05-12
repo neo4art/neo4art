@@ -18,18 +18,23 @@ public class InfoboxArchitecturalParser
   {
     try
     {
-      String[] n1 = StringUtils.split(name, "|");
-  
-      name = n1[0].replace("[", "");
-      name = name.replace("]", "");
-  
-      return name;
+      if(name.contains("|"))
+      {
+        String[] n1 = StringUtils.split(name, "|");
+        
+        name = n1[0].replace("[", "");
+        name = name.replace("]", "");
+      }
+      else
+      {
+        name = InfoboxParserUtil.removeAllParenthesis(name);
+      }
     }
     catch (Exception e)
     {
       logger.error("Error parsing Architectural infobox: " + e.getMessage());      
     }
     
-    return null;
+    return name;
   }
 }

@@ -11,12 +11,12 @@ public class InfoboxMovementParser
 {
 
   private static Log logger = LogFactory.getLog(InfoboxMovementParser.class);
-  
+
   public InfoboxMovementParser()
   {
-    
+
   }
-  
+
   public static ArrayList<ArtMovement> infoboxMovement(ArtMovement artMovement, String movement)
   {
     ArrayList<ArtMovement> artMovementArrayList = new ArrayList<ArtMovement>();
@@ -25,27 +25,29 @@ public class InfoboxMovementParser
       movement = movement.replace("[", "");
       movement = movement.replace("]", "");
       movement = movement.replace("\n", "");
-  
-      String[] work = StringUtils.split(movement, ",");
-  
-      if (work.length > 0)
+      if (movement.length() != 0)
       {
-        for (int i = 0; i < work.length; i++)
+        String[] work = StringUtils.split(movement, ",");
+
+        if (work.length > 0)
         {
-          artMovement = new ArtMovement();
-          artMovement.setName(work[i]);
-          artMovementArrayList.add(artMovement);
+          for (int i = 0; i < work.length; i++)
+          {
+            artMovement = new ArtMovement();
+            artMovement.setName(work[i]);
+            artMovementArrayList.add(artMovement);
+          }
         }
+
+        return artMovementArrayList;
       }
-      
-      return artMovementArrayList;
     }
     catch (Exception e)
     {
       logger.error("Error parsing Movement infobox: " + e.getMessage());
     }
-    
+
     return null;
   }
-  
+
 }

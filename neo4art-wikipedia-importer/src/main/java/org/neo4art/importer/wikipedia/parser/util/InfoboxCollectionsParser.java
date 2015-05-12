@@ -18,9 +18,12 @@ public class InfoboxCollectionsParser
   {
     try
     {
-      String[] da = StringUtils.split(coll, "<");
+      if(coll.contains("<"))
+      {
+        String[] da = StringUtils.split(coll, "<");
 
-      return da[0];
+        return da[0];
+      }
     }
     catch (Exception e)
     {

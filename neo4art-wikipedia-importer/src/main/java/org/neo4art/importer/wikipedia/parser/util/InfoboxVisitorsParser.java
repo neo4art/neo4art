@@ -33,8 +33,6 @@ public class InfoboxVisitorsParser
 
         return da[0];
       }
-
-      return visitors;
     }
     catch (Exception e)
     {

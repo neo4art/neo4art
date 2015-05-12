@@ -18,6 +18,6 @@ public class WikipediaSettlementDistrictPTAveiroInfoboxTest {
 		Settlement settlement = WikipediaSettlementDistrictPTInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("District of Aveiro", settlement.getOfficialName());
-		Assert.assertEquals("District pt", settlement.getType());
+		Assert.assertEquals("District pt ", settlement.getType());
 	}
 }

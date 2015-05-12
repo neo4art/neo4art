@@ -38,7 +38,7 @@ public class WikipediaNRHPManzanarInfoboxTest {
 		Assert.assertEquals("9.0", ""+settlement.getCoordinate().getLongM());
 		Assert.assertEquals("16.0", ""+settlement.getCoordinate().getLongS());
 		Assert.assertEquals("W", settlement.getCoordinate().getLongEW());
-		Assert.assertEquals("HistoricPlace", ""+settlement.getType());
+		Assert.assertEquals("HistoricPlace ", ""+settlement.getType());
 	}
 	
 }

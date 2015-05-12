@@ -13,10 +13,14 @@ public class InfoboxTypeParserUtil
   {
     try
     {
-      String[] t = StringUtils.split(type, "|");
-  
-      t[0] = InfoboxParserUtil.removeAllParenthesis(t[0]);
-      type = t[0].trim();
+      if(type.contains("|"))
+      {
+        String[] t = StringUtils.split(type, "|");
+        
+        t[0] = InfoboxParserUtil.removeAllParenthesis(t[0]);
+        type = t[0].trim();
+        return type;
+      }
     }
     catch(Exception e)
     {

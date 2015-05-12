@@ -162,8 +162,6 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setCoordinates(InfoboxCoordinateParser.infoboxCoordinate(coordinate, map.get(key)));
           break;
         case LATITUDE:
-          coordinate.setLatD(map.get(key));
-          settlement.setCoordinate(coordinate);
           religiousBuilding.setLatitude(map.get(key));
           break;
         case LONGITUDE:
