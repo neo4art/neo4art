@@ -9,6 +9,16 @@ body {
 	padding: 0;
 	margin: 0;
 }
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+.team h4{
+	-webkit-margin-after:-10px;
+}
 .palette-black{
 	color:#180925;
 }
