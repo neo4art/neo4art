@@ -17,8 +17,8 @@ public class BuildPOIListMock {
 		List<PointOfInterest> pois = new ArrayList<PointOfInterest>();
 		
 			PointOfInterest poi = new PointOfInterest();
-			poi.setLat(lat + (Math.random() / 1000));
-			poi.setLng(lng + (Math.random() / 1000));
+			poi.setLat(lat + (Math.random() / 100));
+			poi.setLng(lng + (Math.random() / 100));
 			poi.setTitle("The Sunflowers");
 			poi.setType("ArtWork");
 			poi.setImage("http://www.vggallery.com/painting/f_0001.jpg");
@@ -31,8 +31,8 @@ public class BuildPOIListMock {
 			poi2.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi2.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi2.setType("ArtWork");
-			poi2.setLat(lat + (Math.random() / 1000));
-			poi2.setLng(lng + (Math.random() / 1000));
+			poi2.setLat(lat + (Math.random() / 100));
+			poi2.setLng(lng + (Math.random() / 100));
 			poi2.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			PointOfInterest poi3 = new PointOfInterest();
@@ -40,8 +40,8 @@ public class BuildPOIListMock {
 			poi3.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi3.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi3.setType("ArtWork");
-			poi3.setLat(lat + (Math.random() / 1000));
-			poi3.setLng(lng + (Math.random() / 1000));
+			poi3.setLat(lat + (Math.random() / 100));
+			poi3.setLng(lng + (Math.random() / 100));
 			poi3.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -50,8 +50,8 @@ public class BuildPOIListMock {
 			poi4.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi4.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi4.setType("ArtWork");
-			poi4.setLat(lat + (Math.random() / 1000));
-			poi4.setLng(lng + (Math.random() / 1000));
+			poi4.setLat(lat + (Math.random() / 100));
+			poi4.setLng(lng + (Math.random() / 100));
 			poi4.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -60,8 +60,8 @@ public class BuildPOIListMock {
 			poi5.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi5.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi5.setType("ArtWork");
-			poi5.setLat(lat + (Math.random() / 1000));
-			poi5.setLng(lng + (Math.random() / 1000));
+			poi5.setLat(lat + (Math.random() / 100));
+			poi5.setLng(lng + (Math.random() / 100));
 			poi5.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -70,8 +70,8 @@ public class BuildPOIListMock {
 			poi6.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi6.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi6.setType("ArtWork");
-			poi6.setLat(lat + (Math.random() / 1000));
-			poi6.setLng(lng + (Math.random() / 1000));
+			poi6.setLat(lat + (Math.random() / 100));
+			poi6.setLng(lng + (Math.random() / 100));
 			poi6.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -80,8 +80,8 @@ public class BuildPOIListMock {
 			poi7.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi7.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi7.setType("ArtWork");
-			poi7.setLat(lat + (Math.random() / 1000));
-			poi7.setLng(lng + (Math.random() / 1000));
+			poi7.setLat(lat + (Math.random() / 100));
+			poi7.setLng(lng + (Math.random() / 100));
 			poi7.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -90,8 +90,8 @@ public class BuildPOIListMock {
 			poi8.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi8.setTitle("Dunes");
 			poi8.setType("ArtWork");
-			poi8.setLat(lat + (Math.random() / 1000));
-			poi8.setLng(lng + (Math.random() / 1000));
+			poi8.setLat(lat + (Math.random() / 100));
+			poi8.setLng(lng + (Math.random() / 100));
 			poi8.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -100,8 +100,8 @@ public class BuildPOIListMock {
 			poi9.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi9.setTitle("Dunes with Figures");
 			poi9.setType("ArtWork");
-			poi9.setLat(lat + (Math.random() / 1000));
-			poi9.setLng(lng + (Math.random() / 1000));
+			poi9.setLat(lat + (Math.random() / 100));
+			poi9.setLng(lng + (Math.random() / 100));
 			poi9.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -110,8 +110,8 @@ public class BuildPOIListMock {
 			poi10.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi10.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi10.setType("ArtWork");
-			poi10.setLat(lat + (Math.random() / 1000));
-			poi10.setLng(lng + (Math.random() / 1000));
+			poi10.setLat(lat + (Math.random() / 100));
+			poi10.setLng(lng + (Math.random() / 100));
 			poi10.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -120,8 +120,8 @@ public class BuildPOIListMock {
 			poi11.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi11.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi11.setType("ArtWork");
-			poi11.setLat(lat + (Math.random() / 1000));
-			poi11.setLng(lng + (Math.random() / 1000));
+			poi11.setLat(lat + (Math.random() / 100));
+			poi11.setLng(lng + (Math.random() / 100));
 			poi11.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
@@ -130,8 +130,8 @@ public class BuildPOIListMock {
 			poi12.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi12.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi12.setType("ArtWork");
-			poi12.setLat(lat + (Math.random() / 1000));
-			poi12.setLng(lng + (Math.random() / 1000));
+			poi12.setLat(lat + (Math.random() / 100));
+			poi12.setLng(lng + (Math.random() / 100));
 			poi12.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			pois.add(poi);
