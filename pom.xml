@@ -32,6 +32,7 @@
 		<module>neo4art-colour</module>
 		<module>neo4art-wikipedia-importer</module>
 		<module>neo4art-database</module>
+		<module>neo4art-mobile</module>
 	</modules>
 
 	<properties>
