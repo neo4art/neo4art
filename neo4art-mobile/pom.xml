@@ -5,7 +5,7 @@
 
 	<artifactId>neo4art-mobile</artifactId>
 
-	<description>neo4art mobile applicaiton</description>
+	<description>neo4art mobile application</description>
 	<packaging>jar</packaging>
 
 	<parent>
@@ -15,13 +15,6 @@
 	</parent>
 
 	<dependencies>
-
-		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-    	    <artifactId>spring-boot-starter-tomcat</artifactId>
-        	<scope>${spring.boot.starter.tomcat.scope}</scope>
-	    </dependency>
-
 	</dependencies>
 	
 	<repositories>
