@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Fritz\Projects\PhoneGap\Neo4App\platforms\android\com.google.playservices\neo4app-google-play-services_lib\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\Fritz\Projects\PhoneGap\Neo4App\platforms\android\com.google.playservices\neo4app-google-play-services_lib\src\debug\assets"/></dataSet></merger>
