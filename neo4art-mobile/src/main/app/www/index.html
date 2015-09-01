@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="cordova.js"></script>
+    </head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Localization</title>
+        <link rel="stylesheet" href="font-awesome\css\font-awesome.css" />
+        <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </head>
+    <body>
+        <div class="container" id="container">
+            <img class="logo" src="img/neo4art-logo-header-01.png"/>
+            <a onclick="app.findCurrentPosition()">Find Art Near You</a>
+            <a href="map.html">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</a>
+            <i id="spinner" class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+            <div id="errorPopup" class="popup">
+                <div class="closeImg" onclick="errorPopup.close()"></div>
+                <p id="popup-text"></p>
+            </div>
+        </div>
+    </body>
+</html>

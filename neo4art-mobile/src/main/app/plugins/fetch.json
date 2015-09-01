@@ -1,0 +1,44 @@
+{
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "plugin.http.request": {
+        "source": {
+            "type": "registry",
+            "id": "plugin.http.request"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.google.playservices": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/wf9a5m75/google-play-services",
+            "subdir": ".",
+            "ref": "v23"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "org.apache.cordova.geolocation": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "plugin.google.maps": {
+        "source": {
+            "type": "local",
+            "path": "plugins\\phonegap-googlemaps-plugin-master"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}
