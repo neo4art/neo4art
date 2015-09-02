@@ -3,7 +3,7 @@ package org.neo4art.api.builder.mock.geolocation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.neo4art.api.domain.PointOfInterest;
+import org.neo4art.api.domain.Marker;
 import org.neo4art.domain.Artwork;
 
 /**
@@ -13,10 +13,10 @@ import org.neo4art.domain.Artwork;
  * @since 26 ago 2015
  */
 public class BuildPOIListMock {
-	public static List<PointOfInterest> generatePOIs(Double lat, Double lng) {
-		List<PointOfInterest> pois = new ArrayList<PointOfInterest>();
+	public static List<Marker> generatePOIs(Double lat, Double lng) {
+		List<Marker> pois = new ArrayList<Marker>();
 		
-			PointOfInterest poi = new PointOfInterest();
+			Marker poi = new Marker();
 			poi.setLat(lat + (Math.random() - 0.5));
 			poi.setLng(lng + (Math.random() - 0.5));
 			poi.setTitle("The Sunflowers");
@@ -26,7 +26,7 @@ public class BuildPOIListMock {
 			poi.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi2 = new PointOfInterest();
+			Marker poi2 = new Marker();
 			poi2.setTitle("Still Life with Cabbage and Clogs");
 			poi2.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi2.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -35,7 +35,7 @@ public class BuildPOIListMock {
 			poi2.setLng(lng + (Math.random() - 0.5));
 			poi2.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
-			PointOfInterest poi3 = new PointOfInterest();
+			Marker poi3 = new Marker();
 			poi3.setTitle("Crouching Boy with Sickle");
 			poi3.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi3.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -45,7 +45,7 @@ public class BuildPOIListMock {
 			poi3.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi4 = new PointOfInterest();
+			Marker poi4 = new Marker();
 			poi4.setTitle("Old Man at the Fireside");
 			poi4.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi4.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -55,7 +55,7 @@ public class BuildPOIListMock {
 			poi4.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi5 = new PointOfInterest();
+			Marker poi5 = new Marker();
 			poi5.setTitle("Woman Sewing");
 			poi5.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi5.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -65,7 +65,7 @@ public class BuildPOIListMock {
 			poi5.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi6 = new PointOfInterest();
+			Marker poi6 = new Marker();
 			poi6.setTitle("Woman with White Shawl");
 			poi6.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi6.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -75,7 +75,7 @@ public class BuildPOIListMock {
 			poi6.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi7 = new PointOfInterest();
+			Marker poi7 = new Marker();
 			poi7.setTitle("Beach at Scheveningen in Calm Weather");
 			poi7.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi7.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -85,7 +85,7 @@ public class BuildPOIListMock {
 			poi7.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi8 = new PointOfInterest();
+			Marker poi8 = new Marker();
 			poi8.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi8.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi8.setTitle("Dunes");
@@ -95,7 +95,7 @@ public class BuildPOIListMock {
 			poi8.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi9 = new PointOfInterest();
+			Marker poi9 = new Marker();
 			poi9.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi9.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
 			poi9.setTitle("Dunes with Figures");
@@ -105,7 +105,7 @@ public class BuildPOIListMock {
 			poi9.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi10 = new PointOfInterest();
+			Marker poi10 = new Marker();
 			poi10.setTitle("Beach at Scheveningen in Stormy Weather");
 			poi10.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi10.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -115,7 +115,7 @@ public class BuildPOIListMock {
 			poi10.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi11 = new PointOfInterest();
+			Marker poi11 = new Marker();
 			poi11.setTitle("Fisherman on the Beach");
 			poi11.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi11.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");
@@ -125,7 +125,7 @@ public class BuildPOIListMock {
 			poi11.setDescription("Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo Prova prova ecco ecco pero pero melo melo ");
 			
 			
-			PointOfInterest poi12 = new PointOfInterest();
+			Marker poi12 = new Marker();
 			poi12.setTitle("Starry Night Over the Rhone");
 			poi12.setImage("http://www.vggallery.com/painting/f_0001.jpg");
 			poi12.setThumbnail("http://www.vggallery.com/painting/f_0001.jpg");

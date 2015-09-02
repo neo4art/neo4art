@@ -1,6 +1,6 @@
 package org.neo4art.api.domain;
 
-public class PointOfInterest {
+public class Marker {
 	private Double lat;
 	private Double lng;
 	private String name;

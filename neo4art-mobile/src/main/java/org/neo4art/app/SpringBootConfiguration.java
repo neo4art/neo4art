@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.neo4art.web;
+package org.neo4art.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
