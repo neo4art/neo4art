@@ -355,13 +355,13 @@ public class PluginMarker extends MyPlugin {
    * @param callbackContext
    * @throws JSONException 
    */
-  @SuppressWarnings("unused")
+  /*@SuppressWarnings("unused")
   private void showInfoWindow(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
     String id = args.getString(1);
     Marker marker = this.getMarker(id);
     marker.showInfoWindow();
     this.sendNoResult(callbackContext);
-  }
+  }*/
 
   /**
    * Set rotation for the marker

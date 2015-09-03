@@ -6,19 +6,16 @@ document.addEventListener("deviceready", function() {
     
     // Initialize the map view
     info = JSON.parse( window.localStorage.getItem("info") );
+    console.log( info.length );
     map = plugin.google.maps.Map.getMap(div);
     // Wait until the map is ready status.
     map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
 }, false);
 
 function onMapReady() {
-    map.showDialog();
     myPosition.mapPosition();
     readMarkers.initMarker();
     map.setMapTypeId(plugin.google.maps.MapTypeId.ROADMAP);
-    
-    
-    //button.addEventListener("click", onBtnClicked, false);
 }
 
 var dat = {
@@ -45,6 +42,7 @@ var myPosition = {
 		
 		map.addMarker(
             {
+                icon: 'blue',
                 position: dat.origin,
                 title: "myPosition"
             }
@@ -81,20 +79,49 @@ var readMarkers = {
     initMarker: function() {
         this.LatLngBounds = new plugin.google.maps.LatLngBounds();
         for( var i = 0 ; i < info.length ; i++ ) {
-            this.createMarker( info[i] );
+            this.createMarker( info[i] , i );
         }
         this.fitBounds();
     },
     
-    index: 0,
-    
-    createMarker: function( myMarker ) {
+    createMarker: function( myMarker , i ) {
         console.log("lat: " + myMarker.lat + "\nlng: " + myMarker.lng );
-        map.addMarker({
-            position: new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng )  
-        });
+        map.addMarker(
+            {
+                position: new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng ),
+                disableAutoPan: false,
+                title: myMarker.title,
+                type: myMarker.type,
+                img: myMarker.image,
+                desc: myMarker.description,
+                'markerClick': function(marker) {
+                    readMarkers.markerListener(marker);
+                }
+            }
+        );
         this.LatLngBounds.extend( new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng ) );
-        this.index = this.index + 1;
+    },
+    
+    markerListener: function( marker ) {
+        console.log(marker);
+        console.log( marker.get( "title" ) );
+        console.log( marker.get( "type" ) );
+        console.log( marker.get( "desc" ) );
+        dat.destination = new plugin.google.maps.LatLng( marker.lat , marker.lng );
+        document.getElementById("markerInfo").innerHTML = 
+            '<div class="closeImg" onclick="markerInfo.close()">'+
+                '<img src='+ base64image.closeImg +'>'+
+            '</div>'+
+            '<div class="divInfo">'+
+                '<p id="title">'+ marker.get( "title" ) +'</p>'+
+                '<p>'+ marker.get( "type" ) +'<p/>'+
+                '<div class="miniImg">'+
+                    '<img src="'+ marker.get( "image" ) +'"/>'+
+                '</div>'+
+                '<p>'+ marker.get( "desc" ) +'</p>'+
+                '<p id="path" onClick="drawPath.initMap()">Percorso</p>'+
+            '</div>';
+        markerInfo.open();
     },
     
     fitBounds: function() {
@@ -102,6 +129,43 @@ var readMarkers = {
             'target': this.LatLngBounds
         });
         console.log( this.LatLngBounds );
+    }
+};
+
+var drawPath = {
+    initMap: function() {
+        /*setTimeout(function() {
+            
+            if (confirm("Do you want to go?")) {
+                plugin.google.maps.external.launchNavigation({
+                    "from": dat.origin,
+                    "to": dat.destination
+                });
+            }
+        }, 2000);*/
+    }
+};
+
+var markerInfo = {
+    isOpen: false,
+    
+    open: function() {
+        /*
+        if(menuInfo.isOpen === true) {
+            $("#menuInfo").index = 2;
+        } else {
+            $("#menuInfo").index = 1;
+        }
+        */
+        console.log("markerInfo open");
+        document.getElementById("markerInfo").style.visibility = "visible";
+        this.isOpen = true;
+    },
+    
+    close: function() {
+        console.log("markerInfo close");
+        document.getElementById("markerInfo").style.visibility = "hidden";
+        this.isOpen = false;
     }
 };
 
