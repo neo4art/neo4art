@@ -29,20 +29,9 @@ $(document).ready(function() {
     $("#spinner").hide();
     errorPopup.close();
     $(".closeImg").append('<img src='+ base64image.closeImg +'>');
-    document.addEventListener('searchbutton', app.onOptionKeyDown() , false);
 });
 
 var app = {
-    
-    onOptionKeyDown: function() {
-        if( this.color === false ) {
-            document.getElementById("container").style.backgroundColor = "red";
-            this.color = true;
-        } else {
-            document.getElementById("container").style.backgroundColor = "white";
-            this.color = false;
-        }
-    },
     
     findCurrentPosition: function() {
 		"use strict";
@@ -59,6 +48,7 @@ var app = {
 	onPositionSuccess: function(position) {
 		"use strict";
         console.log("position: " +position);
+        alert("success");
         app.ajaxCall( position.coords.latitude , position.coords.longitude );
 	},
     
@@ -80,7 +70,7 @@ var app = {
 				messaggio = "Non è stato possibile rilevare la posizione corrente";
 				break;
 		} 
-		navigator.notification.alert(messaggio, function() {}, "Avviso");
+		alert( messaggio );
 		document.getElementById( "loc" ).innerHTML = messaggio;
 		
 	},

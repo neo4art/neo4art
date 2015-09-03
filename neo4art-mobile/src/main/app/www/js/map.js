@@ -7,15 +7,14 @@ document.addEventListener("deviceready", function() {
     // Initialize the map view
     info = JSON.parse( window.localStorage.getItem("info") );
     map = plugin.google.maps.Map.getMap(div);
-    map.showDialog();    
     // Wait until the map is ready status.
     map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
 }, false);
 
 function onMapReady() {
+    map.showDialog();
     myPosition.mapPosition();
     readMarkers.initMarker();
-    map.setZoom( 14 );
     map.setMapTypeId(plugin.google.maps.MapTypeId.ROADMAP);
     
     
@@ -77,30 +76,32 @@ var myPosition = {
 
 var readMarkers = {
     
+    LatLngBounds: null,
+    
     initMarker: function() {
+        this.LatLngBounds = new plugin.google.maps.LatLngBounds();
         for( var i = 0 ; i < info.length ; i++ ) {
             this.createMarker( info[i] );
         }
-        //this.FitBounds();
+        this.fitBounds();
     },
     
     index: 0,
     
     createMarker: function( myMarker ) {
         console.log("lat: " + myMarker.lat + "\nlng: " + myMarker.lng );
-        
         map.addMarker({
-            position: new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng )   
+            position: new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng )  
         });
+        this.LatLngBounds.extend( new plugin.google.maps.LatLng( myMarker.lat , myMarker.lng ) );
+        this.index = this.index + 1;
     },
     
-    FitBounds: function() {
-        var bounds = new google.maps.LatLngBounds();
-        bounds.extend( dat.origin );
-        for( i =0 ; i < info.length ; i++ ) {
-            bounds.extend( new google.maps.LatLng( info[i].lat , info[i].lng ) );
-        }
-        map.fitBounds(bounds);
+    fitBounds: function() {
+        map.moveCamera({
+            'target': this.LatLngBounds
+        });
+        console.log( this.LatLngBounds );
     }
 };
 
