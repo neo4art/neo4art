@@ -1,4 +1,4 @@
-package org.neo4art.app.domain;
+package org.neo4art.api.domain;
 /**
  * 
  * @author Gianmarco Laggia

@@ -1,8 +1,8 @@
-package org.neo4art.app.repository;
+package org.neo4art.api.repository;
 
 import java.util.List;
 
-import org.neo4art.app.domain.PointOfInterest;
+import org.neo4art.api.domain.PointOfInterest;
 
 /**
  * 
@@ -20,5 +20,5 @@ public interface IPointOfInterestRepository {
 	 * @param types The list of types each POIs have to be chosen from
 	 * @return
 	 */
-	public List<PointOfInterest> getNearestPointOfInterest(double lat, double lng, int limit, List<String> types);
+	public List<PointOfInterest> getNearestPointOfInterest(double lat, double lng, int limit, String type);
 }
