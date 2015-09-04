@@ -18,7 +18,7 @@
         <param name="android-package" value="plugin.google.maps.MyGeocoder" />
     </feature>
     <allow-intent href="market:*" />
-    <name>Neo4App</name>
+    <name>nome2</name>
     <description>
         Hello World sample application that responds to the deviceready event.
     </description>

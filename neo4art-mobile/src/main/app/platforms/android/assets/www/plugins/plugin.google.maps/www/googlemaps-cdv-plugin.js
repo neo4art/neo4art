@@ -59,22 +59,23 @@ var BaseClass = function() {
   
   self.off = function(eventName, callback) {
     var i;
-    if (typeof eventName === "string" &&
-        eventName in _listeners) {
+    if (typeof eventName === "string"){
+      if(eventName in _listeners) {
       
-      if (typeof callback === "function") {
-        for (i = 0; i < _listeners[eventName].length; i++) {
-          if (_listeners[eventName][i].callback === callback) {
-            document.removeEventListener(eventName, _listeners[eventName][i].listener);
-            _listeners[eventName].splice(i, 1);
-            break;
+        if (typeof callback === "function") {
+          for (i = 0; i < _listeners[eventName].length; i++) {
+            if (_listeners[eventName][i].callback === callback) {
+              document.removeEventListener(eventName, _listeners[eventName][i].listener);
+              _listeners[eventName].splice(i, 1);
+              break;
+            }
           }
+        } else {
+          for (i = 0; i < _listeners[eventName].length; i++) {
+            document.removeEventListener(eventName, _listeners[eventName][i].listener);
+          }
+          delete _listeners[eventName];
         }
-      } else {
-        for (i = 0; i < _listeners[eventName].length; i++) {
-          document.removeEventListener(eventName, _listeners[eventName][i].listener);
-        }
-        delete _listeners[eventName];
       }
     } else {
       //Remove all event listeners
@@ -886,6 +887,7 @@ App.prototype.addMarker = function(markerOptions, callback) {
   markerOptions.rotation = markerOptions.rotation || 0;
   markerOptions.opacity = parseFloat("" + markerOptions.opacity, 10) || 1;
   markerOptions.disableAutoPan = markerOptions.disableAutoPan === undefined ? false: markerOptions.disableAutoPan;
+  markerOptions.params = markerOptions.params || {};
   if ("styles" in markerOptions) {
     markerOptions.styles = typeof markerOptions.styles === "object" ? markerOptions.styles : {};
     
@@ -1243,6 +1245,9 @@ Marker.prototype.remove = function(callback) {
 Marker.prototype.setDisableAutoPan = function(disableAutoPan) {
   this.set('disableAutoPan', disableAutoPan);
   cordova.exec(null, this.errorHandler, PLUGIN_NAME, 'exec', ['Marker.setDisableAutoPan', this.getId(), disableAutoPan]);
+};
+Marker.prototype.getParams = function () {
+    return this.get('params');
 };
 Marker.prototype.setOpacity = function(opacity) {
   this.set('opacity', opacity);
