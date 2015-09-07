@@ -610,21 +610,14 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
       return;
     }
     try {
-      Class pluginCls = Class.forName("plugin.google.maps.Plugin" + serviceName);
+      String className = "plugin.google.maps.Plugin" + serviceName;
+      Class pluginCls = Class.forName(className);
       
       CordovaPlugin plugin = (CordovaPlugin) pluginCls.newInstance();
       PluginEntry pluginEntry = new PluginEntry("GoogleMaps", plugin);
       this.plugins.put(serviceName, pluginEntry);
       
-      try {
-        Class cordovaPref = Class.forName("org.apache.cordova.CordovaPreferences");
-        if (cordovaPref != null) {
-          Method privateInit = CordovaPlugin.class.getMethod("privateInitialize", CordovaInterface.class, CordovaWebView.class, cordovaPref);
-          if (privateInit != null) {
-            privateInit.invoke(plugin, this.cordova, webView, null);
-          }
-        }
-      } catch (Exception e2) {}
+      plugin.privateInitialize(className, this.cordova, webView, null);
       
       plugin.initialize(this.cordova, webView);
       ((MyPluginInterface)plugin).setMapCtrl(this);
@@ -675,7 +668,7 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
     
     // map frame
     final FrameLayout mapFrame = new FrameLayout(activity);
-    mapFrame.setPadding(0, 0, 0, 0);
+    mapFrame.setPadding(0, 0, 0, (int)(40 * density));
     dialogLayer.addView(mapFrame);
     
     if (this.mPluginLayout != null && 
@@ -706,7 +699,7 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
       mapView.setLayoutParams(params);
     } 
     mapFrame.addView(this.mapView);
-    /*
+    
     // button frame
     LinearLayout buttonFrame = new LinearLayout(activity);
     buttonFrame.setOrientation(LinearLayout.HORIZONTAL);
@@ -742,7 +735,7 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
     licenseLink.setOnClickListener(GoogleMaps.this);
     licenseLink.setId(LICENSE_LINK_ID);
     buttonFrame.addView(licenseLink);
-    */
+    
     webView.getView().setVisibility(View.GONE);
     root.addView(windowLayer);
     
@@ -1204,13 +1197,13 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
           disableAutoPan = properties.getBoolean("disableAutoPan");
         } catch (JSONException e) {}
         if (disableAutoPan) {
-          marker.showInfoWindow();
+          //marker.showInfoWindow();
           return true;
         }
       }
     }
 
-    marker.showInfoWindow();
+    //marker.showInfoWindow();
     return true;
     //return false;
   }
@@ -1700,7 +1693,17 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
       return;
     }
   }
-  
+
+  public static boolean isNumeric(String str)
+  {
+    for (char c : str.toCharArray()) {
+      if (!Character.isDigit(c)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
   public View getInfoContents(Marker marker) {
@@ -1732,6 +1735,55 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
     windowLayer.setOrientation(LinearLayout.VERTICAL);
     LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
     layoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
+
+    int maxWidth = 0;
+
+    if (styles != null) {
+      try {
+        int width = 0;
+        String widthString = styles.getString("width");
+
+        if (widthString.endsWith("%")) {
+          double widthDouble = Double.parseDouble(widthString.replace ("%", ""));
+
+          width = (int)((double)mapView.getWidth() * (widthDouble / 100));
+        } else if (isNumeric(widthString)) {
+          double widthDouble = Double.parseDouble(widthString);
+
+          if (widthDouble <= 1.0) {	// for percentage values (e.g. 0.5 = 50%).
+            width = (int)((double)mapView.getWidth() * (widthDouble));
+          } else {
+            width = (int)widthDouble;
+          }
+        }
+
+        if (width > 0) {
+          layoutParams.width = width;
+        }
+      } catch (Exception e) {}
+
+      try {
+        String widthString = styles.getString("maxWidth");
+
+        if (widthString.endsWith("%")) {
+          double widthDouble = Double.parseDouble(widthString.replace ("%", ""));
+
+          maxWidth = (int)((double)mapView.getWidth() * (widthDouble / 100));
+
+          // make sure to take padding into account.
+          maxWidth -= (windowLayer.getPaddingLeft() + windowLayer.getPaddingRight());
+        } else if (isNumeric(widthString)) {
+          double widthDouble = Double.parseDouble(widthString);
+
+          if (widthDouble <= 1.0) {	// for percentage values (e.g. 0.5 = 50%).
+            maxWidth = (int)((double)mapView.getWidth() * (widthDouble));
+          } else {
+            maxWidth = (int)widthDouble;
+          }
+        }
+      } catch (Exception e) {}
+    }
+
     windowLayer.setLayoutParams(layoutParams);
 
     //----------------------------------------
@@ -1769,6 +1821,11 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
         image = PluginUtil.scaleBitmapForDevice(image);
         ImageView imageView = new ImageView(this.cordova.getActivity());
         imageView.setImageBitmap(image);
+
+        if (maxWidth > 0) {
+          imageView.setMaxWidth(maxWidth);
+        }
+
         windowLayer.addView(imageView);
       } else {
         TextView textView = new TextView(this.cordova.getActivity());
@@ -1805,7 +1862,11 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
           } catch (JSONException e) {}
         }
         textView.setTypeface(Typeface.DEFAULT, fontStyle);
-        
+
+        if (maxWidth > 0) {
+          textView.setMaxWidth(maxWidth);
+        }
+
         windowLayer.addView(textView);
       }
     }
@@ -1820,8 +1881,13 @@ public class GoogleMaps extends CordovaPlugin implements View.OnClickListener, O
         textView2.setTextAlignment(textAlignment);
       }
 
+      if (maxWidth > 0) {
+        textView2.setMaxWidth(maxWidth);
+      }
+
       windowLayer.addView(textView2);
     }
+
     return windowLayer;
   }
 
