@@ -107,9 +107,9 @@ body {
 }
 
 .container-page {
-	height: 100%;
-	overflow: auto;
-	width: 100%;
+	width: 1080px;
+    margin:auto;
+    box-shadow: 1px 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .container-page.scrollbar-macosx {
@@ -204,12 +204,8 @@ input[type="search"]::-webkit-search-cancel-button:after {
 }
 
 .content {
-	max-width: 900px;
 	margin: auto;
-	margin-top: 10px;
-	margin-bottom: 10px;
 	border: 1px solid #ccc;
-	box-shadow: 1px 4px 16px rgba(0, 0, 0, 0.3);
 	text-align: center;
 	color: #333;
 	box-sizing: border-box;
