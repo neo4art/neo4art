@@ -3,6 +3,7 @@ package org.neo4art.importer.wikipedia.parser;
 import java.net.MalformedURLException;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4art.domain.Country;
 
@@ -21,6 +22,7 @@ public class WikipediaCountryAustriaInfoboxTest {
 		
 		
 		@Test
+		@Ignore
 		public void shoudParseArtwork() throws MalformedURLException{
 			Country country = WikipediaCountryInfoboxParser.parse(INFOBOX);
 			

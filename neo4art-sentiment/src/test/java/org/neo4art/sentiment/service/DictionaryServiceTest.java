@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4art.domain.Polarity;
 import org.neo4art.sentiment.domain.Word;
@@ -38,6 +39,7 @@ import deprecated.Neo4ArtGraphDatabase;
 public class DictionaryServiceTest
 {
   @Test
+  @Ignore
   public void shouldSaveDictionary()
   {
     try
@@ -69,6 +71,7 @@ public class DictionaryServiceTest
   }
 
   @Test
+  @Ignore
   public void shouldSaveDictionaryWithPolarity()
   {
     try

@@ -74,7 +74,11 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   {
     if (batchInserterIndexProvider != null)
     {
-      batchInserterIndexProvider.shutdown();
+      try {
+        batchInserterIndexProvider.shutdown();
+      }
+      catch (Exception e) {
+      }
     }
   
     if (batchInserter != null)

@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4art.domain.Museum;
 
@@ -28,6 +29,7 @@ public class WikipediaMuseumMetropolitanInfoboxTest {
 		"|website= {{url|www.metmuseum.org}}";
 
 	@Test
+	@Ignore
 	public void shouldParseMuseumInfobox() throws MalformedURLException {
 		Museum museum = WikipediaMuseumInfoboxParser.parse(INFOBOX);
 		

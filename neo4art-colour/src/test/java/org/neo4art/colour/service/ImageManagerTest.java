@@ -3,6 +3,7 @@ package org.neo4art.colour.service;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 
@@ -375,7 +376,7 @@ public class ImageManagerTest
   {
     try
     {
-      URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg/175px-Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg");
+      URL url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg/175px-Vincent_van_Gogh_-_The_yellow_house_%28%27The_street%27%29.jpg");
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
@@ -399,6 +400,7 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
       Assert.fail(e.getMessage());
     }
   }
@@ -408,8 +410,11 @@ public class ImageManagerTest
   {
     try
     {
-      URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Vincent_Willem_van_Gogh_138.jpg/640px-Vincent_Willem_van_Gogh_138.jpg");
-      ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
+      URL url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Vincent_Willem_van_Gogh_138.jpg/640px-Vincent_Willem_van_Gogh_138.jpg");
+      BufferedImage bufferedImage = ImageIO.read(url);
+      if (bufferedImage == null)
+        throw new IllegalStateException("Can't read image from " + url);
+      ImageDefaultManager imageManager = new ImageDefaultManager(bufferedImage);
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
       System.out.println("AVG name:" + analyzeImage.getAverageClosestColour().getName());
@@ -432,6 +437,7 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
       Assert.fail(e.getMessage());
     }
   }
@@ -441,7 +447,7 @@ public class ImageManagerTest
   {
     try
     {
-      URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Vincent_Willem_van_Gogh_128.jpg/640px-Vincent_Willem_van_Gogh_128.jpg");
+      URL url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Vincent_Willem_van_Gogh_128.jpg/640px-Vincent_Willem_van_Gogh_128.jpg");
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
@@ -474,7 +480,7 @@ public class ImageManagerTest
   {
     try
     {
-      URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Vincent_Willem_van_Gogh_015.jpg/640px-Vincent_Willem_van_Gogh_015.jpg");
+      URL url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg/640px-Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_%28Yorck%29.jpg");
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
@@ -487,9 +493,9 @@ public class ImageManagerTest
 
       Color avg = new Color(122, 115, 86);
       assertEquals(analyzeImage.getAverageColour(), avg);
-      Color min = new Color(0, 14, 0);
+      Color min = new Color(0, 2, 3);
       assertEquals(analyzeImage.getMinimumColour(), min);
-      Color max = new Color(255, 255, 246);
+      Color max = new Color(255, 255, 248);
       assertEquals(analyzeImage.getMaximumColour(), max);
 
       Assert.assertEquals(analyzeImage.getAverageClosestColour().getName(), "Gold Fusion");
@@ -498,6 +504,7 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
       Assert.fail(e.getMessage());
     }
   }
@@ -507,7 +514,7 @@ public class ImageManagerTest
   {
     try
     {
-      URL url = new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Vincent_van_Gogh_-_Portret_van_de_postbode_Joseph_Roulin.jpg/640px-Vincent_van_Gogh_-_Portret_van_de_postbode_Joseph_Roulin.jpg");
+      URL url = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Vincent_van_Gogh_-_Portret_van_de_postbode_Joseph_Roulin.jpg/640px-Vincent_van_Gogh_-_Portret_van_de_postbode_Joseph_Roulin.jpg");
       ImageDefaultManager imageManager = new ImageDefaultManager(ImageIO.read(url));
       ColourAnalysis analyzeImage = imageManager.analyzeImage();
 
@@ -531,6 +538,7 @@ public class ImageManagerTest
     }
     catch (Exception e)
     {
+      e.printStackTrace();
       Assert.fail(e.getMessage());
     }
   }
