@@ -6,7 +6,7 @@
 	<artifactId>neo4art-mobile</artifactId>
 
 	<description>neo4art mobile application</description>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.neo4art</groupId>
