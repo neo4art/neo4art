@@ -29,12 +29,13 @@ import org.neo4art.core.graphdb.CoreRelationship;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
+import org.neo4art.domain.Neo4ArtLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.MapUtil;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

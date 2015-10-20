@@ -19,15 +19,14 @@ package org.neo4art.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 3 May 2015
  */
-public class Tecnique implements Neo4ArtNode
+public class Tecnique implements Node
 {
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Tecnique };
 

@@ -23,14 +23,15 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.sentiment.bean.NLPDocument;
 import org.neo4art.sentiment.vangoghletters.VanGoghLetter001;
 import org.neo4art.sentiment.vangoghletters.VanGoghLetter002;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
+import deprecated.Neo4ArtGraphDatabase;
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

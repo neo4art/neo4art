@@ -16,7 +16,6 @@
 
 package org.neo4art.sentiment.repository;
 
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.sentiment.bean.RedundancyStatistics;
 import org.neo4art.sentiment.domain.NLP;
@@ -25,6 +24,8 @@ import org.neo4art.sentiment.graphdb.NLPRelationship;
 import org.neo4art.sentiment.graphdb.RedundancyTreeLabel;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

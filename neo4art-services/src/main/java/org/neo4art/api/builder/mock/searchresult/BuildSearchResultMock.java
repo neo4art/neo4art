@@ -24,10 +24,11 @@ import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
 import org.neo4art.domain.Museum;
-import org.neo4art.graphdb.Neo4ArtGraph;
-import org.neo4art.graphdb.Neo4ArtNode;
-import org.neo4art.graphdb.Neo4ArtRelationship;
+import org.neo4art.graphdb.Node;
+import org.neo4art.graphdb.Relationship;
 import org.neo4art.sentiment.domain.Word;
+
+import deprecated.Graph;
 
 /**
  * @author Enrico De Benetti
@@ -37,17 +38,17 @@ import org.neo4art.sentiment.domain.Word;
 public class BuildSearchResultMock {
 
 	
-	public Neo4ArtGraph getSearchResult(){
+	public Graph getSearchResult(){
 		
-	 List<Neo4ArtNode> listaSearch = new ArrayList<Neo4ArtNode>();	
-	 List<Neo4ArtRelationship> relationshpiList = new ArrayList<Neo4ArtRelationship>();
+	 List<Node> listaSearch = new ArrayList<Node>();	
+	 List<Relationship> relationshpiList = new ArrayList<Relationship>();
 	 
 	  try{
 		  
 		Artist artist = new Artist();
 		artist.setNodeId(0);
 		artist.setName("Van Gogh");
-		artist.setWebsite("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
+		//artist.setWebsite("http://en.wikipedia.org/wiki/Vincent_van_Gogh");
 
 		Artwork artwork1 = new Artwork();
 		artwork1.setNodeId(1);
@@ -106,83 +107,83 @@ public class BuildSearchResultMock {
 		listaSearch.add(color);
 		listaSearch.add(word);
 		
-	   Neo4ArtRelationship relationship1 = new Neo4ArtRelationship();
+	   Relationship relationship1 = new Relationship();
 	   relationship1.setStartNode(artwork1);
 	   relationship1.setEndNode(artist);
 		
-	   Neo4ArtRelationship relationship2 = new Neo4ArtRelationship();
+	   Relationship relationship2 = new Relationship();
 	   relationship2.setStartNode(artwork2);
 	   relationship2.setEndNode(artist);
 	   
-	   Neo4ArtRelationship relationship3 = new Neo4ArtRelationship();
+	   Relationship relationship3 = new Relationship();
 	   relationship3.setStartNode(artwork3);
 	   relationship3.setEndNode(artist);
 	   
-	   Neo4ArtRelationship relationship4 = new Neo4ArtRelationship();
+	   Relationship relationship4 = new Relationship();
 	   relationship4.setStartNode(artwork4);
 	   relationship4.setEndNode(artist);
 	   
-	   Neo4ArtRelationship relationship5 = new Neo4ArtRelationship();
+	   Relationship relationship5 = new Relationship();
 	   relationship5.setStartNode(artwork5);
 	   relationship5.setEndNode(artist);
 	   
-	   Neo4ArtRelationship relationship6 = new Neo4ArtRelationship();
+	   Relationship relationship6 = new Relationship();
 	   relationship6.setStartNode(museum);
 	   relationship6.setEndNode(artwork4);
 	   
-	   Neo4ArtRelationship relationship7 = new Neo4ArtRelationship();
+	   Relationship relationship7 = new Relationship();
 	   relationship7.setStartNode(artwork6);
 	   relationship7.setEndNode(artwork4);
 	   
-	   Neo4ArtRelationship relationship8 = new Neo4ArtRelationship();
+	   Relationship relationship8 = new Relationship();
 	   relationship8.setStartNode(artwork3);
 	   relationship8.setEndNode(artwork6);
 	   
-	   Neo4ArtRelationship relationship9 = new Neo4ArtRelationship();
+	   Relationship relationship9 = new Relationship();
 	   relationship9.setStartNode(word);
 	   relationship9.setEndNode(artwork3);
 	   
-	   Neo4ArtRelationship relationship10 = new Neo4ArtRelationship();
+	   Relationship relationship10 = new Relationship();
 	   relationship10.setStartNode(color);
 	   relationship10.setEndNode(artwork3);
 	   
-	   Neo4ArtRelationship relationship11 = new Neo4ArtRelationship();
+	   Relationship relationship11 = new Relationship();
 	   relationship11.setStartNode(artwork4);
 	   relationship11.setEndNode(artwork3);
 	   
-	   Neo4ArtRelationship relationship12 = new Neo4ArtRelationship();
+	   Relationship relationship12 = new Relationship();
 	   relationship12.setStartNode(artwork1);
 	   relationship12.setEndNode(color);
 	   
-	   Neo4ArtRelationship relationship13 = new Neo4ArtRelationship();
+	   Relationship relationship13 = new Relationship();
 	   relationship13.setStartNode(artwork2);
 	   relationship13.setEndNode(color);
 	   
-	   Neo4ArtRelationship relationship14 = new Neo4ArtRelationship();
+	   Relationship relationship14 = new Relationship();
 	   relationship14.setStartNode(artwork6);
 	   relationship14.setEndNode(color);
 	   
-	   Neo4ArtRelationship relationship15 = new Neo4ArtRelationship();
+	   Relationship relationship15 = new Relationship();
 	   relationship15.setStartNode(artwork5);
 	   relationship15.setEndNode(color);
 	   
-	   Neo4ArtRelationship relationship16 = new Neo4ArtRelationship();
+	   Relationship relationship16 = new Relationship();
 	   relationship16.setStartNode(artwork6);
 	   relationship16.setEndNode(artist);
 	   
-	   Neo4ArtRelationship relationship17 = new Neo4ArtRelationship();
+	   Relationship relationship17 = new Relationship();
 	   relationship17.setStartNode(artwork6);
 	   relationship17.setEndNode(artwork2);
 	   
-	   Neo4ArtRelationship relationship18 = new Neo4ArtRelationship();
+	   Relationship relationship18 = new Relationship();
 	   relationship18.setStartNode(museum);
 	   relationship18.setEndNode(artwork6);
 	   
-	   Neo4ArtRelationship relationship19 = new Neo4ArtRelationship();
+	   Relationship relationship19 = new Relationship();
 	   relationship19.setStartNode(artwork4);
 	   relationship19.setEndNode(artwork6);
 	   
-	   Neo4ArtRelationship relationship20 = new Neo4ArtRelationship();
+	   Relationship relationship20 = new Relationship();
 	   relationship20.setStartNode(artwork5);
 	   relationship20.setEndNode(artwork6);
 	   
@@ -213,17 +214,17 @@ public class BuildSearchResultMock {
 		  System.out.println("ERRORE: "+e.getMessage());
 	  }
 		
-	 Neo4ArtGraph neo4ArtGraph = new Neo4ArtGraph();
-	 neo4ArtGraph.setNodes(listaSearch);
-	 neo4ArtGraph.setRelationships(relationshpiList);
+	 Graph graph = new Graph();
+	 graph.setNodes(listaSearch);
+	 graph.setRelationships(relationshpiList);
 		
-	 return neo4ArtGraph;	
+	 return graph;	
 	}
 	
-    public Neo4ArtGraph getDetailSearchNode(){
+    public Graph getDetailSearchNode(){
 		
-     List<Neo4ArtNode> listaSearch = new ArrayList<Neo4ArtNode>();	
-     List<Neo4ArtRelationship> relationshpiList = new ArrayList<Neo4ArtRelationship>();
+     List<Node> listaSearch = new ArrayList<Node>();	
+     List<Relationship> relationshpiList = new ArrayList<Relationship>();
     	 
      try{	
     	
@@ -289,83 +290,83 @@ public class BuildSearchResultMock {
  		listaSearch.add(artwork10);
  		
  		
- 	   Neo4ArtRelationship relationship1 = new Neo4ArtRelationship();
+ 	   Relationship relationship1 = new Relationship();
  	   relationship1.setStartNode(artwork2);
  	   relationship1.setEndNode(artwork1);
  	   
- 	   Neo4ArtRelationship relationship2 = new Neo4ArtRelationship();
+ 	   Relationship relationship2 = new Relationship();
 	   relationship2.setStartNode(artwork3);
 	   relationship2.setEndNode(artwork1);
 	   
-	   Neo4ArtRelationship relationship3 = new Neo4ArtRelationship();
+	   Relationship relationship3 = new Relationship();
  	   relationship3.setStartNode(artwork4);
  	   relationship3.setEndNode(artwork1);
  	   
- 	   Neo4ArtRelationship relationship4 = new Neo4ArtRelationship();
+ 	   Relationship relationship4 = new Relationship();
 	   relationship4.setStartNode(artwork5);
 	   relationship4.setEndNode(artwork1);
 	   
-	   Neo4ArtRelationship relationship5 = new Neo4ArtRelationship();
+	   Relationship relationship5 = new Relationship();
  	   relationship5.setStartNode(artwork6);
  	   relationship5.setEndNode(artwork1);
  	   
- 	   Neo4ArtRelationship relationship6 = new Neo4ArtRelationship();
+ 	   Relationship relationship6 = new Relationship();
 	   relationship6.setStartNode(artwork7);
 	   relationship6.setEndNode(artwork8);
 	   
-	   Neo4ArtRelationship relationship7 = new Neo4ArtRelationship();
+	   Relationship relationship7 = new Relationship();
  	   relationship7.setStartNode(artwork10);
  	   relationship7.setEndNode(artwork8);
  	   
- 	   Neo4ArtRelationship relationship8 = new Neo4ArtRelationship();
+ 	   Relationship relationship8 = new Relationship();
 	   relationship8.setStartNode(artwork6);
 	   relationship8.setEndNode(artwork10);
 	   
-	   Neo4ArtRelationship relationship9 = new Neo4ArtRelationship();
+	   Relationship relationship9 = new Relationship();
  	   relationship9.setStartNode(artwork5);
  	   relationship9.setEndNode(artwork6);
  	   
- 	   Neo4ArtRelationship relationship10 = new Neo4ArtRelationship();
+ 	   Relationship relationship10 = new Relationship();
 	   relationship10.setStartNode(artwork4);
 	   relationship10.setEndNode(artwork6);
 	   
-	   Neo4ArtRelationship relationship11 = new Neo4ArtRelationship();
+	   Relationship relationship11 = new Relationship();
  	   relationship11.setStartNode(artwork8);
  	   relationship11.setEndNode(artwork6);
  	   
- 	   Neo4ArtRelationship relationship12 = new Neo4ArtRelationship();
+ 	   Relationship relationship12 = new Relationship();
 	   relationship12.setStartNode(artwork2);
 	   relationship12.setEndNode(artwork4);
 	   
-	   Neo4ArtRelationship relationship13 = new Neo4ArtRelationship();
+	   Relationship relationship13 = new Relationship();
  	   relationship13.setStartNode(artwork3);
  	   relationship13.setEndNode(artwork4);
  	   
- 	   Neo4ArtRelationship relationship14 = new Neo4ArtRelationship();
+ 	   Relationship relationship14 = new Relationship();
 	   relationship14.setStartNode(artwork10);
 	   relationship14.setEndNode(artwork4);
 	   
-	   Neo4ArtRelationship relationship15 = new Neo4ArtRelationship();
+	   Relationship relationship15 = new Relationship();
  	   relationship15.setStartNode(artwork9);
  	   relationship15.setEndNode(artwork4);
  	   
- 	   Neo4ArtRelationship relationship16 = new Neo4ArtRelationship();
+ 	   Relationship relationship16 = new Relationship();
 	   relationship16.setStartNode(artwork10);
 	   relationship16.setEndNode(artwork1);
 	   
-	   Neo4ArtRelationship relationship17 = new Neo4ArtRelationship();
+	   Relationship relationship17 = new Relationship();
  	   relationship17.setStartNode(artwork10);
  	   relationship17.setEndNode(artwork3);
  	   
- 	   Neo4ArtRelationship relationship18 = new Neo4ArtRelationship();
+ 	   Relationship relationship18 = new Relationship();
 	   relationship18.setStartNode(artwork7);
 	   relationship18.setEndNode(artwork10);
 	   
-	   Neo4ArtRelationship relationship19 = new Neo4ArtRelationship();
+	   Relationship relationship19 = new Relationship();
  	   relationship19.setStartNode(artwork8);
  	   relationship19.setEndNode(artwork10);
  	   
- 	   Neo4ArtRelationship relationship20 = new Neo4ArtRelationship();
+ 	   Relationship relationship20 = new Relationship();
 	   relationship20.setStartNode(artwork9);
 	   relationship20.setEndNode(artwork10);
  	   
@@ -395,11 +396,11 @@ public class BuildSearchResultMock {
 		  System.out.println("ERRORE: "+e.getMessage());
 	  }
 		
-	 Neo4ArtGraph neo4ArtGraph = new Neo4ArtGraph();
-	 neo4ArtGraph.setNodes(listaSearch);
-	 neo4ArtGraph.setRelationships(relationshpiList);
+	 Graph graph = new Graph();
+	 graph.setNodes(listaSearch);
+	 graph.setRelationships(relationshpiList);
 		
-	 return neo4ArtGraph;		
+	 return graph;		
 	}
     
 }

@@ -20,12 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.neo4art.domain.Artist;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.sentiment.bean.NLPDocument;
 import org.neo4art.sentiment.bean.SentimentAnalysisResult;
 import org.neo4art.sentiment.domain.SentimentAnalysis;
 import org.neo4art.sentiment.repository.DefaultSentimentAnalisysRepository;
 import org.neo4art.sentiment.repository.SentimentAnalysisRepository;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

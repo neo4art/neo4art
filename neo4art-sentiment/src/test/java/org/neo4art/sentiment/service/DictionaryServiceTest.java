@@ -24,11 +24,12 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Polarity;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
 import org.neo4art.sentiment.domain.Word;
 import org.neo4art.sentiment.graphdb.NLPLegacyIndex;
 import org.neo4j.graphdb.index.IndexHits;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
+import deprecated.Neo4ArtGraphDatabase;
 
 /**
  * @author Lorenzo Speranzoni

@@ -16,8 +16,8 @@
 
 package org.neo4art.colour.graphdb;
 
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
-import org.neo4art.graphdb.Neo4ArtLegacyIndexType;
+import deprecated.Neo4ArtLegacyIndex;
+import deprecated.Neo4ArtLegacyIndexType;
 
 /**
  * @author Lorenzo Speranzoni

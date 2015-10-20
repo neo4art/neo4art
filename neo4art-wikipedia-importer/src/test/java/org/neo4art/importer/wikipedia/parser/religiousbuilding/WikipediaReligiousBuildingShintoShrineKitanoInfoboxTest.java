@@ -6,7 +6,8 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.importer.wikipedia.parser.religiousBuilding.WikipediaReligiousBuildingShintoShrineInfobox;
+
+import toberefactored.parser.WikipediaReligiousBuildingShintoShrineInfobox;
 
 public class WikipediaReligiousBuildingShintoShrineKitanoInfoboxTest {
 

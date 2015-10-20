@@ -16,7 +16,6 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import info.bliki.wiki.dump.WikiArticle;
 import info.bliki.wiki.namespaces.Namespace;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,44 +26,28 @@ import org.neo4j.graphdb.Label;
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public class WikipediaCategory extends WikipediaGeneric implements WikipediaElement
-{
+public class WikipediaCategory extends WikipediaAbstractElement implements WikipediaElement {
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCategory };
 
-  public WikipediaCategory()
-  {
-  }
-
-  public WikipediaCategory(String title)
-  {
-    setTitle(title);
-  }
-
-  public WikipediaCategory(WikiArticle article)
-  {
-    from(article);
+  public WikipediaCategory() {
   }
 
   @Override
-  public void setTitle(String title)
-  {
-    if (!StringUtils.startsWith(title, new Namespace().CATEGORY.getCanonicalName()))
-    {
+  public void setTitle(String title) {
+    if (!StringUtils.startsWith(title, new Namespace().CATEGORY.getCanonicalName())) {
       title = new Namespace().CATEGORY.getCanonicalName() + ":" + title;
     }
-    
+
     super.setTitle(title);
   }
 
   @Override
-  public WikipediaType getType()
-  {
+  public WikipediaType getType() {
     return WikipediaType.CATEGORY;
   }
 
   @Override
-  public Label[] getLabels()
-  {
+  public Label[] getLabels() {
     return LABELS;
   }
 }

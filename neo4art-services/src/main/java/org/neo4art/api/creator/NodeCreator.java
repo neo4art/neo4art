@@ -26,9 +26,9 @@ import org.neo4art.domain.HistoricPlace;
 import org.neo4art.domain.HistoricSite;
 import org.neo4art.domain.Monument;
 import org.neo4art.domain.Museum;
+import org.neo4art.domain.Neo4ArtLabel;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
-import org.neo4art.graphdb.Neo4ArtLabel;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.literature.graphdb.LiteratureLabel;
 import org.neo4art.sentiment.domain.Word;
@@ -62,9 +62,9 @@ public class NodeCreator {
 		
 	 Node node = new Node();	
 	 node.setId(artist.getNodeId());
-	 node.setLink(artist.getWebsite());
+	 //node.setLink(artist.getWebsite());
 	 node.setName(artist.getName());
-	 node.setThumbnail(artist.getImage()!=null ? artist.getImage().toString() : "");
+	 //node.setThumbnail(artist.getImage()!=null ? artist.getImage().toString() : "");
 	 node.setType(Neo4ArtLabel.Artist.name());
 	 
 	 return node;	
@@ -111,8 +111,8 @@ public class NodeCreator {
 	 Node node = new Node();	
 	 node.setId(monument.getNodeId());
 	 node.setLink(null);
-	 node.setName(monument.getMonumentName());
-	 node.setThumbnail(monument.getImage()!=null ? monument.getImage().toString() : "");
+	 node.setName(monument.getName());
+	 //node.setThumbnail(monument.getImage()!=null ? monument.getImage().toString() : "");
 	 node.setType(Neo4ArtLabel.Monument.name());
 		 
 	 return node;		

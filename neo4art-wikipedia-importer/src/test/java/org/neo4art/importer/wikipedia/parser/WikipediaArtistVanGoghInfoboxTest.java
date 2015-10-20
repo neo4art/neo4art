@@ -1,19 +1,12 @@
 package org.neo4art.importer.wikipedia.parser;
 
-
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.neo4art.domain.ArtMovement;
 import org.neo4art.domain.Artist;
-import org.neo4art.domain.Artwork;
 
 public class WikipediaArtistVanGoghInfoboxTest {
-
 	private static String INFOBOX =
 		"{{Infobox artist\n" +
         "| bgcolour      = #FBEC5D\n" +
@@ -31,43 +24,9 @@ public class WikipediaArtistVanGoghInfoboxTest {
         "| works         =  ''[[The Starry Night|Starry Night]]'', ''[[Sunflowers (Van Gogh series)|Sunflowers]]'', ''[[Bedroom in Arles]]'', ''[[Portrait of Dr. Gachet]]'', ''[[Sien (Van Gogh series)|Sorrow]]''\n" +
         "| patron        = [[Theo van Gogh (art dealer)|Theo van Gogh]]}}";
 	
-	
 	@Test
 	public void shouldParseArtistInfobox() throws MalformedURLException {
 		Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
-		
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy M dd");	
-		URL url = new URL("http://en.wikipedia.org/wiki/File:Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_(454045).jpg");
-		
-		String test = "";
-		ArrayList<Artwork> work = artist.getNotableWorks();
-		for(int i = 0; i < work.size(); i++){
-			test = test + work.get(i).getTitle() +",";
-		}
-		int leng = test.length();
-		test = test.substring(0, leng-1);
-		
-		String movTest = "";
-		ArrayList<ArtMovement> mov = artist.getMovement();
-		for(int i = 0; i < mov.size(); i++){
-			movTest = movTest + mov.get(i).getName() +",";
-		}
-		int lengt = movTest.length();
-		movTest = movTest.substring(0, lengt-1);
-		
 		Assert.assertEquals("Vincent van Gogh", artist.getName());
-		Assert.assertEquals("Auvers-sur-Oise", artist.getDeathPlace());
-		Assert.assertEquals("1853 3 30", formatDate.format(artist.getBirthDate().getTime()));
-		Assert.assertEquals("Zundert, Netherlands", artist.getBirthPlace());
-		Assert.assertEquals("1890 7 29",formatDate.format(artist.getDeathDate().getTime()));
-		Assert.assertEquals("Post-Impressionism", movTest);
-		Assert.assertEquals("The Starry Night|| Starry Night, Sunflowers (Van Gogh series)|| Sunflowers, Bedroom in Arles, Portrait of Dr. Gachet, Sien (Van Gogh series)|| Sorrow", test);
-		Assert.assertEquals("Theo van Gogh (art dealer) Theo van Gogh", artist.getPatrons());
-		Assert.assertEquals(url, artist.getImage());
-		Assert.assertEquals("Self-Portrait, Spring 1887, Oil on pasteboard, 42 x 33.7 cm., Art Institute of Chicago (F 345)", artist.getCaption());
-		Assert.assertEquals("An intense man with close cropped hair and red beard gazes to the left.", artist.getAlt());
-		Assert.assertEquals("Painting, drawing", artist.getField());
-		Assert.assertEquals("Anton Mauve", artist.getTrainer());
-		
 	}
 }

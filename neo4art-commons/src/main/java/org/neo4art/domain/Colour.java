@@ -19,8 +19,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
 /**
@@ -28,7 +27,7 @@ import org.neo4j.graphdb.Label;
  * @since 01 Mag 2015
  *
  */
-public class Colour implements Neo4ArtNode
+public class Colour implements Node
 {
   private static final Label[] LABELS             = new Label[] { Neo4ArtLabel.Colour };
 

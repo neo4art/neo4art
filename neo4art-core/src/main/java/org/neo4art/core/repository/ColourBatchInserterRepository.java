@@ -18,7 +18,8 @@ package org.neo4art.core.repository;
 
 import org.neo4art.colour.graphdb.ColourLegacyIndex;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

@@ -23,8 +23,9 @@ import org.neo4art.colour.graphdb.ColourLegacyIndex;
 import org.neo4art.colour.graphdb.ColourRelationship;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4j.graphdb.index.IndexHits;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

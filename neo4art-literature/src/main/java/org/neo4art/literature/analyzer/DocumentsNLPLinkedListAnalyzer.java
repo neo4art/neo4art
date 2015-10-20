@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.literature.repository.DocumentBatchInserterRepository;
 import org.neo4art.literature.repository.DocumentRepository;
@@ -33,6 +31,9 @@ import org.neo4art.sentiment.service.RedundancyCounterAggregatorTreeService;
 import org.neo4art.sentiment.service.RedundancyCounterService;
 import org.neo4art.sentiment.service.SentimentAnalysisPOSTagPatternService;
 import org.neo4art.sentiment.service.SentimentAnalysisService;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * Implementation based on a linked list of NLP POS Tags.

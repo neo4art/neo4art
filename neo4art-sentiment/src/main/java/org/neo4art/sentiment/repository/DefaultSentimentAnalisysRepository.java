@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.neo4art.domain.Artist;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.literature.graphdb.LiteratureLabel;
 import org.neo4art.literature.graphdb.LiteratureRelationship;
@@ -30,6 +29,8 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.MapUtil;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Enrico De Benetti

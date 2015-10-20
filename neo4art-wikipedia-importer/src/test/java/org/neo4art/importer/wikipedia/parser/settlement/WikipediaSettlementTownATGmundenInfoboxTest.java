@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
 
+import toberefactored.parser.WikipediaSettlementTownAtInfoboxParser;
+
 public class WikipediaSettlementTownATGmundenInfoboxTest
 {
   private static String INFOBOX ="{{Infobox Town AT|\n"+

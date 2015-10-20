@@ -30,7 +30,8 @@ import org.neo4art.colour.service.ImageDefaultManager;
 import org.neo4art.colour.service.ImageManager;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

@@ -27,12 +27,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Polarity;
-import org.neo4art.graphdb.Neo4ArtLegacyIndex;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.domain.Word;
 import org.neo4art.sentiment.graphdb.NLPLegacyIndex;
 import org.neo4art.sentiment.util.DictionaryUtils;
 import org.neo4j.graphdb.index.IndexHits;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
+import deprecated.Neo4ArtLegacyIndex;
 
 /**
  * @author Lorenzo Speranzoni

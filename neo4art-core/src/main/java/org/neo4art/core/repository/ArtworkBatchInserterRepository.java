@@ -19,8 +19,9 @@ package org.neo4art.core.repository;
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.core.graphdb.CoreRelationship;
 import org.neo4art.domain.Artwork;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4j.graphdb.index.IndexHits;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

@@ -35,11 +35,11 @@ import org.neo4art.domain.Monument;
 import org.neo4art.domain.Museum;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
-import org.neo4art.graphdb.Neo4ArtGraph;
-import org.neo4art.graphdb.Neo4ArtNode;
-import org.neo4art.graphdb.Neo4ArtRelationship;
+import org.neo4art.graphdb.Relationship;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.sentiment.domain.Word;
+
+import deprecated.Graph;
 
 /**
  * @author Enrico De Benetti
@@ -55,21 +55,20 @@ public class SearchResultTransformer {
 	public static SearchResult buildSearchResult(){
 		
 	  BuildSearchResultMock mockSearchResult = new BuildSearchResultMock();
-	  Neo4ArtGraph neo4ArtGraph = mockSearchResult.getSearchResult();
+	  Graph graph = mockSearchResult.getSearchResult();
 	  
 	  List<Node> nodeList = new ArrayList<Node>();
 	  List<Link> linkList = new ArrayList<Link>();
 	  
-	  for (Neo4ArtNode neo4ArtNode : neo4ArtGraph.getNodes()) {
+	  for (org.neo4art.graphdb.Node node : graph.getNodes()) {
 		  
-		  Node node = createNodeFromEntity(neo4ArtNode);
-		  nodeList.add(node);
+		  nodeList.add(createNodeFromEntity(node));
 	  }
 	  
-	  for (Neo4ArtRelationship neo4ArtRelationship : neo4ArtGraph.getRelationships()) {
+	  for (Relationship relationship : graph.getRelationships()) {
 		  
 		  LinkCreator linkCreator = LinkCreator.getInstance();
-		  Link link =linkCreator.createLink(neo4ArtRelationship);
+		  Link link =linkCreator.createLink(relationship);
 		  linkList.add(link);
 	  }
 	  
@@ -82,77 +81,77 @@ public class SearchResultTransformer {
 	}
 	
 	/**
-	 * @param neo4ArtNode
+	 * @param node
 	 * @return
 	 */
-	private static Node createNodeFromEntity(Neo4ArtNode neo4ArtNode) {
+	private static Node createNodeFromEntity(org.neo4art.graphdb.Node node) {
 		
 	 NodeCreator nodeCreator = NodeCreator.getInstance();
 	 Node result = null;
 		  
-	 if(neo4ArtNode instanceof Artist){
+	 if (node instanceof Artist){
 			  
-	   result = nodeCreator.createNodeFromArtist((Artist) neo4ArtNode);
+	   result = nodeCreator.createNodeFromArtist((Artist) node);
 	 }
 		  
-	 if(neo4ArtNode instanceof ArtMovement){
+	 if(node instanceof ArtMovement){
 		  
-	   result = nodeCreator.createNodeFromArtMovement((ArtMovement) neo4ArtNode);
-	 }
-	 
-	 if(neo4ArtNode instanceof Artwork){
-		  
-	   result = nodeCreator.createNodeFromArtwork((Artwork) neo4ArtNode);
+	   result = nodeCreator.createNodeFromArtMovement((ArtMovement) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Museum){
+	 if(node instanceof Artwork){
 		  
-	  result = nodeCreator.createNodeFromMuseum((Museum) neo4ArtNode);
+	   result = nodeCreator.createNodeFromArtwork((Artwork) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Monument){
+	 if(node instanceof Museum){
 		  
-	   result = nodeCreator.createNodeFromMonument((Monument) neo4ArtNode);
+	  result = nodeCreator.createNodeFromMuseum((Museum) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof HistoricPlace){
+	 if(node instanceof Monument){
 		  
-	   result = nodeCreator.createNodeFromHistoricPlace((HistoricPlace) neo4ArtNode);
+	   result = nodeCreator.createNodeFromMonument((Monument) node);
+	 }
+	 
+	 if(node instanceof HistoricPlace){
+		  
+	   result = nodeCreator.createNodeFromHistoricPlace((HistoricPlace) node);
 	 }
 	
-	 if(neo4ArtNode instanceof HistoricSite){
+	 if(node instanceof HistoricSite){
 		  
-	   result = nodeCreator.createNodeFromHistoricSite((HistoricSite) neo4ArtNode);
+	   result = nodeCreator.createNodeFromHistoricSite((HistoricSite) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof ReligiousBuilding){
+	 if(node instanceof ReligiousBuilding){
 		  
-	   result = nodeCreator.createNodeFromReligiousBuilding((ReligiousBuilding) neo4ArtNode);
+	   result = nodeCreator.createNodeFromReligiousBuilding((ReligiousBuilding) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Settlement){
+	 if(node instanceof Settlement){
 		  
-	   result = nodeCreator.createNodeFromSettlement((Settlement) neo4ArtNode);
+	   result = nodeCreator.createNodeFromSettlement((Settlement) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Letter){
+	 if(node instanceof Letter){
 		  
-	   result = nodeCreator.createNodeFromLetter((Letter) neo4ArtNode);
+	   result = nodeCreator.createNodeFromLetter((Letter) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Word){
+	 if(node instanceof Word){
 		  
-	   result = nodeCreator.createNodeFromWord((Word) neo4ArtNode);
+	   result = nodeCreator.createNodeFromWord((Word) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Colour){
+	 if(node instanceof Colour){
 		  
-	   result = nodeCreator.createNodeFromColour((Colour) neo4ArtNode);
+	   result = nodeCreator.createNodeFromColour((Colour) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof ColourAnalysis){
+	 if(node instanceof ColourAnalysis){
 		  
-	   result = nodeCreator.createNodeFromColourAnalysis((ColourAnalysis) neo4ArtNode);
+	   result = nodeCreator.createNodeFromColourAnalysis((ColourAnalysis) node);
 	 }
 		  
 		  
@@ -166,21 +165,20 @@ public class SearchResultTransformer {
 	public static SearchResult buildDetailNodeSearch(){
 		
 	  BuildSearchResultMock mockSearchResult = new BuildSearchResultMock();
-	  Neo4ArtGraph neo4ArtGraph = mockSearchResult.getDetailSearchNode();
+	  Graph graph = mockSearchResult.getDetailSearchNode();
 	  
 	  List<Node> nodeList = new ArrayList<Node>();
 	  List<Link> linkList = new ArrayList<Link>();
 	  
-	  for (Neo4ArtNode neo4ArtNode : neo4ArtGraph.getNodes()) {
+	  for (org.neo4art.graphdb.Node node : graph.getNodes()) {
 		  
-		  Node node = createNodeFromEntity(neo4ArtNode);
-		  nodeList.add(node);
+		  nodeList.add(createNodeFromEntity(node));
 	  }
 	  
-	  for (Neo4ArtRelationship neo4ArtRelationship : neo4ArtGraph.getRelationships()) {
+	  for (Relationship relationship : graph.getRelationships()) {
 		  
 		  LinkCreator linkCreator = LinkCreator.getInstance();
-		  Link link =linkCreator.createLink(neo4ArtRelationship);
+		  Link link =linkCreator.createLink(relationship);
 		  linkList.add(link);
 	  }
 	  

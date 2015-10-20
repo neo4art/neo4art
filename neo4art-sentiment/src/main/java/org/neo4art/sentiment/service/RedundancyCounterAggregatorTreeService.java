@@ -19,7 +19,6 @@ package org.neo4art.sentiment.service;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.sentiment.bean.RedundancyStatistics;
 import org.neo4art.sentiment.domain.RedundancyCounter;
@@ -28,6 +27,8 @@ import org.neo4art.sentiment.repository.RedundancyCounterAggregatorTreeRepositor
 import org.neo4art.sentiment.repository.RedundancyCounterRepository;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 /**
  * @author Lorenzo Speranzoni

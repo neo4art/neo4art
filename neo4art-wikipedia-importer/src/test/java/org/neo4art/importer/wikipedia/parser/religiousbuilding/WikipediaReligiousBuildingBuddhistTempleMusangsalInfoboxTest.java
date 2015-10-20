@@ -6,7 +6,8 @@ import java.net.URL;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.ReligiousBuilding;
-import org.neo4art.importer.wikipedia.parser.religiousBuilding.WikipediaReligiousBuildingBuddhistTempleInfobox;
+
+import toberefactored.parser.WikipediaReligiousBuildingBuddhistTempleInfobox;
 
 public class WikipediaReligiousBuildingBuddhistTempleMusangsalInfoboxTest {
 	

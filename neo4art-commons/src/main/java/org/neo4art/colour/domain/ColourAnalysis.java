@@ -22,7 +22,7 @@ import java.util.Map;
 import org.neo4art.colour.graphdb.ColourLabel;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
 /**
@@ -30,7 +30,7 @@ import org.neo4j.graphdb.Label;
  * @since 01 Mag 2015
  *
  */
-public class ColourAnalysis implements Neo4ArtNode
+public class ColourAnalysis implements Node
 {
   private static final Label[] LABELS = new Label[] { ColourLabel.ColourAnalysis };
 

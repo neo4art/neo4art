@@ -5,7 +5,8 @@ import java.net.MalformedURLException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-import org.neo4art.importer.wikipedia.parser.settlement.WikipediaSettlementGreekDimosInfoboxParser;
+
+import toberefactored.parser.WikipediaSettlementGreekDimosInfoboxParser;
 
 public class WikipediaSettlementGreekDimonsAbderaTest {
 

@@ -20,7 +20,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.core.repository.ArtistBatchInserterRepository;
 import org.neo4art.core.repository.ArtistRepository;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

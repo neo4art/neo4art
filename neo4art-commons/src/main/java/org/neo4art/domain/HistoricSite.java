@@ -4,11 +4,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
-public class HistoricSite implements Neo4ArtNode
+public class HistoricSite implements Node
 {
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.HistoricSite };
 

@@ -19,15 +19,14 @@ package org.neo4art.domain;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 3 May 2015
  */
-public class Emotion implements Neo4ArtNode
+public class Emotion implements Node
 {
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Emotion };
   
@@ -78,7 +77,7 @@ public class Emotion implements Neo4ArtNode
   }
 
   /**
-   * @see org.neo4art.graphdb.Neo4ArtNode#getNodeId()
+   * @see org.neo4art.graphdb.Node#getNodeId()
    */
   @Override
   public Long getNodeId()
@@ -87,7 +86,7 @@ public class Emotion implements Neo4ArtNode
   }
 
   /**
-   * @see org.neo4art.graphdb.Neo4ArtNode#setNodeId(long)
+   * @see org.neo4art.graphdb.Node#setNodeId(long)
    */
   @Override
   public void setNodeId(long nodeId)
@@ -96,7 +95,7 @@ public class Emotion implements Neo4ArtNode
   }
 
   /**
-   * @see org.neo4art.graphdb.Neo4ArtNode#getProperties()
+   * @see org.neo4art.graphdb.Node#getProperties()
    */
   @Override
   public Map<String, Object> getProperties()
@@ -117,7 +116,7 @@ public class Emotion implements Neo4ArtNode
   }
 
   /**
-   * @see org.neo4art.graphdb.Neo4ArtNode#getLabels()
+   * @see org.neo4art.graphdb.Node#getLabels()
    */
   @Override
   public Label[] getLabels()

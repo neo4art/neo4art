@@ -22,13 +22,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.core.graphdb.CoreRelationship;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.literature.graphdb.LiteratureRelationship;
 import org.neo4art.literature.manager.VanGoghLettersManager;
 import org.neo4art.literature.repository.DocumentBatchInserterRepository;
 import org.neo4art.literature.repository.DocumentRepository;
 import org.neo4art.sentiment.domain.SentimentAnalysis;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Enrico De Benetti

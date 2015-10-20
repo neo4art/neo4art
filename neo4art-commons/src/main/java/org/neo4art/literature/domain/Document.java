@@ -16,13 +16,13 @@
 
 package org.neo4art.literature.domain;
 
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 28 Apr 2015
  */
-public interface Document extends Neo4ArtNode
+public interface Document extends Node
 {
   String getTitle();
   String getContent();

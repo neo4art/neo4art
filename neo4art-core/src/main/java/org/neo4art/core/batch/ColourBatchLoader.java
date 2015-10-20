@@ -23,7 +23,8 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4art.core.service.ColourDefaultService;
 import org.neo4art.core.service.ColourService;
 import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

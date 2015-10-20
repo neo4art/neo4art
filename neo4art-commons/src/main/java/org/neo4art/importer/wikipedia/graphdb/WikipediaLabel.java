@@ -36,6 +36,11 @@ public enum WikipediaLabel implements Label {
   WikipediaSettlementPage,
   WikipediaCountryPage,
   
+  WikipediaBookPage,
+  WikipediaDocumentPage,
+
+  WikipediaColourPage,
+  
   WikipediaPage,
   WikipediaCategory,
   WikipediaFile,

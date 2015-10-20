@@ -19,8 +19,9 @@ package org.neo4art.literature.repository;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.literature.domain.Document;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

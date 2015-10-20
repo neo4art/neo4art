@@ -18,7 +18,8 @@ package org.neo4art.core.repository;
 
 import org.neo4art.core.graphdb.CoreLegacyIndex;
 import org.neo4art.domain.Emotion;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

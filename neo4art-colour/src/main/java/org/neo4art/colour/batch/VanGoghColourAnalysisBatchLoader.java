@@ -28,7 +28,8 @@ import org.neo4art.core.service.ArtworkDefaultService;
 import org.neo4art.core.service.ArtworkService;
 import org.neo4art.domain.Artist;
 import org.neo4art.domain.Artwork;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

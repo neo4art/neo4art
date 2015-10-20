@@ -16,7 +16,7 @@
 package org.neo4art.api.creator;
 
 import org.neo4art.api.domain.Link;
-import org.neo4art.graphdb.Neo4ArtRelationship;
+import org.neo4art.graphdb.Relationship;
 
 /**
  * @author Enrico De Benetti
@@ -41,11 +41,11 @@ public class LinkCreator {
 	 return instance;
 	}
 	
-    public Link createLink(Neo4ArtRelationship neo4ArtRelationship){
+    public Link createLink(Relationship relationship){
     	
      Link link = new Link();
-     link.setSource(neo4ArtRelationship.getStartNode().getNodeId());
-     link.setTarget(neo4ArtRelationship.getEndNode().getNodeId());
+     link.setSource(relationship.getStartNode().getNodeId());
+     link.setTarget(relationship.getEndNode().getNodeId());
      
      return link;	
     }

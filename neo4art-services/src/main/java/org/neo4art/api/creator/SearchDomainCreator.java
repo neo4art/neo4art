@@ -87,7 +87,7 @@ public class SearchDomainCreator {
    	public SearchDomain createSearchDomainFromMonument(Monument monument){
    		
    	 SearchDomain searchDomain = new SearchDomain();	
-   	 searchDomain.setText(monument.getMonumentName());
+   	 searchDomain.setText(monument.getName());
    		 
    	 return searchDomain;		
    	}

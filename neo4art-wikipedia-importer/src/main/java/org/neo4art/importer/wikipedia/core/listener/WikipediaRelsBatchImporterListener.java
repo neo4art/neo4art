@@ -15,11 +15,8 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
-import org.neo4art.importer.wikipedia.manager.WikipediaElementManager;
-import org.neo4art.importer.wikipedia.manager.WikipediaElementManagerFactory;
+import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
 
 /**
  * Default implementation of the importer listener.
@@ -28,26 +25,10 @@ import org.neo4art.importer.wikipedia.manager.WikipediaElementManagerFactory;
  * @since 25.02.2015
  */
 public class WikipediaRelsBatchImporterListener extends WikipediaAbstractImporterListener implements WikipediaImporterListener {
-
-  private static Log logger = LogFactory.getLog(WikipediaRelsBatchImporterListener.class);
   
   @Override
-  public void flush() {
+  public long persist(WikipediaElement wikipediaElement) {
     
-    long newRelatioships = 0;
-    
-    for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
-      
-      WikipediaElementManager wikipediaElementManager =
-          WikipediaElementManagerFactory.getInstance(wikipediaElement.getType());
-      
-      newRelatioships += wikipediaElementManager.createRelationships(wikipediaElement);
-    }
-      
-    this.graphCount.addAndGet(newRelatioships);
-    
-    this.wikipediaElementBuffer.clear();
-    
-    logger.debug(newRelatioships + " new relationships created.");
+    return new WikipediaElementDefaultManager().createRelationships(wikipediaElement);
   }
 }

@@ -18,7 +18,8 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.neo4art.domain.ArtMovement;
-import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
+
+import toberefactored.parser.util.InfoboxMap;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
@@ -26,62 +27,21 @@ import org.neo4art.importer.wikipedia.parser.util.InfoboxMap;
  * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 19 Mar 2015
  */
-public class WikipediaArtMovementInfoboxParser
-{
-  public static final String NAME         = "name";
-  public static final String IMAGE        = "image";
-  public static final String IMAGE_SIZE   = "image_size";
-  public static final String ALT          = "alt";
-  public static final String CAPTION      = "caption";
-  public static final String YEARSACTIVE  = "yearsactive";
-  public static final String COUNTRY      = "country";
-  public static final String MAJORFIGURES = "majorfigures";
-  public static final String INFLUENCES   = "influences";
-  public static final String INFLUENCED   = "influenced";
+public class WikipediaArtMovementInfoboxParser {
+  public static final String NAME = "name";
 
-  public WikipediaArtMovementInfoboxParser()
-  {
+  public WikipediaArtMovementInfoboxParser() {
   }
 
-  public static ArtMovement parse(String text)
-  {
+  public static ArtMovement parse(String text) {
     Map<String, String> map = InfoboxMap.asMap(text);
 
     ArtMovement artMovement = new ArtMovement();
 
-    for (String key : map.keySet())
-    {
-      switch (key)
-      {
+    for (String key : map.keySet()) {
+      switch (key) {
         case NAME:
           artMovement.setName(map.get(key));
-          break;
-        case IMAGE:
-          artMovement.setImage(map.get(key));
-          break;
-        case IMAGE_SIZE:
-          artMovement.setImageSize(map.get(key));
-          break;
-        case ALT:
-          artMovement.setAlt(map.get(key));
-          break;
-        case CAPTION:
-          artMovement.setCaption(map.get(key));
-          break;
-        case YEARSACTIVE:
-          artMovement.setYearsActive(map.get(key));
-          break;
-        case COUNTRY:
-          artMovement.setCountry(map.get(key));
-          break;
-        case MAJORFIGURES:
-          artMovement.setMajorFigures(map.get(key));
-          break;
-        case INFLUENCES:
-          artMovement.setInfluences(map.get(key));
-          break;
-        case INFLUENCED:
-          artMovement.setInfluenced(map.get(key));
           break;
       }
     }

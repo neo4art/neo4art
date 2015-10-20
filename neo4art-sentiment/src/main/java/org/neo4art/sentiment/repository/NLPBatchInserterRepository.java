@@ -18,10 +18,11 @@ package org.neo4art.sentiment.repository;
 
 import java.util.Map;
 
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
 import org.neo4art.sentiment.domain.NLP;
 import org.neo4art.sentiment.graphdb.NLPRelationship;
 import org.neo4j.helpers.collection.MapUtil;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
 
 /**
  * @author Lorenzo Speranzoni

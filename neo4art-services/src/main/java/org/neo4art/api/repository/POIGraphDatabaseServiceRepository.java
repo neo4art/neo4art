@@ -1,24 +1,15 @@
 package org.neo4art.api.repository;
 
-import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.neo4art.api.domain.PointOfInterest;
-import org.neo4art.colour.domain.ColourAnalysis;
-import org.neo4art.colour.graphdb.ColourLabel;
-import org.neo4art.colour.graphdb.ColourRelationship;
-import org.neo4art.core.graphdb.CoreRelationship;
-import org.neo4art.domain.Artwork;
-import org.neo4art.domain.Colour;
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.MapUtil;
+
+import deprecated.Neo4ArtGraphDatabaseServiceSingleton;
 
 public class POIGraphDatabaseServiceRepository implements IPointOfInterestRepository {
 

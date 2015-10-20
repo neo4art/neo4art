@@ -15,39 +15,24 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
-import org.neo4art.importer.wikipedia.manager.WikipediaElementManager;
-import org.neo4art.importer.wikipedia.manager.WikipediaElementManagerFactory;
+import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
 
 /**
  * Default implementation of the importer listener.
- *  
+ * 
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
 public class WikipediaNodesBatchImporterListener extends WikipediaAbstractImporterListener implements WikipediaImporterListener {
 
-  private static Log logger = LogFactory.getLog(WikipediaNodesBatchImporterListener.class);
-  
-  @Override
-  public void flush() {
-    
-    long newNodes = 0;
-    
-    for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
-      
-      WikipediaElementManager wikipediaElementManager =
-          WikipediaElementManagerFactory.getInstance(wikipediaElement.getType());
-      
-      newNodes += wikipediaElementManager.createNodes(wikipediaElement);
-    }
-      
-    this.graphCount.addAndGet(newNodes);
-      
-    this.wikipediaElementBuffer.clear();
+  public WikipediaNodesBatchImporterListener() {
+    super();
+  }
 
-    logger.debug(newNodes + " new nodes created.");
+  @Override
+  public long persist(WikipediaElement wikipediaElement) {
+    
+    return new WikipediaElementDefaultManager().createNodes(wikipediaElement);
   }
 }

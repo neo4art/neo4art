@@ -22,11 +22,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabaseServiceSingleton;
-import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Transaction;
+import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
+import org.neo4art.importer.wikipedia.core.WikipediaBatchImporter;
 
 /**
  * It tests the import of a Wikimedia Dump.
@@ -41,7 +38,7 @@ public class WikipediaImporterTest {
   @Before
   public void cleanDatabase() throws IOException {
     
-    FileUtils.deleteDirectory(new File(Neo4ArtGraphDatabase.NEO4J_STORE_DIR));
+    FileUtils.deleteDirectory(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
   }
   
 	@Test
@@ -49,12 +46,13 @@ public class WikipediaImporterTest {
 	  
 		try {
 		  
-//			File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
-		  //File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
-		  File dumpFile = new File("/home/larus/Scaricati/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+		  File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
 			
-			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
-      
+			//long newNodesAndRelationships = 
+			    
+			    new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
+
+			/*
 			GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
 			
 			try (Transaction tx = graphDatabaseService.beginTx()) {
@@ -65,6 +63,7 @@ public class WikipediaImporterTest {
 			  
 			  tx.success();
 			}
+			*/
 		} catch (Exception e) {
 		  
 			e.printStackTrace();

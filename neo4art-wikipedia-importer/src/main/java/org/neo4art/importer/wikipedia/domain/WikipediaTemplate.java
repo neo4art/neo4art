@@ -16,8 +16,6 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import info.bliki.wiki.dump.WikiArticle;
-
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4j.graphdb.Label;
 
@@ -25,28 +23,19 @@ import org.neo4j.graphdb.Label;
  * @author Lorenzo Speranzoni
  * @since 19 Mar 2015
  */
-public class WikipediaTemplate extends WikipediaGeneric implements WikipediaElement
-{
+public class WikipediaTemplate extends WikipediaAbstractElement implements WikipediaElement {
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaTemplate };
 
-  public WikipediaTemplate()
-  {
-  }
-
-  public WikipediaTemplate(WikiArticle article)
-  {
-    from(article);
+  public WikipediaTemplate() {
   }
 
   @Override
-  public WikipediaType getType()
-  {
+  public WikipediaType getType() {
     return WikipediaType.TEMPLATE;
   }
 
   @Override
-  public Label[] getLabels()
-  {
+  public Label[] getLabels() {
     return LABELS;
   }
 }

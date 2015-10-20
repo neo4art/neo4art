@@ -26,13 +26,16 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
+import org.neo4art.graphdb.Index;
+import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
+import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory;
+import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.GraphDatabaseConnectionType;
+import org.neo4art.graphdb.indexes.IndexAlreadyExistsException;
+import org.neo4art.graphdb.indexes.IndexNotFoundException;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaNodesBatchImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaRelsBatchImporterListener;
-import org.neo4art.importer.wikipedia.graphdb.WikipediaIndexManager;
-import org.neo4art.importer.wikipedia.repository.WikipediaBatchInserterRepository;
-import org.neo4art.importer.wikipedia.repository.WikipediaRepository;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaIndex;
 import org.xml.sax.SAXException;
 
 /**
@@ -54,19 +57,23 @@ public class WikipediaBatchImporter implements WikipediaImporter
     long newNodes = 0;
     long newRelationships = 0;
 
-    logger.info("Store directory is " + Neo4ArtBatchInserterSingleton.getStoreDir());
+    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER);
+    
+    logger.info("Store directory is " + graphDatabaseConnectionManager.getStoreDir());
 
     {
-      WikipediaRepository wikipediaBatchInserterRepository = new WikipediaBatchInserterRepository();
-      long createDeferredIndexStartDate = Calendar.getInstance().getTimeInMillis();
-      wikipediaBatchInserterRepository.createDeferredIndexes();
-      long createDeferredIndexEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Deferred indexes created in " + (createDeferredIndexEndDate - createDeferredIndexStartDate) + " ms.");
+      try {
+        graphDatabaseConnectionManager.createIndex(WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE);
+        logger.info("Index '" + WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE + "' created.");
+      }
+      catch (IndexAlreadyExistsException e) {
+        logger.error("Index '" + WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE + "' already exists.");
+      }
     }
-
+    
     {
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
-      wikipediaNodesImporterListener.setBatchSize(10000);
+      wikipediaNodesImporterListener.setBatchSize(100_000);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
@@ -77,15 +84,8 @@ public class WikipediaBatchImporter implements WikipediaImporter
     }
 
     {
-      long indexFlushingStartDate = Calendar.getInstance().getTimeInMillis();
-      Neo4ArtBatchInserterSingleton.flushLegacyNodeIndex(WikipediaIndexManager.WIKIPEDIA_LEGACY_INDEX);
-      long indexFlushingEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Index flushed in " + (indexFlushingEndDate - indexFlushingStartDate) + " ms.");
-    }
-
-    {
       WikipediaImporterListener wikipediaRelsImporterListener = new WikipediaRelsBatchImporterListener();
-      wikipediaRelsImporterListener.setBatchSize(10000);
+      wikipediaRelsImporterListener.setBatchSize(100_000);
       long parserForRelsStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForRels = new WikiXMLParser(dumpFile, wikipediaRelsImporterListener);
       parserForRels.parse();
@@ -94,12 +94,24 @@ public class WikipediaBatchImporter implements WikipediaImporter
       newRelationships = wikipediaRelsImporterListener.getGraphCount();
       logger.info("Done! " + newRelationships + " relationships created in " + (parserForRelsEndDate - parserForRelsStartDate) + " ms.");
     }
-
+    
     {
       long shutdownStartDate = Calendar.getInstance().getTimeInMillis();
-      Neo4ArtBatchInserterSingleton.shutdownBatchInserterInstance();
+      graphDatabaseConnectionManager.close();
       long shutdownEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Shutdown completed in " + (shutdownEndDate - shutdownStartDate) + " ms.");
+    }
+
+    {
+      try {
+        @SuppressWarnings("rawtypes")
+        Index index = graphDatabaseConnectionManager.getIndex(WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE);
+        logger.info("Index '" + WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE + "' size: " + index.size());
+        index.clear();
+      }
+      catch (IndexNotFoundException e) {
+        logger.error("Index '" + WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE + "' not found.");
+      }
     }
 
     long dumpImportEndDate = Calendar.getInstance().getTimeInMillis();

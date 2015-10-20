@@ -37,7 +37,7 @@ import org.neo4art.domain.Monument;
 import org.neo4art.domain.Museum;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4art.literature.domain.Letter;
 import org.neo4art.sentiment.domain.Word;
 
@@ -161,7 +161,7 @@ public class SearchDomainTransformer {
     public static List<SearchDomain> buildDomains(){
 		
      List<SearchDomain> listaSearchDomain = new ArrayList<SearchDomain>();
-     List<Neo4ArtNode>  entityList = new ArrayList<Neo4ArtNode>();
+     List<Node>  entityList = new ArrayList<Node>();
      
      BuildMockAGArtists mockAGArtists = new BuildMockAGArtists();
      BuildMockMuseums mockMuseums = new BuildMockMuseums();
@@ -179,9 +179,9 @@ public class SearchDomainTransformer {
      entityList.addAll(negativeAO.loadMockSentiments());
      entityList.addAll(negativePZ.loadMockSentiments());  
         
-     for (Neo4ArtNode neo4ArtNode : entityList) {
+     for (Node node : entityList) {
     	 
-      SearchDomain searchDomain = createSearchDomainFromEntity(neo4ArtNode);
+      SearchDomain searchDomain = createSearchDomainFromEntity(node);
       listaSearchDomain.add(searchDomain);
 	}
 		
@@ -189,72 +189,72 @@ public class SearchDomainTransformer {
 	}
     
     /**
-	 * @param neo4ArtNode
+	 * @param node
 	 * @return
 	 */
-	private static SearchDomain createSearchDomainFromEntity(Neo4ArtNode neo4ArtNode) {
+	private static SearchDomain createSearchDomainFromEntity(Node node) {
 		
 	 SearchDomainCreator searchDomainCreator = SearchDomainCreator.getInstance();
 	 SearchDomain result = null;
 		  
-	 if(neo4ArtNode instanceof Artist){
+	 if(node instanceof Artist){
 			  
-	   result = searchDomainCreator.createSearchDomainFromArtist((Artist) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromArtist((Artist) node);
 	 }
 		  
-	 if(neo4ArtNode instanceof ArtMovement){
+	 if(node instanceof ArtMovement){
 		  
-	   result = searchDomainCreator.createSearchDomainFromArtMovement((ArtMovement) neo4ArtNode);
-	 }
-	 
-	 if(neo4ArtNode instanceof Artwork){
-		  
-	   result = searchDomainCreator.createSearchDomainFromArtwork((Artwork) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromArtMovement((ArtMovement) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Museum){
+	 if(node instanceof Artwork){
 		  
-	  result = searchDomainCreator.createSearchDomainFromMuseum((Museum) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromArtwork((Artwork) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Monument){
+	 if(node instanceof Museum){
 		  
-	   result = searchDomainCreator.createSearchDomainFromMonument((Monument) neo4ArtNode);
+	  result = searchDomainCreator.createSearchDomainFromMuseum((Museum) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof HistoricPlace){
+	 if(node instanceof Monument){
 		  
-	   result = searchDomainCreator.createSearchDomainFromHistoricPlace((HistoricPlace) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromMonument((Monument) node);
+	 }
+	 
+	 if(node instanceof HistoricPlace){
+		  
+	   result = searchDomainCreator.createSearchDomainFromHistoricPlace((HistoricPlace) node);
 	 }
 	
-	 if(neo4ArtNode instanceof HistoricSite){
+	 if(node instanceof HistoricSite){
 		  
-	   result = searchDomainCreator.createSearchDomainFromHistoricSite((HistoricSite) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromHistoricSite((HistoricSite) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof ReligiousBuilding){
+	 if(node instanceof ReligiousBuilding){
 		  
-	   result = searchDomainCreator.createSearchDomainFromReligiousBuilding((ReligiousBuilding) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromReligiousBuilding((ReligiousBuilding) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Settlement){
+	 if(node instanceof Settlement){
 		  
-	   result = searchDomainCreator.createSearchDomainFromSettlement((Settlement) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromSettlement((Settlement) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Letter){
+	 if(node instanceof Letter){
 		  
-	   result = searchDomainCreator.createSearchDomainFromLetter((Letter) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromLetter((Letter) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Word){
+	 if(node instanceof Word){
 		  
-	   result = searchDomainCreator.createSearchDomainFromWord((Word) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromWord((Word) node);
 	 }
 	 
-	 if(neo4ArtNode instanceof Colour){
+	 if(node instanceof Colour){
 		  
-	   result = searchDomainCreator.createSearchDomainFromColour((Colour) neo4ArtNode);
+	   result = searchDomainCreator.createSearchDomainFromColour((Colour) node);
 	 }
 		  
 	 return result;

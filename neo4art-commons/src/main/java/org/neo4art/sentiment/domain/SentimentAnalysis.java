@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4art.literature.domain.Document;
 import org.neo4art.sentiment.graphdb.SentymentLabel;
 import org.neo4j.graphdb.Label;
@@ -29,7 +29,7 @@ import org.neo4j.graphdb.Label;
  * @since 03 Mag 2015
  *
  */
-public class SentimentAnalysis implements Neo4ArtNode{
+public class SentimentAnalysis implements Node{
 
    private static final Label[] LABELS = new Label[] { SentymentLabel.SentimentAnalysis };
 	

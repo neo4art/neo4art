@@ -20,15 +20,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Neo4ArtLabel;
-import org.neo4art.graphdb.Neo4ArtNode;
+import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
 /**
  * @author Lorenzo Speranzoni
  * @since 29 Mar 2015
  */
-public class Museum implements Neo4ArtNode
+public class Museum implements Node
 {
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Museum };
 

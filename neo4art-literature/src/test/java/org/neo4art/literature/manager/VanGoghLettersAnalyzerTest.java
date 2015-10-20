@@ -20,10 +20,11 @@ import java.io.File;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
-import org.neo4art.graphdb.connection.Neo4ArtBatchInserterSingleton;
-import org.neo4art.graphdb.connection.Neo4ArtGraphDatabase;
 import org.neo4art.sentiment.service.DictionaryBasicService;
 import org.neo4art.sentiment.service.DictionaryService;
+
+import deprecated.Neo4ArtBatchInserterSingleton;
+import deprecated.Neo4ArtGraphDatabase;
 
 /**
  * @author Lorenzo Speranzoni

@@ -21,11 +21,15 @@ package org.neo4art.importer.wikipedia.domain;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public enum WikipediaType
-{
+public enum WikipediaType {
+
   PAGE, CATEGORY, FILE, PROJECT, TEMPLATE, GENERIC,
 
   ARTIST_PAGE, ARTWORK_PAGE, MUSEUM_PAGE, ART_MOVEMENT_PAGE, MONUMENT_PAGE, RELIGIOUS_BUILDING_PAGE,
 
   SETTLEMENT_PAGE, COUNTRY_PAGE,
+
+  DOCUMENT_PAGE, BOOK_PAGE,
+
+  COLOUR_PAGE
 }
