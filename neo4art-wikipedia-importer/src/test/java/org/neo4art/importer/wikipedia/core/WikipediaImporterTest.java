@@ -23,7 +23,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
-import org.neo4art.importer.wikipedia.core.WikipediaBatchImporter;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
 /**
  * It tests the import of a Wikimedia Dump.
@@ -46,24 +48,22 @@ public class WikipediaImporterTest {
 	  
 		try {
 		  
-		  File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
+		  File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
 			
-			//long newNodesAndRelationships = 
+			long newNodesAndRelationships = 
 			    
 			    new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
 
-			/*
-			GraphDatabaseService graphDatabaseService = Neo4ArtGraphDatabaseServiceSingleton.getGraphDatabaseService();
+			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(GraphDatabaseConnectionManager.NEO4J_STORE_DIR);
 			
 			try (Transaction tx = graphDatabaseService.beginTx()) {
 			  
-			  Object newNodesAndRelationshipsOnDB = graphDatabaseService.execute("match (n:" + WikipediaLabel.Wikipedia + ") optional match (n)-[r]-(m) return count(distinct(id(n))) + count(distinct(id(r))) as tot").next().get("tot");
+			  Object newNodesAndRelationshipsOnDB = graphDatabaseService.execute("match (n) optional match (n)-[r]-(m) return count(distinct(id(n))) + count(distinct(id(r))) as tot").next().get("tot");
 			  
 			  Assert.assertEquals(newNodesAndRelationships, newNodesAndRelationshipsOnDB);
 			  
 			  tx.success();
 			}
-			*/
 		} catch (Exception e) {
 		  
 			e.printStackTrace();
