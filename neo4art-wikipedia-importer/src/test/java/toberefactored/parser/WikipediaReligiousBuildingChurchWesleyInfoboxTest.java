@@ -1,13 +1,10 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.ReligiousBuilding;
-
-import toberefactored.parser.WikipediaReligiousBuildingChurchInfobox;
 
 public class WikipediaReligiousBuildingChurchWesleyInfoboxTest {
 
