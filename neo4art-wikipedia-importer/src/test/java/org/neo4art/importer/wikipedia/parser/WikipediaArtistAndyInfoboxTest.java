@@ -1,13 +1,16 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artist;
 
 public class WikipediaArtistAndyInfoboxTest {
+  
   private static String INFOBOX =
+      
     "{{Infobox artist\n"+
     "| name = Andy Warhol\n"+
     "| image = Andy Warhol by Jack Mitchell.jpg\n"+
@@ -26,7 +29,22 @@ public class WikipediaArtistAndyInfoboxTest {
   
   @Test
   public void shouldParseArtistInfobox() throws MalformedURLException {
+    
+    Calendar birthDateCalendar = Calendar.getInstance();
+    birthDateCalendar.set(1928, Calendar.AUGUST, 6, 0, 0, 0);
+    birthDateCalendar.set(Calendar.MILLISECOND, 0);
+    
+    Calendar deathDateCalendar = Calendar.getInstance();
+    deathDateCalendar.set(1987, Calendar.FEBRUARY, 22, 0, 0, 0);
+    deathDateCalendar.set(Calendar.MILLISECOND, 0);
+    
     Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
+    
     Assert.assertEquals("Andy Warhol", artist.getName());
+    Assert.assertEquals(birthDateCalendar.getTimeInMillis(), artist.getBirthDate().getTime());
+    Assert.assertEquals("Pittsburgh, Pennsylvania, United States", artist.getBirthPlace());
+    Assert.assertEquals(deathDateCalendar.getTimeInMillis(), artist.getDeathDate().getTime());
+    Assert.assertEquals("New York City, New York, United States", artist.getDeathPlace());
+    Assert.assertEquals("American", artist.getNationality());
   }
 }

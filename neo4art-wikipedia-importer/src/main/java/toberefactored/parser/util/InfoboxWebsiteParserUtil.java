@@ -12,8 +12,14 @@ public class InfoboxWebsiteParserUtil
   {
     try
     {
+      web = InfoboxParserUtil.removeAllParenthesis(web);
+      if (web.startsWith("URL")) {
+        web = web.replace("URL", "");
+      }
       if (web.contains("/"))
       {
+        System.out.println("AAAAAA: " + web);
+
         String[] w = StringUtils.split(web, "/");
         web = w[0] + "//" + w[1];
         for (int i = 2; i < w.length; i++)

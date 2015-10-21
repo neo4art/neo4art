@@ -18,17 +18,25 @@ package org.neo4art.importer.wikipedia.parser;
 import java.util.Map;
 
 import org.neo4art.domain.Artist;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaDateTimeInfoboxParserUtils;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 import toberefactored.parser.util.InfoboxMap;
 
 /**
- * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template :Infobox_artist</a>
+ * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
  * 
  * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 19 Mar 2015
  */
 public class WikipediaArtistInfoboxParser {
-  public static final String NAME = "name";
+
+  public static final String NAME        = "name";
+  public static final String BIRTH_DATE  = "birth_date";
+  public static final String BIRTH_PLACE = "birth_place";
+  public static final String DEATH_DATE  = "death_date";
+  public static final String DEATH_PLACE = "death_place";
+  public static final String NATIONALITY = "nationality";
 
   public WikipediaArtistInfoboxParser() {
   }
@@ -42,6 +50,21 @@ public class WikipediaArtistInfoboxParser {
       switch (key) {
         case NAME:
           artist.setName(map.get(key));
+          break;
+        case BIRTH_DATE:
+          artist.setBirthDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
+          break;
+        case BIRTH_PLACE:
+          artist.setBirthPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
+          break;
+        case DEATH_DATE:
+          artist.setDeathDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
+          break;
+        case DEATH_PLACE:
+          artist.setDeathPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
+          break;
+        case NATIONALITY:
+          artist.setNationality(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
           break;
       }
     }

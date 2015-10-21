@@ -2,48 +2,57 @@ package toberefactored.parser.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-public class InfoboxMap
-{
+public class InfoboxMap {
 
-  public static Map<String, String> asMap(String text)
-  {
+  private static Log logger = LogFactory.getLog(InfoboxMap.class);
+  
+  private static final String ONE_OR_MORE_NEW_LINES = "[\\n\\r]+";
+  private static final String ZERO_OR_MORE_SPACES   = "[\\s]*";
+  private static final String JUST_ONE_PIPE         = "[\\|]{1}";
+  private static final String JUST_ONE_EQUAL        = "[=]{1}";
+  private static final String INFO_KEY              = "([\\S]+)";
+  private static final String INFO_VALUE            = "([\\S\\s&&[^\\n^\\r]]*)";
+
+  /**
+   * @param text
+   * @return
+   */
+  public static Map<String, String> asMap(String text) {
 
     Map<String, String> map = new HashMap<String, String>();
 
-    text = text.replace("|", "|| ");
-    String[] infos = StringUtils.split(text, "\n");
+    String patternRegex = 
+        ONE_OR_MORE_NEW_LINES + 
+        ZERO_OR_MORE_SPACES + 
+        JUST_ONE_PIPE + 
+        ZERO_OR_MORE_SPACES + 
+        INFO_KEY + 
+        ZERO_OR_MORE_SPACES + 
+        JUST_ONE_EQUAL + 
+        //ZERO_OR_MORE_SPACES +
+        INFO_VALUE;
 
-    String type = infos[0];
+    Pattern pattern = Pattern.compile(patternRegex);
+    Matcher matcher = pattern.matcher(text);
 
-    type = type.replace("\n ", "");
-    type = type.replace("{{Infobox ", "");
-    type = type.replace("|", "");
+    while (matcher.find()) {
 
-    for (int i = 0; i < infos.length; i++)
-    {
-      if (infos[i].contains("="))
-      {
-        int separatorIndex = infos[i].indexOf("=");
-
-        if (separatorIndex != -1)
-        {
-          String key = infos[i].substring(0, separatorIndex).trim();
-          String value = infos[i].substring(separatorIndex + 1).trim();
-          if (key.contains("|"))
-            key = key.replace("|", "");
-          if (value.endsWith("||"))
-          {
-            value = value.replace("|", "");
-          }
-            
-          map.put(key.trim(), value.trim());
+      if (logger.isTraceEnabled()) {
+        for (int i = 1; i <= matcher.groupCount(); i++) {
+          logger.trace(i + " [" + matcher.start(i) + "," + matcher.end() + "]:" + matcher.group(i));
         }
       }
+      
+      map.put(StringUtils.trim(matcher.group(1)), StringUtils.trim(matcher.group(2)));
     }
-    map.put("infobox", type);
+
     return map;
   }
 }

@@ -199,8 +199,6 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
       properties.put("timestamp", this.timestamp);
     }
 
-    properties.put("hashcode", this.hashCode());
-
     return properties;
   }
 

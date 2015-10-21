@@ -32,16 +32,16 @@ import org.neo4art.importer.wikipedia.domain.WikipediaProject;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 import org.neo4art.importer.wikipedia.domain.WikipediaType;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtMovementInfoboxParser;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtistInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaArtworkInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaColourInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaCountryInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaDocumentInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaInfoboxParser;
-import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 import org.neo4j.graphdb.Label;
 
+import toberefactored.parser.WikipediaArtMovementInfoboxParser;
+import toberefactored.parser.WikipediaArtworkInfoboxParser;
+import toberefactored.parser.WikipediaColourInfoboxParser;
+import toberefactored.parser.WikipediaCountryInfoboxParser;
+import toberefactored.parser.WikipediaDocumentInfoboxParser;
+import toberefactored.parser.WikipediaInfoboxParser;
+import toberefactored.parser.WikipediaMuseumInfoboxParser;
 import toberefactored.parser.WikipediaReligiousBuildingInfoboxParser;
 import toberefactored.parser.WikipediaSettlementInfoboxParser;
 

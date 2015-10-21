@@ -26,100 +26,112 @@ import org.neo4j.graphdb.Label;
  * @author Lorenzo Speranzoni
  * @since 4 Apr 2015
  */
-public class Country implements Node
-{
+public class Country implements Node {
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Country };
 
   private Long                 nodeId;
 
-  private String               conventionalLongName;
+  private String               name;
   private String               nativeName;
   private String               commonName;
-  private Coordinate           coordinate;
+  private String               conventionalLongName;
   private String               type;
+  
+  private Coordinate           coordinate;
 
-  public String getType()
-  {
-    return type;
+  public Country() {
   }
 
-  public void setType(String type)
-  {
-    this.type = type;
+  /**
+   * @return the name
+   */
+  public String getName() {
+    return name;
   }
 
-  public Country()
-  {
+  /**
+   * @param name
+   *          the name to set
+   */
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getConventionalLongName()
-  {
-    return conventionalLongName;
-  }
-
-  public void setConventionalLongName(String conventionalLongName)
-  {
-    this.conventionalLongName = conventionalLongName;
-  }
-
-  public String getNativeName()
-  {
+  public String getNativeName() {
     return nativeName;
   }
 
-  public void setNativeName(String nativeName)
-  {
+  public void setNativeName(String nativeName) {
     this.nativeName = nativeName;
   }
 
-  public String getCommonName()
-  {
+  public String getCommonName() {
     return commonName;
   }
 
-  public void setCommonName(String commonName)
-  {
+  public void setCommonName(String commonName) {
     this.commonName = commonName;
   }
 
-  public Coordinate getCoordinate()
-  {
+  public String getConventionalLongName() {
+    return conventionalLongName;
+  }
+
+  public void setConventionalLongName(String conventionalLongName) {
+    this.conventionalLongName = conventionalLongName;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public Coordinate getCoordinate() {
     return coordinate;
   }
 
-  public void setCoordinate(Coordinate coordinate)
-  {
+  public void setCoordinate(Coordinate coordinate) {
     this.coordinate = coordinate;
   }
 
   @Override
-  public Long getNodeId()
-  {
+  public Long getNodeId() {
     return this.nodeId;
   }
 
   @Override
-  public void setNodeId(long nodeId)
-  {
+  public void setNodeId(long nodeId) {
     this.nodeId = nodeId;
   }
 
   @Override
-  public Map<String, Object> getProperties()
-  {
+  public Map<String, Object> getProperties() {
     Map<String, Object> properties = new HashMap<String, Object>();
 
-    if (this.commonName != null)
-    {
+    if (this.name != null) {
+      properties.put("cname", this.name);
+    }
+    if (this.commonName != null) {
       properties.put("commonName", this.commonName);
+    }
+    if (this.nativeName != null) {
+      properties.put("nativeName", this.nativeName);
+    }
+    if (this.conventionalLongName != null) {
+      properties.put("conventionalLongName", this.conventionalLongName);
+    }
+    if (this.type != null) {
+      properties.put("type", this.type);
     }
 
     return properties;
   }
 
   @Override
-  public Label[] getLabels()
-  {
+  public Label[] getLabels() {
     return LABELS;
   }
 }

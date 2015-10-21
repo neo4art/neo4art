@@ -50,11 +50,9 @@ public class WikipediaImporterTest {
 		  
 		  File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
 			
-			long newNodesAndRelationships = 
-			    
-			    new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
+			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
 
-			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(GraphDatabaseConnectionManager.NEO4J_STORE_DIR);
+			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
 			
 			try (Transaction tx = graphDatabaseService.beginTx()) {
 			  
