@@ -69,24 +69,32 @@ public class WikipediaDateTimeInfoboxParserUtils {
    * {{Birth date|1993|2|4|df=yes}}
    * {{Birth date|1993|2|4|mf=yes}}
    * {{Birth date|1993|2|4}}
+   * {{Birth date |1901|7|31|df=y}}
+   * {{Birth date|df=yes|1756|03|04}}
    * 
    * @param dateAsString
    * @return
    */
   public static Date parseBirthDateAsDate(String dateAsString) {
 
-    Pattern patter = Pattern.compile("[\\{]{2}[Bb]irth date\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|");
-    Matcher matcher = patter.matcher(dateAsString);
+    final String PATTERNS[] = { "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|" ,
+                                "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
+                                "[\\{]{2}[Bb]irth date[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}"};
 
-    if (matcher.find()) {
+    for (String patternRegex : PATTERNS) {
       
-      return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
-    }
-    else {
-      logger.error("Unable to parse " + dateAsString);
+      Pattern patter = Pattern.compile(patternRegex);
+      Matcher matcher = patter.matcher(dateAsString);
       
-      return null;
+      if (matcher.matches()) {
+      
+        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
+      }
     }
+
+    logger.error("Unable to parse " + dateAsString);
+    
+    return null;
   }
 
   /**
@@ -98,7 +106,24 @@ public class WikipediaDateTimeInfoboxParserUtils {
    * @return
    */
   public static Date parseBirthDateAndAgeAsDate(String dateAsString) {
-    throw new IllegalAccessError("Not yet implemented");
+
+    final String PATTERNS[] = { "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*",
+                                "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}"};
+
+    for (String patternRegex : PATTERNS) {
+      
+      Pattern patter = Pattern.compile(patternRegex);
+      Matcher matcher = patter.matcher(null);
+      
+      if (matcher.matches()) {
+        
+        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
+      }      
+    }
+
+    logger.error("Unable to parse " + dateAsString);
+      
+    return null;
   }
 
   /**
@@ -106,7 +131,7 @@ public class WikipediaDateTimeInfoboxParserUtils {
    * @return
    */
   public static Date parseBirthYearAndAgeAsDate(String dateAsString) {
-    throw new IllegalAccessError("Not yet implemented");
+    return null;
   }
 
   /**
@@ -120,8 +145,8 @@ public class WikipediaDateTimeInfoboxParserUtils {
    */
   public static Date parseDeathDateAndAgeAsDate(String dateAsString) {
 
-    final String PATTERNS[] = { "[\\{]{2}[Dd]eath date and age\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" ,
-                                "[\\{]{2}[Dd]eath date and age\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" };
+    final String PATTERNS[] = { "[\\{]{2}[Dd]eath date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" ,
+                                "[\\{]{2}[Dd]eath date and age[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" };
 
     for (String patternRegex : PATTERNS) {
       
@@ -158,6 +183,7 @@ public class WikipediaDateTimeInfoboxParserUtils {
       return calendar.getTime();
     }
     catch (Exception e) {
+      
       logger.error("Unable to generate date for year = " + year + ", month = " + month + ", day = " + day);
       
       return null;

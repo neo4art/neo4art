@@ -23,6 +23,7 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.neo4art.importer.wikipedia.domain.WikipediaArtElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
@@ -54,22 +55,28 @@ import toberefactored.parser.WikipediaSettlementInfoboxParser;
 public class WikipediaElementTransformer {
   public static WikipediaElement toWikipediaElement(WikiArticle article) {
 
-    WikiPatternMatcher articleTextParser = new WikiPatternMatcher(article.getText());
-
-    // ----- DISAMBIGUATION, STUB AND REDIRECTED PAGES are ignored -----
-    if (articleTextParser.isDisambiguationPage() || articleTextParser.isStub() || articleTextParser.isRedirect()) {
+    WikiPatternMatcher articleTextParser = null;
+    
+    if (StringUtils.isNotEmpty(article.getText())) {
       
-      return null;
+      articleTextParser = new WikiPatternMatcher(article.getText());
+      
+      if (articleTextParser.isDisambiguationPage() || !articleTextParser.isStub() || !articleTextParser.isRedirect()) {
+        
+        // ----- DISAMBIGUATION, STUB AND REDIRECTED PAGES are ignored -----
+        return null;
+      }        
     }
-    else {
+    
+    WikipediaElement wikipediaElement = from(article, articleTextParser);
+    
+    wikipediaElement.setId(Long.parseLong(article.getId()));
+    wikipediaElement.setTitle(article.getTitle());
+    wikipediaElement.setRevision(Long.parseLong(article.getRevisionId()));
+    wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
+        
+    if (articleTextParser != null) {
       
-      WikipediaElement wikipediaElement = from(article, articleTextParser);
-  
-      wikipediaElement.setId(Long.parseLong(article.getId()));
-      wikipediaElement.setTitle(article.getTitle());
-      wikipediaElement.setRevision(Long.parseLong(article.getRevisionId()));
-      wikipediaElement.setTimestamp(DatatypeConverter.parseDateTime(article.getTimeStamp()).getTimeInMillis());
-
       // ----- LINKS -----
       List<String> links = articleTextParser.getLinks();
       if (CollectionUtils.isNotEmpty(links)) {
@@ -79,6 +86,7 @@ public class WikipediaElementTransformer {
           wikipediaElement.addLink(page);
         }
       }
+      
       // ----- CATEGORIES -----
       List<String> categorieNames = articleTextParser.getCategories();
       if (CollectionUtils.isNotEmpty(categorieNames)) {
@@ -88,9 +96,9 @@ public class WikipediaElementTransformer {
           wikipediaElement.addCategory(category);
         }
       }
-      
-      return wikipediaElement;
     }
+    
+    return wikipediaElement;
   }
 
   /**
@@ -102,8 +110,8 @@ public class WikipediaElementTransformer {
     
     if (article.isMain()) {
       
-      if (articleTextParser.getInfoBox() != null) {
-        
+      if (articleTextParser != null && articleTextParser.getInfoBox() != null) {
+          
         if (WikipediaInfoboxParser.isArtist(article.getText())) {
           return new WikipediaArtElement(WikipediaArtistInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage }, WikipediaType.ARTIST_PAGE);
         }

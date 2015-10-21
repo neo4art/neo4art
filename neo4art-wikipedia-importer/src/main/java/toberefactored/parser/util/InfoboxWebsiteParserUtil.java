@@ -47,7 +47,7 @@ public class InfoboxWebsiteParserUtil
     }
     catch (Exception e)
     {
-      logger.error("Error parsing Website infobox: " + e.getMessage());
+      logger.error("Error parsing 'website' infobox parameter with value = " + web + ". Error message: " + e.getMessage());
     }
     return web.trim();
   }
