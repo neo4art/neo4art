@@ -98,9 +98,9 @@ public class NodeCreator {
 		
 	 Node node = new Node();	
 	 node.setId(museum.getNodeId());
-	 node.setLink(museum.getWebsite());
+	 //node.setLink(museum.getWebsite());
 	 node.setName(museum.getName());
-	 node.setThumbnail(museum.getImage()!=null ? museum.getImage().toString() : "");
+	 //node.setThumbnail(museum.getImage()!=null ? museum.getImage().toString() : "");
 	 node.setType(Neo4ArtLabel.Museum.name());
 			 
 	 return node;		

@@ -2,7 +2,7 @@ package toberefactored.parser;
 
 import java.util.Map;
 
-import org.neo4art.domain.Coordinate;
+import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.Settlement;
 
 import toberefactored.parser.util.InfoboxMap;
@@ -10,8 +10,7 @@ import toberefactored.parser.util.InfoboxParserUtil;
 import toberefactored.parser.util.InfoboxTypeParserUtil;
 import toberefactored.parser.util.InfoboxWebsiteParserUtil;
 
-public class WikipediaSettlementCityJapanInfoboxParser
-{
+public class WikipediaSettlementCityJapanInfoboxParser {
 
   public static final String NAME             = "name";
   public static final String NAMEN            = "Name";
@@ -47,153 +46,145 @@ public class WikipediaSettlementCityJapanInfoboxParser
   public static final String WEBS             = "CityHallLink";
   public static final String STYLE            = "infobox";
 
-  public WikipediaSettlementCityJapanInfoboxParser()
-  {
+  public WikipediaSettlementCityJapanInfoboxParser() {
   }
 
-  public static Settlement parse(String text)
-  {
+  public static Settlement parse(String text) {
 
     Map<String, String> map = InfoboxMap.asMap(text);
 
     Settlement settlement = new Settlement();
-    Coordinate coordinate = new Coordinate();
+    Coordinates coordinates = new Coordinates();
 
-    for (String key : map.keySet())
-    {
+    for (String key : map.keySet()) {
+      try {
+        switch (key) {
 
-      switch (key)
-      {
+          case NAME:
+            settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+            break;
+          case NAMEN:
+            settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+            break;
+          case STYLE:
+            settlement.setType(InfoboxTypeParserUtil.getType(map.get(key)));
+            break;
+          case OFFICIAL_NAME:
+            settlement.setOfficialName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+            break;
+          case NATIVE_NAME:
+            settlement.setNativeName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+            break;
+          case OTHER_NAME:
+            settlement.setOtherName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+            break;
+          case LATITUDE:
+            coordinates.setLatD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
 
-        case NAME:
-          settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case NAMEN:
-          settlement.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          settlement.setType(InfoboxTypeParserUtil.getType(map.get(key)));
-          break;
-        case OFFICIAL_NAME:
-          settlement.setOfficialName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case NATIVE_NAME:
-          settlement.setNativeName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case NATIVE_NAME_LANG:
-          settlement.setNativeNameLang(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case OTHER_NAME:
-          settlement.setOtherName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case SETTLEMENT_TYPE:
-          settlement.setSettlementType(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case LATITUDE:
-          coordinate.setLatD(map.get(key));
-          settlement.setCoordinate(coordinate);
+            break;
+          case LONGITUDE:
+            coordinates.setLongD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATD:
+            coordinates.setLatD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
 
-          break;
-        case LONGITUDE:
-          coordinate.setLongD(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATD:
-          coordinate.setLatD(map.get(key));
-          settlement.setCoordinate(coordinate);
+            break;
+          case LATM:
+            coordinates.setLatM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATS:
 
-          break;
-        case LATM:
-          coordinate.setLatM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATS:
+            coordinates.setLatS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATDL:
+            coordinates.setLatD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATML:
+            coordinates.setLatM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATSL:
 
-          coordinate.setLatS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATDL:
-          coordinate.setLatD(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATML:
-          coordinate.setLatM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATSL:
+            coordinates.setLatS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATDEG:
+            coordinates.setLatD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
 
-          coordinate.setLatS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATDEG:
-          coordinate.setLatD(map.get(key));
-          settlement.setCoordinate(coordinate);
+            break;
+          case LATMIN:
+            coordinates.setLatM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATSEC:
 
-          break;
-        case LATMIN:
-          coordinate.setLatM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATSEC:
-
-          coordinate.setLatS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LATNS:
-          coordinate.setLatNS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGD:
-          coordinate.setLongD(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGM:
-          coordinate.setLongM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGS:
-          coordinate.setLongS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGDL:
-          coordinate.setLongD(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGML:
-          coordinate.setLongM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGSL:
-          coordinate.setLongS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGDEG:
-          coordinate.setLongD(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGMIN:
-          coordinate.setLongM(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGSEC:
-          coordinate.setLongS(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case LONGEW:
-          coordinate.setLongEW(map.get(key));
-          settlement.setCoordinate(coordinate);
-          break;
-        case WEB:
-          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
-          break;
-        case WEBS:
-          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
-          break;
-        case WEBSITE:
-          settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
-          break;
+            coordinates.setLatS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LATNS:
+            coordinates.setLatNS(map.get(key));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGD:
+            coordinates.setLongD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGM:
+            coordinates.setLongM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGS:
+            coordinates.setLongS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGDL:
+            coordinates.setLongD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGML:
+            coordinates.setLongM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGSL:
+            coordinates.setLongS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGDEG:
+            coordinates.setLongD(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGMIN:
+            coordinates.setLongM(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGSEC:
+            coordinates.setLongS(Double.parseDouble(map.get(key)));
+            settlement.setCoordinate(coordinates);
+            break;
+          case LONGEW:
+            coordinates.setLongEW(map.get(key));
+            settlement.setCoordinate(coordinates);
+            break;
+          case WEB:
+            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            break;
+          case WEBS:
+            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            break;
+          case WEBSITE:
+            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            break;
+        }
       }
-
+      catch (Exception e) {
+      }
     }
 
     return settlement;

@@ -77,12 +77,13 @@ public class WikipediaDateTimeInfoboxParserUtils {
    */
   public static Date parseBirthDateAsDate(String dateAsString) {
 
-    final String PATTERNS[] = { "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|" ,
+    final String PATTERNS[] = { "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]+[\\}]{2}" ,
                                 "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
                                 "[\\{]{2}[Bb]irth date[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}"};
 
     for (String patternRegex : PATTERNS) {
       
+      System.out.println("AAAAAAA: " + dateAsString + "   -> " + patternRegex);
       Pattern patter = Pattern.compile(patternRegex);
       Matcher matcher = patter.matcher(dateAsString);
       

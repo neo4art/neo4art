@@ -37,7 +37,7 @@ public class Country implements Node {
   private String               conventionalLongName;
   private String               type;
   
-  private Coordinate           coordinate;
+  private Coordinates           coordinates;
 
   public Country() {
   }
@@ -89,12 +89,12 @@ public class Country implements Node {
     this.type = type;
   }
 
-  public Coordinate getCoordinate() {
-    return coordinate;
+  public Coordinates getCoordinate() {
+    return coordinates;
   }
 
-  public void setCoordinate(Coordinate coordinate) {
-    this.coordinate = coordinate;
+  public void setCoordinate(Coordinates coordinates) {
+    this.coordinates = coordinates;
   }
 
   @Override

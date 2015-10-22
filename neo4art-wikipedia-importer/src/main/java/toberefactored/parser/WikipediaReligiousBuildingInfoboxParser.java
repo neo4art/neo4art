@@ -17,7 +17,7 @@ package toberefactored.parser;
 
 import java.util.Map;
 
-import org.neo4art.domain.Coordinate;
+import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.domain.Settlement;
 
@@ -115,7 +115,7 @@ public class WikipediaReligiousBuildingInfoboxParser
     Map<String, String> map = InfoboxMap.asMap(text);
 
     ReligiousBuilding religiousBuilding = new ReligiousBuilding();
-    Coordinate coordinate = new Coordinate();
+    Coordinates coordinates = new Coordinates();
     Settlement settlement = new Settlement();
 
     for (String key : map.keySet())
@@ -160,7 +160,7 @@ public class WikipediaReligiousBuildingInfoboxParser
           religiousBuilding.setLocation(settlement);
           break;
         case COORDINATES:
-          religiousBuilding.setCoordinates(InfoboxCoordinateParser.infoboxCoordinate(coordinate, map.get(key)));
+          religiousBuilding.setCoordinates(InfoboxCoordinateParser.infoboxCoordinate(coordinates, map.get(key)));
           break;
         case LATITUDE:
           religiousBuilding.setLatitude(map.get(key));

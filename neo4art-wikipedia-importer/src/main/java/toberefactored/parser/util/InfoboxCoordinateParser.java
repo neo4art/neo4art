@@ -3,7 +3,7 @@ package toberefactored.parser.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.domain.Coordinate;
+import org.neo4art.domain.Coordinates;
 
 public class InfoboxCoordinateParser
 {
@@ -14,7 +14,7 @@ public class InfoboxCoordinateParser
 
   }
 
-  public static Coordinate infoboxRestingPlaceCoordinates(Coordinate coordinate, String coor)
+  public static Coordinates infoboxRestingPlaceCoordinates(Coordinates coordinates, String coor)
   {
     try
     {
@@ -26,40 +26,40 @@ public class InfoboxCoordinateParser
       {
         String[] c = StringUtils.split(coor, "|");
 
-        coordinate.setLatD(c[1]);
-        coordinate.setLongD(c[2]);
+        coordinates.setLatD(Double.parseDouble(c[1]));
+        coordinates.setLongD(Double.parseDouble(c[2]));
 
-        return coordinate;
+        return coordinates;
       }
       
     }
     catch (Exception e)
     {
-      logger.error("Error parsing Coordinate Place infobox: " + e.getMessage());
+      logger.error("Error parsing Coordinates Place infobox: " + e.getMessage());
     }
 
     return null;
   }
 
-  public static Coordinate infoboxCoordinate(Coordinate coordinate, String coo)
+  public static Coordinates infoboxCoordinate(Coordinates coordinates, String coo)
   {
     try
     {
       String[] c = StringUtils.split(coo, "|");
-      coordinate.setLatD(c[1]);
-      coordinate.setLatM(c[2]);
-      coordinate.setLatS(c[3]);
-      coordinate.setLatNS(c[4]);
-      coordinate.setLongD(c[5]);
-      coordinate.setLongM(c[6]);
-      coordinate.setLongS(c[7]);
-      coordinate.setLongEW(c[8]);
+      coordinates.setLatD(Double.parseDouble(c[1]));
+      coordinates.setLatM(Double.parseDouble(c[2]));
+      coordinates.setLatS(Double.parseDouble(c[3]));
+      coordinates.setLatNS(c[4]);
+      coordinates.setLongD(Double.parseDouble(c[5]));
+      coordinates.setLongM(Double.parseDouble(c[6]));
+      coordinates.setLongS(Double.parseDouble(c[7]));
+      coordinates.setLongEW(c[8]);
 
-      return coordinate;
+      return coordinates;
     }
     catch (Exception e)
     {
-      logger.error("Error parsing Coordinate infobox: " + e.getMessage());
+      logger.error("Error parsing Coordinates infobox: " + e.getMessage());
     }
 
     return null;

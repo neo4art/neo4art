@@ -15,7 +15,7 @@ public class HistoricPlace implements Node
 
   private String               name;
   private String               nhrp_type;
-  private Coordinate           coordinate;
+  private Coordinates           coordinates;
   private String               website;
   private String               type;
   private URL                  image;
@@ -60,14 +60,14 @@ public class HistoricPlace implements Node
     this.nhrp_type = nhrp_type;
   }
 
-  public Coordinate getCoordinate()
+  public Coordinates getCoordinate()
   {
-    return coordinate;
+    return coordinates;
   }
 
-  public void setCoordinate(Coordinate coordinate)
+  public void setCoordinate(Coordinates coordinates)
   {
-    this.coordinate = coordinate;
+    this.coordinates = coordinates;
   }
 
   public String getWebsite()

@@ -18,7 +18,7 @@ package toberefactored.parser;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.neo4art.domain.Coordinate;
+import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.ReligiousBuilding;
 
 import toberefactored.parser.util.InfoboxMap;
@@ -47,7 +47,7 @@ public class WikipediaReligiousBuildingHinduTempleInfobox
   public static ReligiousBuilding parse(String text) throws MalformedURLException
   {
     ReligiousBuilding hinduTemple = new ReligiousBuilding();
-    Coordinate coordinate = new Coordinate();
+    Coordinates coordinates = new Coordinates();
 
     Map<String, String> map = InfoboxMap.asMap(text);
 
@@ -65,32 +65,32 @@ public class WikipediaReligiousBuildingHinduTempleInfobox
           hinduTemple.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
           break;
         case LATD:
-          coordinate.setLatD(map.get(key));
+          coordinates.setLatD(Double.parseDouble(map.get(key)));
           break;
         case LATM:
-          coordinate.setLatM(map.get(key));
+          coordinates.setLatM(Double.parseDouble(map.get(key)));
           break;
         case LATS:
-          coordinate.setLatS(map.get(key));
+          coordinates.setLatS(Double.parseDouble(map.get(key)));
           break;
         case LATNS:
-          coordinate.setLatNS(map.get(key));
+          coordinates.setLatNS(map.get(key));
           break;
         case LONGD:
-          coordinate.setLongD(map.get(key));
+          coordinates.setLongD(Double.parseDouble(map.get(key)));
           break;
         case LONGM:
-          coordinate.setLongM(map.get(key));
+          coordinates.setLongM(Double.parseDouble(map.get(key)));
           break;
         case LONGS:
-          coordinate.setLongS(map.get(key));
+          coordinates.setLongS(Double.parseDouble(map.get(key)));
           break;
         case LONGEW:
-          coordinate.setLongEW(map.get(key));
+          coordinates.setLongEW(map.get(key));
           break;
       }
       
-      hinduTemple.setCoordinates(coordinate);
+      hinduTemple.setCoordinates(coordinates);
     }
     return hinduTemple;
   }

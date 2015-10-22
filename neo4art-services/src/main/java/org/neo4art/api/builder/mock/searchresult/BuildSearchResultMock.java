@@ -78,8 +78,8 @@ public class BuildSearchResultMock {
 		Museum museum = new Museum();
 		museum.setNodeId(6);
 		museum.setName("Van Gogh Museum");
-		museum.setImage(new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Van_Gogh_Museum.jpg/1024px-Van_Gogh_Museum.jpg"));
-		museum.setWebsite("http://it.wikipedia.org/wiki/Van_Gogh_Museum");
+		//museum.setImage(new URL("http://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Van_Gogh_Museum.jpg/1024px-Van_Gogh_Museum.jpg"));
+		//museum.setWebsite("http://it.wikipedia.org/wiki/Van_Gogh_Museum");
 		
 		Artwork artwork4 = new Artwork();
 		artwork4.setNodeId(7);

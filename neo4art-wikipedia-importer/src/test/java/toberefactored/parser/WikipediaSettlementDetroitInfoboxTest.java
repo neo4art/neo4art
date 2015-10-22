@@ -30,7 +30,6 @@ public class WikipediaSettlementDetroitInfoboxTest {
 		Settlement settlement = WikipediaSettlementInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Detroit", settlement.getName());
-		Assert.assertEquals("City (Michigan)City", settlement.getSettlementType());
 		Assert.assertEquals("City of Detroit", settlement.getOfficialName());
 		Assert.assertEquals("42.0",""+settlement.getCoordinate().getLatD());
 		Assert.assertEquals("19.0", ""+settlement.getCoordinate().getLatM());

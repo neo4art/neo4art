@@ -14,7 +14,7 @@ public class HistoricSite implements Node
   private Long                 nodeId;
 
   private String               name;
-  private Coordinate           coordinate;
+  private Coordinates           coordinates;
   private URL                  image;
   private Country              country;
   private String               caption;
@@ -41,14 +41,14 @@ public class HistoricSite implements Node
     this.name = name;
   }
 
-  public Coordinate getCoordinate()
+  public Coordinates getCoordinate()
   {
-    return coordinate;
+    return coordinates;
   }
 
-  public void setCoordinate(Coordinate coordinate)
+  public void setCoordinate(Coordinates coordinates)
   {
-    this.coordinate = coordinate;
+    this.coordinates = coordinates;
   }
 
   public URL getImage()

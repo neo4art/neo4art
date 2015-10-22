@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artwork;
+import org.neo4art.importer.wikipedia.parser.WikipediaArtworkInfoboxParser;
 
 public class WikipediaArtworkSunFlowerInfoboxTest {
 	private static String INFOBOX =

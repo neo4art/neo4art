@@ -29,7 +29,6 @@ public class WikipediaSettlementChicagoInfoboxTest {
 		Settlement settlement = WikipediaSettlementInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Chicago", settlement.getName());
-		Assert.assertEquals("City (Illinois)City", settlement.getSettlementType());
 		Assert.assertEquals("41.0",""+settlement.getCoordinate().getLatD());
 		Assert.assertEquals("50.0", ""+settlement.getCoordinate().getLatM());
 		Assert.assertEquals("15.0", ""+settlement.getCoordinate().getLatS());

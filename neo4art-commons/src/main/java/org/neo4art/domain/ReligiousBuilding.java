@@ -45,7 +45,7 @@ public class ReligiousBuilding implements Node
   private String               mapSize;
   private String               mapCaption;
   private Settlement           location;
-  private Coordinate           coordinate;
+  private Coordinates           coordinates;
   private String               latitude;
   private String               longitude;
   private String               coordinatesRegion;
@@ -221,14 +221,14 @@ public class ReligiousBuilding implements Node
     this.location = settlement;
   }
 
-  public Coordinate getCoordinates()
+  public Coordinates getCoordinates()
   {
-    return coordinate;
+    return coordinates;
   }
 
-  public void setCoordinates(Coordinate coordinate)
+  public void setCoordinates(Coordinates coordinates)
   {
-    this.coordinate = coordinate;
+    this.coordinates = coordinates;
   }
 
   public String getLatitude()

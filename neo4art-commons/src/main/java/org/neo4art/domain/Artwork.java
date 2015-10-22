@@ -41,8 +41,13 @@ public class Artwork implements Node {
   private String               year;
   private Date                 completionDate;
   private String               catalogue;
+  private String               subject;
+  private Settlement           city;
+  private Museum               museum;
 
   private String               imageFile;
+
+  private Coordinates          coordinates;
 
   private Artist               artist;
 
@@ -111,12 +116,44 @@ public class Artwork implements Node {
     this.catalogue = catalogue;
   }
 
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
+  public Settlement getCity() {
+    return city;
+  }
+
+  public void setCity(Settlement city) {
+    this.city = city;
+  }
+
+  public Museum getMuseum() {
+    return museum;
+  }
+
+  public void setMuseum(Museum musuem) {
+    this.museum = musuem;
+  }
+
   public String getImageFile() {
     return this.imageFile;
   }
 
   public void setImageFile(String imageFile) {
     this.imageFile = imageFile;
+  }
+
+  public Coordinates getCoordinates() {
+    return coordinates;
+  }
+
+  public void setCoordinates(Coordinates coordinates) {
+    this.coordinates = coordinates;
   }
 
   public Artist getArtist() {
@@ -148,6 +185,19 @@ public class Artwork implements Node {
     }
     if (this.catalogue != null) {
       properties.put("catalogue", this.catalogue);
+    }
+    if (this.subject != null) {
+      properties.put("subject", this.subject);
+    }
+    if (this.city != null && this.city.getName() != null) {
+      properties.put("city", this.city.getName());
+    }
+    if (this.museum != null && this.museum.getName() != null) {
+      properties.put("museum", this.museum.getName());
+    }
+    if (this.coordinates != null) {
+      properties.put("lat", this.coordinates.getLatitude());
+      properties.put("lon", this.coordinates.getLongitude());
     }
 
     return properties;
