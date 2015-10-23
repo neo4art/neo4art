@@ -46,6 +46,8 @@ import org.xml.sax.SAXException;
 public class WikipediaBatchImporter implements WikipediaImporter
 {
   private static Log logger = LogFactory.getLog(WikipediaBatchImporter.class);
+  
+  static final int BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 10_000;
 
   @Override
   public long importOrUpdateDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException
@@ -73,7 +75,7 @@ public class WikipediaBatchImporter implements WikipediaImporter
     
     {
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
-      wikipediaNodesImporterListener.setBatchSize(100_000);
+      wikipediaNodesImporterListener.setBatchSize(BATCH_SIZE);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
@@ -85,7 +87,7 @@ public class WikipediaBatchImporter implements WikipediaImporter
 
     {
       WikipediaImporterListener wikipediaRelsImporterListener = new WikipediaRelsBatchImporterListener();
-      wikipediaRelsImporterListener.setBatchSize(100_000);
+      wikipediaRelsImporterListener.setBatchSize(BATCH_SIZE);
       long parserForRelsStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForRels = new WikiXMLParser(dumpFile, wikipediaRelsImporterListener);
       parserForRels.parse();
