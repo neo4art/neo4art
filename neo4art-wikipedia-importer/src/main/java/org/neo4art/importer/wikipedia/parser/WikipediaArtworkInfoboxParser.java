@@ -17,6 +17,8 @@ package org.neo4art.importer.wikipedia.parser;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artwork;
 import org.neo4art.domain.Museum;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
@@ -33,6 +35,8 @@ import toberefactored.parser.util.InfoboxMap;
  */
 public class WikipediaArtworkInfoboxParser {
 
+  private static Log logger = LogFactory.getLog(WikipediaArtworkInfoboxParser.class);
+  
   public static final String TITLE           = "title";
 
   public static final String YEAR            = "year";
@@ -59,34 +63,41 @@ public class WikipediaArtworkInfoboxParser {
     
     for (String key : map.keySet()) {
 
-      switch (key) {
-        case TITLE:
-          artwork.setTitle(map.get(key));
-          break;
-        case YEAR:
-          artwork.setYear(map.get(key));
-          break;
-        case COMPLETION_DATE:
-          artwork.setCompletionDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
-          break;
-        case TYPE:
-          artwork.setType(map.get(key));
-          break;
-        case CATALOGUE:
-          artwork.setCatalogue(map.get(key));
-          break;
-        case SUBJECT:
-          artwork.setSubject(map.get(key));
-          break;
-        case CITY:
-          artwork.setCity(WikipediaSettlementInfoboxParser.parse(map.get(key)));
-          break;
-        case MUSEUM:
-          artwork.setMuseum(new Museum(map.get(key)));
-          break;
+      try {
+
+        switch (key) {
+          case TITLE:
+            artwork.setTitle(map.get(key));
+            break;
+          case YEAR:
+            artwork.setYear(map.get(key));
+            break;
+          case COMPLETION_DATE:
+            artwork.setCompletionDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
+            break;
+          case TYPE:
+            artwork.setType(map.get(key));
+            break;
+          case CATALOGUE:
+            artwork.setCatalogue(map.get(key));
+            break;
+          case SUBJECT:
+            artwork.setSubject(map.get(key));
+            break;
+          case CITY:
+            artwork.setCity(WikipediaSettlementInfoboxParser.parse(map.get(key)));
+            break;
+          case MUSEUM:
+            artwork.setMuseum(new Museum(map.get(key)));
+            break;
+        }
+      }
+      catch (Exception e) {
+        
+        logger.warn("Error parsing infobox value: " + key);
       }
     }
-
+    
     return artwork;
   }
 }

@@ -17,6 +17,8 @@ package org.neo4art.importer.wikipedia.parser;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Artist;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaDateTimeInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
@@ -31,6 +33,8 @@ import toberefactored.parser.util.InfoboxMap;
  */
 public class WikipediaArtistInfoboxParser {
 
+  private static Log logger = LogFactory.getLog(WikipediaArtistInfoboxParser.class);
+  
   public static final String NAME        = "name";
   public static final String BIRTH_DATE  = "birth_date";
   public static final String BIRTH_PLACE = "birth_place";
@@ -42,30 +46,39 @@ public class WikipediaArtistInfoboxParser {
   }
 
   public static Artist parse(String text) {
+    
     Map<String, String> map = InfoboxMap.asMap(text);
 
     Artist artist = new Artist();
 
     for (String key : map.keySet()) {
-      switch (key) {
-        case NAME:
-          artist.setName(map.get(key));
-          break;
-        case BIRTH_DATE:
-          artist.setBirthDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
-          break;
-        case BIRTH_PLACE:
-          artist.setBirthPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
-          break;
-        case DEATH_DATE:
-          artist.setDeathDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
-          break;
-        case DEATH_PLACE:
-          artist.setDeathPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
-          break;
-        case NATIONALITY:
-          artist.setNationality(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
-          break;
+      
+      try {
+        
+        switch (key) {
+          case NAME:
+            artist.setName(map.get(key));
+            break;
+          case BIRTH_DATE:
+            artist.setBirthDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
+            break;
+          case BIRTH_PLACE:
+            artist.setBirthPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
+            break;
+          case DEATH_DATE:
+            artist.setDeathDate(WikipediaDateTimeInfoboxParserUtils.parseAsDate(map.get(key)));
+            break;
+          case DEATH_PLACE:
+            artist.setDeathPlace(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
+            break;
+          case NATIONALITY:
+            artist.setNationality(WikipediaInfoboxParserUtils.removeDoubleSquareBracketsForLinks(map.get(key)));
+            break;
+        }
+      }
+      catch (Exception e) {
+        
+        logger.warn("Error parsing infobox value: " + key);
       }
     }
 

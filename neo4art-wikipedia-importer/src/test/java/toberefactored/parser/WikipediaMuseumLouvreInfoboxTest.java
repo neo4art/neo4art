@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4art.domain.Museum;
+import org.neo4art.importer.wikipedia.parser.WikipediaMuseumInfoboxParser;
 
 public class WikipediaMuseumLouvreInfoboxTest {
 
