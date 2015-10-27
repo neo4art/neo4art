@@ -24,6 +24,7 @@ import java.util.Calendar;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
@@ -40,8 +41,8 @@ import org.xml.sax.SAXException;
  * @since 25.02.2015
  */
 public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
-  
-  private static Log logger     = LogFactory.getLog(WikipediaInMemoryBatchImporter.class);
+
+  private static Log logger = LogFactory.getLog(WikipediaInMemoryBatchImporter.class);
 
   @Override
   public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
@@ -50,7 +51,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
     long dumpImportStartDate = Calendar.getInstance().getTimeInMillis();
 
     long newNodesAndRelationships = 0;
-    
+
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER);
 
     logger.info("Configuration: ");
@@ -59,8 +60,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
     logger.info("Store directory is: " + graphDatabaseConnectionManager.getStoreDir());
     logger.info("");
 
-    try
-    {
+    try {
       logger.info("Parsing of wikipedia dump " + dumpFile.getAbsolutePath() + " started...");
       long parserStartDate = Calendar.getInstance().getTimeInMillis();
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaInMemoryBatchImporterListener();
@@ -70,7 +70,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
       long parserEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Wikipedia dump parsed in " + (parserEndDate - parserStartDate) + " ms.");
       logger.info("");
-      
+
       logger.info("Creation of Wikipedia nodes and relationships started...");
       long flushOnGraphStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();
@@ -78,7 +78,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
       newNodesAndRelationships = wikipediaNodesImporterListener.getGraphCount();
       logger.info("Done! " + newNodesAndRelationships + " nodes and relationships created in " + (flushOnGraphEndDate - flushOnGraphStartDate) + " ms.");
       logger.info("");
-      
+
       logger.info("Creation of Wikipedia indexes started...");
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.Wikipedia, "title");
@@ -98,11 +98,10 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaProject, "title");
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaTemplate, "title");
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate)  + " ms.");
+      logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");
       logger.info("");
     }
-    finally
-    {
+    finally {
       logger.info("Neo4j files consolidation (before shutting down) started...");
       long shutdownStartDate = Calendar.getInstance().getTimeInMillis();
       graphDatabaseConnectionManager.close();
@@ -132,7 +131,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
       new WikipediaInMemoryBatchImporter().importDump(wikipediaDump);
     }
     catch (Exception e) {
-      throw new RuntimeException("Import failed: " + e.getMessage() + ".", e);
+      throw new RuntimeException("Import failed: " + ExceptionUtils.getStackTrace(e));
     }
   }
 }

@@ -24,6 +24,7 @@ import java.util.Calendar;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
@@ -140,7 +141,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
       new WikipediaBufferedBatchImporter().importDump(wikipediaDump);
     }
     catch (Exception e) {
-      throw new RuntimeException("Import failed: " + e.getMessage() + ".", e);
+      throw new RuntimeException("Import failed: " + ExceptionUtils.getStackTrace(e));
     }
   }
 }
