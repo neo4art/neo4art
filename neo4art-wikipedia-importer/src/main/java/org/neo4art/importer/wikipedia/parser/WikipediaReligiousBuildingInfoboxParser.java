@@ -70,7 +70,7 @@ public class WikipediaReligiousBuildingInfoboxParser {
       }
       catch (Exception e) {
 
-        logger.error("     Error parsing infobox pair (" + key + " , " + map.get(key) + ") : " + e.getMessage());
+        logger.error("# Error parsing infobox pair (" + key + " , " + map.get(key) + ") : " + e.getMessage());
       }
     }
 
