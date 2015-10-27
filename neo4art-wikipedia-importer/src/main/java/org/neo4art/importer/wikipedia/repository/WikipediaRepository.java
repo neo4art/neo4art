@@ -28,4 +28,6 @@ public interface WikipediaRepository {
   long createNodes(WikipediaElement wikipediaElement);
   
   long createRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship);
+
+  boolean addNodeToWikipediaIndex(WikipediaElement wikipediaElement);
 }

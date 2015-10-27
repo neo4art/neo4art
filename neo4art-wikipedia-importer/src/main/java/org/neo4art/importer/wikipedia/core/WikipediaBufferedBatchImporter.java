@@ -40,14 +40,14 @@ import org.xml.sax.SAXException;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaBatchImporter implements WikipediaImporter {
+public class WikipediaBufferedBatchImporter implements WikipediaImporter {
   
-  private static Log logger     = LogFactory.getLog(WikipediaBatchImporter.class);
+  private static Log logger     = LogFactory.getLog(WikipediaBufferedBatchImporter.class);
 
   static final int   BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 10_000;
 
   @Override
-  public long importOrUpdateDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
+  public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
     logger.info("Wikipedia dump file import started...");
 
     long dumpImportStartDate = Calendar.getInstance().getTimeInMillis();
@@ -127,7 +127,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
 
   public static void main(String[] args) {
     if (args.length != 1) {
-      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar org.neo4art.importer.wikipedia.core.WikipediaBatchImporter /path/to/wikipedia-dump.xml");
+      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaBufferedBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml");
     }
 
     File wikipediaDump = new File(args[0]);
@@ -137,7 +137,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
     }
 
     try {
-      new WikipediaBatchImporter().importOrUpdateDump(wikipediaDump);
+      new WikipediaBufferedBatchImporter().importDump(wikipediaDump);
     }
     catch (Exception e) {
       throw new RuntimeException("Import failed: " + e.getMessage() + ".", e);

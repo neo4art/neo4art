@@ -15,15 +15,8 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
-import info.bliki.wiki.dump.Siteinfo;
-import info.bliki.wiki.dump.WikiArticle;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
@@ -31,65 +24,25 @@ import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.GraphDatabaseConnectionType;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
-import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
-import org.xml.sax.SAXException;
+import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
 
 /**
- * Default implementation of the importer listener. It's an aggregator that processes pages in batch mode.
- *  
+ * Default implementation of the importer listener.
+ * 
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public abstract class WikipediaAbstractImporterListener implements WikipediaImporterListener {
+public class WikipediaInMemoryBatchImporterListener extends WikipediaAbstractImporterListener implements WikipediaImporterListener {
+
+  private static Log logger = LogFactory.getLog(WikipediaInMemoryBatchImporterListener.class);
   
-  private static Log logger = LogFactory.getLog(WikipediaAbstractImporterListener.class);
-  
-	protected AtomicLong pageCount;
-	protected AtomicLong graphCount;
-	protected long batchSize;
-	protected List<WikipediaElement> wikipediaElementBuffer;
-	
-	protected WikipediaAbstractImporterListener() {
-		this.graphCount = new AtomicLong();
-		this.pageCount  = new AtomicLong();
-		this.batchSize = 1;
-		this.wikipediaElementBuffer  = new ArrayList<WikipediaElement>();
-	}
-	
-	@Override
-	public void setBatchSize(long size) {
-	  this.batchSize = size;
-	}
-
-	@Override
-	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
-	  
-	  if (StringUtils.isNotEmpty(article.getTitle())) {
-	    
-  		pageCount.incrementAndGet();
-  		
-  		if (this.batchSize != WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT && this.wikipediaElementBuffer.size() == this.batchSize) {
-  		  flush();
-  		}
-  		
-      WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
-      
-      if (wikipediaElement != null) {
-        this.wikipediaElementBuffer.add(wikipediaElement);
-      }
-	  }
-	}
-
-	@Override
-	public long getPageCount() {
-	  return this.pageCount.longValue();
-	}
-
-  @Override
-  public long getGraphCount() {
-    return this.graphCount.longValue();
+  public WikipediaInMemoryBatchImporterListener() {
+    super();
   }
-  
+
+  /**
+   * @see org.neo4art.importer.wikipedia.core.listener.WikipediaAbstractImporterListener#flush()
+   */
   @Override
   public void flush() {
     
@@ -103,7 +56,11 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
       
       for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
-        graphElementsCreated += persist(wikipediaElement);
+        graphElementsCreated += persistNodes(wikipediaElement);
+      }
+      
+      for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
+        graphElementsCreated += persistRelationships(wikipediaElement);
       }
       
       tx.success();
@@ -114,6 +71,51 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     logger.debug(graphElementsCreated + " new graph database elements created for " + this.wikipediaElementBuffer.size() + " wikipedia elements in " + (flushEndDate - flushStartDate) + " ms.");
     this.wikipediaElementBuffer.clear();
   }
+  
+  /**
+   * 
+   * @param wikipediaElement
+   * @return
+   */
+  private long persistNodes(WikipediaElement wikipediaElement) {
+    
+    try {
+      
+      return new WikipediaElementDefaultManager().createNodes(wikipediaElement);
+    }
+    catch (Exception e) {
+      
+      logger.error("Error creating nodes for wikipedia element { " + wikipediaElement.getProperties() + "}. Cause: " + e.getCause().getMessage());
+      
+      return 0;
+    }
+  }
+  
+  /**
+   * 
+   * @param wikipediaElement
+   * @return
+   */
+  private long persistRelationships(WikipediaElement wikipediaElement) {
+    
+    try {
+      
+      return new WikipediaElementDefaultManager().createRelationships(wikipediaElement);
+    }
+    catch (Exception e) {
+      
+      logger.error("Error creating relationships for wikipedia element { " + wikipediaElement.getProperties() + " }. Cause: " + e.getCause().getMessage());
+      
+      return 0;
+    }
+  }
 
-  protected abstract long persist(WikipediaElement wikipediaElement);
+  /**
+   * @see org.neo4art.importer.wikipedia.core.listener.WikipediaAbstractImporterListener#persist(org.neo4art.importer.wikipedia.domain.WikipediaElement)
+   */
+  @Override
+  protected long persist(WikipediaElement wikipediaElement) {
+    
+    throw new RuntimeException(new IllegalAccessException("Method not allowed in this implementation. Use 'persistNodes' and 'persistRepationships' instead."));
+  }
 }

@@ -31,7 +31,7 @@ public class WikipediaRelsBatchImporterListener extends WikipediaAbstractImporte
   private static Log logger = LogFactory.getLog(WikipediaRelsBatchImporterListener.class);
   
   @Override
-  public long persist(WikipediaElement wikipediaElement) {
+  protected long persist(WikipediaElement wikipediaElement) {
     
     try {
       

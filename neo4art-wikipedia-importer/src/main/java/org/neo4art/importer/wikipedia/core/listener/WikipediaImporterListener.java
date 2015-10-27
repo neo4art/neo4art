@@ -27,6 +27,8 @@ import info.bliki.wiki.dump.IArticleFilter;
  */
 public interface WikipediaImporterListener extends IArticleFilter {
 
+  public static final int NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT = -1;
+  
   void setBatchSize(long size);
   
 	long getPageCount();

@@ -35,7 +35,7 @@ public class WikipediaNodesBatchImporterListener extends WikipediaAbstractImport
   }
 
   @Override
-  public long persist(WikipediaElement wikipediaElement) {
+  protected long persist(WikipediaElement wikipediaElement) {
     
     try {
       

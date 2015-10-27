@@ -108,7 +108,8 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
    * @param wikipediaElement
    * @return
    */
-  private boolean addNodeToWikipediaIndex(WikipediaElement wikipediaElement) {
+  @Override
+  public boolean addNodeToWikipediaIndex(WikipediaElement wikipediaElement) {
     WikipediaIndexes.getInstance().getIndex(WikipediaIndexes.INDEX_FOR_WIKIPEDIA_TITLE).add(wikipediaElement.getTitle(), wikipediaElement.getNodeId());
     return true;
   }

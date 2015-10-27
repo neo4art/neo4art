@@ -35,7 +35,7 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaImporterTest {
+public class WikipediaInMemoryBatchImporterTest {
 
   @Before
   public void cleanDatabase() throws IOException {
@@ -50,7 +50,7 @@ public class WikipediaImporterTest {
 		  
 		  File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
 			
-			long newNodesAndRelationships = new WikipediaBatchImporter().importOrUpdateDump(dumpFile);
+			long newNodesAndRelationships = new WikipediaInMemoryBatchImporter().importDump(dumpFile);
 
 			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
 			
@@ -62,7 +62,8 @@ public class WikipediaImporterTest {
 			  
 			  tx.success();
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 		  
 			e.printStackTrace();
 			
