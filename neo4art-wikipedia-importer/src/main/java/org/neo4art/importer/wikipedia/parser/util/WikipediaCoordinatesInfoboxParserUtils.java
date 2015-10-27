@@ -97,11 +97,11 @@ public class WikipediaCoordinatesInfoboxParserUtils {
         }
       }
       catch (NumberFormatException nfe) {
+        
         logger.trace(nfe.getMessage());
       }
     }
 
     return (coordinates.getStatus() == Coordinates.COMPUTED) ? coordinates : null;
   }
-
 }

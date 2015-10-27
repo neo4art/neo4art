@@ -66,8 +66,10 @@ public class WikipediaDateTimeInfoboxParserUtils {
    */
   public static Date parseAsDate(String dateAsString) {
 
-    if (StringUtils.isBlank(dateAsString))
+    if (StringUtils.isBlank(dateAsString)) {
+      
       return null;
+    }
 
     final String PATTERNS[] = { "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]+[\\}]{2}" ,
                                 "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
@@ -91,21 +93,24 @@ public class WikipediaDateTimeInfoboxParserUtils {
     }
     
     try {
+      
       return new SimpleDateFormat("dd MMM yyyy").parse(dateAsString);
     }
     catch (Exception e) {
     }
     
     try {
+      
       Calendar year = Calendar.getInstance();
       year.set(Integer.parseInt(dateAsString), Calendar.JANUARY, 1, 0, 0, 0);
       year.set(Calendar.MILLISECOND, 0);
+      
       return year.getTime();
     }
     catch (Exception e) {
     }
     
-    logger.error("Unable to parse " + dateAsString + " as Date.");
+    logger.trace("Unable to parse " + dateAsString + " as Date.");
     
     return null;
   }
@@ -129,10 +134,8 @@ public class WikipediaDateTimeInfoboxParserUtils {
       return calendar.getTime();
     }
     catch (Exception e) {
-      
-      logger.error("Unable to generate date for year = " + year + ", month = " + month + ", day = " + day);
-      
-      return null;
     }
+    
+    return null;
   }
 }
