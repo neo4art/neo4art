@@ -65,17 +65,19 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
 	  
 	  if (StringUtils.isNotEmpty(article.getTitle())) {
-	    
   		pageCount.incrementAndGet();
-  		
-  		if (this.batchSize != WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT && this.wikipediaElementBuffer.size() == this.batchSize) {
-  		  flush();
-  		}
   		
       WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
       
       if (wikipediaElement != null) {
         this.wikipediaElementBuffer.add(wikipediaElement);
+      }
+      
+      if (this.wikipediaElementBuffer.size() % this.batchSize == 0) {        
+        logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far...");
+        if (this.batchSize != WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT) {
+          flush();
+        }
       }
 	  }
 	}
@@ -93,19 +95,15 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
   @Override
   public void flush() {
     
-    logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far... start flushing on graph...");
-    
     long graphElementsCreated = 0;
     long flushStartDate = Calendar.getInstance().getTimeInMillis();
     
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.GRAPH_DATABASE_SERVICE);
 
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
-      
       for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
         graphElementsCreated += persist(wikipediaElement);
       }
-      
       tx.success();
     }
     

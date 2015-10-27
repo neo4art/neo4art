@@ -44,7 +44,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
   
   private static Log logger     = LogFactory.getLog(WikipediaBufferedBatchImporter.class);
 
-  static final int   BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 10_000;
+  static final int   BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 500_000;
 
   @Override
   public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
