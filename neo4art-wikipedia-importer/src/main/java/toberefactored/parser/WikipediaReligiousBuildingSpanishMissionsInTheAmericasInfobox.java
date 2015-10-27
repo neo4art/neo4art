@@ -19,8 +19,8 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.ReligiousBuilding;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
 import toberefactored.parser.util.InfoboxParserUtil;
 import toberefactored.parser.util.InfoboxUrlParser;
 
@@ -53,7 +53,7 @@ public class WikipediaReligiousBuildingSpanishMissionsInTheAmericasInfobox
     ReligiousBuilding spanishMissionsInTheAmericans = new ReligiousBuilding();
     Coordinates coordinates = new Coordinates();
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     for (String key : map.keySet())
     {

@@ -21,8 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Monument;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
-
-import toberefactored.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_monument">Template :Infobox_monument</a>
@@ -43,7 +42,7 @@ public class WikipediaMonumentInfoboxParser {
 
   public static Monument parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Monument monument = new Monument();
 

@@ -22,8 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Book;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_book">Template :Infobox_book</a>
  * 
@@ -45,7 +43,7 @@ public class WikipediaBookInfoboxParser {
 
   public static Book parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Book book = new Book();
 

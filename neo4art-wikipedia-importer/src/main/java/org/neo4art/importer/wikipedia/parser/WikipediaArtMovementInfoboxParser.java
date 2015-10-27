@@ -22,8 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ArtMovement;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_art_movement">Template:Infobox_art_movement</a>
  * 
@@ -42,7 +40,7 @@ public class WikipediaArtMovementInfoboxParser {
 
   public static ArtMovement parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     ArtMovement artMovement = new ArtMovement();
 

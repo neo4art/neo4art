@@ -21,8 +21,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Colour;
-
-import toberefactored.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_color">Template :Infobox_artist</a>
@@ -45,7 +44,7 @@ public class WikipediaColourInfoboxParser {
 
   public static Colour parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Colour colour = new Colour();
 

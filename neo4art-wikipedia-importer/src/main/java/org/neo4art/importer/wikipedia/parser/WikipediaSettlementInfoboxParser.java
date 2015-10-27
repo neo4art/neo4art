@@ -23,8 +23,6 @@ import org.neo4art.domain.Settlement;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_settlement"> Template:Infobox_settlement</a>
  * 
@@ -47,7 +45,7 @@ public class WikipediaSettlementInfoboxParser {
 
   public static Settlement parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Settlement settlement = new Settlement();
 

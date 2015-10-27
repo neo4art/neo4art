@@ -24,8 +24,6 @@ import org.neo4art.domain.Museum;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_museum">Template :Infobox_museum</a>
  * 
@@ -43,7 +41,7 @@ public class WikipediaMuseumInfoboxParser {
 
   public static Museum parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Museum museum = new Museum();
 

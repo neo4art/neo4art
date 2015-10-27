@@ -41,6 +41,7 @@ import org.xml.sax.SAXException;
  * @since 25.02.2015
  */
 public class WikipediaBatchImporter implements WikipediaImporter {
+  
   private static Log logger     = LogFactory.getLog(WikipediaBatchImporter.class);
 
   static final int   BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 10_000;

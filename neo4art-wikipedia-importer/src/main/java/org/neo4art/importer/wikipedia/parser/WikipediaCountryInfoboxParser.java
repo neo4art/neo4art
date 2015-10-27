@@ -20,8 +20,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Country;
-
-import toberefactored.parser.util.InfoboxMap;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_country">Template:Infobox_country</a>
@@ -42,7 +41,7 @@ public class WikipediaCountryInfoboxParser {
 
   public static Country parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Country country = new Country();
 

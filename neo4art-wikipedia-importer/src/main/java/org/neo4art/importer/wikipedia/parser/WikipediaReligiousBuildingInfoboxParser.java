@@ -23,8 +23,6 @@ import org.neo4art.domain.ReligiousBuilding;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_religious_building">Template:Infobox_religious_building</a>
  * 
@@ -45,7 +43,7 @@ public class WikipediaReligiousBuildingInfoboxParser {
 
   public static ReligiousBuilding parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     ReligiousBuilding religiousBuilding = new ReligiousBuilding();
 

@@ -28,8 +28,6 @@ import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxPar
 import org.neo4art.importer.wikipedia.parser.util.WikipediaDateTimeInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artwork">Template :Infobox_artwork</a>
  * 
@@ -61,7 +59,7 @@ public class WikipediaArtworkInfoboxParser {
 
   public static Artwork parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Artwork artwork = new Artwork();
 

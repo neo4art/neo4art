@@ -6,7 +6,6 @@ import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.Settlement;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
 import toberefactored.parser.util.InfoboxParserUtil;
 import toberefactored.parser.util.InfoboxTypeParserUtil;
 
@@ -43,7 +42,7 @@ public class WikipediaSettlementGreekDimosInfoboxParser {
 
   public static Settlement parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Settlement settlement = new Settlement();
     Coordinates coordinates = new Coordinates();

@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
@@ -151,14 +150,13 @@ public class Artist implements Node {
     if (this.birthDate != null) {
       properties.put("birthDate", this.birthDate.getTime());
     }
-    if (this.birthPlace != null && StringUtils.isNotBlank(this.birthPlace.getName())) {
-      System.out.println("BIRTH PLACE = " + this.birthPlace.getName());
+    if (this.birthPlace != null && this.birthPlace.getName() != null) {
       properties.put("birthPlace", this.birthPlace.getName());
     }
     if (this.deathDate != null) {
       properties.put("deathDate", this.deathDate.getTime());
     }
-    if (this.deathPlace != null && StringUtils.isNotBlank(this.deathPlace.getName())) {
+    if (this.deathPlace != null && this.deathPlace.getName() != null) {
       properties.put("deathPlace", this.deathPlace.getName());
     }
     if (this.nationality != null) {

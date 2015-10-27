@@ -26,8 +26,6 @@ import org.neo4art.domain.Artist;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaDateTimeInfoboxParserUtils;
 import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
-import toberefactored.parser.util.InfoboxMap;
-
 /**
  * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
  * 
@@ -55,7 +53,7 @@ public class WikipediaArtistInfoboxParser {
 
   public static Artist parse(String text) {
 
-    Map<String, String> map = InfoboxMap.asMap(text);
+    Map<String, String> map = WikipediaInfoboxParserUtils.asMap(text);
 
     Artist artist = new Artist();
 
