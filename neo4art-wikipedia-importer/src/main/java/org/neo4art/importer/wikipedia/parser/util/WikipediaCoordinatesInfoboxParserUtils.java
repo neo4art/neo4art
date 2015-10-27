@@ -97,7 +97,7 @@ public class WikipediaCoordinatesInfoboxParserUtils {
         }
       }
       catch (NumberFormatException nfe) {
-        logger.warn(nfe.getMessage());
+        logger.trace(nfe.getMessage());
       }
     }
 

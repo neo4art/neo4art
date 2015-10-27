@@ -15,6 +15,8 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
 
@@ -26,6 +28,8 @@ import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
  */
 public class WikipediaNodesBatchImporterListener extends WikipediaAbstractImporterListener implements WikipediaImporterListener {
 
+  private static Log logger = LogFactory.getLog(WikipediaNodesBatchImporterListener.class);
+  
   public WikipediaNodesBatchImporterListener() {
     super();
   }
@@ -33,6 +37,13 @@ public class WikipediaNodesBatchImporterListener extends WikipediaAbstractImport
   @Override
   public long persist(WikipediaElement wikipediaElement) {
     
-    return new WikipediaElementDefaultManager().createNodes(wikipediaElement);
+    try {
+      return new WikipediaElementDefaultManager().createNodes(wikipediaElement);
+    }
+    catch (Exception e) {
+      
+      logger.error("Error creating node for wikipedia element " + wikipediaElement.getProperties() + " Cause: " + e.getMessage());
+      return 0;
+    }
   }
 }

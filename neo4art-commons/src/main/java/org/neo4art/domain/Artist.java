@@ -150,13 +150,13 @@ public class Artist implements Node {
     if (this.birthDate != null) {
       properties.put("birthDate", this.birthDate.getTime());
     }
-    if (this.birthPlace != null) {
+    if (this.birthPlace != null && this.birthPlace.getName() != null) {
       properties.put("birthPlace", this.birthPlace.getName());
     }
     if (this.deathDate != null) {
       properties.put("deathDate", this.deathDate.getTime());
     }
-    if (this.deathPlace != null) {
+    if (this.deathPlace != null && this.deathPlace.getName() != null) {
       properties.put("deathPlace", this.deathPlace.getName());
     }
     if (this.nationality != null) {
