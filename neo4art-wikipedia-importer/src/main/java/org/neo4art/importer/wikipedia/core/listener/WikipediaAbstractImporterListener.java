@@ -18,6 +18,7 @@ package org.neo4art.importer.wikipedia.core.listener;
 import info.bliki.wiki.dump.Siteinfo;
 import info.bliki.wiki.dump.WikiArticle;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -68,7 +69,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     
     if (logger.isInfoEnabled()) {
       if (pages % 500_000 == 0) {
-        logger.info(pages + " wikipedia pages parsed from dump so far...");
+        logger.info(new DecimalFormat("#_###").format(pages) + " wikipedia pages parsed from dump so far...");
       }
     }
     
