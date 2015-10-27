@@ -66,10 +66,9 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	  
 	  if (StringUtils.isNotEmpty(article.getTitle())) {
 	    
-  		long currentPageCount = pageCount.incrementAndGet();
+  		pageCount.incrementAndGet();
   		
   		if (this.wikipediaElementBuffer.size() == this.batchSize) {
-  		  logger.info(currentPageCount + " pages parsed so far...");
   		  flush();
   		}
   		
@@ -94,7 +93,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
   @Override
   public void flush() {
     
-    logger.info(this.getPageCount() + " pages parsed so far... start flushing on graph...");
+    logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far... start flushing on graph...");
     
     long graphElementsCreated = 0;
     long flushStartDate = Calendar.getInstance().getTimeInMillis();

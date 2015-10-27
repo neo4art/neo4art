@@ -15,6 +15,8 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
 
@@ -26,9 +28,20 @@ import org.neo4art.importer.wikipedia.manager.WikipediaElementDefaultManager;
  */
 public class WikipediaRelsBatchImporterListener extends WikipediaAbstractImporterListener implements WikipediaImporterListener {
   
+  private static Log logger = LogFactory.getLog(WikipediaRelsBatchImporterListener.class);
+  
   @Override
   public long persist(WikipediaElement wikipediaElement) {
     
-    return new WikipediaElementDefaultManager().createRelationships(wikipediaElement);
+    try {
+      
+      return new WikipediaElementDefaultManager().createRelationships(wikipediaElement);
+    }
+    catch (Exception e) {
+      
+      logger.error("Error creating relationships for wikipedia element { " + wikipediaElement.getProperties() + " }. Cause: " + e.getCause().getMessage());
+      
+      return 0;
+    }
   }
 }

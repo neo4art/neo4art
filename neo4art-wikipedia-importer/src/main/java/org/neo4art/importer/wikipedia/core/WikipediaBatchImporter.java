@@ -61,8 +61,10 @@ public class WikipediaBatchImporter implements WikipediaImporter {
     logger.info("------------------------------------------------");
     logger.info("Batch size " + BATCH_SIZE);
     logger.info("Store directory is " + graphDatabaseConnectionManager.getStoreDir());
+    logger.info("");
 
     {
+      logger.info("Creation of Wikipedia nodes started...");
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
       wikipediaNodesImporterListener.setBatchSize(BATCH_SIZE);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
@@ -75,6 +77,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
     }
 
     {
+      logger.info("Creation of Wikipedia relationships started...");
       WikipediaImporterListener wikipediaRelsImporterListener = new WikipediaRelsBatchImporterListener();
       wikipediaRelsImporterListener.setBatchSize(BATCH_SIZE);
       long parserForRelsStartDate = Calendar.getInstance().getTimeInMillis();
@@ -87,6 +90,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
     }
 
     {
+      logger.info("Creation of Wikipedia indexes started...");
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.Wikipedia, "title");
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaArtistPage, "title");
@@ -105,7 +109,7 @@ public class WikipediaBatchImporter implements WikipediaImporter {
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaProject, "title");
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaTemplate, "title");
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Indexes created in " + (indexCreationEndDate - indexCreationStartDate)  + " ms.");
+      logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate)  + " ms.");
     }
 
     {

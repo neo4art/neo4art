@@ -38,11 +38,13 @@ public class WikipediaNodesBatchImporterListener extends WikipediaAbstractImport
   public long persist(WikipediaElement wikipediaElement) {
     
     try {
+      
       return new WikipediaElementDefaultManager().createNodes(wikipediaElement);
     }
     catch (Exception e) {
       
-      logger.error("Error creating node for wikipedia element " + wikipediaElement.getProperties() + " Cause: " + e.getMessage());
+      logger.error("Error creating nodes for wikipedia element { " + wikipediaElement.getProperties() + "}. Cause: " + e.getCause().getMessage());
+      
       return 0;
     }
   }
