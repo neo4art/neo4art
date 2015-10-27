@@ -67,18 +67,18 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	  if (StringUtils.isNotEmpty(article.getTitle())) {
       WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
       
-      pageCount.incrementAndGet();
+      long pages = pageCount.incrementAndGet();
+      
+      if (logger.isInfoEnabled()) {
+        if (pages % 500_000 == 0) {
+          logger.info(pages + " wikipedia 'pages' parsed from dump so far...");
+        }
+      }
       
       if (wikipediaElement != null) {
         this.wikipediaElementBuffer.add(wikipediaElement);
       }
 
-      if (logger.isInfoEnabled()) {
-        if (this.wikipediaElementBuffer.size() % 500_000 == 0) {
-          logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far...");
-        }
-      }
-      
       if (this.wikipediaElementBuffer.size() == this.batchSize) {
         if (this.batchSize != WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT) {
           flush();
