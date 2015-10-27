@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementCityJapanInfoboxParser;
 
 public class WikipediaSettlementCityJapanToyonakaInfoboxTest {
 
@@ -26,11 +25,11 @@ public class WikipediaSettlementCityJapanToyonakaInfoboxTest {
 		Settlement settlement = WikipediaSettlementCityJapanInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Toyonaka", settlement.getName());
-		Assert.assertEquals("34.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("47.0", ""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("135.0", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("28.0", ""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("http://www.city.toyonaka.osaka.jp/", settlement.getWebsite());
+		Assert.assertEquals("34.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("47.0", ""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("135.0", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("28.0", ""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals(new URL("http://www.city.toyonaka.osaka.jp/"), settlement.getWebsite());
 	}
 	
 }

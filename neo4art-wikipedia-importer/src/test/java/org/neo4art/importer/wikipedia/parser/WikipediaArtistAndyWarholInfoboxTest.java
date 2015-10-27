@@ -1,13 +1,14 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artist;
 
-public class WikipediaArtistAndyInfoboxTest {
+public class WikipediaArtistAndyWarholInfoboxTest {
   
   private static String INFOBOX =
       
@@ -24,11 +25,11 @@ public class WikipediaArtistAndyInfoboxTest {
     "| movement = [[Pop art]]\n"+
     "| works = ''[[Chelsea Girls]]'' (1966 film)<br>''[[Exploding Plastic Inevitable]]'' (1966 event)<br>''[[Campbell's Soup Cans]]'' (1962 painting)\n"+
     "| death_date = {{Death date and age|1987|2|22|1928|8|6|mf=yes}}\n"+
-    "| death_place = New York City, New York, United States\n"+
+    "| death_place = [[New York City, New York]], United States\n"+
     "}}";
   
   @Test
-  public void shouldParseArtistInfobox() throws MalformedURLException {
+  public void shouldParseAndyWarholArtistInfobox() throws MalformedURLException {
     
     Calendar birthDateCalendar = Calendar.getInstance();
     birthDateCalendar.set(1928, Calendar.AUGUST, 6, 0, 0, 0);
@@ -41,10 +42,16 @@ public class WikipediaArtistAndyInfoboxTest {
     Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
     
     Assert.assertEquals("Andy Warhol", artist.getName());
+    Assert.assertEquals(new URL("https://en.wikipedia.org/wiki/File:Andy_Warhol_by_Jack_Mitchell.jpg"), artist.getImage());
     Assert.assertEquals(birthDateCalendar.getTimeInMillis(), artist.getBirthDate().getTime());
-    Assert.assertEquals("Pittsburgh, Pennsylvania, United States", artist.getBirthPlace());
+    Assert.assertEquals("Pittsburgh", artist.getBirthPlace().getName());
+    Assert.assertEquals("Pennsylvania", artist.getBirthPlace().getState());
+    Assert.assertEquals("United States", artist.getBirthPlace().getCountry());
     Assert.assertEquals(deathDateCalendar.getTimeInMillis(), artist.getDeathDate().getTime());
-    Assert.assertEquals("New York City, New York, United States", artist.getDeathPlace());
+    Assert.assertEquals("New York City", artist.getDeathPlace().getName());
+    Assert.assertEquals("New York", artist.getDeathPlace().getState());
+    Assert.assertEquals("United States", artist.getDeathPlace().getCountry());
     Assert.assertEquals("American", artist.getNationality());
+    Assert.assertEquals("Pop art", artist.getArtMovements().get(0).getName());
   }
 }

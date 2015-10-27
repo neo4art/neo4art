@@ -16,6 +16,7 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,11 @@ public class Museum implements Node {
   private Long                 nodeId;
 
   private String               name;
+  private URL                  image;
+  private String               location;
+  private URL                  website;
+
+  private Coordinates          coordinates;
 
   public Museum() {
   }
@@ -47,6 +53,38 @@ public class Museum implements Node {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public URL getImage() {
+    return image;
+  }
+
+  public void setImage(URL image) {
+    this.image = image;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public URL getWebsite() {
+    return website;
+  }
+
+  public void setWebsite(URL website) {
+    this.website = website;
+  }
+
+  public Coordinates getCoordinates() {
+    return coordinates;
+  }
+
+  public void setCoordinates(Coordinates coordinates) {
+    this.coordinates = coordinates;
   }
 
   @Override
@@ -65,6 +103,19 @@ public class Museum implements Node {
 
     if (this.name != null) {
       properties.put("name", this.name);
+    }
+    if (this.image != null) {
+      properties.put("image", this.image.toString());
+    }
+    if (this.location != null) {
+      properties.put("location", this.location);
+    }
+    if (this.website != null) {
+      properties.put("website", this.website.toString());
+    }
+    if (this.coordinates != null && this.coordinates.getStatus() == Coordinates.COMPUTED) {
+      properties.put("lon", this.coordinates.getLongitude());
+      properties.put("lat", this.coordinates.getLatitude());
     }
 
     return properties;

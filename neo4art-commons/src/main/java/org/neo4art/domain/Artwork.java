@@ -17,6 +17,7 @@
 package org.neo4art.domain;
 
 import java.net.URL;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class Artwork implements Node {
   private URL                  url;
 
   private String               type;
-  private String               year;
+  private Date                 year;
   private Date                 completionDate;
   private String               catalogue;
   private String               subject;
@@ -92,11 +93,11 @@ public class Artwork implements Node {
     this.type = type;
   }
 
-  public String getYear() {
+  public Date getYear() {
     return year;
   }
 
-  public void setYear(String year) {
+  public void setYear(Date year) {
     this.year = year;
   }
 
@@ -178,7 +179,9 @@ public class Artwork implements Node {
       properties.put("type", this.type);
     }
     if (this.year != null) {
-      properties.put("year", this.year);
+      Calendar year = Calendar.getInstance();
+      year.setTime(this.year);
+      properties.put("year", year.get(Calendar.YEAR));
     }
     if (this.completionDate != null) {
       properties.put("completionDate", this.completionDate);

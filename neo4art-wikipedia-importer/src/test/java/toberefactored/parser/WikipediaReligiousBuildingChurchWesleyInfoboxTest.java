@@ -43,6 +43,6 @@ public class WikipediaReligiousBuildingChurchWesleyInfoboxTest {
 		  
 			ReligiousBuilding church = WikipediaReligiousBuildingChurchInfobox.parse(INFOBOX);
 			
-			Assert.assertEquals("Wesley Methodist Church", church.getBuildingName());
+			Assert.assertEquals("Wesley Methodist Church", church.getName());
 		}
 }

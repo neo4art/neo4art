@@ -16,6 +16,7 @@
 
 package org.neo4art.graphdb.connection;
 
+
 /**
  * @author Lorenzo Speranzoni
  * @since 14 Oct 2015

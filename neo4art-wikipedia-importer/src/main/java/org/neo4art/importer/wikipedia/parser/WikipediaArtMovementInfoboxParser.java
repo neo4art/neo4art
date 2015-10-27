@@ -20,43 +20,48 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.ArtMovement;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 import toberefactored.parser.util.InfoboxMap;
 
 /**
- * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_artist">Template:Infobox_artist</a>
+ * Parser for <a href="http://en.wikipedia.org/wiki/Template:Infobox_art_movement">Template:Infobox_art_movement</a>
  * 
  * @author Lorenzo Speranzoni, Mattia Zaratin
  * @since 19 Mar 2015
  */
 public class WikipediaArtMovementInfoboxParser {
-  
-  private static Log logger = LogFactory.getLog(WikipediaArtMovementInfoboxParser.class);
-  
-  public static final String NAME = "name";
+
+  private static Log         logger = LogFactory.getLog(WikipediaArtMovementInfoboxParser.class);
+
+  public static final String NAME   = "name";
+  public static final String IMAGE  = "image";
 
   public WikipediaArtMovementInfoboxParser() {
   }
 
   public static ArtMovement parse(String text) {
-    
+
     Map<String, String> map = InfoboxMap.asMap(text);
 
     ArtMovement artMovement = new ArtMovement();
 
     for (String key : map.keySet()) {
-      
+
       try {
 
         switch (key) {
           case NAME:
             artMovement.setName(map.get(key));
             break;
+          case IMAGE:
+            artMovement.setImage(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
+            break;
         }
       }
       catch (Exception e) {
-        
-        logger.warn("Error parsing infobox value: " + key);
+
+        logger.warn("Error parsing infobox pair [ " + key + " | " + map.get(key) + " ]");
       }
     }
 

@@ -27,12 +27,12 @@ public class WikipediaSettlementKlagenfurtEisenstadtInfoboxTest {
 		Settlement settlement = WikipediaSettlementTownAtInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Klagenfurt",settlement.getName());
-		Assert.assertEquals("46.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("37.0",""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("N",""+settlement.getCoordinate().getLatNS());
-		Assert.assertEquals("14.0",""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("18.0",""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("E",""+settlement.getCoordinate().getLongEW());
+		Assert.assertEquals("46.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("37.0",""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("N",""+settlement.getCoordinates().getLatNS());
+		Assert.assertEquals("14.0",""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("18.0",""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals("E",""+settlement.getCoordinates().getLongEW());
 
 	}
 }

@@ -21,6 +21,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -76,7 +77,7 @@ public class VanGoghArtworksColourAnalysisDefaultManager implements VanGoghArtwo
 
         artwork.setTitle(csvRecord.get(0));
         artwork.setType(csvRecord.get(1));
-        artwork.setYear(csvRecord.get(2));
+        artwork.setYear(new Date(Integer.parseInt(csvRecord.get(2)), Calendar.JANUARY, 1));
         artwork.setCompletionDate(completionDate.getTime());
         artwork.setImageFile(csvRecord.get(4));
         artwork.setCatalogue("F: " + csvRecord.get(5) + ", JH: " + csvRecord.get(6));

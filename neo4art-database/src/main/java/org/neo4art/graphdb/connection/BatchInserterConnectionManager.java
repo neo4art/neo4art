@@ -16,17 +16,18 @@
 
 package org.neo4art.graphdb.connection;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.neo4art.graphdb.Index;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.Node;
 import org.neo4art.graphdb.Relationship;
-import org.neo4art.graphdb.indexes.HashMapIndex;
-import org.neo4art.graphdb.indexes.IndexAlreadyExistsException;
-import org.neo4art.graphdb.indexes.IndexNotFoundException;
 import org.neo4art.graphdb.transaction.DummyTransaction;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 import org.neo4j.unsafe.batchinsert.BatchInserters;
 
@@ -36,11 +37,11 @@ import org.neo4j.unsafe.batchinsert.BatchInserters;
  */
 class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
   
+  private static Log logger = LogFactory.getLog(BatchInserterConnectionManager.class);
+  
   private static BatchInserter                    batchInserter;
-  private static Map<String, Index<String, Long>> indexes;
 
   public static final Map<String, String>         DEFAULT_GRAPHDB_CONFIG;
-  public static final int                         DEFAULT_INDEX_INITIAL_CAPACITY = 5_000_000;
 
   static {
     
@@ -50,28 +51,29 @@ class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
 
   protected BatchInserterConnectionManager() {
     
-    newBatchInserterInstance(NEO4J_STORE_DIR, DEFAULT_GRAPHDB_CONFIG);
+    newBatchInserterInstance(new File(NEO4J_STORE_DIR), DEFAULT_GRAPHDB_CONFIG);
   }
 
-  protected BatchInserterConnectionManager(String storeDir) {
+  protected BatchInserterConnectionManager(File storeDir) {
     
     newBatchInserterInstance(storeDir, DEFAULT_GRAPHDB_CONFIG);
   }
 
-  protected BatchInserterConnectionManager(String storeDir, Map<String, String> config) {
+  protected BatchInserterConnectionManager(File storeDir, Map<String, String> config) {
     
     newBatchInserterInstance(storeDir, config);
   }
 
-  private void newBatchInserterInstance(String storeDir, Map<String, String> config) {
+  private void newBatchInserterInstance(File storeDir, Map<String, String> config) {
     
     if (batchInserter == null) {
-      batchInserter = BatchInserters.inserter(storeDir, config);
-    }
-    
-    if (indexes == null) {
-      indexes = new HashMap<String, Index<String, Long>>();
-    }
+      try {
+        batchInserter = BatchInserters.inserter(storeDir, config);
+      }
+      catch (Exception e) {
+        logger.error("Error creating batch inserter in store dir " + storeDir);
+      }
+    }    
   }
 
   /**
@@ -117,32 +119,12 @@ class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
   }
 
   /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#createIndex(java.lang.String)
+   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#createSchemaIndex(org.neo4j.graphdb.Label, java.lang.String)
    */
   @Override
-  public Index<String, Long> createIndex(String name) throws IndexAlreadyExistsException {
+  public IndexDefinition createSchemaIndex(Label label, String propertyKey) {
     
-    if (indexes.containsKey(name))
-      throw new IndexAlreadyExistsException("Index with name " + name + " already existes.");
-    
-    Index<String, Long> index = new HashMapIndex<String, Long>(name, DEFAULT_INDEX_INITIAL_CAPACITY);
-    indexes.put(name, index);
-    
-    return index;
-  }
-
-  /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getIndex(java.lang.String)
-   */
-  @Override
-  public Index<String, Long> getIndex(String name) throws IndexNotFoundException {
-    
-    Index<String, Long> index = indexes.get(name);
-    
-    if (index == null)
-      throw new IndexNotFoundException("Index with name " + name + " doesn't exist.");
-    
-    return index;
+    return batchInserter.createDeferredSchemaIndex(label).on(propertyKey).create();
   }
 
   /**

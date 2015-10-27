@@ -1,12 +1,15 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Artist;
 
 public class WikipediaArtistDaliInfoboxTest {
+  
 	private static String INFOBOX =
 	  "{{Infobox artist\n"+
     "| name        = Salvador Dalí\n"+
@@ -30,8 +33,31 @@ public class WikipediaArtistDaliInfoboxTest {
     "}}";
 
 	@Test
-	public void shouldParseArtistInfobox() throws MalformedURLException {
-		Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
+	public void shouldParseSalvadorDaliArtistInfobox() throws MalformedURLException {
+	  
+    Calendar birthDateCalendar = Calendar.getInstance();
+    birthDateCalendar.set(1904, Calendar.MAY, 11, 0, 0, 0);
+    birthDateCalendar.set(Calendar.MILLISECOND, 0);
+    
+    Calendar deathDateCalendar = Calendar.getInstance();
+    deathDateCalendar.set(1989, Calendar.JANUARY, 23, 0, 0, 0);
+    deathDateCalendar.set(Calendar.MILLISECOND, 0);
+
+    Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
+    
 		Assert.assertEquals("Salvador Dalí", artist.getName());
+    Assert.assertEquals(new URL("https://en.wikipedia.org/wiki/File:Salvador_Dalí_1939.jpg"), artist.getImage());
+    Assert.assertEquals(birthDateCalendar.getTimeInMillis(), artist.getBirthDate().getTime());
+    Assert.assertEquals("Figueres", artist.getBirthPlace().getName());
+    Assert.assertEquals("Catalonia", artist.getBirthPlace().getState());
+    Assert.assertEquals("Spain", artist.getBirthPlace().getCountry());
+    Assert.assertEquals(deathDateCalendar.getTimeInMillis(), artist.getDeathDate().getTime());
+    Assert.assertEquals("Figueres", artist.getBirthPlace().getName());
+    Assert.assertEquals("Catalonia", artist.getBirthPlace().getState());
+    Assert.assertEquals("Spain", artist.getBirthPlace().getCountry());
+    Assert.assertEquals("Spanish", artist.getNationality());
+    Assert.assertEquals("Cubism", artist.getArtMovements().get(0).getName());
+    Assert.assertEquals("Dada", artist.getArtMovements().get(1).getName());
+    Assert.assertEquals("Surrealism", artist.getArtMovements().get(2).getName());
 	}
 }

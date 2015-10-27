@@ -60,10 +60,7 @@ public class WikipediaReligiousBuildingJainTempleInfobox
       switch (key)
       {
         case NAME:
-          jainTemple.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          jainTemple.setType(map.get(key));
+          jainTemple.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           jainTemple.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

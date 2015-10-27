@@ -20,8 +20,8 @@ public class WikipediaSettlementCapeVerdeSettlementInfoboxTest {
 	public void shoudParseSettlement() throws MalformedURLException{
 		Settlement settlement = WikipediaSettlementCapeVerdeInfoboxParser.parse(INFOBOX);
 		
-		Assert.assertEquals("14.987", ""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("-24.305", ""+settlement.getCoordinate().getLongD());
+		Assert.assertEquals("14.987", ""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("-24.305", ""+settlement.getCoordinates().getLongD());
 	}
 	
 }

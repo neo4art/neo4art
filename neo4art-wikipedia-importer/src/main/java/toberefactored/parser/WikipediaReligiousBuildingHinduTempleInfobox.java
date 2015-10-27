@@ -56,10 +56,7 @@ public class WikipediaReligiousBuildingHinduTempleInfobox
       switch (key)
       {
         case NAME:
-          hinduTemple.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          hinduTemple.setType(map.get(key));
+          hinduTemple.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           hinduTemple.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

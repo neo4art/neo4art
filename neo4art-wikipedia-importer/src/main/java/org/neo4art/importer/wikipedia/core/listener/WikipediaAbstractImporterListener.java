@@ -73,11 +73,11 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
   		  flush();
   		}
   		
-  		WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
-  		
-  		if (wikipediaElement != null) {
-  		  this.wikipediaElementBuffer.add(wikipediaElement);
-  		}
+      WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
+      
+      if (wikipediaElement != null) {
+        this.wikipediaElementBuffer.add(wikipediaElement);
+      }
 	  }
 	}
 

@@ -32,7 +32,7 @@ public class WikipediaReligiousBuildingTibetanBuddhistMonasteryJokhangInfoboxTes
 		
 		URL url = new URL("http://en.wikipedia.org/wiki/File:Gilt_roof_of_the_Jokhang.JPG");
 	
-		Assert.assertEquals("Jokhang", tibetanBuddhistMonastery.getBuildingName());
+		Assert.assertEquals("Jokhang", tibetanBuddhistMonastery.getName());
 		Assert.assertEquals(url , tibetanBuddhistMonastery.getImage());
 		Assert.assertEquals("29.0",""+tibetanBuddhistMonastery.getCoordinates().getLatD());
 		Assert.assertEquals("39.0", ""+tibetanBuddhistMonastery.getCoordinates().getLatM());

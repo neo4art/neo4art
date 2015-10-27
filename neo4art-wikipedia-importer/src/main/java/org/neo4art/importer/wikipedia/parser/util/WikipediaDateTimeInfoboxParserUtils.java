@@ -16,6 +16,7 @@
 
 package org.neo4art.importer.wikipedia.parser.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -42,6 +43,24 @@ public class WikipediaDateTimeInfoboxParserUtils {
   private static Log logger = LogFactory.getLog(WikipediaDateTimeInfoboxParserUtils.class);
 
   /**
+   * Known pattern:
+   * 
+   * {{Birth date|1993|2|4|df=yes}}
+   * {{Birth date|1993|2|4|mf=yes}}
+   * {{Birth date|1993|2|4}}
+   * {{Birth date|df=yes|1756|03|04}}
+   *
+   * {{Birth date and age|1993|2|4|df=yes}}
+   * {{Birth date and age|1993|2|4|mf=yes}}
+   * {{Birth date and age|1993|2|4}}
+   *
+   * {{Death date and age|1993|2|24|1941|4|12|df=yes}}
+   * {{Death date and age|1993|2|24|1941|4|df=yes}}
+   * {{Death date and age|1993|2|24|1941|mf=yes}}
+   * {{Death date and age|df=yes|1890|7|29|1853|3|30}}
+   *
+   * 30 March 1853
+   * 
    * @param dateAsString
    * @return
    */
@@ -50,103 +69,14 @@ public class WikipediaDateTimeInfoboxParserUtils {
     if (StringUtils.isBlank(dateAsString))
       return null;
 
-    else if (StringUtils.contains(dateAsString, "Birth date"))
-      return parseBirthDateAsDate(dateAsString);
-
-    else if (StringUtils.contains(dateAsString, "Birth date and age"))
-      return parseBirthDateAndAgeAsDate(dateAsString);
-
-    else if (StringUtils.contains(dateAsString, "Birth year and age"))
-      return parseBirthYearAndAgeAsDate(dateAsString);
-
-    else if (StringUtils.contains(dateAsString, "Death date and age"))
-      return parseDeathDateAndAgeAsDate(dateAsString);
-    
-    return null;
-  }
-
-  /**
-   * {{Birth date|1993|2|4|df=yes}}
-   * {{Birth date|1993|2|4|mf=yes}}
-   * {{Birth date|1993|2|4}}
-   * {{Birth date |1901|7|31|df=y}}
-   * {{Birth date|df=yes|1756|03|04}}
-   * 
-   * @param dateAsString
-   * @return
-   */
-  public static Date parseBirthDateAsDate(String dateAsString) {
-
     final String PATTERNS[] = { "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]+[\\}]{2}" ,
                                 "[\\{]{2}[Bb]irth date[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
-                                "[\\{]{2}[Bb]irth date[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}"};
-
-    for (String patternRegex : PATTERNS) {
-      
-      System.out.println("AAAAAAA: " + dateAsString + "   -> " + patternRegex);
-      Pattern patter = Pattern.compile(patternRegex);
-      Matcher matcher = patter.matcher(dateAsString);
-      
-      if (matcher.matches()) {
-      
-        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
-      }
-    }
-
-    logger.error("Unable to parse " + dateAsString);
-    
-    return null;
-  }
-
-  /**
-   * {{Birth date and age|1993|2|4|df=yes}}
-   * {{Birth date and age|1993|2|4|mf=yes}}
-   * {{Birth date and age|1993|2|4}}
-   * 
-   * @param dateAsString
-   * @return
-   */
-  public static Date parseBirthDateAndAgeAsDate(String dateAsString) {
-
-    final String PATTERNS[] = { "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*",
-                                "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}"};
-
-    for (String patternRegex : PATTERNS) {
-      
-      Pattern patter = Pattern.compile(patternRegex);
-      Matcher matcher = patter.matcher(null);
-      
-      if (matcher.matches()) {
-        
-        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
-      }      
-    }
-
-    logger.error("Unable to parse " + dateAsString);
-      
-    return null;
-  }
-
-  /**
-   * @param dateAsString
-   * @return
-   */
-  public static Date parseBirthYearAndAgeAsDate(String dateAsString) {
-    return null;
-  }
-
-  /**
-   * {{Death date and age|1993|2|24|1941|4|12|df=yes}}
-   * {{Death date and age|1993|2|24|1941|4|df=yes}}
-   * {{Death date and age|1993|2|24|1941|mf=yes}}
-   * {{Death date and age|df=yes|1890|7|29|1853|3|30}}
-   * 
-   * @param dateAsString
-   * @return
-   */
-  public static Date parseDeathDateAndAgeAsDate(String dateAsString) {
-
-    final String PATTERNS[] = { "[\\{]{2}[Dd]eath date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" ,
+                                "[\\{]{2}[Bb]irth date[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
+                                
+                                "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*",
+                                "[\\{]{2}[Bb]irth date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)[\\}]{2}",
+                                
+                                "[\\{]{2}[Dd]eath date and age[\\s]*\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" ,
                                 "[\\{]{2}[Dd]eath date and age[\\s]*\\|[\\D]+\\|([\\d]+)\\|([\\d]+)\\|([\\d]+)\\|[\\S]*" };
 
     for (String patternRegex : PATTERNS) {
@@ -155,13 +85,28 @@ public class WikipediaDateTimeInfoboxParserUtils {
       Matcher matcher = patter.matcher(dateAsString);
       
       if (matcher.matches()) {
-        
-        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
-      }      
-    }
-
-    logger.error("Unable to parse " + dateAsString);
       
+        return toDate(matcher.group(1), matcher.group(2), matcher.group(3));
+      }
+    }
+    
+    try {
+      return new SimpleDateFormat("dd MMM yyyy").parse(dateAsString);
+    }
+    catch (Exception e) {
+    }
+    
+    try {
+      Calendar year = Calendar.getInstance();
+      year.set(Integer.parseInt(dateAsString), Calendar.JANUARY, 1, 0, 0, 0);
+      year.set(Calendar.MILLISECOND, 0);
+      return year.getTime();
+    }
+    catch (Exception e) {
+    }
+    
+    logger.error("Unable to parse " + dateAsString + " as Date.");
+    
     return null;
   }
 

@@ -16,6 +16,8 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
+import java.util.Map;
+
 import org.neo4art.graphdb.Node;
 import org.neo4j.graphdb.Label;
 
@@ -23,7 +25,7 @@ import org.neo4j.graphdb.Label;
  * @author Lorenzo Speranzoni
  * @since 4 Mar 2015
  */
-public class WikipediaArtElement extends WikipediaAbstractElement implements WikipediaElement {
+public class WikipediaDomainPage extends WikipediaAbstractElement implements WikipediaElement {
 
   private Node          artNode;
 
@@ -31,7 +33,7 @@ public class WikipediaArtElement extends WikipediaAbstractElement implements Wik
 
   private Label[]       labels;
 
-  public WikipediaArtElement(Node artNode, Label[] labels, WikipediaType type) {
+  public WikipediaDomainPage(Node artNode, Label[] labels, WikipediaType type) {
     this.artNode = artNode;
     this.labels = labels;
     this.type = type;
@@ -49,5 +51,15 @@ public class WikipediaArtElement extends WikipediaAbstractElement implements Wik
   @Override
   public Label[] getLabels() {
     return this.labels;
+  }
+  
+  /**
+   * @see org.neo4art.importer.wikipedia.domain.WikipediaAbstractElement#getProperties()
+   */
+  @Override
+  public Map<String, Object> getProperties() {
+    Map<String, Object> properties = super.getProperties();
+    properties.putAll(this.artNode.getProperties());
+    return properties;
   }
 }

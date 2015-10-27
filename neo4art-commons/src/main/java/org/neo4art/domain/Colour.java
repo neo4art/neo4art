@@ -27,12 +27,11 @@ import org.neo4j.graphdb.Label;
  * @since 01 Mag 2015
  *
  */
-public class Colour implements Node
-{
+public class Colour implements Node {
   private static final Label[] LABELS             = new Label[] { Neo4ArtLabel.Colour };
 
-  public static final String  NAME_PROPERTY_NAME = "name";
-  public static final String  RGB_PROPERTY_NAME  = "rgb";
+  public static final String   NAME_PROPERTY_NAME = "name";
+  public static final String   RGB_PROPERTY_NAME  = "rgb";
 
   private Long                 nodeId;
 
@@ -40,55 +39,79 @@ public class Colour implements Node
 
   private Color                rgb;
 
-  public Colour()
-  {
+  public Colour() {
     this.name = null;
     this.rgb = null;
   }
 
-  public Colour(int rgb)
-  {
+  public Colour(int rgb) {
     this.name = null;
     this.rgb = new Color(rgb);
   }
 
-  public Colour(Color rgb)
-  {
+  public Colour(Color rgb) {
     this.name = null;
     this.rgb = rgb;
   }
 
-  public Colour(String name, int red, int green, int blue)
-  {
+  public Colour(String name, int red, int green, int blue) {
     this.name = name;
     this.rgb = new Color(red, green, blue);
   }
 
+  public void setRed(int red) {
+    if (this.rgb == null) {
+
+      this.rgb = new Color(red, 0, 0);
+    }
+    else {
+
+      this.rgb = new Color(red, this.rgb.getGreen(), this.rgb.getBlue());
+    }
+  }
+
+  public void setGreen(int green) {
+    if (this.rgb == null) {
+      
+      this.rgb = new Color(0, green, 0);
+    }
+    else {
+      
+      this.rgb = new Color(this.rgb.getRed(), green, this.rgb.getBlue());
+    }
+  }
+  
+  public void setBlue(int blue) {
+    if (this.rgb == null) {
+      
+      this.rgb = new Color(0, 0, blue);
+    }
+    else {
+      
+      this.rgb = new Color(this.rgb.getRed(), this.rgb.getGreen(), blue);
+    }
+  }
+  
   @Override
-  public Long getNodeId()
-  {
+  public Long getNodeId() {
     return this.nodeId;
   }
 
   @Override
-  public void setNodeId(long nodeId)
-  {
+  public void setNodeId(long nodeId) {
     this.nodeId = nodeId;
   }
 
   @Override
-  public Map<String, Object> getProperties()
-  {
+  public Map<String, Object> getProperties() {
 
     Map<String, Object> properties = new HashMap<String, Object>();
 
-    if (this.name != null)
-    {
+    if (this.name != null) {
       properties.put(NAME_PROPERTY_NAME, this.name);
     }
 
-    if (this.rgb != null)
-    {
+    if (this.rgb != null) {
       properties.put(RGB_PROPERTY_NAME, this.rgb.getRGB());
     }
 
@@ -96,60 +119,50 @@ public class Colour implements Node
   }
 
   @Override
-  public Label[] getLabels()
-  {
+  public Label[] getLabels() {
     return LABELS;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public void setName(String name)
-  {
+  public void setName(String name) {
     this.name = name;
   }
 
-  public Color getColor()
-  {
+  public Color getColor() {
     return rgb;
   }
 
-  public void setRgb(int rgb)
-  {
+  public void setRgb(int rgb) {
     this.rgb = new Color(rgb);
   }
 
-  public void setRgb(Color rgb)
-  {
+  public void setRgb(Color rgb) {
     this.rgb = rgb;
   }
 
-  public int getRed()
-  {
+  public int getRed() {
     return this.rgb.getRed();
   }
 
-  public int getGreen()
-  {
+  public int getGreen() {
     return this.rgb.getGreen();
   }
 
-  public int getBlue()
-  {
+  public int getBlue() {
     return this.rgb.getBlue();
   }
-  
-  public String getHexaDecimalColor(){
-	  
+
+  public String getHexaDecimalColor() {
+
     String hex = "";
-	    
-	if(this.rgb != null)
-	{
-	  hex = String.format("%02x%02x%02x", this.rgb.getRed(), this.rgb.getGreen(), this.rgb.getBlue());	  	
-	}
-	    
-	return hex;
+
+    if (this.rgb != null) {
+      hex = String.format("%02x%02x%02x", this.rgb.getRed(), this.rgb.getGreen(), this.rgb.getBlue());
+    }
+
+    return hex;
   }
 }

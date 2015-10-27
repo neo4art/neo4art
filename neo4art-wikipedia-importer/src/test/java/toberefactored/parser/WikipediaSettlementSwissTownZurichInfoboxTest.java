@@ -26,12 +26,12 @@ public class WikipediaSettlementSwissTownZurichInfoboxTest {
 		Settlement settlement = WikipediaSettlementSwissTownInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Zürich",settlement.getName());
-		Assert.assertEquals("47.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("22.0",""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("N",""+settlement.getCoordinate().getLatNS());
-		Assert.assertEquals("8.0",""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("33.0",""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("E",""+settlement.getCoordinate().getLongEW());
+		Assert.assertEquals("47.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("22.0",""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("N",""+settlement.getCoordinates().getLatNS());
+		Assert.assertEquals("8.0",""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("33.0",""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals("E",""+settlement.getCoordinates().getLongEW());
 
 	}
 	

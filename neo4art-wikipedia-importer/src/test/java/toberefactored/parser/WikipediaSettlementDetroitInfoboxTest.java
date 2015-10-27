@@ -1,12 +1,12 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementInfoboxParser;
+import org.neo4art.importer.wikipedia.parser.WikipediaSettlementInfoboxParser;
 
 public class WikipediaSettlementDetroitInfoboxTest {
 
@@ -31,14 +31,14 @@ public class WikipediaSettlementDetroitInfoboxTest {
 		
 		Assert.assertEquals("Detroit", settlement.getName());
 		Assert.assertEquals("City of Detroit", settlement.getOfficialName());
-		Assert.assertEquals("42.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("19.0", ""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("53.0", ""+settlement.getCoordinate().getLatS());
-		Assert.assertEquals("N", settlement.getCoordinate().getLatNS());
-		Assert.assertEquals("83.0", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("2.0", ""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("45.0", ""+settlement.getCoordinate().getLongS());
-		Assert.assertEquals("W", settlement.getCoordinate().getLongEW());
-		Assert.assertEquals("http://www.detroitmi.gov/", settlement.getWebsite());
+		Assert.assertEquals("42.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("19.0", ""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("53.0", ""+settlement.getCoordinates().getLatS());
+		Assert.assertEquals("N", settlement.getCoordinates().getLatNS());
+		Assert.assertEquals("83.0", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("2.0", ""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals("45.0", ""+settlement.getCoordinates().getLongS());
+		Assert.assertEquals("W", settlement.getCoordinates().getLongEW());
+		Assert.assertEquals(new URL("http://www.detroitmi.gov/"), settlement.getWebsite());
 	}
 }

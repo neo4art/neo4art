@@ -28,14 +28,14 @@ public void shoudParseArtwork() throws MalformedURLException{
   Settlement settlement = WikipediaSettlementTownAtInfoboxParser.parse(INFOBOX);
   
   Assert.assertEquals("Gmunden",settlement.getName());
-  Assert.assertEquals("47.0",""+settlement.getCoordinate().getLatD());
-  Assert.assertEquals("55.0",""+settlement.getCoordinate().getLatM());
-  Assert.assertEquals("5.0",""+settlement.getCoordinate().getLatS());
-  Assert.assertEquals("N",""+settlement.getCoordinate().getLatNS());
-  Assert.assertEquals("13.0",""+settlement.getCoordinate().getLongD());
-  Assert.assertEquals("47.0",""+settlement.getCoordinate().getLongM());
-  Assert.assertEquals("58.0",""+settlement.getCoordinate().getLongS());
-  Assert.assertEquals("E",""+settlement.getCoordinate().getLongEW());
+  Assert.assertEquals("47.0",""+settlement.getCoordinates().getLatD());
+  Assert.assertEquals("55.0",""+settlement.getCoordinates().getLatM());
+  Assert.assertEquals("5.0",""+settlement.getCoordinates().getLatS());
+  Assert.assertEquals("N",""+settlement.getCoordinates().getLatNS());
+  Assert.assertEquals("13.0",""+settlement.getCoordinates().getLongD());
+  Assert.assertEquals("47.0",""+settlement.getCoordinates().getLongM());
+  Assert.assertEquals("58.0",""+settlement.getCoordinates().getLongS());
+  Assert.assertEquals("E",""+settlement.getCoordinates().getLongEW());
 
 }
 }

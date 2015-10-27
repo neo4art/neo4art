@@ -24,7 +24,7 @@ public class WikipediaReligiousBuildingMosqueHaramInfoboxTest {
 		
 		URL url = new URL("http://en.wikipedia.org/wiki/File:A_packed_house_-_Flickr_-_Al_Jazeera_English.jpg");
 	
-		Assert.assertEquals("Al-Masjid al-Haram", mosque.getBuildingName());
+		Assert.assertEquals("Al-Masjid al-Haram", mosque.getName());
 		Assert.assertEquals(url , mosque.getImage());
 		Assert.assertEquals("21.422",""+mosque.getCoordinates().getLatD());
 		Assert.assertEquals("39.826", ""+mosque.getCoordinates().getLongD());

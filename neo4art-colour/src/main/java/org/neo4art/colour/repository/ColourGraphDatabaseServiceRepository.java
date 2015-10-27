@@ -18,6 +18,7 @@ package org.neo4art.colour.repository;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class ColourGraphDatabaseServiceRepository implements ColourAnalysisRepos
       Artwork artwork = new Artwork();
       artwork.setArtist(artist);
       artwork.setTitle((String) artworkNode.getProperty("title"));
-      artwork.setYear((String) artworkNode.getProperty("year"));
+      artwork.setYear(new Date(Integer.parseInt((String) artworkNode.getProperty("year")), Calendar.JANUARY, 1));
       artwork.setCompletionDate(new Date((Long) artworkNode.getProperty("completionDate")));
       
       Colour averageClosestColour = new Colour();

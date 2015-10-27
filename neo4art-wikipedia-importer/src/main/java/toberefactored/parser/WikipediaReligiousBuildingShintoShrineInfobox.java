@@ -61,10 +61,7 @@ public class WikipediaReligiousBuildingShintoShrineInfobox
       switch (key)
       {
         case NAME:
-          shintoShrine.setBuildingName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
-          break;
-        case STYLE:
-          shintoShrine.setType(map.get(key));
+          shintoShrine.setName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
           break;
         case IMAGE:
           shintoShrine.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

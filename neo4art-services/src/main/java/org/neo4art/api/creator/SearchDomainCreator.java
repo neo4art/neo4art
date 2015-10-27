@@ -111,7 +111,7 @@ public class SearchDomainCreator {
    	public SearchDomain createSearchDomainFromReligiousBuilding(ReligiousBuilding religiousBuilding){
    		
    	 SearchDomain searchDomain = new SearchDomain();	
-   	 searchDomain.setText(religiousBuilding.getBuildingName());
+   	 searchDomain.setText(religiousBuilding.getName());
    		 
    	 return searchDomain;		
    	}

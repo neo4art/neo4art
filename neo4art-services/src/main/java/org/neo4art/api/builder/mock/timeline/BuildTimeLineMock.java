@@ -18,6 +18,7 @@ package org.neo4art.api.builder.mock.timeline;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.neo4art.colour.domain.ColourAnalysis;
@@ -40,7 +41,7 @@ public class BuildTimeLineMock {
 		colourAnalysis1.setSource("http://www.vggallery.com/painting/f_0001.jpg");
 		Artwork artwork1 = new Artwork();
 		artwork1.setTitle("Still Life with Cabbage and Clogs");
-		artwork1.setYear("1881");
+		artwork1.setYear(new Date(1881, Calendar.JANUARY, 1));
 		colourAnalysis1.setArtwork(artwork1);
 		
 		ColourAnalysis colourAnalysis2 = new ColourAnalysis();

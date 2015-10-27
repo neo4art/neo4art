@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementFinnishFormerInfoboxParser;
 
 public class WikipediaSettlementFrenchComuneParisInfoboxTest {
 
@@ -22,9 +21,9 @@ public class WikipediaSettlementFrenchComuneParisInfoboxTest {
 		Settlement frenchComune = WikipediaSettlementFinnishFormerInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Paris", frenchComune.getName());
-		Assert.assertEquals("48.856667",""+frenchComune.getCoordinate().getLatD());
-		Assert.assertEquals("2.350833", ""+frenchComune.getCoordinate().getLongD());
-		Assert.assertEquals("http://www.paris.fr", frenchComune.getWebsite());
+		Assert.assertEquals("48.856667",""+frenchComune.getCoordinates().getLatD());
+		Assert.assertEquals("2.350833", ""+frenchComune.getCoordinates().getLongD());
+		Assert.assertEquals(new URL("http://www.paris.fr"), frenchComune.getWebsite());
 	}
 	
 }

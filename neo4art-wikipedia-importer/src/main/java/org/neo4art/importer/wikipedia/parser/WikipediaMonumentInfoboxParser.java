@@ -20,6 +20,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Monument;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
 
 import toberefactored.parser.util.InfoboxMap;
 
@@ -31,32 +32,42 @@ import toberefactored.parser.util.InfoboxMap;
  */
 public class WikipediaMonumentInfoboxParser {
 
-  private static Log logger = LogFactory.getLog(WikipediaMonumentInfoboxParser.class);
-  
+  private static Log         logger        = LogFactory.getLog(WikipediaMonumentInfoboxParser.class);
+
   public static final String MONUMENT_NAME = "monument_name";
+  public static final String NATIVE_NAME   = "native_name";
+  public static final String TYPE          = "type";
 
   public WikipediaMonumentInfoboxParser() {
   }
 
   public static Monument parse(String text) {
-    
+
     Map<String, String> map = InfoboxMap.asMap(text);
 
     Monument monument = new Monument();
 
+    monument.setCoordinates(WikipediaCoordinatesInfoboxParserUtils.buildCoordinates(map));
+
     for (String key : map.keySet()) {
-      
+
       try {
-        
+
         switch (key) {
           case MONUMENT_NAME:
             monument.setName(map.get(key));
             break;
+          case NATIVE_NAME:
+            monument.setNativeName(map.get(key));
+            break;
+          case TYPE:
+            monument.setType(map.get(key));
+            break;
         }
       }
       catch (Exception e) {
-        
-        logger.warn("Error parsing infobox value: " + key);
+
+        logger.warn("Error parsing infobox pair [ " + key + " | " + map.get(key) + " ]");
       }
     }
 

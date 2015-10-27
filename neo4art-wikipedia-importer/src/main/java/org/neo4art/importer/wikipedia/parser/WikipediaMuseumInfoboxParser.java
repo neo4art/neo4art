@@ -21,6 +21,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Museum;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaCoordinatesInfoboxParserUtils;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 import toberefactored.parser.util.InfoboxMap;
 
@@ -31,30 +33,44 @@ import toberefactored.parser.util.InfoboxMap;
  * @since 20 Mar 2015
  */
 public class WikipediaMuseumInfoboxParser {
-  
-  private static Log logger = LogFactory.getLog(WikipediaMuseumInfoboxParser.class);
-  
-  public static final String NAME = "name";
+
+  private static Log         logger   = LogFactory.getLog(WikipediaMuseumInfoboxParser.class);
+
+  public static final String NAME     = "name";
+  public static final String IMAGE    = "image";
+  public static final String LOCATION = "location";
+  public static final String WEBSITE  = "website";
 
   public static Museum parse(String text) {
-    
+
     Map<String, String> map = InfoboxMap.asMap(text);
 
     Museum museum = new Museum();
 
+    museum.setCoordinates(WikipediaCoordinatesInfoboxParserUtils.buildCoordinates(map));
+
     for (String key : map.keySet()) {
-      
+
       try {
 
         switch (key) {
           case NAME:
             museum.setName(map.get(key));
             break;
+          case IMAGE:
+            museum.setImage(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
+            break;
+          case LOCATION:
+            museum.setLocation(map.get(key));
+            break;
+          case WEBSITE:
+            museum.setWebsite(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
+            break;
         }
       }
       catch (Exception e) {
-        
-        logger.warn("Error parsing infobox value: " + key);
+
+        logger.warn("Error parsing infobox pair [ " + key + " | " + map.get(key) + " ]");
       }
     }
 

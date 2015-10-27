@@ -35,7 +35,6 @@ public class Country implements Node {
   private String               nativeName;
   private String               commonName;
   private String               conventionalLongName;
-  private String               type;
   
   private Coordinates           coordinates;
 
@@ -65,28 +64,12 @@ public class Country implements Node {
     this.nativeName = nativeName;
   }
 
-  public String getCommonName() {
-    return commonName;
-  }
-
-  public void setCommonName(String commonName) {
-    this.commonName = commonName;
-  }
-
   public String getConventionalLongName() {
     return conventionalLongName;
   }
 
   public void setConventionalLongName(String conventionalLongName) {
     this.conventionalLongName = conventionalLongName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public Coordinates getCoordinate() {
@@ -122,9 +105,6 @@ public class Country implements Node {
     }
     if (this.conventionalLongName != null) {
       properties.put("conventionalLongName", this.conventionalLongName);
-    }
-    if (this.type != null) {
-      properties.put("type", this.type);
     }
 
     return properties;

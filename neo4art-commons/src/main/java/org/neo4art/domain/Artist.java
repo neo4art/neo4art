@@ -16,6 +16,7 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +36,12 @@ public class Artist implements Node {
   private Long                 nodeId;
 
   private String               name;
+  private URL                  image;
 
   private Date                 birthDate;
-  private String               birthPlace;
+  private Settlement           birthPlace;
   private Date                 deathDate;
-  private String               deathPlace;
+  private Settlement           deathPlace;
 
   private String               nationality;
 
@@ -49,6 +51,10 @@ public class Artist implements Node {
   public Artist() {
   }
 
+  public Artist(String name) {
+    this.name = name;
+  }
+  
   @Override
   public Long getNodeId() {
     return this.nodeId;
@@ -67,6 +73,14 @@ public class Artist implements Node {
     this.name = name;
   }
 
+  public URL getImage() {
+    return image;
+  }
+
+  public void setImage(URL image) {
+    this.image = image;
+  }
+
   public Date getBirthDate() {
     return birthDate;
   }
@@ -75,11 +89,11 @@ public class Artist implements Node {
     this.birthDate = birthDate;
   }
 
-  public String getBirthPlace() {
+  public Settlement getBirthPlace() {
     return birthPlace;
   }
 
-  public void setBirthPlace(String birthPlace) {
+  public void setBirthPlace(Settlement birthPlace) {
     this.birthPlace = birthPlace;
   }
 
@@ -91,11 +105,11 @@ public class Artist implements Node {
     this.deathDate = deathDate;
   }
 
-  public String getDeathPlace() {
+  public Settlement getDeathPlace() {
     return deathPlace;
   }
 
-  public void setDeathPlace(String deathPlace) {
+  public void setDeathPlace(Settlement deathPlace) {
     this.deathPlace = deathPlace;
   }
 
@@ -130,17 +144,20 @@ public class Artist implements Node {
     if (this.name != null) {
       properties.put("name", this.name);
     }
+    if (this.image != null) {
+      properties.put("image", this.image.toString());
+    }
     if (this.birthDate != null) {
       properties.put("birthDate", this.birthDate.getTime());
     }
     if (this.birthPlace != null) {
-      properties.put("birthPlace", this.birthPlace);
+      properties.put("birthPlace", this.birthPlace.getName());
     }
     if (this.deathDate != null) {
       properties.put("deathDate", this.deathDate.getTime());
     }
     if (this.deathPlace != null) {
-      properties.put("deathPlace", this.deathPlace);
+      properties.put("deathPlace", this.deathPlace.getName());
     }
     if (this.nationality != null) {
       properties.put("nationality", this.nationality);

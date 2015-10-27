@@ -16,16 +16,16 @@
 
 package org.neo4art.graphdb.connection;
 
-import org.neo4art.graphdb.Index;
+import java.io.File;
+
 import org.neo4art.graphdb.Node;
 import org.neo4art.graphdb.Relationship;
-import org.neo4art.graphdb.indexes.HashMapIndex;
-import org.neo4art.graphdb.indexes.IndexAlreadyExistsException;
-import org.neo4art.graphdb.indexes.IndexNotFoundException;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4art.graphdb.transaction.TransactionWrapper;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.graphdb.schema.IndexDefinition;
 
 /**
  * @author Lorenzo Speranzoni
@@ -42,8 +42,10 @@ class GraphDatabaseServiceConnectionManager implements GraphDatabaseConnectionMa
   
   private void newGraphDatabaseServiceInstance() {
     
-    if (graphDatabaseService == null)
-      graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_STORE_DIR);
+    if (graphDatabaseService == null) {
+      
+      graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(new File(NEO4J_STORE_DIR));
+    }
   }
   
   /**
@@ -89,25 +91,23 @@ class GraphDatabaseServiceConnectionManager implements GraphDatabaseConnectionMa
   }
 
   /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#createIndex(java.lang.String)
+   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#createIndex(org.neo4art.graphdb.indexes.IndexType, java.lang.String)
    */
   @Override
-  @SuppressWarnings("rawtypes")
-  public Index createIndex(String name) throws IndexAlreadyExistsException {
+  public IndexDefinition createSchemaIndex(Label label, String propertyKey) {
     
-    return new HashMapIndex<String, Long>(name);
+    IndexDefinition indexDefinition;
+    
+    try (GraphDatabaseTransaction tx = getTransactionManager()) {
+      
+      indexDefinition = graphDatabaseService.schema().indexFor(label).on(propertyKey).create();
+      
+      tx.success();
+    }
+    
+    return indexDefinition;
   }
 
-  /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getIndex(java.lang.String)
-   */
-  @Override
-  @SuppressWarnings("rawtypes")
-  public Index getIndex(String name) throws IndexNotFoundException {
-    
-    return new HashMapIndex<String, Long>(name);
-  }
-  
   /**
    * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getTransactionManager()
    */

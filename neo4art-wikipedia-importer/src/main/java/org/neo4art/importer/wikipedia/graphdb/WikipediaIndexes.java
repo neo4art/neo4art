@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-package org.neo4art.graphdb.indexes;
+package org.neo4art.importer.wikipedia.graphdb;
+
+import org.neo4art.graphdb.indexes.HashMapIndexProvider;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 18 Oct 2015
+ * @since 19 Oct 2015
  */
-public class IndexAlreadyExistsException extends Exception {
+public class WikipediaIndexes {
 
-  private static final long serialVersionUID = 1L;
+  public static final String INDEX_FOR_WIKIPEDIA_TITLE = ":Wikipedia(title)";
+  
+  private static HashMapIndexProvider<String, Long> instance;
+  
+  protected WikipediaIndexes() {
+  }
+  
+  public static HashMapIndexProvider<String, Long> getInstance() {
+    
+    if (instance == null) {
+      
+      instance = new HashMapIndexProvider<String, Long>();
+    }
+    
+    return instance;
+  }
 
-  public IndexAlreadyExistsException() {
-    super();
-  }
-  
-  public IndexAlreadyExistsException(String message) {
-    super(message);
-  }
-  
-  public IndexAlreadyExistsException(Throwable cause) {
-    super(cause);
-  }
-  
-  public IndexAlreadyExistsException(String message, Throwable cause) {
-    super(message, cause);
-  }
 }

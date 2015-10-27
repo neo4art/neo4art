@@ -60,13 +60,10 @@ public class WikipediaReligiousBuildingSpanishMissionsInTheAmericasInfobox
       switch (key)
       {
         case NAME:
-          spanishMissionsInTheAmericans.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
+          spanishMissionsInTheAmericans.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           spanishMissionsInTheAmericans.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
-          break;
-        case STYLE:
-          spanishMissionsInTheAmericans.setType(map.get(key));
           break;
         case LATD:
           coordinates.setLatD(Double.parseDouble(map.get(key)));

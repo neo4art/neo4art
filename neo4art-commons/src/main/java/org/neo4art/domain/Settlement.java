@@ -16,6 +16,7 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.neo4j.graphdb.Label;
  * @since 4 Apr 2015
  */
 public class Settlement implements Node {
-  
+
   private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Settlement };
 
   private Long                 nodeId;
@@ -36,12 +37,19 @@ public class Settlement implements Node {
   private String               officialName;
   private String               nativeName;
   private String               otherName;
+  private String               state;
+  private String               country;
+  
   private String               type;
-  private String               website;
-
+  private URL                  website;
+  
   private Coordinates          coordinates;
 
   public Settlement() {
+  }
+
+  public Settlement(String name) {
+    this.name = name;
   }
 
   public String getName() {
@@ -50,14 +58,6 @@ public class Settlement implements Node {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 
   public String getOfficialName() {
@@ -84,20 +84,44 @@ public class Settlement implements Node {
     this.otherName = otherName;
   }
 
-  public Coordinates getCoordinate() {
-    return coordinates;
+  public String getState() {
+    return state;
   }
 
-  public void setCoordinate(Coordinates coordinates) {
-    this.coordinates = coordinates;
+  public void setState(String state) {
+    this.state = state;
   }
 
-  public String getWebsite() {
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country) {
+    this.country = country;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public URL getWebsite() {
     return website;
   }
 
-  public void setWebsite(String website) {
+  public void setWebsite(URL website) {
     this.website = website;
+  }
+
+  public Coordinates getCoordinates() {
+    return coordinates;
+  }
+
+  public void setCoordinates(Coordinates coordinates) {
+    this.coordinates = coordinates;
   }
 
   @Override
@@ -130,11 +154,11 @@ public class Settlement implements Node {
       properties.put("type", this.type);
     }
     if (this.website != null) {
-      properties.put("website", this.website);
+      properties.put("website", this.website.toString());
     }
-    if (this.coordinates != null && this.getCoordinate().getStatus() == Coordinates.COMPUTED) {
-      properties.put("lon", this.getCoordinate().getLongitude());
-      properties.put("lat", this.getCoordinate().getLatitude());
+    if (this.coordinates != null && this.getCoordinates().getStatus() == Coordinates.COMPUTED) {
+      properties.put("lon", this.getCoordinates().getLongitude());
+      properties.put("lat", this.getCoordinates().getLatitude());
     }
 
     return properties;

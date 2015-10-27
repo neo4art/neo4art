@@ -34,7 +34,7 @@ public class WikipediaReligiousBuildingJainTempleShriInfoboxTest {
 			
 			URL url = new URL("http://en.wikipedia.org/wiki/File:Mahavirji_Temple.JPG");
 		
-			Assert.assertEquals("Shri Mahavirji Temple", jainTemple.getBuildingName());
+			Assert.assertEquals("Shri Mahavirji Temple", jainTemple.getName());
 			Assert.assertEquals(url , jainTemple.getImage());
 			Assert.assertEquals("26.0",""+jainTemple.getCoordinates().getLatD());
 			Assert.assertEquals("41.0", ""+jainTemple.getCoordinates().getLatM());

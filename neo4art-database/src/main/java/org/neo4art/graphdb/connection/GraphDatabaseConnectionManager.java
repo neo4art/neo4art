@@ -16,12 +16,11 @@
 
 package org.neo4art.graphdb.connection;
 
-import org.neo4art.graphdb.Index;
 import org.neo4art.graphdb.Node;
 import org.neo4art.graphdb.Relationship;
-import org.neo4art.graphdb.indexes.IndexAlreadyExistsException;
-import org.neo4art.graphdb.indexes.IndexNotFoundException;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.schema.IndexDefinition;
 
 
 /**
@@ -61,25 +60,15 @@ public interface GraphDatabaseConnectionManager
    * @return
    */
   long createRelationship(Relationship relationship);
-  
+
   /**
    * 
-   * @param name
+   * @param label
+   * @param propertyKey
    * @return
-   * @throws IndexAlreadyExistsException 
    */
-  @SuppressWarnings("rawtypes")
-  Index createIndex(String name) throws IndexAlreadyExistsException;
-  
-  /**
-   * 
-   * @param name
-   * @return
-   * @throws IndexNotFoundException 
-   */
-  @SuppressWarnings("rawtypes")
-  Index getIndex(String name) throws IndexNotFoundException;
-  
+  IndexDefinition createSchemaIndex(Label label, String propertyKey);
+
   /**
    * 
    * @return

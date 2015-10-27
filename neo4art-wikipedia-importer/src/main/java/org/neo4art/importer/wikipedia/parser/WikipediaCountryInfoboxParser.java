@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package toberefactored.parser;
+package org.neo4art.importer.wikipedia.parser;
 
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.domain.Country;
 
 import toberefactored.parser.util.InfoboxMap;
@@ -28,30 +30,41 @@ import toberefactored.parser.util.InfoboxMap;
  * @since 19 Mar 2015
  */
 public class WikipediaCountryInfoboxParser {
+
+  private static Log logger = LogFactory.getLog(WikipediaCountryInfoboxParser.class);
   
-  public static final String NATIVE_NAME = "native_name";
-  public static final String COMMON_NAME = "common_name";
+  public static final String NATIVE_NAME            = "native_name";
+  public static final String COMMON_NAME            = "common_name";
   public static final String CONVENTIONAL_LONG_NAME = "conventional_long_name";
-  
+
   public WikipediaCountryInfoboxParser() {
   }
 
   public static Country parse(String text) {
+
     Map<String, String> map = InfoboxMap.asMap(text);
 
     Country country = new Country();
-    
+
     for (String key : map.keySet()) {
-      switch (key) {
-        case CONVENTIONAL_LONG_NAME:
-          country.setConventionalLongName(map.get(key));
-          break;
-        case NATIVE_NAME:
-          country.setNativeName(map.get(key));
-          break;
-        case COMMON_NAME:
-          country.setCommonName(map.get(key));
-          break;
+
+      try {
+        
+        switch (key) {
+          case CONVENTIONAL_LONG_NAME:
+            country.setConventionalLongName(map.get(key));
+            break;
+          case NATIVE_NAME:
+            country.setNativeName(map.get(key));
+            break;
+          case COMMON_NAME:
+            country.setName(map.get(key));
+            break;
+        }
+      }
+      catch (Exception e) {
+
+        logger.warn("Error parsing infobox pair [ " + key + " | " + map.get(key) + " ]");
       }
     }
 

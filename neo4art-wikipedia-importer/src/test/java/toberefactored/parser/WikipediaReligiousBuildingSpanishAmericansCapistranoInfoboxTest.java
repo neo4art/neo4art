@@ -31,7 +31,7 @@ public class WikipediaReligiousBuildingSpanishAmericansCapistranoInfoboxTest {
 		
 		URL url = new URL("http://en.wikipedia.org/wiki/File:Mission_San_Juan_Capistrano.jpg");
 	
-		Assert.assertEquals("Mission San Juan Capistrano", spanishMissionsInTheAmericans.getBuildingName());
+		Assert.assertEquals("Mission San Juan Capistrano", spanishMissionsInTheAmericans.getName());
 		Assert.assertEquals(url , spanishMissionsInTheAmericans.getImage());
 		Assert.assertEquals("33.0",""+spanishMissionsInTheAmericans.getCoordinates().getLatD());
 		Assert.assertEquals("30.0", ""+spanishMissionsInTheAmericans.getCoordinates().getLatM());

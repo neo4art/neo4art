@@ -1,6 +1,8 @@
-package toberefactored.parser;
+package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.neo4art.domain.Artwork;
 import org.neo4art.importer.wikipedia.parser.WikipediaArtworkInfoboxParser;
 
 public class WIkipediaArtworkIrisTest {
+  
 	private static String INFOBOX =
     "{{Infobox artwork\n"+
 	  "| image_file         = Irises-Vincent van Gogh.jpg\n"+
@@ -33,8 +36,20 @@ public class WIkipediaArtworkIrisTest {
 	  "}}";
 	
 	@Test
-	public void shoudParseArtwork() throws MalformedURLException{
+	public void shoudParseVanGoghIrisesArtwork() throws MalformedURLException{
+	  
+	  Calendar year1889 = Calendar.getInstance();
+	  year1889.set(1889, Calendar.JANUARY, 1, 0, 0, 0);
+	  year1889.set(Calendar.MILLISECOND, 0);
+	  
 		Artwork artwork = WikipediaArtworkInfoboxParser.parse(INFOBOX);
+		
 		Assert.assertEquals("Irises", artwork.getTitle());
+		Assert.assertEquals("Vincent van Gogh", artwork.getArtist().getName());
+		Assert.assertEquals("Los Angeles, California", artwork.getCity().getName());
+		Assert.assertEquals(new URL("https://en.wikipedia.org/wiki/File:Irises-Vincent_van_Gogh.jpg"), artwork.getUrl());
+		Assert.assertEquals("J. Paul Getty Museum", artwork.getMuseum().getName());
+		Assert.assertEquals("Oil on canvas", artwork.getType());
+		Assert.assertEquals(year1889.getTimeInMillis(), artwork.getYear().getTime());
 	}
 }

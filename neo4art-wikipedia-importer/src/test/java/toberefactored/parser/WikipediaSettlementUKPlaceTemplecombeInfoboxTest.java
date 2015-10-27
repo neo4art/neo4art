@@ -24,8 +24,8 @@ public class WikipediaSettlementUKPlaceTemplecombeInfoboxTest {
 		Settlement settlement = WikipediaSettlementUKPlaceInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Templecombe",settlement.getOfficialName());
-		Assert.assertEquals("50.999982",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("-2.415075",""+settlement.getCoordinate().getLongD());
+		Assert.assertEquals("50.999982",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("-2.415075",""+settlement.getCoordinates().getLongD());
 
 	}
 }

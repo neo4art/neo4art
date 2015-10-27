@@ -55,10 +55,7 @@ public class WikipediaReligiousBuildingChurchInfobox
       switch (key)
       {
         case NAME:
-          church.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          church.setType(map.get(key));
+          church.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           church.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

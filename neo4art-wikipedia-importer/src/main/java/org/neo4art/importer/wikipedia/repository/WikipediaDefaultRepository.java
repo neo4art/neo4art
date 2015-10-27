@@ -19,10 +19,8 @@ package org.neo4art.importer.wikipedia.repository;
 import org.neo4art.graphdb.Relationship;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory;
-import org.neo4art.importer.wikipedia.domain.WikipediaArtElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
-import org.neo4art.importer.wikipedia.domain.WikipediaPage;
-import org.neo4art.importer.wikipedia.graphdb.WikipediaIndex;
+import org.neo4art.importer.wikipedia.graphdb.WikipediaIndexes;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaRelationship;
 
 /**
@@ -36,7 +34,9 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
   @Override
   public long createNodes(WikipediaElement wikipediaElement) {
 
-    long nodesAndRelationshipsCreated = 0;
+    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
+
+    graphDatabaseConnectionManager.createNode(wikipediaElement);
 
     switch (wikipediaElement.getType()) {
 
@@ -51,11 +51,8 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
       case BOOK_PAGE:
       case DOCUMENT_PAGE:
       case COLOUR_PAGE:
-        nodesAndRelationshipsCreated += createNodesForWikipiaArtPage((WikipediaArtElement) wikipediaElement);
-        break;
-
       case PAGE:
-        nodesAndRelationshipsCreated += createNodesForWikipediaPage((WikipediaPage) wikipediaElement);
+        addNodeToWikipediaIndex(wikipediaElement);
         break;
 
       case CATEGORY:
@@ -63,79 +60,10 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
       case PROJECT:
       case TEMPLATE:
       case GENERIC:
-        nodesAndRelationshipsCreated += createNodesForOtherWikipediaResources(wikipediaElement);
         break;
     }
 
-    return nodesAndRelationshipsCreated;
-  }
-
-  /**
-   * 
-   * @param wikipediaArtistPage
-   * @return
-   */
-  private long createNodesForWikipiaArtPage(WikipediaArtElement wikipediaArtistPage) {
-
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
-
-    graphDatabaseConnectionManager.createNode(wikipediaArtistPage.getArtNode());
-    graphDatabaseConnectionManager.createNode(wikipediaArtistPage);
-    graphDatabaseConnectionManager.createRelationship(new Relationship(wikipediaArtistPage.getArtNode(), wikipediaArtistPage, WikipediaRelationship.DOCUMENTED_IN, null));
-
-    addNodeToWikipediaIndex(wikipediaArtistPage);
-
-    return 3;
-  }
-
-  /**
-   * 
-   * @param wikipediaPage
-   * @return
-   */
-  private long createNodesForWikipediaPage(WikipediaPage wikipediaPage) {
-
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
-
-    graphDatabaseConnectionManager.createNode(wikipediaPage);
-
-    addNodeToWikipediaIndex(wikipediaPage);
-
     return 1;
-  }
-
-  /**
-   * 
-   * @param wikipediaElement
-   * @return
-   */
-  private long createNodesForOtherWikipediaResources(WikipediaElement wikipediaElement) {
-
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
-
-    graphDatabaseConnectionManager.createNode(wikipediaElement);
-
-    return 1;
-  }
-
-  /**
-   * 
-   * @param wikipediaElement
-   * @return
-   */
-  @SuppressWarnings("unchecked")
-  private boolean addNodeToWikipediaIndex(WikipediaElement wikipediaElement) {
-
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
-
-    try {
-      graphDatabaseConnectionManager.getIndex(WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE).add(wikipediaElement.getTitle().toLowerCase(), wikipediaElement.getNodeId());
-    }
-    catch (Exception e) {
-      return false;
-    }
-
-    return true;
   }
 
   /**
@@ -143,23 +71,20 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
    *      org.neo4art.importer.wikipedia.graphdb.WikipediaRelationship)
    */
   @Override
-  @SuppressWarnings("unchecked")
   public long createRelationship(WikipediaElement wikipediaElementFrom, WikipediaElement wikipediaElementTo, WikipediaRelationship wikipediaRelationship) {
-
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
 
     Long wikipediaElementFromId = wikipediaElementFrom.getNodeId();
     Long wikipediaElementToId = wikipediaElementTo.getNodeId();
 
     try {
       if (wikipediaElementFromId == null) {
-        wikipediaElementFromId = (Long) graphDatabaseConnectionManager.getIndex(WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE).get(wikipediaElementFrom.getTitle().toLowerCase());
+        wikipediaElementFromId = (Long) WikipediaIndexes.getInstance().getIndex(WikipediaIndexes.INDEX_FOR_WIKIPEDIA_TITLE).get(wikipediaElementFrom.getTitle());
         if (wikipediaElementFromId != null) {
           wikipediaElementFrom.setNodeId(wikipediaElementFromId);
         }
       }
       if (wikipediaElementToId == null) {
-        wikipediaElementToId = (Long) graphDatabaseConnectionManager.getIndex(WikipediaIndex.INDEX_FOR_WIKIPEDIA_TITLE).get(wikipediaElementTo.getTitle().toLowerCase());
+        wikipediaElementToId = (Long) WikipediaIndexes.getInstance().getIndex(WikipediaIndexes.INDEX_FOR_WIKIPEDIA_TITLE).get(wikipediaElementTo.getTitle());
         if (wikipediaElementToId != null) {
           wikipediaElementTo.setNodeId(wikipediaElementToId);
         }
@@ -170,6 +95,7 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
     }
 
     if (wikipediaElementFromId != null && wikipediaElementToId != null) {
+      GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
       return graphDatabaseConnectionManager.createRelationship(new Relationship(wikipediaElementFrom, wikipediaElementTo, wikipediaRelationship, null));
     }
     else {
@@ -178,11 +104,12 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
   }
 
   /**
-   * @see org.neo4art.importer.wikipedia.repository.WikipediaRepository#createDeferredIndexes()
+   * 
+   * @param wikipediaElement
+   * @return
    */
-  @Deprecated
-  @Override
-  public void createDeferredIndexes() {
-    throw new RuntimeException(new IllegalAccessException("Method not allowed for this implemetation."));
+  private boolean addNodeToWikipediaIndex(WikipediaElement wikipediaElement) {
+    WikipediaIndexes.getInstance().getIndex(WikipediaIndexes.INDEX_FOR_WIKIPEDIA_TITLE).add(wikipediaElement.getTitle(), wikipediaElement.getNodeId());
+    return true;
   }
 }

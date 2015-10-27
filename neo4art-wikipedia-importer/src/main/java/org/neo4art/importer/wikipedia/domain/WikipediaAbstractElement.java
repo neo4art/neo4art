@@ -32,6 +32,7 @@ import org.neo4j.graphdb.Label;
  * @since 25.02.2015
  */
 public abstract class WikipediaAbstractElement implements WikipediaElement {
+
   private Long                   nodeId;
 
   private Long                   id;
@@ -46,7 +47,7 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
 
   protected WikipediaAbstractElement() {
   }
-  
+
   @Override
   public Long getNodeId() {
     return this.nodeId;
@@ -132,6 +133,7 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
 
   @Override
   public boolean addCategory(WikipediaCategory wikipediaCategory) {
+
     if (CollectionUtils.isEmpty(categories)) {
       this.categories = new HashSet<WikipediaCategory>();
     }
@@ -149,7 +151,9 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
 
   @Override
   public String[] getLinksAsArray() {
+
     if (CollectionUtils.isNotEmpty(this.links)) {
+
       List<String> result = new ArrayList<String>();
 
       Iterator<WikipediaElement> iterator = this.links.iterator();
@@ -166,7 +170,9 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
 
   @Override
   public String[] getCategoriesAsArray() {
+
     if (CollectionUtils.isNotEmpty(this.categories)) {
+
       List<String> result = new ArrayList<String>();
 
       Iterator<WikipediaCategory> iterator = this.categories.iterator();
@@ -183,18 +189,18 @@ public abstract class WikipediaAbstractElement implements WikipediaElement {
 
   @Override
   public Map<String, Object> getProperties() {
+
     Map<String, Object> properties = new HashMap<String, Object>();
 
     if (this.id != null) {
       properties.put("id", this.id);
     }
-
-    properties.put("title", this.title);
-
+    if (this.title != null) {
+      properties.put("title", this.title);
+    }
     if (this.revision != null) {
       properties.put("revision", this.revision);
     }
-
     if (this.timestamp != null) {
       properties.put("timestamp", this.timestamp);
     }

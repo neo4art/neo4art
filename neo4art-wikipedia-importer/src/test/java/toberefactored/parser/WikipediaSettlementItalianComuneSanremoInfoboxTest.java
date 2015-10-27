@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementItalianComuneInfoboxParser;
 
 public class WikipediaSettlementItalianComuneSanremoInfoboxTest {
 
@@ -28,12 +27,12 @@ public class WikipediaSettlementItalianComuneSanremoInfoboxTest {
 		Settlement settlement = WikipediaSettlementItalianComuneInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Sanremo", settlement.getName());
-		Assert.assertEquals("43.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("49.0", ""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("N", settlement.getCoordinate().getLatNS());
-		Assert.assertEquals("7.0", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("47.0", ""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("E", settlement.getCoordinate().getLongEW());
-		Assert.assertEquals("http://www.comunedisanremo.it/", settlement.getWebsite());
+		Assert.assertEquals("43.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("49.0", ""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("N", settlement.getCoordinates().getLatNS());
+		Assert.assertEquals("7.0", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("47.0", ""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals("E", settlement.getCoordinates().getLongEW());
+		Assert.assertEquals(new URL("http://www.comunedisanremo.it/"), settlement.getWebsite());
 	}
 }

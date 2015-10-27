@@ -24,10 +24,10 @@ public class WikipediaSettlementGreekDimonsAbderaTest {
 		Settlement settlement = WikipediaSettlementGreekDimosInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Abdera", settlement.getName());
-		Assert.assertEquals("40.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("57.0",""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("24.0",""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("59.0",""+settlement.getCoordinate().getLongM());
+		Assert.assertEquals("40.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("57.0",""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("24.0",""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("59.0",""+settlement.getCoordinates().getLongM());
 	}
 	
 }

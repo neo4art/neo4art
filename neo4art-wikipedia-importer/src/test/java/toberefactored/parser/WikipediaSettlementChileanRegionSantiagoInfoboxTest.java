@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementChileanRegionInfoboxParser;
 
 public class WikipediaSettlementChileanRegionSantiagoInfoboxTest {
 	
@@ -28,14 +27,14 @@ public class WikipediaSettlementChileanRegionSantiagoInfoboxTest {
 		Settlement settlement = WikipediaSettlementChileanRegionInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Santiago Metropolitan Region", settlement.getName());
-		Assert.assertEquals("33.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("26.0", ""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("16.0", ""+settlement.getCoordinate().getLatS());
-		Assert.assertEquals("S", settlement.getCoordinate().getLatNS());
-		Assert.assertEquals("70.0", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("39.0", ""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("1.0", ""+settlement.getCoordinate().getLongS());
-		Assert.assertEquals("W", settlement.getCoordinate().getLongEW());
-		Assert.assertEquals("http://www.gobiernosantiago.cl/", settlement.getWebsite());
+		Assert.assertEquals("33.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("26.0", ""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("16.0", ""+settlement.getCoordinates().getLatS());
+		Assert.assertEquals("S", settlement.getCoordinates().getLatNS());
+		Assert.assertEquals("70.0", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("39.0", ""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals("1.0", ""+settlement.getCoordinates().getLongS());
+		Assert.assertEquals("W", settlement.getCoordinates().getLongEW());
+		Assert.assertEquals(new URL("http://www.gobiernosantiago.cl/"), settlement.getWebsite());
 	}
 }

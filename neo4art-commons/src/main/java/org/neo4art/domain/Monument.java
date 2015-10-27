@@ -31,7 +31,11 @@ public class Monument implements Node {
 
   private Long                 nodeId;
 
-  public String                name;
+  private String               name;
+  private String               nativeName;
+  private String               type;
+
+  private Coordinates          coordinates;
 
   public Monument() {
   }
@@ -42,6 +46,30 @@ public class Monument implements Node {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getNativeName() {
+    return nativeName;
+  }
+
+  public void setNativeName(String nativeName) {
+    this.nativeName = nativeName;
+  }
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public Coordinates getCoordinates() {
+    return coordinates;
+  }
+
+  public void setCoordinates(Coordinates coordinates) {
+    this.coordinates = coordinates;
   }
 
   @Override
@@ -60,6 +88,16 @@ public class Monument implements Node {
 
     if (this.name != null) {
       properties.put("name", this.name);
+    }
+    if (this.nativeName != null) {
+      properties.put("nativeName", this.nativeName);
+    }
+    if (this.type != null) {
+      properties.put("type", this.type);
+    }
+    if (this.coordinates != null && this.coordinates.getStatus() == Coordinates.COMPUTED) {
+      properties.put("lon", this.coordinates.getLongitude());
+      properties.put("lat", this.coordinates.getLatitude());
     }
 
     return properties;

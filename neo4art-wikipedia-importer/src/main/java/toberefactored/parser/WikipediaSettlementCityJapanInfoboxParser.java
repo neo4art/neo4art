@@ -4,11 +4,11 @@ import java.util.Map;
 
 import org.neo4art.domain.Coordinates;
 import org.neo4art.domain.Settlement;
+import org.neo4art.importer.wikipedia.parser.util.WikipediaInfoboxParserUtils;
 
 import toberefactored.parser.util.InfoboxMap;
 import toberefactored.parser.util.InfoboxParserUtil;
 import toberefactored.parser.util.InfoboxTypeParserUtil;
-import toberefactored.parser.util.InfoboxWebsiteParserUtil;
 
 public class WikipediaSettlementCityJapanInfoboxParser {
 
@@ -80,106 +80,106 @@ public class WikipediaSettlementCityJapanInfoboxParser {
             break;
           case LATITUDE:
             coordinates.setLatD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
 
             break;
           case LONGITUDE:
             coordinates.setLongD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATD:
             coordinates.setLatD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
 
             break;
           case LATM:
             coordinates.setLatM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATS:
 
             coordinates.setLatS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATDL:
             coordinates.setLatD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATML:
             coordinates.setLatM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATSL:
 
             coordinates.setLatS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATDEG:
             coordinates.setLatD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
 
             break;
           case LATMIN:
             coordinates.setLatM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATSEC:
 
             coordinates.setLatS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LATNS:
             coordinates.setLatNS(map.get(key));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGD:
             coordinates.setLongD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGM:
             coordinates.setLongM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGS:
             coordinates.setLongS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGDL:
             coordinates.setLongD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGML:
             coordinates.setLongM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGSL:
             coordinates.setLongS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGDEG:
             coordinates.setLongD(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGMIN:
             coordinates.setLongM(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGSEC:
             coordinates.setLongS(Double.parseDouble(map.get(key)));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case LONGEW:
             coordinates.setLongEW(map.get(key));
-            settlement.setCoordinate(coordinates);
+            settlement.setCoordinates(coordinates);
             break;
           case WEB:
-            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            settlement.setWebsite(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
             break;
           case WEBS:
-            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            settlement.setWebsite(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
             break;
           case WEBSITE:
-            settlement.setWebsite(InfoboxWebsiteParserUtil.getWebsite(map.get(key)));
+            settlement.setWebsite(WikipediaInfoboxParserUtils.parseAsURL(map.get(key)));
             break;
         }
       }

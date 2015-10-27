@@ -30,7 +30,7 @@ public class WikipediaReligiousBuildingMonasteryAbbeyInfoboxTest {
 		
 		URL url = new URL("http://en.wikipedia.org/wiki/File:Mount_Grace_Priory.jpg");
 	
-		Assert.assertEquals("Example Abbey", monastery.getBuildingName());
+		Assert.assertEquals("Example Abbey", monastery.getName());
 		Assert.assertEquals(url , monastery.getImage());
 		Assert.assertEquals("51.0",""+monastery.getCoordinates().getLatD());
 		Assert.assertEquals("11.0", ""+monastery.getCoordinates().getLatM());

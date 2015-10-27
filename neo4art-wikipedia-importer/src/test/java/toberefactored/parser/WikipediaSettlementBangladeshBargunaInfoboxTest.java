@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementBangladeshDistrictInfoboxParser;
 
 public class WikipediaSettlementBangladeshBargunaInfoboxTest {
 
@@ -29,8 +28,8 @@ public class WikipediaSettlementBangladeshBargunaInfoboxTest {
 		Settlement settlement = WikipediaSettlementBangladeshDistrictInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Barguna", settlement.getName());
-		Assert.assertEquals("22.1508",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("90.1264", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("http://www.dcbarguna.gov.bd", settlement.getWebsite());
+		Assert.assertEquals("22.1508",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("90.1264", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals(new URL("http://www.dcbarguna.gov.bd"), settlement.getWebsite());
 	}
 }

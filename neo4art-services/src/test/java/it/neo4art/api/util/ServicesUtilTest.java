@@ -51,7 +51,7 @@ public class ServicesUtilTest
     artwork.setCompletionDate(calendar.getTime());
 
     String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
-    Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
+    Assert.assertEquals("15-Sep-1883 00:00", verifyArtworkDate);
   }
   
   @Test
@@ -72,7 +72,7 @@ public class ServicesUtilTest
     artwork.setCompletionDate(calendar.getTime());
 
     String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
-    Assert.assertEquals("16-Sep-1883 12:00", verifyArtworkDate);
+    Assert.assertEquals("16-Sep-1883 00:00", verifyArtworkDate);
     
     Calendar calendar1 = Calendar.getInstance();
     calendar1.set(Calendar.YEAR, 1883);

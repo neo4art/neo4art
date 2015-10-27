@@ -1,6 +1,8 @@
 package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -26,7 +28,25 @@ public class WikipediaArtistVanGoghInfoboxTest {
 	
 	@Test
 	public void shouldParseArtistInfobox() throws MalformedURLException {
-		Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
-		Assert.assertEquals("Vincent van Gogh", artist.getName());
+	  
+    Calendar birthDateCalendar = Calendar.getInstance();
+    birthDateCalendar.set(1853, Calendar.MARCH, 30, 0, 0, 0);
+    birthDateCalendar.set(Calendar.MILLISECOND, 0);
+    
+    Calendar deathDateCalendar = Calendar.getInstance();
+    deathDateCalendar.set(1890, Calendar.JULY, 29, 0, 0, 0);
+    deathDateCalendar.set(Calendar.MILLISECOND, 0);
+
+    Artist artist = WikipediaArtistInfoboxParser.parse(INFOBOX);
+    
+    Assert.assertEquals("Vincent van Gogh", artist.getName());
+    Assert.assertEquals(new URL("https://en.wikipedia.org/wiki/File:Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_(454045).jpg"), artist.getImage());
+    Assert.assertEquals(birthDateCalendar.getTimeInMillis(), artist.getBirthDate().getTime());
+    Assert.assertEquals("Zundert", artist.getBirthPlace().getName());
+    Assert.assertEquals("Netherlands", artist.getBirthPlace().getCountry());
+    Assert.assertEquals(deathDateCalendar.getTimeInMillis(), artist.getDeathDate().getTime());
+    Assert.assertEquals("Auvers-sur-Oise", artist.getDeathPlace().getName());
+    Assert.assertEquals("French Third Republic", artist.getDeathPlace().getCountry());
+    Assert.assertEquals("Post-Impressionism", artist.getArtMovements().get(0).getName());
 	}
 }

@@ -76,7 +76,7 @@ public class NodeCreator {
 	 node.setId(artMovement.getNodeId());
 	 node.setLink(null);
 	 node.setName(artMovement.getName());
-	 node.setThumbnail(artMovement.getImage());
+	 node.setThumbnail(artMovement.getImage().toString());
 	 node.setType(Neo4ArtLabel.ArtMovement.name());
 		 
 	 return node;	
@@ -146,8 +146,8 @@ public class NodeCreator {
 		
 	 Node node = new Node();	
 	 node.setId(religiousBuilding.getNodeId());
-	 node.setLink(religiousBuilding.getWebsite());
-	 node.setName(religiousBuilding.getBuildingName());
+	 node.setLink(religiousBuilding.getWebsite().toString());
+	 node.setName(religiousBuilding.getName());
 	 node.setThumbnail(religiousBuilding.getImage()!=null ? religiousBuilding.getImage().toString() : "");
 	 node.setType(Neo4ArtLabel.ReligiousBuilding.name());
 		 
@@ -158,7 +158,7 @@ public class NodeCreator {
 		
 	 Node node = new Node();	
 	 node.setId(settlement.getNodeId());
-	 node.setLink(settlement.getWebsite());
+	 node.setLink(settlement.getWebsite().toString());
 	 node.setName(settlement.getName());
 	 node.setThumbnail(null);
 	 node.setType(Neo4ArtLabel.Settlement.name());

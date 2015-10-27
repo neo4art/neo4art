@@ -41,7 +41,7 @@
 		<source.level>1.7</source.level>
 		<target.level>1.7</target.level>
 
-		<neo4j.version>2.3.0-RC1</neo4j.version>		
+		<neo4j.version>2.3.0-M03</neo4j.version>		
 	</properties>
 
 	<profiles>
@@ -85,17 +85,6 @@
 			<organizationUrl>http://www.larus-ba.it</organizationUrl>
 			<roles>
 				<role>Project Leader</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>debe78</id>
-			<name>Enrico De Benetti</name>
-			<email>enrico.debenetti at larus-ba.it</email>
-			<organization>LARUS Business Automation</organization>
-			<organizationUrl>http://www.larus-ba.it</organizationUrl>
-			<roles>
-				<role>Technical Leader</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>

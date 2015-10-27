@@ -1,12 +1,11 @@
 package toberefactored.parser;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.neo4art.domain.Settlement;
-
-import toberefactored.parser.WikipediaSettlementBelgiumSettlementInfoboxParser;
 
 public class WikipediaSettlementBelgiumMunicipalityLeuvenInfoboxTest {
 	
@@ -24,10 +23,10 @@ public class WikipediaSettlementBelgiumMunicipalityLeuvenInfoboxTest {
 		Settlement settlement = WikipediaSettlementBelgiumSettlementInfoboxParser.parse(INFOBOX);
 		
 		Assert.assertEquals("Leuven", settlement.getName());
-		Assert.assertEquals("50.0",""+settlement.getCoordinate().getLatD());
-		Assert.assertEquals("53.0",""+settlement.getCoordinate().getLatM());
-		Assert.assertEquals("4.0", ""+settlement.getCoordinate().getLongD());
-		Assert.assertEquals("42.0", ""+settlement.getCoordinate().getLongM());
-		Assert.assertEquals("http://www.leuven.be/", settlement.getWebsite());
+		Assert.assertEquals("50.0",""+settlement.getCoordinates().getLatD());
+		Assert.assertEquals("53.0",""+settlement.getCoordinates().getLatM());
+		Assert.assertEquals("4.0", ""+settlement.getCoordinates().getLongD());
+		Assert.assertEquals("42.0", ""+settlement.getCoordinates().getLongM());
+		Assert.assertEquals(new URL("http://www.leuven.be/"), settlement.getWebsite());
 	}
 }

@@ -63,13 +63,10 @@ public class WikipediaReligiousBuildingMosqueInfobox
       switch (key)
       {
         case NAME:
-          mosque.setBuildingName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
+          mosque.setName(InfoboxNameParser.infoboxBuildingName(map.get(key)));
           break;
         case IMAGE:
           mosque.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));
-          break;
-        case STYLE:
-          mosque.setType(map.get(key));
           break;
         case LATITUDE:
           coordinates.setLatD(Double.parseDouble(map.get(key)));

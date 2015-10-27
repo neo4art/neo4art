@@ -27,6 +27,8 @@ import org.neo4art.graphdb.Index;
  */
 public class HashMapIndex<K, V> implements Index<K, V> {
 
+  public static final int INITIAL_CAPACITY = 5_000_000;
+  
   private String    name;
   private Map<K, V> index;
 
@@ -41,7 +43,7 @@ public class HashMapIndex<K, V> implements Index<K, V> {
   }
 
   /**
-   * @see org.neo4art.graphdb.Index#getName()
+   * @see org.neo4art.graphdb.indexes.Index#getName()
    */
   @Override
   public String getName() {
@@ -49,7 +51,7 @@ public class HashMapIndex<K, V> implements Index<K, V> {
   }
 
   /**
-   * @see org.neo4art.graphdb.Index#add(java.lang.Object, java.lang.Object)
+   * @see org.neo4art.graphdb.indexes.Index#add(java.lang.Object, java.lang.Object)
    */
   @Override
   public void add(K key, V value) {
@@ -62,7 +64,7 @@ public class HashMapIndex<K, V> implements Index<K, V> {
   }
 
   /**
-   * @see org.neo4art.graphdb.Index#size()
+   * @see org.neo4art.graphdb.indexes.Index#size()
    */
   @Override
   public int size() {
@@ -70,7 +72,7 @@ public class HashMapIndex<K, V> implements Index<K, V> {
   }
 
   /**
-   * @see org.neo4art.graphdb.Index#clear()
+   * @see org.neo4art.graphdb.indexes.Index#clear()
    */
   @Override
   public void clear() {
@@ -78,7 +80,7 @@ public class HashMapIndex<K, V> implements Index<K, V> {
   }
 
   /**
-   * @see org.neo4art.graphdb.Index#get(java.lang.Object)
+   * @see org.neo4art.graphdb.indexes.Index#get(java.lang.Object)
    */
   @Override
   public V get(K key) {

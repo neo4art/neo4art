@@ -60,10 +60,7 @@ public class WikipediaReligiousBuildingTibetanBuddhistMonasteryInfobox
       switch (key)
       {
         case NAME:
-          tibetanBuddhistMonastery.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          tibetanBuddhistMonastery.setType(map.get(key));
+          tibetanBuddhistMonastery.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           tibetanBuddhistMonastery.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

@@ -60,10 +60,7 @@ public class WikipediaReligiousBuildingLDSTempleInfobox
       switch (key)
       {
         case NAME:
-          lDSTemple.setBuildingName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
-          break;
-        case STYLE:
-          lDSTemple.setType(map.get(key));
+          lDSTemple.setName(InfoboxParserUtil.removeAllParenthesis(map.get(key)));
           break;
         case IMAGE:
           lDSTemple.setImage(InfoboxUrlParser.infoboxUrl(map.get(key)));

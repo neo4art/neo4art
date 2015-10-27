@@ -42,7 +42,7 @@ public class WikipediaReligiousBuildingBuddhistTempleMusangsalInfoboxTest {
 			
 			URL url = new URL("http://en.wikipedia.org/wiki/File:Musansga.jpg");
 		
-			Assert.assertEquals("Musangsa", buddhistTemple.getBuildingName());
+			Assert.assertEquals("Musangsa", buddhistTemple.getName());
 			Assert.assertEquals(url , buddhistTemple.getImage());
 		}
 		

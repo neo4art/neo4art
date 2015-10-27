@@ -52,7 +52,7 @@ public class WikipediaReligiousBuildingHinduTempleMorgaonInfoboxTest {
 			
 			URL url = new URL("http://en.wikipedia.org/wiki/File:Morgaon.jpg");
 		
-			Assert.assertEquals("Shri Mayureshwar Mandir, Morgaon", hinduTemple.getBuildingName());
+			Assert.assertEquals("Shri Mayureshwar Mandir, Morgaon", hinduTemple.getName());
 			Assert.assertEquals(url , hinduTemple.getImage());
 			Assert.assertEquals("18.0",""+hinduTemple.getCoordinates().getLatD());
 			Assert.assertEquals("16.0", ""+hinduTemple.getCoordinates().getLatM());

@@ -1,4 +1,4 @@
-package toberefactored.parser;
+package org.neo4art.importer.wikipedia.parser;
 
 import java.net.MalformedURLException;
 

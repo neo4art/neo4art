@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.neo4art.domain.Country;
+import org.neo4art.importer.wikipedia.parser.WikipediaCountryInfoboxParser;
 
 public class WikipediaCountryGermanTest {
 

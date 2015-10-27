@@ -16,6 +16,7 @@
 
 package org.neo4art.domain;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,56 +27,97 @@ import org.neo4j.graphdb.Label;
  * @author Lorenzo Speranzoni
  * @since 11 Oct 2015
  */
-public class Book implements Node
-{
-  private static final Label[]   LABELS = new Label[] { Neo4ArtLabel.Book };
+public class Book implements Node {
 
-  private Long                   nodeId;
+  private static final Label[] LABELS = new Label[] { Neo4ArtLabel.Book };
 
-  private String                 name;
+  private Long                 nodeId;
 
-  public Book()
-  {
+  private String               name;
+  private URL                  image;
+  private String               author;
+  private String               language;
+  private String               genre;
+
+  public Book() {
   }
-  
-  public String getName()
-  {
+
+  public String getName() {
     return name;
   }
-  
-  public void setName(String name)
-  {
+
+  public void setName(String name) {
     this.name = name;
   }
 
+  public URL getImage() {
+    return image;
+  }
+
+  public void setImage(URL image) {
+    this.image = image;
+  }
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(String author) {
+    this.author = author;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public String getGenre() {
+    return genre;
+  }
+
+  public void setGenre(String genre) {
+    this.genre = genre;
+  }
+
   @Override
-  public Long getNodeId()
-  {
+  public Long getNodeId() {
     return this.nodeId;
   }
 
   @Override
-  public void setNodeId(long nodeId)
-  {
+  public void setNodeId(long nodeId) {
     this.nodeId = nodeId;
   }
 
   @Override
-  public Map<String, Object> getProperties()
-  {
+  public Map<String, Object> getProperties() {
+
     Map<String, Object> properties = new HashMap<String, Object>();
 
-    if (this.name != null)
-    {
+    if (this.name != null) {
       properties.put("name", this.name);
     }
-    
+    if (this.image != null) {
+      properties.put("image", this.image.toString());
+    }
+    if (this.language != null) {
+      properties.put("language", this.language);
+    }
+    if (this.author != null) {
+      properties.put("author", this.author);
+    }
+    if (this.genre != null) {
+      properties.put("genre", this.genre);
+    }
+
     return properties;
   }
 
   @Override
-  public Label[] getLabels()
-  {
+  public Label[] getLabels() {
     return LABELS;
   }
 }

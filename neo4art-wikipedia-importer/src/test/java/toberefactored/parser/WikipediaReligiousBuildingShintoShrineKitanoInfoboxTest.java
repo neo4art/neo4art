@@ -30,7 +30,7 @@ public class WikipediaReligiousBuildingShintoShrineKitanoInfoboxTest {
 		
 		URL url = new URL("http://en.wikipedia.org/wiki/File:Kitano-tenmangu_Kyoto_Japan41s3s4592.jpg");
 	
-		Assert.assertEquals("Kitano Tenmangū", shintoShrine.getBuildingName());
+		Assert.assertEquals("Kitano Tenmangū", shintoShrine.getName());
 		Assert.assertEquals(url , shintoShrine.getImage());
 		Assert.assertEquals("35.0",""+shintoShrine.getCoordinates().getLatD());
 		Assert.assertEquals("1.0", ""+shintoShrine.getCoordinates().getLatM());
