@@ -152,6 +152,7 @@ public class Artist implements Node {
       properties.put("birthDate", this.birthDate.getTime());
     }
     if (this.birthPlace != null && StringUtils.isNotBlank(this.birthPlace.getName())) {
+      System.out.println("BIRTH PLACE = " + this.birthPlace.getName());
       properties.put("birthPlace", this.birthPlace.getName());
     }
     if (this.deathDate != null) {
