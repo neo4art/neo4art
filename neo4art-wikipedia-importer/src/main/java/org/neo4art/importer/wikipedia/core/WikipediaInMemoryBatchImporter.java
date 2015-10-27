@@ -61,7 +61,7 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
 
     try
     {
-      logger.info("Parsing of wikipedia dump started...");
+      logger.info("Parsing of wikipedia dump " + dumpFile.getAbsolutePath() + " started...");
       long parserStartDate = Calendar.getInstance().getTimeInMillis();
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaInMemoryBatchImporterListener();
       wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT);
