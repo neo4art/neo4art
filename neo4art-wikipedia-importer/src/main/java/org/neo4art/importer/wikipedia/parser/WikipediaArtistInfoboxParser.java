@@ -90,7 +90,7 @@ public class WikipediaArtistInfoboxParser {
       }
       catch (Exception e) {
 
-        logger.error("     Error parsing infobox pair (" + key + " , " + map.get(key) + ") - " + e.getMessage() + " | " + e.getLocalizedMessage());
+        logger.error("     Error parsing infobox pair (" + key + " , " + map.get(key) + ") : " + e.getMessage());
       }
     }
 
