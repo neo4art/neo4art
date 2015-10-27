@@ -46,8 +46,6 @@ public class WikipediaInMemoryBatchImporterListener extends WikipediaAbstractImp
   @Override
   public void flush() {
     
-    logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far... start flushing on graph...");
-    
     long graphElementsCreated = 0;
     long flushStartDate = Calendar.getInstance().getTimeInMillis();
     

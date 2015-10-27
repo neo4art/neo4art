@@ -75,7 +75,7 @@ public class WikipediaSettlementInfoboxParser {
       }
       catch (Exception e) {
 
-        logger.error("# Error parsing infobox pair (" + key + " , " + map.get(key) + ") : " + e.getMessage());
+        logger.trace("   #    Error parsing infobox pair (" + key + " , " + map.get(key) + ") : " + e.getMessage());
       }
     }
 

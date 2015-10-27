@@ -64,16 +64,17 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	@Override
 	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
 	  
-	  if (StringUtils.isNotEmpty(article.getTitle())) {
-      WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
-      
-      long pages = pageCount.incrementAndGet();
-      
-      if (logger.isInfoEnabled()) {
-        if (pages % 500_000 == 0) {
-          logger.info(pages + " wikipedia 'pages' parsed from dump so far...");
-        }
+    long pages = pageCount.incrementAndGet();
+    
+    if (logger.isInfoEnabled()) {
+      if (pages % 500_000 == 0) {
+        logger.info(pages + " wikipedia pages parsed from dump so far...");
       }
+    }
+    
+	  if (StringUtils.isNotEmpty(article.getTitle())) {
+      
+      WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
       
       if (wikipediaElement != null) {
         this.wikipediaElementBuffer.add(wikipediaElement);

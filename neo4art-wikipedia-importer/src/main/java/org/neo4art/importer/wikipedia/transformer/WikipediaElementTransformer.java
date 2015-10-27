@@ -24,6 +24,7 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
@@ -103,7 +104,8 @@ public class WikipediaElementTransformer {
       }
     }
     catch (Exception e) {
-      logger.error("# Error parsing article " + article.getTitle() + " : " + e.getMessage());
+      
+      logger.error("Error parsing article " + article.getTitle() + " : " + ExceptionUtils.getRootCauseMessage(e));
     }
 
     return wikipediaElement;
