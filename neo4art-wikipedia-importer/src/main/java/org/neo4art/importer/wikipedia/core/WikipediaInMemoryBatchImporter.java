@@ -59,20 +59,26 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
     logger.info("Store directory is: " + graphDatabaseConnectionManager.getStoreDir());
     logger.info("");
 
+    try
     {
-      logger.info("Creation of Wikipedia nodes and relationships started...");
+      logger.info("Parsing of wikipedia dump started...");
+      long parserStartDate = Calendar.getInstance().getTimeInMillis();
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaInMemoryBatchImporterListener();
       wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT);
-      long parserStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
       long parserEndDate = Calendar.getInstance().getTimeInMillis();
+      logger.info("Done! Wikipedia dump parsed in " + (parserEndDate - parserStartDate) + " ms.");
+      logger.info("");
+      
+      logger.info("Creation of Wikipedia nodes and relationships started...");
+      long flushOnGraphStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();
+      long flushOnGraphEndDate = Calendar.getInstance().getTimeInMillis();
       newNodesAndRelationships = wikipediaNodesImporterListener.getGraphCount();
-      logger.info("Done! " + newNodesAndRelationships + " nodes created in " + (parserEndDate - parserStartDate) + " ms.");
-    }
-
-    {
+      logger.info("Done! " + newNodesAndRelationships + " nodes and relationships created in " + (flushOnGraphEndDate - flushOnGraphStartDate) + " ms.");
+      logger.info("");
+      
       logger.info("Creation of Wikipedia indexes started...");
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.Wikipedia, "title");
@@ -93,13 +99,16 @@ public class WikipediaInMemoryBatchImporter implements WikipediaImporter {
       graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaTemplate, "title");
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate)  + " ms.");
+      logger.info("");
     }
-
+    finally
     {
+      logger.info("Neo4j files consolidation (before shutting down) started...");
       long shutdownStartDate = Calendar.getInstance().getTimeInMillis();
       graphDatabaseConnectionManager.close();
       long shutdownEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Shutdown completed in " + (shutdownEndDate - shutdownStartDate) + " ms.");
+      logger.info("");
     }
 
     long dumpImportEndDate = Calendar.getInstance().getTimeInMillis();
