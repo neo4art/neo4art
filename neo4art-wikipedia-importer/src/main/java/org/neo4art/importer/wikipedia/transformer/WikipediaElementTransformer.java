@@ -104,7 +104,7 @@ public class WikipediaElementTransformer {
       }
     }
     catch (Exception e) {
-      
+      e.printStackTrace();
       logger.error("Error parsing article " + article.getTitle() + " : " + ExceptionUtils.getRootCauseMessage(e));
     }
 

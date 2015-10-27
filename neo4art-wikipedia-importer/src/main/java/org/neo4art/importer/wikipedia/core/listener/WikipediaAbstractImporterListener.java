@@ -73,7 +73,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
       }
     }
     
-	  if (StringUtils.isNotEmpty(article.getTitle())) {
+	  if (StringUtils.isNotBlank(article.getTitle())) {
       
       WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
       

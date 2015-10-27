@@ -171,7 +171,7 @@ public class Coordinates {
 
   public Double getLongitude() {
 
-    if (this.longitude == null && this.latD != null && this.latM != null && this.latS != null) {
+    if (this.longitude == null && this.longD != null && this.longM != null && this.longS != null) {
 
       longitude  = this.longD;
       longitude += this.longM / 60;
