@@ -64,17 +64,22 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	@Override
 	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
 	  
+	  pageCount.incrementAndGet();
+	  
 	  if (StringUtils.isNotEmpty(article.getTitle())) {
-  		pageCount.incrementAndGet();
-  		
       WikipediaElement wikipediaElement = WikipediaElementTransformer.toWikipediaElement(article);
       
       if (wikipediaElement != null) {
         this.wikipediaElementBuffer.add(wikipediaElement);
       }
+
+      if (logger.isInfoEnabled()) {
+        if (this.wikipediaElementBuffer.size() % 500_000 == 0) {
+          logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far...");
+        }
+      }
       
-      if (this.wikipediaElementBuffer.size() % this.batchSize == 0) {        
-        logger.info(this.getPageCount() + " wikipedia 'pages' parsed from dump so far...");
+      if (this.wikipediaElementBuffer.size() == this.batchSize) {
         if (this.batchSize != WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT) {
           flush();
         }
@@ -101,9 +106,11 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.GRAPH_DATABASE_SERVICE);
 
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
+      
       for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
         graphElementsCreated += persist(wikipediaElement);
       }
+      
       tx.success();
     }
     
