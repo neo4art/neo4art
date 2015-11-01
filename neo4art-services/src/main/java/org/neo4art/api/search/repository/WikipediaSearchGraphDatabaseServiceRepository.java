@@ -45,7 +45,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
   @Override
   public WikipediaSearchResult findDepthOneConnectionsByPageTitle(String wikipediaPageTitle, boolean autoComplete) {
 
-    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE n.title = {title} RETURN n, r, m";
+    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE n.title = {title} AND n <> m RETURN n, r, distinct(m) as m";
 
     Map<String, Object> parameters = MapUtil.map("title", wikipediaPageTitle);
 
@@ -58,7 +58,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
   @Override
   public WikipediaSearchResult findDepthOneConnectionsByNodeId(long nodeId, boolean autoComplete) {
 
-    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE id(n) = {nodeId} RETURN n, r, m";
+    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE id(n) = {nodeId} AND n <> m RETURN n, r, distinct(m) as m";
 
     Map<String, Object> parameters = MapUtil.map("nodeId", nodeId);
 

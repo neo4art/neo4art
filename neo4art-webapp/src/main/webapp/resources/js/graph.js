@@ -14,21 +14,27 @@ var currentTranslateY = 0;
  * dimensions of the document
  */
 $(document).ready(function() {
+	
 	p = parseURLParams();
+	
 	if (p != undefined) {
 		graph = new theGraph();
-	} else {
+	}
+	else {
 		console.log("non faccio niente");
 	}
+	
 	$("#dialog").dialog({
 		autoOpen : false,
 		title : "Legend",
 		width : 500,
 		resizable : false
 	});
+	
 	$("#legendOpener").click(function() {
 		$("#dialog").dialog("open");
 	});
+	
 	$(".container-page").scrollbar();
 });
 
@@ -69,6 +75,7 @@ function legend() {
 }
 
 function theGraph() {
+	
 	var selectedNode, selectedD;
 	generateWindow();
 	firstUpdate();
@@ -84,10 +91,10 @@ function theGraph() {
 			"description" : nodeToAdd.description
 		});
 	}
+	
 	addLink = function(linkToAdd) {
 		var sourceNode = findNode(linkToAdd.source);
 		var targetNode = findNode(linkToAdd.target);
-
 		if ((sourceNode !== undefined) && (targetNode !== undefined)) {
 			linkList.push({
 				"source" : linkToAdd.source,
@@ -128,24 +135,20 @@ function theGraph() {
 				return i
 		}
 	}
+	
 	clearDiv("graph");
+	
 	var width = $("#graph").width();
 	var height = $("#graph").height();
 
 	var color = d3.scale.category20();
-
 	var force = d3.layout.force().charge(-300).linkDistance(150).size([ width, height ]);
-
 	var zoom = d3.behavior.zoom().on("zoom", redraw);
-
 	var drag = force.drag().on("dragstart", dragstarted);
-
 	var svg = d3.select("#graph").append("svg").attr("class", "svg").append("g").call(zoom).on("dblclick.zoom", null);
-
 	var rect = svg.append("rect").attr("width", "100%").attr("height", "100%").style("fill", "none").style("pointer-events", "all");
 
-	svg.append("text").attr("x", 10).attr("y", 20).attr("font-family", "sans-serif").attr("font-size", "15px").attr("fill", "#333333")
-			.text("Right Click to show details");
+	svg.append("text").attr("x", 10).attr("y", 20).attr("font-family", "sans-serif").attr("font-size", "15px").attr("fill", "#333333").text("Right Click to show details");
 
 	/* Contenitore del grafo */
 	var container = svg.append("g").attr("id", "container");
@@ -154,22 +157,37 @@ function theGraph() {
 	var linkList = [];
 
 	var nodeEnter, linkEnter;
+	
 	function firstUpdate(json) {
 
+		console.log("FIRST UPDATE");
+		
 		$.ajax({
 			method : 'get',
-			url : "http://5.9.211.195/neo4art-services/api/search/wikipedia/" + p.query.toString().replace(/\+/g, " "),
+			url : encodeURI("http://5.9.211.195/neo4art-services/api/search/wikipedia/" + p.query.toString()),
 			dataType : 'json',
 			success : function(graph) {
-				// d3.json("miserables.json", function(error, graph) {
-				force.nodes(graph.nodeList).links(graph.linkList).start();
+				console.log("GRAPH");
+				console.log(graph);
+				console.log("START GRAPH");
+				force.nodes(graph.nodes).links(graph.relationships).start();
 				nodeList = force.nodes();
+				console.log("NODES");
+				console.log(nodeList);
 				linkList = force.links();
+				console.log("RELS");
+				console.log(linkList);
+				console.log("UPDATE");
 				update();
+				console.log("UPDATE DONE");
 			}
 		});
 	}
+	
 	function update() {
+		
+		console.log("UPDATE IN");
+		
 		clearDiv("container");
 
 		function connects(l, n) {
@@ -182,6 +200,7 @@ function theGraph() {
 		var link = container.append("g").attr("class", "links").selectAll(".link").data(linkList, function(d) {
 			return d.source.name + "-" + d.target.name;
 		});
+		
 		linkEnter = link.enter().append("line").attr("class", "link").style("stroke-width", function(d) {
 			return Math.sqrt(d.value) * 3;
 		}).on("mouseover", function(d) {
@@ -194,16 +213,21 @@ function theGraph() {
 			node.classed("node-active-green", false);
 			link.classed("link-active-green", false);
 		});
+		
 		linkEnter.append("title").text(function(d) {
 			return d.linkName
 		});
+		
 		link.exit().remove();
 
 		// ########################################
+		
 		var nodeContainer = container.append("g").attr("class", "nodes");
+		
 		var node = nodeContainer.selectAll(".node").data(nodeList, function(d) {
 			return d.name;
 		});
+		
 		nodeEnter = node.enter().append("g").attr("class", "node").attr("id", function(d) {
 			d.radius = radius;
 			return d.id; // TODO CHECK
@@ -219,6 +243,7 @@ function theGraph() {
 				return color(1 / d.id);
 			}
 		});
+		
 		nodeEnter.append("clipPath").attr('id', function(d, i) {
 			return "clip" + i
 		}).append("circle").attr("class", "clip-path").attr("r", function(d) {
@@ -232,6 +257,7 @@ function theGraph() {
 		}).style("fill", function(d) {
 			return color(1 / d.rating);
 		});
+		
 		var img = nodeEnter.append("svg:image").attr("class", "circle").attr("xlink:href", function(d) {
 			if (d.type != "Colour") {
 				return d.thumbnail;
@@ -397,6 +423,7 @@ function theGraph() {
 		// Restart the force layout.
 		force.start();
 	}
+	
 	function redraw() {
 		currentZoom = d3.event.scale;
 		currentTranslateX = d3.event.translate[0];
@@ -423,7 +450,9 @@ function theGraph() {
 	}
 
 	function openWindow(d) {
+		
 		clearDiv("data");
+		
 		var float = d3.select("#floating").attr("class", "visible").attr("style", null);
 		var data = float.select("#data");
 		// data.append("div").attr("class", "title").append("h1").text(d.name);
@@ -439,9 +468,10 @@ function theGraph() {
 	}
 
 	function closeWindow() {
+		
 		d3.select("#floating").attr("class", null).style("left", null);
-		container.transition().duration(750).attr("transform",
-				"translate(" + currentTranslateX + "," + currentTranslateY + ")" + " scale(" + currentZoom + ")");
+		
+		container.transition().duration(750).attr("transform", "translate(" + currentTranslateX + "," + currentTranslateY + ")" + " scale(" + currentZoom + ")");
 		nodeEnter.classed("node-active", false);
 		linkEnter.classed("link-active", false);
 
@@ -451,17 +481,19 @@ function theGraph() {
 			else
 				return radius;// + 2
 		});
+		
 		if (selectedD != undefined) {
 			selectedD.clicked = false;
 		}
+		
 		if (selectedNode != undefined) {
 			selectedNode.select("image").transition().duration(750).attr("x", -radius).attr("y", -radius).attr("width", radius * 2).attr(
 					"height", radius * 2);
 			selectedNode.select("text").transition().duration(750).style("font-size", "10px").attr("y", 2);
 		}
 	}
-
 }
+
 /**
  * This method remove all other components inside the specified ID
  * 
