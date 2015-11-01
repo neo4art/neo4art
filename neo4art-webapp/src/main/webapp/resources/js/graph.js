@@ -160,11 +160,14 @@ function theGraph() {
 	
 	function firstUpdate(json) {
 
+		var searchURI = encodeURI("http://5.9.211.195/neo4art-services/api/search" + ((p.test != undefined) ? "/test" : "") + "/wikipedia/" + p.query.toString());
+		
 		console.log("FIRST UPDATE");
+		console.log(searchURI);
 		
 		$.ajax({
 			method : 'get',
-			url : encodeURI("http://5.9.211.195/neo4art-services/api/search/test/wikipedia/" + p.query.toString()),
+			url : searchURI,
 			dataType : 'json',
 			success : function(graph) {
 				console.log("GRAPH");

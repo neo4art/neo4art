@@ -69,7 +69,7 @@ public class WikipediaSearchTestRestController {
     WikipediaSearchResult wikipediaSearchResult = new WikipediaSearchResult();
     wikipediaSearchResult.addNode(node);
     wikipediaSearchResult.addNode(node2);
-    wikipediaSearchResult.addRelationship(relationship);
+    //wikipediaSearchResult.addRelationship(relationship);
     
     return wikipediaSearchResult;
   }  
