@@ -61,15 +61,15 @@ public class WikipediaSearchTestRestController {
     
     WikipediaSearchResultRelationship relationship = new WikipediaSearchResultRelationship();
     relationship.setId(0);
-    relationship.setSource(20814);
-    relationship.setTarget(41980);
+    relationship.setSource(0);
+    relationship.setTarget(1);
     relationship.setLinkName("REFERS");
     relationship.setValue(1);
     
     WikipediaSearchResult wikipediaSearchResult = new WikipediaSearchResult();
     wikipediaSearchResult.addNode(node);
     wikipediaSearchResult.addNode(node2);
-    //wikipediaSearchResult.addRelationship(relationship);
+    wikipediaSearchResult.addRelationship(relationship);
     
     return wikipediaSearchResult;
   }  

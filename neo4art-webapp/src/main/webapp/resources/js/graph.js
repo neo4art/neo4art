@@ -162,34 +162,20 @@ function theGraph() {
 
 		var searchURI = encodeURI("http://5.9.211.195/neo4art-services/api/search" + ((p.test != undefined) ? "/test" : "") + "/wikipedia/" + p.query.toString());
 		
-		console.log("FIRST UPDATE");
-		console.log(searchURI);
-		
 		$.ajax({
 			method : 'get',
 			url : searchURI,
 			dataType : 'json',
 			success : function(graph) {
-				console.log("GRAPH");
-				console.log(graph);
-				console.log("START GRAPH");
 				force.nodes(graph.nodes).links(graph.relationships).start();
 				nodeList = force.nodes();
-				console.log("NODES");
-				console.log(nodeList);
 				linkList = force.links();
-				console.log("RELS");
-				console.log(linkList);
-				console.log("UPDATE");
 				update();
-				console.log("UPDATE DONE");
 			}
 		});
 	}
 	
 	function update() {
-		
-		console.log("UPDATE IN");
 		
 		clearDiv("container");
 
