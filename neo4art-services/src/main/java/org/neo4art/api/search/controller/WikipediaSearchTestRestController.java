@@ -17,8 +17,6 @@ package org.neo4art.api.search.controller;
 
 import org.neo4art.api.search.bean.WikipediaSearchResult;
 import org.neo4art.api.search.bean.WikipediaSearchResultNode;
-import org.neo4art.api.search.repository.WikipediaSearchGraphDatabaseServiceRepository;
-import org.neo4art.api.search.repository.WikipediaSearchRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,9 +50,15 @@ public class WikipediaSearchTestRestController {
   @RequestMapping(value = "/{title}/expand/{nodeId}", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody WikipediaSearchResult expandWikipediaNode(@PathVariable(value = "title") String title, @PathVariable(value = "nodeId") int nodeId) {
 
-    WikipediaSearchRepository wikipediaSearchRepository = new WikipediaSearchGraphDatabaseServiceRepository();
+    WikipediaSearchResultNode node = new WikipediaSearchResultNode();
+    node.setId(20814);
+    node.setName("Vincent van Gogh");
+    node.setType("Wikipedia");
+    node.setGroup(1);
     
-    return wikipediaSearchRepository.findDepthOneConnectionsByNodeId(nodeId, true);
+    WikipediaSearchResult wikipediaSearchResult = new WikipediaSearchResult();
+    wikipediaSearchResult.addNode(node);
     
+    return wikipediaSearchResult;
   }
 }
