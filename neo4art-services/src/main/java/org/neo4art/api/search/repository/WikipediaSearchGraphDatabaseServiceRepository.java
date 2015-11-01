@@ -17,6 +17,7 @@
 package org.neo4art.api.search.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -120,7 +121,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
           }
           else if ("r".equals(column.getKey())) {
 
-            WikipediaSearchResultRelationship relationship = createRelationship(nodeIds, (Relationship) column.getValue());
+            WikipediaSearchResultRelationship relationship = createRelationship((Relationship) column.getValue());
 
             if (relationship != null && relationshipIds.get(relationship.getId()) == null) {
 
@@ -131,6 +132,8 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
         }
       }
 
+      remapRelationships(nodeIds, result);
+      
       if (autoComplete) {
 
         autoComplete(result);
@@ -172,30 +175,49 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
   /**
    * 
-   * @param nodeIds
    * @param relationship
    * @return
    */
-  private WikipediaSearchResultRelationship createRelationship(Map<Long, Integer> nodeIds, Relationship relationship) {
+  private WikipediaSearchResultRelationship createRelationship(Relationship relationship) {
 
-    Integer source = nodeIds.get(relationship.getStartNode().getId());
-    Integer target = nodeIds.get(relationship.getEndNode().getId());
+    WikipediaSearchResultRelationship result = new WikipediaSearchResultRelationship();
 
-    WikipediaSearchResultRelationship result = null;
-
-    if (source != null && target != null) {
-
-      result = new WikipediaSearchResultRelationship();
-
-      result.setId(relationship.getId());
-      result.setSource(source);
-      result.setTarget(target);
-      result.setLinkName(relationship.getType().name());
-    }
+    result.setId(relationship.getId());
+    result.setSource(relationship.getStartNode().getId());
+    result.setTarget(relationship.getEndNode().getId());
+    result.setLinkName(relationship.getType().name());
 
     return result;
   }
+  
+  /**
+   * 
+   * @param nodeIds
+   * @param result
+   */
+  private void remapRelationships(Map<Long, Integer> nodeIds, WikipediaSearchResult result) {
+    
+    List<WikipediaSearchResultRelationship> relationships = result.getRelationships();
+    
+    for (int i = 0; i < relationships.size(); i++) {
+      
+      WikipediaSearchResultRelationship relationship = relationships.get(i);
+      
+      Integer source = nodeIds.get(relationship.getSource());
+      Integer target = nodeIds.get(relationship.getTarget());
 
+      if (source != null && target != null) {
+        
+        relationship.setSource(source);
+        relationship.setTarget(target);
+      }
+      else {
+        
+        relationships.remove(i);
+      }
+    }
+  }
+  
   /**
    * @param result
    */
