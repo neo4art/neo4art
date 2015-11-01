@@ -158,7 +158,7 @@ function theGraph() {
 
 		$.ajax({
 			method : 'get',
-			url : "http://5.9.211.195/neo4art-services/api/search/wikipedia/" + p.query.toString().replace(/\+/g, " "),
+			url : "http://5.9.211.195:8080/neo4art-services/api/services/search/search-results.json?searchInput=" + p.query.toString().replace(/\+/g, " "),
 			dataType : 'json',
 			success : function(graph) {
 				// d3.json("miserables.json", function(error, graph) {
