@@ -20,7 +20,9 @@ import info.bliki.wiki.dump.WikiXMLParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -60,7 +62,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
 
     logger.info("Configuration: ");
     logger.info("------------------------------------------------");
-    logger.info("Batch size " + BATCH_SIZE);
+    logger.info("Batch size " + NumberFormat.getInstance(Locale.ITALY).format(BATCH_SIZE));
     logger.info("Store directory is " + graphDatabaseConnectionManager.getStoreDir());
     logger.info("");
 
@@ -74,7 +76,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
       long parserForNodesEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();
       newNodes = wikipediaNodesImporterListener.getGraphCount();
-      logger.info("Done! " + newNodes + " nodes created in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
+      logger.info("Done! " + NumberFormat.getInstance(Locale.ITALY).format(newNodes) + " nodes created in " + (parserForNodesEndDate - parserForNodesStartDate) + " ms.");
     }
 
     {
@@ -87,7 +89,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
       long parserForRelsEndDate = Calendar.getInstance().getTimeInMillis();
       wikipediaRelsImporterListener.flush();
       newRelationships = wikipediaRelsImporterListener.getGraphCount();
-      logger.info("Done! " + newRelationships + " relationships created in " + (parserForRelsEndDate - parserForRelsStartDate) + " ms.");
+      logger.info("Done! " + NumberFormat.getInstance(Locale.ITALY).format(newRelationships) + " relationships created in " + (parserForRelsEndDate - parserForRelsStartDate) + " ms.");
     }
 
     {
