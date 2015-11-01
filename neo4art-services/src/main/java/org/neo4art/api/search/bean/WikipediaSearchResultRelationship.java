@@ -27,10 +27,12 @@ public class WikipediaSearchResultRelationship {
   private long   source;
   private long   target;
   private int    value;
+  private int    weight;
   private String linkName;
 
   public WikipediaSearchResultRelationship() {
     this.value = 1;
+    this.weight = 1;
   }
 
   public long getId() {
@@ -63,6 +65,14 @@ public class WikipediaSearchResultRelationship {
 
   public void setValue(int value) {
     this.value = value;
+  }
+
+  public int getWeight() {
+    return weight;
+  }
+
+  public void setWeight(int weight) {
+    this.weight = weight;
   }
 
   public String getLinkName() {
