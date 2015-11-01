@@ -27,7 +27,7 @@ public class GraphDatabaseConnectionManagerFactory
   
   public static enum GraphDatabaseConnectionType {
     
-    GRAPH_DATABASE_SERVICE, BATCH_INSERTER
+    EMBEDDED_DATABASE, BATCH_INSERTER
   }
   
   public static GraphDatabaseConnectionManager getInstance() {
@@ -44,8 +44,8 @@ public class GraphDatabaseConnectionManagerFactory
       
       switch (graphDatabaseConnectionType) {
         
-        case GRAPH_DATABASE_SERVICE:
-          instance = new GraphDatabaseServiceConnectionManager();
+        case EMBEDDED_DATABASE:
+          instance = new EmbeddedDatabaseConnectionManager();
           break;
           
         case BATCH_INSERTER:

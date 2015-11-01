@@ -15,56 +15,52 @@
 	</parent>
 
 	<dependencies>
+
+		<!-- Tomcat Embedded -->
 		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-    	    <artifactId>spring-boot-starter-tomcat</artifactId>
-        	<scope>${spring.boot.starter.tomcat.scope}</scope>
-	    </dependency>
-	    
-	    <dependency>
-	      <groupId>org.springframework</groupId>
-	      <artifactId>spring-web</artifactId>
-        </dependency>
-        
-        <dependency>
-	      <groupId>org.springframework</groupId>
-	      <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        
-        
-        <!-- neo4art -->
-		<dependency>
-		  <groupId>org.neo4art</groupId>
-		  <artifactId>neo4art-commons</artifactId>
-		  <version>${project.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
+		<!-- neo4art -->
 		<dependency>
-		  <groupId>org.neo4art</groupId>
-		  <artifactId>neo4art-colour</artifactId>
-		  <version>${project.version}</version>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-commons</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		
+
 		<dependency>
-		  <groupId>org.neo4art</groupId>
-		  <artifactId>neo4art-sentiment</artifactId>
-		  <version>${project.version}</version>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-colour</artifactId>
+			<version>${project.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>org.neo4art</groupId>
+			<artifactId>neo4art-sentiment</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Jackson JSON Mapper -->
 		<dependency>
-	      <groupId>com.fasterxml.jackson.core</groupId>
-	      <artifactId>jackson-core</artifactId>
-        </dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
 
-        <dependency>
-	      <groupId>com.fasterxml.jackson.core</groupId>
-	      <artifactId>jackson-databind</artifactId>
-        </dependency>
-	    
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
 	</dependencies>
 
-	<repositories>
-	</repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

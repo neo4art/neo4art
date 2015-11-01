@@ -158,8 +158,7 @@ function theGraph() {
 
 		$.ajax({
 			method : 'get',
-			url : window.location.protocol + '//' + window.location.host
-					+ "/neo4art-services/api/services/search/search-results.json?searchInput=" + p.query.toString().replace(/\+/g, " "),
+			url : window.location.protocol + '//' + window.location.host + ":8081/neo4art/api/search/wikipedia/" + p.query.toString().replace(/\+/g, " "),
 			dataType : 'json',
 			success : function(graph) {
 				// d3.json("miserables.json", function(error, graph) {

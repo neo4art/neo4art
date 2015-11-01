@@ -14,24 +14,47 @@
  * limitations under the License.
  */
 
-package org.neo4art.api.configuration;
+package org.neo4art.graphdb;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import java.util.Set;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 29 Mar 2015
+ * @since 29 Apr 2015
  */
-@SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan({ "org.neo4art.api" })
-public class SpringBootConfiguration {
+public class Graph
+{
+  private Set<Node> nodes;
+  
+  private Set<Relationship> relationships;
+  
+  public Graph()
+  {
+  }
+  
+  public Graph(Set<Node> nodes, Set<Relationship> relationships)
+  {
+    this.nodes = nodes;
+    this.relationships = relationships;
+  }
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootConfiguration.class, args);
-    }
+  public Set<Node> getNodes()
+  {
+    return nodes;
+  }
 
+  public void setNodes(Set<Node> nodes)
+  {
+    this.nodes = nodes;
+  }
+
+  public Set<Relationship> getRelationships()
+  {
+    return relationships;
+  }
+
+  public void setRelationships(Set<Relationship> relationships)
+  {
+    this.relationships = relationships;
+  }
 }

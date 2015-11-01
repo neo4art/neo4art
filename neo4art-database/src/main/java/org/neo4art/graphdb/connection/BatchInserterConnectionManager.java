@@ -27,6 +27,7 @@ import org.neo4art.graphdb.Relationship;
 import org.neo4art.graphdb.transaction.DummyTransaction;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.schema.IndexDefinition;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
 import org.neo4j.unsafe.batchinsert.BatchInserters;
@@ -134,5 +135,14 @@ class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
   public GraphDatabaseTransaction getTransactionManager() {
     
     return new DummyTransaction();
+  }
+
+  /* (non-Javadoc)
+   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#executeCypherQuery(java.lang.String, java.util.Map)
+   */
+  @Override
+  public Result executeCypherQuery(String query, Map<String, Object> parameters) {
+    
+    throw new RuntimeException(new IllegalAccessException("Method not allowed for this implementation."));
   }
 }

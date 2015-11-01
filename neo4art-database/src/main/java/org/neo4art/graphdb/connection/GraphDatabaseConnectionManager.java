@@ -16,10 +16,13 @@
 
 package org.neo4art.graphdb.connection;
 
+import java.util.Map;
+
 import org.neo4art.graphdb.Node;
 import org.neo4art.graphdb.Relationship;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.schema.IndexDefinition;
 
 
@@ -69,6 +72,14 @@ public interface GraphDatabaseConnectionManager
    */
   IndexDefinition createSchemaIndex(Label label, String propertyKey);
 
+  /**
+   * 
+   * @param query
+   * @param parameters
+   * @return
+   */
+  Result executeCypherQuery(String query, Map<String, Object> parameters);
+  
   /**
    * 
    * @return

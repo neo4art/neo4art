@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package org.neo4art.api.configuration;
+package org.neo4art.api.search.repository;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.neo4art.api.search.bean.WikipediaSearchResult;
 
 /**
  * @author Lorenzo Speranzoni
- * @since 29 Mar 2015
+ * @since 31 Oct 2015
  */
-@SpringBootApplication
-@EnableAutoConfiguration
-@ComponentScan({ "org.neo4art.api" })
-public class SpringBootConfiguration {
+public interface WikipediaSearchRepository {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootConfiguration.class, args);
-    }
+  /**
+   * @param wikipediaPageTitle
+   * @param autoComplete
+   * @return
+   */
+  WikipediaSearchResult findDepthOneConnectionsByPageTitle(String wikipediaPageTitle, boolean autoComplete);
 
+  /**
+   * @param nodeId
+   * @param autoComplete
+   * @return
+   */
+  WikipediaSearchResult findDepthOneConnectionsByNodeId(long nodeId, boolean autoComplete);
 }

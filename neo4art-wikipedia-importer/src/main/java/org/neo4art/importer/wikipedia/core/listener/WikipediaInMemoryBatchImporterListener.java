@@ -49,7 +49,7 @@ public class WikipediaInMemoryBatchImporterListener extends WikipediaAbstractImp
     long graphElementsCreated = 0;
     long flushStartDate = Calendar.getInstance().getTimeInMillis();
     
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.GRAPH_DATABASE_SERVICE);
+    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE);
 
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
       
