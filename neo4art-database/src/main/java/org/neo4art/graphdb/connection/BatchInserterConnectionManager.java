@@ -70,6 +70,7 @@ class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
     if (batchInserter == null) {
       try {
         batchInserter = BatchInserters.inserter(storeDir, config);
+        logger.info("Batch inserter instance created. Neo4j store directory = " + storeDir);
       }
       catch (Exception e) {
         logger.error("Error creating batch inserter in store dir " + storeDir);

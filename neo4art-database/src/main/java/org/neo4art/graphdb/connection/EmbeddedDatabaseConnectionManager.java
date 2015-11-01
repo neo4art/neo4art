@@ -20,6 +20,8 @@ import java.io.File;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.Node;
 import org.neo4art.graphdb.Relationship;
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
@@ -35,28 +37,40 @@ import org.neo4j.graphdb.schema.IndexDefinition;
  * @since 19 Oct 2015
  */
 class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManager {
-  
+
+  private static Log                  logger = LogFactory.getLog(EmbeddedDatabaseConnectionManager.class);
+
   private static GraphDatabaseService graphDatabaseService;
-  
+
   protected EmbeddedDatabaseConnectionManager() {
+
+    newGraphDatabaseServiceInstance(new File(NEO4J_STORE_DIR));
+  }
+
+  protected EmbeddedDatabaseConnectionManager(File storeDir) {
     
-    newGraphDatabaseServiceInstance();
+    newGraphDatabaseServiceInstance(storeDir);
   }
   
-  private void newGraphDatabaseServiceInstance() {
-    
+  private void newGraphDatabaseServiceInstance(File storeDir) {
+
     if (graphDatabaseService == null) {
-      
-      graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(new File(NEO4J_STORE_DIR));
+      try {
+        graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(storeDir);
+        logger.info("Embedded instance created. Neo4j store directory = " + storeDir);
+      }
+      catch (Exception e) {
+        logger.error("Error creating embedded instance in store dir " + storeDir);
+      }
     }
   }
-  
+
   /**
    * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getStoreDir()
    */
   @Override
   public String getStoreDir() {
-    
+
     return NEO4J_STORE_DIR;
   }
 
@@ -65,7 +79,7 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
    */
   @Override
   public void close() {
-    
+
     graphDatabaseService.shutdown();
   }
 
@@ -74,13 +88,13 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
    */
   @Override
   public long createNode(Node node) {
-    
+
     org.neo4j.graphdb.Node neo4jNode = graphDatabaseService.createNode(node.getLabels());
-    
+
     for (String key : node.getProperties().keySet()) {
       neo4jNode.setProperty(key, node.getProperties().get(key));
     }
-    
+
     return neo4jNode.getId();
   }
 
@@ -89,7 +103,7 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
    */
   @Override
   public long createRelationship(Relationship relationship) {
-    
+
     return 0;
   }
 
@@ -98,31 +112,31 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
    */
   @Override
   public IndexDefinition createSchemaIndex(Label label, String propertyKey) {
-    
+
     IndexDefinition indexDefinition;
-    
+
     try (GraphDatabaseTransaction tx = getTransactionManager()) {
-      
+
       indexDefinition = graphDatabaseService.schema().indexFor(label).on(propertyKey).create();
-      
+
       tx.success();
     }
-    
+
     return indexDefinition;
   }
-  
+
   /**
    * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#executeCypherQuery(java.lang.String, java.util.Map)
    */
   @Override
   public Result executeCypherQuery(String query, Map<String, Object> parameters) {
-    
+
     if (MapUtils.isEmpty(parameters)) {
-      
+
       return graphDatabaseService.execute(query);
     }
     else {
-      
+
       return graphDatabaseService.execute(query, parameters);
     }
   }
