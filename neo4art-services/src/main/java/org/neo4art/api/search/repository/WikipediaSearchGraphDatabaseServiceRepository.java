@@ -39,6 +39,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.kernel.api.exceptions.PropertyNotFoundException;
 
 /**
  * @author Lorenzo Speranzoni
@@ -162,24 +163,10 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     result.setId(node.getId());
     result.setName((String) node.getProperty("title"));
 
-    String thumbnail = null;
-
-    if ("Vincent van Gogh".equals(result.getName())) {
-      System.out.println(node.getProperty("url"));
-      System.out.println(node.getProperty("url") == null);
-      System.out.println(node.getProperty("image"));
-      System.out.println(node.getProperty("image") == null);
-    }
+    String thumbnail = getThumbnail(node, "url");
     
-    try {
-      thumbnail = (String) node.getProperty("url");
-      thumbnail = (thumbnail != null) ? thumbnail : (String) node.getProperty("image");
-      thumbnail = thumbnail.replace("https://en.wikipedia.org/wiki/File:", "");
-      thumbnail = toWikipediaImageURL(thumbnail);
-    }
-    catch (Exception e) {
-      thumbnail = null;
-    }
+    if (thumbnail == null)
+      thumbnail = getThumbnail(node, "image");
 
     result.setLink("https://en.wikipedia.org/wiki/" + result.getName());
     result.setThumbnail(thumbnail);
@@ -187,21 +174,6 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     result.setGroup(1);
 
     return result;
-  }
-
-  private String getNodeType(Node node) {
-
-    String type = "Wikipedia";
-
-    Iterable<Label> labels = node.getLabels();
-
-    for (Label label : labels) {
-      if (!WikipediaLabel.Wikipedia.equals(label)) {
-        type = label.name();
-      }
-    }
-
-    return type;
   }
 
   /**
@@ -219,6 +191,27 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     result.setLinkName(relationship.getType().name());
 
     return result;
+  }
+
+  /**
+   * @param result
+   */
+  private void autoComplete(WikipediaSearchResult result) {
+  }
+
+  private String getNodeType(Node node) {
+  
+    String type = "Wikipedia";
+  
+    Iterable<Label> labels = node.getLabels();
+  
+    for (Label label : labels) {
+      if (!WikipediaLabel.Wikipedia.equals(label)) {
+        type = label.name();
+      }
+    }
+  
+    return type;
   }
 
   /**
@@ -250,11 +243,27 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
   }
 
   /**
-   * @param result
+   * @param node 
+   * @param property
+   * @return
    */
-  private void autoComplete(WikipediaSearchResult result) {
-  }
+  private String getThumbnail(Node node, String property) {
+    
+    String thumbnail = null;
+    
+    try {
+      
+      thumbnail = (String) node.getProperty(property);
+      thumbnail = thumbnail.replace("https://en.wikipedia.org/wiki/File:", "");
+      thumbnail = toWikipediaImageURL(thumbnail);
+    }
+    catch (Exception e) {
+      thumbnail = null;
+    }
   
+    return thumbnail;
+  }
+
   /**
    * 
    * @param imageName
