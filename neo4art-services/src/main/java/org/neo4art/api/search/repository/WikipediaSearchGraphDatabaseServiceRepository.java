@@ -16,6 +16,10 @@
 
 package org.neo4art.api.search.repository;
 
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,6 +167,8 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     try {
       thumbnail = (String) node.getProperty("url");
       thumbnail = (thumbnail != null) ? thumbnail : (String) node.getProperty("image");
+      thumbnail = thumbnail.replace("https://en.wikipedia.org/wiki/File:", "");
+      thumbnail = toWikipediaImageURL(thumbnail);
     }
     catch (Exception e) {
     }
@@ -239,5 +245,37 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
    * @param result
    */
   private void autoComplete(WikipediaSearchResult result) {
+  }
+  
+  /**
+   * 
+   * @param imageName
+   * @return
+   * @throws Exception
+   */
+  private String toWikipediaImageURL(String imageName) throws Exception {
+    
+    String encodedAsMD5 = encodeAsMD5(imageName);
+    String encodeAsURL = URLEncoder.encode(imageName, "UTF-8");
+    
+    return "http://upload.wikimedia.org/wikipedia/commons/" + encodedAsMD5.charAt(0) + "/" + encodedAsMD5.charAt(0) + encodedAsMD5.charAt(1) + "/" + encodeAsURL;
+  }
+
+  /**
+   * 
+   * @param imageName
+   * @return
+   * @throws NoSuchAlgorithmException
+   */
+  private String encodeAsMD5(String imageName) throws NoSuchAlgorithmException {
+    
+    MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+    byte[] digest = messageDigest.digest(imageName.getBytes());
+    BigInteger bigInt = new BigInteger(1, digest);
+    String hashtext = bigInt.toString(16);
+    while (hashtext.length() < 32) {
+      hashtext = "0" + hashtext;
+    }
+    return hashtext;
   }
 }
