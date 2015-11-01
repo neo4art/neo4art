@@ -30,6 +30,7 @@ import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.Grap
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaRelationship;
+import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
@@ -133,7 +134,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
       }
 
       remapRelationships(nodeIds, result);
-      
+
       if (autoComplete) {
 
         autoComplete(result);
@@ -166,11 +167,27 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     catch (Exception e) {
     }
 
+    result.setLink("https://en.wikipedia.org/wiki/" + result.getName());
     result.setThumbnail(thumbnail);
-    result.setType(node.getLabels().iterator().next().name());
+    result.setType(getNodeType(node));
     result.setGroup(1);
 
     return result;
+  }
+
+  private String getNodeType(Node node) {
+
+    String type = "Wikipedia";
+
+    Iterable<Label> labels = node.getLabels();
+
+    for (Label label : labels) {
+      if (!WikipediaLabel.Wikipedia.equals(label)) {
+        type = label.name();
+      }
+    }
+
+    return type;
   }
 
   /**
@@ -189,35 +206,35 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
     return result;
   }
-  
+
   /**
    * 
    * @param nodeIds
    * @param result
    */
   private void remapRelationships(Map<Long, Integer> nodeIds, WikipediaSearchResult result) {
-    
+
     List<WikipediaSearchResultRelationship> relationships = result.getRelationships();
-    
+
     for (int i = 0; i < relationships.size(); i++) {
-      
+
       WikipediaSearchResultRelationship relationship = relationships.get(i);
-      
+
       Integer source = nodeIds.get(relationship.getSource());
       Integer target = nodeIds.get(relationship.getTarget());
 
       if (source != null && target != null) {
-        
+
         relationship.setSource(source);
         relationship.setTarget(target);
       }
       else {
-        
+
         relationships.remove(i);
       }
     }
   }
-  
+
   /**
    * @param result
    */
