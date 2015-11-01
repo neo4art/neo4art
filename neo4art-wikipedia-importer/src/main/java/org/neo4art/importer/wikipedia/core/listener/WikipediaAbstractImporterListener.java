@@ -119,7 +119,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     
     long flushEndDate = Calendar.getInstance().getTimeInMillis();
     this.graphCount.addAndGet(graphElementsCreated);
-    logger.debug(graphElementsCreated + " new graph database elements created for " + this.wikipediaElementBuffer.size() + " wikipedia elements in " + (flushEndDate - flushStartDate) + " ms.");
+    logger.debug(NumberFormat.getInstance(Locale.ITALY).format(graphElementsCreated) + " new graph database elements created for " + NumberFormat.getInstance(Locale.ITALY).format(this.wikipediaElementBuffer.size()) + " wikipedia elements in " + (flushEndDate - flushStartDate) + " ms.");
     this.wikipediaElementBuffer.clear();
   }
 
