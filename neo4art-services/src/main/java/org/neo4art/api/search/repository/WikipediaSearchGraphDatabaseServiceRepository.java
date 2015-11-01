@@ -180,6 +180,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
     WikipediaSearchResultRelationship result = new WikipediaSearchResultRelationship();
 
+    result.setId(relationship.getId());
     result.setSource(relationship.getStartNode().getId());
     result.setTarget(relationship.getEndNode().getId());
     result.setLinkName(relationship.getType().name());
