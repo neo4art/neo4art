@@ -258,7 +258,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     String encodedAsMD5 = encodeAsMD5(imageName);
     String encodeAsURL = URLEncoder.encode(imageName, "UTF-8");
     
-    return "http://upload.wikimedia.org/wikipedia/commons/" + encodedAsMD5.charAt(0) + "/" + encodedAsMD5.charAt(0) + encodedAsMD5.charAt(1) + "/" + encodeAsURL;
+    return "http://upload.wikimedia.org/wikipedia/commons/thumb/" + encodedAsMD5.charAt(0) + "/" + encodedAsMD5.charAt(0) + encodedAsMD5.charAt(1) + "/" + encodeAsURL + "/40px-" + encodeAsURL;
   }
 
   /**
