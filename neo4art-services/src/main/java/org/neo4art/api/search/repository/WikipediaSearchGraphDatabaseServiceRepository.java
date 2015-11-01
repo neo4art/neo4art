@@ -164,6 +164,13 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
     String thumbnail = null;
 
+    if ("Vincent van Gogh".equals(result.getName())) {
+      System.out.println(node.getProperty("url"));
+      System.out.println(node.getProperty("url") == null);
+      System.out.println(node.getProperty("image"));
+      System.out.println(node.getProperty("image") == null);
+    }
+    
     try {
       thumbnail = (String) node.getProperty("url");
       thumbnail = (thumbnail != null) ? thumbnail : (String) node.getProperty("image");
@@ -171,6 +178,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
       thumbnail = toWikipediaImageURL(thumbnail);
     }
     catch (Exception e) {
+      thumbnail = null;
     }
 
     result.setLink("https://en.wikipedia.org/wiki/" + result.getName());
