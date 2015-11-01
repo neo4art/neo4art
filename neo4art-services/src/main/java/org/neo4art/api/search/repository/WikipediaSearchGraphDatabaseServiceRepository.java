@@ -79,9 +79,9 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE);
 
-    Map<Long, Long> nodeIds = new HashMap<Long, Long>();
-    Map<Long, Long> relationshipIds = new HashMap<Long, Long>();
-    
+    Map<Long, Integer> nodeIds = new HashMap<Long, Integer>();
+    Map<Long, Integer> relationshipIds = new HashMap<Long, Integer>();
+
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
 
       Result queryResult = graphDatabaseConnectionManager.executeCypherQuery(query, parameters);
@@ -94,16 +94,15 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
         for (Entry<String, Object> column : row.entrySet()) {
 
-          
           if ("n".equals(column.getKey())) {
 
             if (first) {
-              
+
               WikipediaSearchResultNode node = createNode((Node) column.getValue());
-              
+
               if (nodeIds.get(node.getId()) == null) {
-                
-                nodeIds.put(node.getId(), node.getId());
+
+                nodeIds.put(node.getId(), nodeIds.size());
                 result.addNode(node);
                 first = false;
               }
@@ -112,28 +111,28 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
           else if ("m".equals(column.getKey())) {
 
             WikipediaSearchResultNode node = createNode((Node) column.getValue());
-            
+
             if (nodeIds.get(node.getId()) == null) {
-              
-              nodeIds.put(node.getId(),node.getId());
+
+              nodeIds.put(node.getId(), nodeIds.size());
               result.addNode(node);
             }
           }
           else if ("r".equals(column.getKey())) {
 
-            WikipediaSearchResultRelationship relationship = createRelationship((Relationship) column.getValue());
-            
-            if (relationshipIds.get(relationship.getId()) == null) {
+            WikipediaSearchResultRelationship relationship = createRelationship(nodeIds, (Relationship) column.getValue());
 
-              relationshipIds.put(relationship.getId(), relationship.getId());
+            if (relationship != null && relationshipIds.get(relationship.getId()) == null) {
+
+              relationshipIds.put(relationship.getId(), relationshipIds.size());
               result.addRelationship(relationship);
             }
           }
         }
       }
-      
+
       if (autoComplete) {
-        
+
         autoComplete(result);
       }
 
@@ -149,41 +148,50 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
    * @return
    */
   private WikipediaSearchResultNode createNode(Node node) {
-  
+
     WikipediaSearchResultNode result = new WikipediaSearchResultNode();
-  
+
     result.setId(node.getId());
     result.setName((String) node.getProperty("title"));
-  
+
     String thumbnail = null;
-  
+
     try {
       thumbnail = (String) node.getProperty("url");
       thumbnail = (thumbnail != null) ? thumbnail : (String) node.getProperty("image");
     }
     catch (Exception e) {
     }
-  
+
     result.setThumbnail(thumbnail);
     result.setType(node.getLabels().iterator().next().name());
     result.setGroup(1);
-  
+
     return result;
   }
 
   /**
    * 
+   * @param nodeIds
    * @param relationship
    * @return
    */
-  private WikipediaSearchResultRelationship createRelationship(Relationship relationship) {
+  private WikipediaSearchResultRelationship createRelationship(Map<Long, Integer> nodeIds, Relationship relationship) {
 
-    WikipediaSearchResultRelationship result = new WikipediaSearchResultRelationship();
+    Integer source = nodeIds.get(relationship.getStartNode().getId());
+    Integer target = nodeIds.get(relationship.getEndNode().getId());
 
-    result.setId(relationship.getId());
-    result.setSource(relationship.getStartNode().getId());
-    result.setTarget(relationship.getEndNode().getId());
-    result.setLinkName(relationship.getType().name());
+    WikipediaSearchResultRelationship result = null;
+
+    if (source != null && target != null) {
+
+      result = new WikipediaSearchResultRelationship();
+
+      result.setId(relationship.getId());
+      result.setSource(source);
+      result.setTarget(target);
+      result.setLinkName(relationship.getType().name());
+    }
 
     return result;
   }
