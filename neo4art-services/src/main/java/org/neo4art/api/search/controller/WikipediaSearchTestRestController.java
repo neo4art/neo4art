@@ -17,6 +17,7 @@ package org.neo4art.api.search.controller;
 
 import org.neo4art.api.search.bean.WikipediaSearchResult;
 import org.neo4art.api.search.bean.WikipediaSearchResultNode;
+import org.neo4art.api.search.bean.WikipediaSearchResultRelationship;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,30 +36,41 @@ public class WikipediaSearchTestRestController {
   @RequestMapping(value = "/{title}", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody WikipediaSearchResult searchOnWikipediaByTitle(@PathVariable(value = "title") String title) {
 
-    WikipediaSearchResultNode node = new WikipediaSearchResultNode();
-    node.setId(20814);
-    node.setName("Vincent van Gogh");
-    node.setType("Wikipedia");
-    node.setGroup(1);
-    
-    WikipediaSearchResult wikipediaSearchResult = new WikipediaSearchResult();
-    wikipediaSearchResult.addNode(node);
-    
-    return wikipediaSearchResult;
+    return createWikipediaSearchResultMock();
   }
-  
+
   @RequestMapping(value = "/{title}/expand/{nodeId}", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody WikipediaSearchResult expandWikipediaNode(@PathVariable(value = "title") String title, @PathVariable(value = "nodeId") int nodeId) {
 
+    return createWikipediaSearchResultMock();
+  }
+  
+  private WikipediaSearchResult createWikipediaSearchResultMock() {
+    
     WikipediaSearchResultNode node = new WikipediaSearchResultNode();
     node.setId(20814);
     node.setName("Vincent van Gogh");
     node.setType("Wikipedia");
     node.setGroup(1);
     
+    WikipediaSearchResultNode node2 = new WikipediaSearchResultNode();
+    node2.setId(41980);
+    node2.setName("Paul Gauguin");
+    node2.setType("Wikipedia");
+    node2.setGroup(1);
+    
+    WikipediaSearchResultRelationship relationship = new WikipediaSearchResultRelationship();
+    relationship.setId(0);
+    relationship.setSource(20814);
+    relationship.setTarget(41980);
+    relationship.setLinkName("REFERS");
+    relationship.setValue(1);
+    
     WikipediaSearchResult wikipediaSearchResult = new WikipediaSearchResult();
     wikipediaSearchResult.addNode(node);
+    wikipediaSearchResult.addNode(node2);
+    wikipediaSearchResult.addRelationship(relationship);
     
     return wikipediaSearchResult;
-  }
+  }  
 }

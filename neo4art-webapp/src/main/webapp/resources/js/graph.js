@@ -164,7 +164,7 @@ function theGraph() {
 		
 		$.ajax({
 			method : 'get',
-			url : encodeURI("http://5.9.211.195/neo4art-services/api/search/wikipedia/" + p.query.toString()),
+			url : encodeURI("http://5.9.211.195/neo4art-services/api/search/test/wikipedia/" + p.query.toString()),
 			dataType : 'json',
 			success : function(graph) {
 				console.log("GRAPH");
