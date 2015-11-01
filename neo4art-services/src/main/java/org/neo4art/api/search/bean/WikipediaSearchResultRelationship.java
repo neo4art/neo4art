@@ -22,6 +22,8 @@ package org.neo4art.api.search.bean;
  */
 public class WikipediaSearchResultRelationship {
 
+  private long   id;
+
   private long   source;
   private long   target;
   private int    value;
@@ -31,11 +33,12 @@ public class WikipediaSearchResultRelationship {
     this.value = 1;
   }
 
-  public WikipediaSearchResultRelationship(long source, long target, int value, String name) {
-    this.source = source;
-    this.target = target;
-    this.value = value;
-    this.linkName = name;
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 
   public long getSource() {

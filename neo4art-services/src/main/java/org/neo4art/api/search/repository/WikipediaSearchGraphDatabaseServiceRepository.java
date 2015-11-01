@@ -16,6 +16,7 @@
 
 package org.neo4art.api.search.repository;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -45,7 +46,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
   @Override
   public WikipediaSearchResult findDepthOneConnectionsByPageTitle(String wikipediaPageTitle, boolean autoComplete) {
 
-    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE n.title = {title} AND n <> m WITH n, r, distinct(m) as m RETURN n, r, m";
+    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE n.title = {title} RETURN n, r, m";
 
     Map<String, Object> parameters = MapUtil.map("title", wikipediaPageTitle);
 
@@ -58,7 +59,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
   @Override
   public WikipediaSearchResult findDepthOneConnectionsByNodeId(long nodeId, boolean autoComplete) {
 
-    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE id(n) = {nodeId} AND n <> m WITH n, r, distinct(m) as m RETURN n, r, m";
+    String cql = "MATCH (n:" + WikipediaLabel.Wikipedia + ")-[r:" + WikipediaRelationship.REFERS + "]-(m:" + WikipediaLabel.Wikipedia + ") WHERE id(n) = {nodeId} RETURN n, r, m";
 
     Map<String, Object> parameters = MapUtil.map("nodeId", nodeId);
 
@@ -78,6 +79,9 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE);
 
+    Map<Long, Long> nodeIds = new HashMap<Long, Long>();
+    Map<Long, Long> relationshipIds = new HashMap<Long, Long>();
+    
     try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
 
       Result queryResult = graphDatabaseConnectionManager.executeCypherQuery(query, parameters);
@@ -90,21 +94,40 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
 
         for (Entry<String, Object> column : row.entrySet()) {
 
+          
           if ("n".equals(column.getKey())) {
 
             if (first) {
-
-              result.addNode(createNode((Node) column.getValue()));
-              first = false;
+              
+              WikipediaSearchResultNode node = createNode((Node) column.getValue());
+              
+              if (nodeIds.get(node.getId()) == null) {
+                
+                nodeIds.put(node.getId(), node.getId());
+                result.addNode(node);
+                first = false;
+              }
             }
           }
           else if ("m".equals(column.getKey())) {
 
-            result.addNode(createNode((Node) column.getValue()));
+            WikipediaSearchResultNode node = createNode((Node) column.getValue());
+            
+            if (nodeIds.get(node.getId()) == null) {
+              
+              nodeIds.put(node.getId(),node.getId());
+              result.addNode(node);
+            }
           }
           else if ("r".equals(column.getKey())) {
 
-            result.addRelationship(createRelationship((Relationship) column.getValue()));
+            WikipediaSearchResultRelationship relationship = createRelationship((Relationship) column.getValue());
+            
+            if (relationshipIds.get(relationship.getId()) == null) {
+
+              relationshipIds.put(relationship.getId(), relationship.getId());
+              result.addRelationship(relationship);
+            }
           }
         }
       }
