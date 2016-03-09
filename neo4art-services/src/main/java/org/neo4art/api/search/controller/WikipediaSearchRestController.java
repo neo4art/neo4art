@@ -15,6 +15,7 @@
  */
 package org.neo4art.api.search.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.neo4art.api.search.bean.WikipediaSearchResult;
 import org.neo4art.api.search.repository.WikipediaSearchGraphDatabaseServiceRepository;
 import org.neo4art.api.search.repository.WikipediaSearchRepository;
@@ -36,6 +37,8 @@ public class WikipediaSearchRestController {
   @RequestMapping(value = "/{title}", method = RequestMethod.GET, produces = "application/json")
   public @ResponseBody WikipediaSearchResult searchOnWikipediaByTitle(@PathVariable(value = "title") String title) {
 
+    title = StringUtils.replace(title, "+", " ");
+    
     WikipediaSearchRepository wikipediaSearchRepository = new WikipediaSearchGraphDatabaseServiceRepository();
     
     return wikipediaSearchRepository.findDepthOneConnectionsByPageTitle(title, true);
