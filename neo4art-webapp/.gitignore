@@ -1,7 +1,5 @@
-.project
-.classpath
-.idea
-.iml
-bin/
-/target/
-.settings/
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components

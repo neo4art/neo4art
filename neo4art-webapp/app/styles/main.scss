@@ -9,18 +9,49 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     padding: 0.2em 0;
 }
 
-body {
-    padding: 0;
+html {
+    height: 100%;
+    width: 100%;
+    body {
+        font-family: 'Raleway', sans-serif;
+        font-weight: normal;
+        padding: 0;
+        margin: 0;
+    }
 }
 
-
-/* Everything but the jumbotron gets side spacing for mobile first views */
+.container-page {
+    width: 100%;
+    margin: auto;
+    /*
+    width: 1080px;
+    margin: auto;
+    box-shadow: 1px 4px 16px rgba(0, 0, 0, 0.3);*/
+    .container-view {}
+}
 
 .header,
-.marketing,
 .footer {
-    padding-left: 15px;
-    padding-right: 15px;
+    width: 1080px;
+    margin: auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 7px #d7d7d7;
+    text-align: center;
+    color: #333;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.header {
+    margin-top: 10px;
+    border-bottom: none;
+}
+
+.footer {
+    margin-bottom: 10px;
+    border-top: none;
 }
 
 
@@ -53,32 +84,12 @@ body {
 
 /* ########################################################## */
 
-.header,
-.footer {
-    width: 100%;
-    margin: auto;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 7px #d7d7d7;
-    text-align: center;
-    color: #333;
-    position: relative;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-
-.header {
-    margin-top: 10px;
-    border-bottom: none;
-}
-
-.footer {
-    margin-bottom: 10px;
-    border-top: none;
-}
-
 .menu {
     border-bottom: none;
+}
+
+.container-page.scrollbar-macosx {
+    max-height: none;
 }
 
 .text-home {
@@ -141,19 +152,6 @@ body {
         width: 100%;
         max-width: 900px;
     }
-}
-
-html,
-body {
-    height: 100%;
-    width: 100%;
-}
-
-body {
-    font-family: 'Raleway', sans-serif;
-    font-weight: normal;
-    padding: 0;
-    margin: 0;
 }
 
 .clearfix:after {
@@ -255,16 +253,6 @@ body {
     padding-left: 5px;
     padding-right: 5px;
     border: 1px solid #b6b6b6;
-}
-
-.container-page {
-    width: 1080px;
-    margin: auto;
-    box-shadow: 1px 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-.container-page.scrollbar-macosx {
-    max-height: none;
 }
 
 input[type="search"]::-webkit-search-cancel-button {
