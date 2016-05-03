@@ -15,4 +15,7 @@ angular
     'ngResource',
     'ngRoute',
     'ngMaterial'
-  ]);
+  ])
+    .config(function ($mdIconProvider) {
+        $mdIconProvider.defaultIconSet('images/mdi.svg')
+    });

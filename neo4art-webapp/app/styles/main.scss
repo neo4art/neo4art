@@ -162,10 +162,27 @@ html {
     height: 630px;
 }
 
+md-fab-trigger {
+    .md-button.blue.md-fab {
+        &:not([disabled]) {
+            &.md-focused,
+            &:hover {
+                background-color: $blue;
+            }
+        }
+        background-color: $dark-blue;
+    }
+}
+
+md-fab-actions {
+    .md-button.md-raised:not([disabled]) md-icon {
+        color: $dark-blue;
+    }
+}
+
 .main-svg {
     height: 100%;
     width: 100%;
-    border: 1px solid black;
 }
 
 
