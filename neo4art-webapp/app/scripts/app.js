@@ -13,5 +13,6 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ngMaterial'
   ]);

@@ -10,7 +10,7 @@
         <h2>Preface</h2>
         <div class="img-float-right">
             <figure>
-                <img src="resources/img/sulle-tracce-di-van-gogh.png" class="border-three-color" />
+                <img src="../images/sulle-tracce-di-van-gogh.png" class="border-three-color" />
                 <figcaption>The present</figcaption>
             </figure>
         </div>
@@ -25,14 +25,14 @@
         <p>So how would I go about putting Van Gogh’s journey into Neo4j?</p>
         <h2>Introduction</h2>
         <p>First, I started with collecting the data: The Vincent Van Gogh Gallery has a complete list of his paintings. So i saved more specific informations, such as cities where he lived, with province, region, latitude and longitude; and so every art movement he adhered like &quot;Post-Impressionism&quot; (more correctly, he was one of its founder). With just with this little amount of data we can see firsts connections were borning.</p>
-        <div class="block-image border-three-color"><img src="resources/img/first-connections.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/first-connections.png" /></div>
         <h2>Journey's stages</h2>
         <p>
             On December 1883, Van Gogh began his journey by moving to Neuen, North Brabant, Netherlands. He lived there until November 1885.
             <br />In december 1885, Van Gogh moved to Antwerp, Belgium, where he lived until February 1886. The artist lived in Paris, France from March 1886 to February 1888. Van Gogh moved to Arles, France in February 1888 and stayed there until May 1889. Then he moved to Saint-R&eacute;my de Provence, France in May 1889 and stayed there until May 1890. Vincent Van Gogh ended his trip, and also his life by committing suicide, in Auvers-sur-Oise, France where he had lived from May to July 1890.
         </p>
         <p>Inserted those informations, we are able to to visualize Van Gogh’s journey:</p>
-        <div class="block-image border-three-color"><img src="resources/img/van-gogh-journey.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/van-gogh-journey.png" /></div>
         <h2>Influencers</h2>
         <p>
             Describing his journey, there’s another fundamental aspect about Van Gogh’s artwork: his influencers. <em>&quot;During his 2nd
@@ -53,22 +53,22 @@
         </p>
         <p>In Arles, Van Gogh was introduced to Eug&egrave;ne Boch, a Belgian painter who stayed at times in Fontvieille, and the two exchanged visits for some times. So we start inserting data of every artist who has a related connection between Van Gogh.</p>
         <p>And now we are able to graphically see who and where influenced Van Gogh’s artwork:</p>
-        <div class="block-image border-three-color"><img src="resources/img/artwork-influence.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/artwork-influence.png" /></div>
         <h2>Artwork</h2>
         <p>Van Gogh’s artwork is about painting, so we specified that and relate our artist with this kind of art. From the studies we extract all of his works, for example: In Neuen, Van Gogh &quot;completed what is generally considered his first major work, The Potato Eaters, the culmination of several years work painting peasant character studies&quot;. During his stage in Antwerp, among others, he depicted Backyards of Old Houses in Antwerp in the Snow. &quot;During his stay in Paris, he collected more Japanese ukiyo-e woodblock prints; he became interested in such works, when in 1885 in Antwerp he used them to decorate the walls of his studio. He collected hundreds of prints, which are visible in the backgrounds of several of his paintings. In his 1887 Portrait of P&egrave;re Tanguy several can be seen hanging on the wall behind the main figure&quot;. In Arles, &quot;his project at this time was a series of paintings including Van Gogh’s Chair (1888), Bedroom in Arles (1888), The Night Caf&eacute; (1888), Cafe Terrace at Night (September 1888), Starry Night Over the Rhone (1888), Still Life: Vase with Twelve Sunflowers (1888), all intended to form the d&eacute;coration for the Yellow House&quot;</p>
         <p>In Saint-R&eacute;my de Provence, Van Gogh painted Starry Night, in Auvers-sur-Oise he painted Wheat Field with Crows.</p>
         <p>Again, inserting this data in the system, we visualize when and where Van Gogh painted his artworks:</p>
-        <div class="block-image border-three-color"><img src="resources/img/location-period-artworks.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/location-period-artworks.png" /></div>
         <h2>Artwork</h2>
         <p>Ok, I believe it’s time to get up from my chair to start admiring his paintings around the world. Let's insert museums data (<strong>neo4<span class="palette-dark-blue">A</span><span
                     class="palette-blue">r</span><span class="palette-orange">t</span></strong> system could be able to track artworks’ movement from official location: I really suffer when my family and me plan to visit a museum to admire an artwork and we discover it’s on loan ).
         </p>
         <p>Now I’m able to ask the system which Van Gogh’s artworks are in dutch museums:</p>
-        <div class="block-image border-three-color"><img src="resources/img/artworks-in-dutch-museums.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/artworks-in-dutch-museums.png" /></div>
         <h2>Add some social</h2>
         <p>Of course in an age of social networking, we couldn’t finish this spike without some forms of &quot;I LIKE&quot;, posting some photos and inquiry for LIKES and POSTS from Italian people.</p>
         <p>The result:</p>
-        <div class="block-image border-three-color"><img src="resources/img/graph-and-social.png" /></div>
+        <div class="block-image border-three-color"><img src="../images/graph-and-social.png" /></div>
         <p>Now imagine doing this with all the informations about art that can be found online, saving data from encyclopedias like Wikipedia and more others art portals; and visualize them in an Awesome User Interface, to let you navigate throw artists, museums, artworks, cities and a lot of other stuffs, using connections between them!</p>
         <p class="big">That will be <strong>neo4<span class="palette-dark-blue">A</span><span
                     class="palette-blue">r</span><span class="palette-orange">t</span></strong></p>
