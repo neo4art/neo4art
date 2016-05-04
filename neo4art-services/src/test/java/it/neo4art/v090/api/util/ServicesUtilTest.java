@@ -53,7 +53,7 @@ public class ServicesUtilTest
     String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("15-Sep-1883 12:00", verifyArtworkDate);
   }
-  
+
   @Test
   public void testDateFormatCompletionDateSplitSameDays()
   {
@@ -61,7 +61,7 @@ public class ServicesUtilTest
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.YEAR, 1883);
     calendar.set(Calendar.MONTH, 8);
-    calendar.set(Calendar.DAY_OF_MONTH, 15);
+    calendar.set(Calendar.DAY_OF_MONTH, 16);
     calendar.set(Calendar.HOUR, 0);
     calendar.set(Calendar.MINUTE, 0);
     calendar.set(Calendar.SECOND, 0);
@@ -73,7 +73,7 @@ public class ServicesUtilTest
 
     String verifyArtworkDate = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     Assert.assertEquals("16-Sep-1883 12:00", verifyArtworkDate);
-    
+
     Calendar calendar1 = Calendar.getInstance();
     calendar1.set(Calendar.YEAR, 1883);
     calendar1.set(Calendar.MONTH, 8);
@@ -88,7 +88,7 @@ public class ServicesUtilTest
 
     String verifyArtworkDateNextDay = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     //Assert.assertEquals("17-Sep-1883 12:00", verifyArtworkDateNextDay);
-    
+
     Calendar calendar2 = Calendar.getInstance();
     calendar2.set(Calendar.YEAR, 1883);
     calendar2.set(Calendar.MONTH, 8);
@@ -104,29 +104,29 @@ public class ServicesUtilTest
     String verifyArtworkDateNextNextDay = serviceUtil.verifyArtworkDate(artwork,timelineEvent);
     //Assert.assertEquals("17-Sep-1883 12:00", verifyArtworkDateNextNextDay);
   }
-  
+
   @Test
   public void testDateFormatDocument(){
-    
+
     ServicesUtil serviceUtil = ServicesUtil.getInstance();
     Letter letter = new Letter();
     letter.setDate("Sunday, 29 September 1872");
-    
+
     String verifyDocumentDate = serviceUtil.verifyDocumentDate(letter);
     Assert.assertEquals("29-Sep-1872 00:00", verifyDocumentDate);
   }
-  
+
 //  @Test
 //  public void testDateFormatDocumentWithCommentBeforeDay(){
-//    
+//
 //    ServicesUtil serviceUtil = ServicesUtil.getInstance();
 //    Letter letter = new Letter();
 //    letter.setDate("on or about Sunday, 18 December 1881");
-//    
+//
 //    String verifyDocumentDate = serviceUtil.verifyDocumentDate(letter);
 //    Assert.assertEquals("18-Dec-1881 00:00", verifyDocumentDate);
 //  }
-  
-  
+
+
 
 }
