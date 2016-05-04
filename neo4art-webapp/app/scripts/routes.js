@@ -2,7 +2,9 @@
 
 angular.module('neo4art').config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
-            templateUrl: 'views/main.html'
+            templateUrl: 'views/main.html',
+            controller: 'HomeCtrl',
+            controllerAs: 'ctrl'
         })
         .when('/about/', {
             templateUrl: 'views/about.html'

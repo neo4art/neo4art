@@ -14,8 +14,9 @@ angular
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngMaterial'
+    'ngMaterial',
+    'd3'
   ])
     .config(function ($mdIconProvider) {
-        $mdIconProvider.defaultIconSet('images/mdi.svg')
+        $mdIconProvider.defaultIconSet('images/mdi.svg');
     });
