@@ -133,7 +133,13 @@ public class MobileAppRestController {
 				+ "{\"title\": \"punto97\" , \"type\": \"type32\" , \"image\": \"image97\" , \"description\": \"punto97\" , \"lat\": 45.519751392349924 , \"lng\": 11.998744903231744},\n"
 				+ "{\"title\": \"punto98\" , \"type\": \"type32\" , \"image\": \"image98\" , \"description\": \"punto98\" , \"lat\": 45.54836366172513 , \"lng\": 11.998577226723853},\n"
 				+ "{\"title\": \"punto99\" , \"type\": \"type32\" , \"image\": \"image99\" , \"description\": \"punto99\" , \"lat\": 45.49859708523185 , \"lng\": 11.959472039342204},\n"
-				+ "{\"title\": \"punto100\" , \"type\": \"type33\" , \"image\": \"image100\" , \"description\": \"punto100\" , \"lat\": 45.555955962129815 , \"lng\": 12.107616125152232}\n"
+				+ "{\"title\": \"punto100\" , \"type\": \"type33\" , \"image\": \"image100\" , \"description\": \"punto100\" , \"lat\": 45.555955962129815 , \"lng\": 12.107616125152232},\n"
+				+ "{\"title\": \"punto101\" , \"type\": \"type33\" , \"image\": \"image101\" , \"description\": \"punto101\" , \"lat\": 45.522014 , \"lng\": 12.042762},\n"
+				+ "{\"title\": \"punto102\" , \"type\": \"type33\" , \"image\": \"image102\" , \"description\": \"punto102\" , \"lat\": 45.522465 , \"lng\": 12.043497},\n"
+				+ "{\"title\": \"punto103\" , \"type\": \"type34\" , \"image\": \"image103\" , \"description\": \"punto103\" , \"lat\": 45.523164 , \"lng\": 12.044119},\n"
+				+ "{\"title\": \"punto104\" , \"type\": \"type34\" , \"image\": \"image104\" , \"description\": \"punto104\" , \"lat\": 45.523863 , \"lng\": 12.044999},\n"
+				+ "{\"title\": \"punto105\" , \"type\": \"type34\" , \"image\": \"image105\" , \"description\": \"punto105\" , \"lat\": 45.524780 , \"lng\": 12.045353},\n"
+				+ "{\"title\": \"punto106\" , \"type\": \"type35\" , \"image\": \"image106\" , \"description\": \"punto106\" , \"lat\": 45.525044 , \"lng\": 12.046287}\n"
 				+ "]";
 	}
 
