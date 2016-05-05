@@ -158,8 +158,13 @@ html {
 
 /***   #####################   MAIN PAGE   #####################   ***/
 
-.container-home {
+.container-home,
+.main-svg {
     height: 630px;
+}
+
+.main-svg {
+    width: 100%;
 }
 
 md-fab-trigger {
@@ -178,11 +183,6 @@ md-fab-actions {
     .md-button.md-raised:not([disabled]) md-icon {
         color: $dark-blue;
     }
-}
-
-.main-svg {
-    height: 100%;
-    width: 100%;
 }
 
 
@@ -579,19 +579,22 @@ input[type="search"]::-webkit-search-cancel-button:after {
 /***   VERTICAL RESPONSIVE   ***/
 
 @media screen and (max-height:900px) {
-    .container-home {
+    .container-home,
+    .main-svg {
         height: 500px;
     }
 }
 
 @media screen and (max-height:768px) {
-    .container-home {
+    .container-home,
+    .main-svg {
         height: 350px;
     }
 }
 
 @media screen and (max-height:650px) {
-    .container-home {
+    .container-home,
+    .main-svg {
         height: 250px;
     }
 }

@@ -3,7 +3,7 @@
 angular.module('d3', [])
     .factory('d3Service', ['$window', '$document', '$q', '$rootScope',
     function ($window, $document, $q, $rootScope) {
-            var d = $q.defer();
+            /*var d = $q.defer();
 
             function onScriptLoad() {
                 // Load client in the browser
@@ -32,5 +32,7 @@ angular.module('d3', [])
                 d3: function () {
                     return d.promise;
                 }
-            };
+            };*/
+            return {};
+
 }]);
