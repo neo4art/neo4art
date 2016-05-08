@@ -15,9 +15,7 @@
  */
 package org.neo4art.importer.wikipedia.core.listener;
 
-import info.bliki.wiki.dump.Siteinfo;
-import info.bliki.wiki.dump.WikiArticle;
-
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,7 +32,9 @@ import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.Grap
 import org.neo4art.graphdb.transaction.GraphDatabaseTransaction;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.transformer.WikipediaElementTransformer;
-import org.xml.sax.SAXException;
+
+import info.bliki.wiki.dump.Siteinfo;
+import info.bliki.wiki.dump.WikiArticle;
 
 /**
  * Default implementation of the importer listener. It's an aggregator that processes pages in batch mode.
@@ -64,7 +64,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	}
 
 	@Override
-	public void process(WikiArticle article, Siteinfo siteinfo) throws SAXException {
+	public void process(WikiArticle article, Siteinfo siteinfo) throws IOException {
 	  
     long pages = pageCount.incrementAndGet();
     
