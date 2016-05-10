@@ -25,11 +25,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
-import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory;
-import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.GraphDatabaseConnectionType;
+import org.neo4art.importer.wikipedia.core.listener.WikipediaCVSImportBatchImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaImporterListener;
-import org.neo4art.importer.wikipedia.core.listener.WikipediaInMemoryBatchImporterListener;
 import org.xml.sax.SAXException;
 
 import info.bliki.wiki.dump.WikiXMLParser;
@@ -39,10 +36,10 @@ import info.bliki.wiki.dump.WikiXMLParser;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImporter implements WikipediaImporter {
+public class WikipediaCVSImportBatchImporter extends WikipediaAbstractBatchImporter implements WikipediaImporter {
 
-  private static Log logger = LogFactory.getLog(WikipediaInMemoryBatchImporter.class);
-
+  private static Log logger = LogFactory.getLog(WikipediaCVSImportBatchImporter.class);
+  
   @Override
   public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
   	return importDump(dumpFile, null);
@@ -56,47 +53,39 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
 
     long newNodesAndRelationships = 0;
 
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER, storeDir);
-
     logger.info("Configuration: ");
     logger.info("------------------------------------------------");
     logger.info("Batch size: NO BUFFER LIMIT");
-    logger.info("Store directory is: " + graphDatabaseConnectionManager.getStoreDir());
+    logger.info("CVS output directory is: " + dumpFile.getParentFile() + "");
     logger.info("");
 
     try {
-      logger.info("Parsing of wikipedia dump " + dumpFile.getAbsolutePath() + " started...");
+    	WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaCVSImportBatchImporterListener(dumpFile.getParentFile());
+    	wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT);
+    	
+      logger.info("wikipedia-nodes.cvs creation started!");
+      logger.info("Parsing wikipedia dump " + dumpFile.getAbsolutePath() + " ...");
       long parserStartDate = Calendar.getInstance().getTimeInMillis();
-      WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaInMemoryBatchImporterListener();
-      wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT);
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
       long parserEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Wikipedia dump parsed in " + (parserEndDate - parserStartDate) + " ms.");
-      logger.info("");
-
-      logger.info("Creation of Wikipedia nodes and relationships started...");
-      long flushOnGraphStartDate = Calendar.getInstance().getTimeInMillis();
       wikipediaNodesImporterListener.flush();
-      long flushOnGraphEndDate = Calendar.getInstance().getTimeInMillis();
-      newNodesAndRelationships = wikipediaNodesImporterListener.getGraphCount();
-      logger.info("Done! " + newNodesAndRelationships + " nodes and relationships created in " + (flushOnGraphEndDate - flushOnGraphStartDate) + " ms.");
+      logger.info("wikipedia-nodes.cvs created!");
       logger.info("");
 
-      logger.info("Creation of Wikipedia indexes started...");
-      long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
-      createIndexes(graphDatabaseConnectionManager);
-      long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate) + " ms.");
-      logger.info("");
+      logger.info("wikipedia-rels.cvs creation started!");
+      logger.info("Parsing of wikipedia dump " + dumpFile.getAbsolutePath() + " started...");
+      parserStartDate = Calendar.getInstance().getTimeInMillis();
+      parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
+      parserForNodes.parse();
+      parserEndDate = Calendar.getInstance().getTimeInMillis();
+      logger.info("Done! Wikipedia dump parsed in " + (parserEndDate - parserStartDate) + " ms.");
+      wikipediaNodesImporterListener.flush();
+      logger.info("wikipedia-rels.cvs creation created!");
+      logger.info("");      
     }
     finally {
-      logger.info("Neo4j files consolidation (before shutting down) started...");
-      long shutdownStartDate = Calendar.getInstance().getTimeInMillis();
-      graphDatabaseConnectionManager.close();
-      long shutdownEndDate = Calendar.getInstance().getTimeInMillis();
-      logger.info("Done! Shutdown completed in " + (shutdownEndDate - shutdownStartDate) + " ms.");
-      logger.info("");
     }
 
     long dumpImportEndDate = Calendar.getInstance().getTimeInMillis();
@@ -107,7 +96,7 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
 
   public static void main(String[] args) {
     if (args.length == 0) {
-      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaInMemoryBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml [/path/to/storeDir]");
+      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaCVSImportBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml [/path/to/storeDir]");
     }
 
     File wikipediaDump = new File(args[0]);
@@ -123,7 +112,7 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
     }
     
     try {
-      new WikipediaInMemoryBatchImporter().importDump(wikipediaDump, storeDir);
+      new WikipediaCVSImportBatchImporter().importDump(wikipediaDump, storeDir);
     }
     catch (Exception e) {
       throw new RuntimeException("Import failed: " + ExceptionUtils.getStackTrace(e));

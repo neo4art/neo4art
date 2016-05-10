@@ -15,9 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.transformer;
 
-import info.bliki.wiki.dump.WikiArticle;
-import info.bliki.wiki.dump.WikiPatternMatcher;
-
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
@@ -27,12 +24,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.neo4art.domain.ArtMovement;
+import org.neo4art.domain.Artist;
+import org.neo4art.domain.Artwork;
+import org.neo4art.domain.Colour;
+import org.neo4art.domain.Country;
+import org.neo4art.domain.Document;
+import org.neo4art.domain.Monument;
+import org.neo4art.domain.Museum;
+import org.neo4art.domain.ReligiousBuilding;
+import org.neo4art.domain.Settlement;
 import org.neo4art.importer.wikipedia.domain.WikipediaCategory;
+import org.neo4art.importer.wikipedia.domain.WikipediaDisambiguationPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaDomainPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaElement;
 import org.neo4art.importer.wikipedia.domain.WikipediaFile;
+import org.neo4art.importer.wikipedia.domain.WikipediaModule;
 import org.neo4art.importer.wikipedia.domain.WikipediaPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaProject;
+import org.neo4art.importer.wikipedia.domain.WikipediaRedirectPage;
 import org.neo4art.importer.wikipedia.domain.WikipediaTemplate;
 import org.neo4art.importer.wikipedia.domain.WikipediaType;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
@@ -47,6 +57,8 @@ import org.neo4art.importer.wikipedia.parser.WikipediaReligiousBuildingInfoboxPa
 import org.neo4art.importer.wikipedia.parser.WikipediaSettlementInfoboxParser;
 import org.neo4j.graphdb.Label;
 
+import info.bliki.wiki.dump.WikiArticle;
+import info.bliki.wiki.dump.WikiPatternMatcher;
 import toberefactored.parser.WikipediaDocumentInfoboxParser;
 import toberefactored.parser.WikipediaInfoboxParser;
 
@@ -57,9 +69,11 @@ import toberefactored.parser.WikipediaInfoboxParser;
  * @since 25.02.2015
  */
 public class WikipediaElementTransformer {
-
+	
   private static Log logger = LogFactory.getLog(WikipediaElementTransformer.class);
 
+  private enum ArticleParser { EXTENDED, SIMPLIFIED };
+  
   public static WikipediaElement toWikipediaElement(WikiArticle article) {
 
     WikipediaElement wikipediaElement = null;
@@ -72,7 +86,7 @@ public class WikipediaElementTransformer {
         articleTextParser = new WikiPatternMatcher(article.getText());
       }
 
-      if ((wikipediaElement = from(article, articleTextParser)) != null) {
+      if ((wikipediaElement = from(article, articleTextParser, ArticleParser.SIMPLIFIED)) != null) {
 
         wikipediaElement.setId(Long.parseLong(article.getId()));
         wikipediaElement.setTitle(article.getTitle());
@@ -116,47 +130,65 @@ public class WikipediaElementTransformer {
    * @param articleTextParser
    * @return
    */
-  private static WikipediaElement from(WikiArticle article, WikiPatternMatcher articleTextParser) {
-
+  private static WikipediaElement from(WikiArticle article, WikiPatternMatcher articleTextParser, ArticleParser articleParser) {
+  	
+  	if (articleParser == ArticleParser.SIMPLIFIED)
+  		return fromSimplified(article, articleTextParser);
+  	else
+  		return fromExtended(article, articleTextParser);
+  }
+  
+  	/**
+  	 * @param article
+  	 * @param articleTextParser
+  	 * @return
+  	 */
+  	private static WikipediaElement fromSimplified(WikiArticle article, WikiPatternMatcher articleTextParser) {
+  		
     WikipediaElement wikipediaElement = null;
 
     if (article.isMain()) {
       if (articleTextParser != null) {
-        if (articleTextParser.isDisambiguationPage() || articleTextParser.isStub()) {
-          // ----- DISAMBIGUATION AND STUB PAGES are ignored -----
-          return null;
+        if (articleTextParser.isDisambiguationPage()) {
+          return new WikipediaDisambiguationPage();
         }
-
-        if (articleTextParser.getInfoBox() != null) {
+        else if (articleTextParser.isRedirect()) {
+        	WikipediaPage redirectTo = new WikipediaPage();
+        	redirectTo.setTitle(articleTextParser.getRedirectText());
+        	WikipediaRedirectPage redirect = new WikipediaRedirectPage();
+        	redirect.setRedirect(redirectTo);
+        	return redirect;
+        }
+        else if (articleTextParser.getInfoBox() != null) {
           if (WikipediaInfoboxParser.isArtist(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaArtistInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage }, WikipediaType.ARTIST_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Artist(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage }, WikipediaType.ARTIST_PAGE);
           }
           else if (WikipediaInfoboxParser.isArtwork(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaArtworkInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtworkPage }, WikipediaType.ARTWORK_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Artwork(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtworkPage }, WikipediaType.ARTWORK_PAGE);
           }
           else if (WikipediaInfoboxParser.isArtMovement(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaArtMovementInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtMovementPage }, WikipediaType.ART_MOVEMENT_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new ArtMovement(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtMovementPage }, WikipediaType.ART_MOVEMENT_PAGE);
           }
           else if (WikipediaInfoboxParser.isMuseum(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaMuseumInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MUSEUM_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Museum(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MUSEUM_PAGE);
           }
           else if (WikipediaInfoboxParser.isMonument(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaMonumentInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MONUMENT_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Monument(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MONUMENT_PAGE);
           }
           else if (WikipediaInfoboxParser.isReligiousBuilding(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaReligiousBuildingInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaReligiousBuildingPage }, WikipediaType.RELIGIOUS_BUILDING_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new ReligiousBuilding(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaReligiousBuildingPage }, WikipediaType.RELIGIOUS_BUILDING_PAGE);
           }
           else if (WikipediaInfoboxParser.isSettlement(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaSettlementInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaSettlementPage }, WikipediaType.SETTLEMENT_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Settlement(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaSettlementPage }, WikipediaType.SETTLEMENT_PAGE);
           }
           else if (WikipediaInfoboxParser.isCountry(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaCountryInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCountryPage }, WikipediaType.COUNTRY_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Country(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCountryPage }, WikipediaType.COUNTRY_PAGE);
           }
           else if (WikipediaInfoboxParser.isDocument(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaDocumentInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaDocumentPage }, WikipediaType.DOCUMENT_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Document(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaDocumentPage }, WikipediaType.DOCUMENT_PAGE);
           }
           else if (WikipediaInfoboxParser.isColour(article.getText())) {
-            wikipediaElement = new WikipediaDomainPage(WikipediaColourInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaColourPage }, WikipediaType.COLOUR_PAGE);
+            wikipediaElement = new WikipediaDomainPage(new Colour(), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaColourPage }, WikipediaType.COLOUR_PAGE);
           }
         }
       }
@@ -173,7 +205,76 @@ public class WikipediaElementTransformer {
     else if (article.isProject()) {
       wikipediaElement = new WikipediaProject();
     }
+    else if (article.isModule()) {
+    	wikipediaElement = new WikipediaModule();
+    }
 
     return (wikipediaElement != null) ? wikipediaElement : new WikipediaPage();
   }
+
+	/**
+	 * @param article
+	 * @param articleTextParser
+	 * @return
+	 */
+	private static WikipediaElement fromExtended(WikiArticle article, WikiPatternMatcher articleTextParser) {
+	
+	  WikipediaElement wikipediaElement = null;
+	
+	  if (article.isMain()) {
+	    if (articleTextParser != null) {
+	      if (articleTextParser.isDisambiguationPage() || articleTextParser.isStub()) {
+	        // ----- DISAMBIGUATION AND STUB PAGES are ignored -----
+	        return null;
+	      }
+	
+	      if (articleTextParser.getInfoBox() != null) {
+	        if (WikipediaInfoboxParser.isArtist(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaArtistInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtistPage }, WikipediaType.ARTIST_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isArtwork(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaArtworkInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtworkPage }, WikipediaType.ARTWORK_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isArtMovement(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaArtMovementInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaArtMovementPage }, WikipediaType.ART_MOVEMENT_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isMuseum(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaMuseumInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MUSEUM_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isMonument(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaMonumentInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaMuseumPage }, WikipediaType.MONUMENT_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isReligiousBuilding(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaReligiousBuildingInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaReligiousBuildingPage }, WikipediaType.RELIGIOUS_BUILDING_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isSettlement(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaSettlementInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaSettlementPage }, WikipediaType.SETTLEMENT_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isCountry(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaCountryInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCountryPage }, WikipediaType.COUNTRY_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isDocument(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaDocumentInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaDocumentPage }, WikipediaType.DOCUMENT_PAGE);
+	        }
+	        else if (WikipediaInfoboxParser.isColour(article.getText())) {
+	          wikipediaElement = new WikipediaDomainPage(WikipediaColourInfoboxParser.parse(articleTextParser.getInfoBox().dumpRaw()), new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaColourPage }, WikipediaType.COLOUR_PAGE);
+	        }
+	      }
+	    }
+	  }
+	  else if (article.isCategory()) {
+	    wikipediaElement = new WikipediaCategory();
+	  }
+	  else if (article.isTemplate()) {
+	    wikipediaElement = new WikipediaTemplate();
+	  }
+	  else if (article.isFile()) {
+	    wikipediaElement = new WikipediaFile();
+	  }
+	  else if (article.isProject()) {
+	    wikipediaElement = new WikipediaProject();
+	  }
+	
+	  return (wikipediaElement != null) ? wikipediaElement : new WikipediaPage();
+	}
 }

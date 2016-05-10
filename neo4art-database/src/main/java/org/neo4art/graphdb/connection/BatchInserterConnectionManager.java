@@ -130,10 +130,10 @@ class BatchInserterConnectionManager implements GraphDatabaseConnectionManager {
   }
 
   /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getTransactionManager()
+   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getTransaction()
    */
   @Override
-  public GraphDatabaseTransaction getTransactionManager() {
+  public GraphDatabaseTransaction getTransaction() {
     
     return new DummyTransaction();
   }

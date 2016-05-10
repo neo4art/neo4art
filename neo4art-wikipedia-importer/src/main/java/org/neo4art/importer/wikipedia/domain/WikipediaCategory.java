@@ -16,9 +16,6 @@
 
 package org.neo4art.importer.wikipedia.domain;
 
-import info.bliki.wiki.namespaces.Namespace;
-
-import org.apache.commons.lang3.StringUtils;
 import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.neo4j.graphdb.Label;
 
@@ -30,15 +27,6 @@ public class WikipediaCategory extends WikipediaAbstractElement implements Wikip
   private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaCategory };
 
   public WikipediaCategory() {
-  }
-
-  @Override
-  public void setTitle(String title) {
-    if (!StringUtils.startsWith(title, new Namespace().CATEGORY.getCanonicalName())) {
-      title = new Namespace().CATEGORY.getCanonicalName() + ":" + title;
-    }
-
-    super.setTitle(title);
   }
 
   @Override

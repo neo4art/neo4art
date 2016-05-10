@@ -16,6 +16,7 @@
 
 package org.neo4art.graphdb.connection;
 
+import java.io.File;
 
 /**
  * @author Lorenzo Speranzoni
@@ -39,17 +40,21 @@ public class GraphDatabaseConnectionManagerFactory
   }
   
   public static GraphDatabaseConnectionManager getInstance(GraphDatabaseConnectionType graphDatabaseConnectionType) {
+  	return getInstance(graphDatabaseConnectionType, null);
+  }
+  
+  public static GraphDatabaseConnectionManager getInstance(GraphDatabaseConnectionType graphDatabaseConnectionType, File storeDir) {
 
     if (instance == null) {
       
       switch (graphDatabaseConnectionType) {
         
         case EMBEDDED_DATABASE:
-          instance = new EmbeddedDatabaseConnectionManager();
+          instance = (storeDir != null) ? new EmbeddedDatabaseConnectionManager(storeDir) : new EmbeddedDatabaseConnectionManager();
           break;
           
         case BATCH_INSERTER:
-          instance = new BatchInserterConnectionManager();
+          instance = (storeDir != null) ? new BatchInserterConnectionManager(storeDir) : new BatchInserterConnectionManager();
           break;
       }
     }

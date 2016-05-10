@@ -46,4 +46,8 @@ public enum WikipediaLabel implements Label {
   WikipediaFile,
   WikipediaProject,
   WikipediaTemplate,
+  WikipediaModule,
+  
+  WikipediaDisambiguationPage,
+  WikipediaRedirectPage
 }

@@ -51,7 +51,7 @@ public class WikipediaInMemoryBatchImporterListener extends WikipediaAbstractImp
     
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE);
 
-    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
+    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransaction()) {
       
       for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
         graphElementsCreated += persistNodes(wikipediaElement);

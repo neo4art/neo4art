@@ -39,7 +39,6 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.kernel.api.exceptions.PropertyNotFoundException;
 
 /**
  * @author Lorenzo Speranzoni
@@ -89,7 +88,7 @@ public class WikipediaSearchGraphDatabaseServiceRepository implements WikipediaS
     Map<Long, Integer> nodeIds = new HashMap<Long, Integer>();
     Map<Long, Integer> relationshipIds = new HashMap<Long, Integer>();
 
-    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
+    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransaction()) {
 
       Result queryResult = graphDatabaseConnectionManager.executeCypherQuery(query, parameters);
 

@@ -28,8 +28,8 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.GraphDatabaseConnectionType;
+import org.neo4art.importer.wikipedia.core.listener.WikipediaCVSFilesBatchImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaImporterListener;
-import org.neo4art.importer.wikipedia.core.listener.WikipediaInMemoryBatchImporterListener;
 import org.xml.sax.SAXException;
 
 import info.bliki.wiki.dump.WikiXMLParser;
@@ -39,10 +39,10 @@ import info.bliki.wiki.dump.WikiXMLParser;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImporter implements WikipediaImporter {
+public class WikipediaCVSFilesBatchImporter extends WikipediaAbstractBatchImporter implements WikipediaImporter {
 
-  private static Log logger = LogFactory.getLog(WikipediaInMemoryBatchImporter.class);
-
+  private static Log logger = LogFactory.getLog(WikipediaCVSFilesBatchImporter.class);
+  
   @Override
   public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
   	return importDump(dumpFile, null);
@@ -56,18 +56,19 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
 
     long newNodesAndRelationships = 0;
 
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER, storeDir);
+    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE, storeDir);
 
     logger.info("Configuration: ");
     logger.info("------------------------------------------------");
     logger.info("Batch size: NO BUFFER LIMIT");
     logger.info("Store directory is: " + graphDatabaseConnectionManager.getStoreDir());
+    logger.info("CVS output directory is: " + dumpFile.getParentFile() + "");
     logger.info("");
 
     try {
       logger.info("Parsing of wikipedia dump " + dumpFile.getAbsolutePath() + " started...");
       long parserStartDate = Calendar.getInstance().getTimeInMillis();
-      WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaInMemoryBatchImporterListener();
+      WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaCVSFilesBatchImporterListener(dumpFile.getParentFile());
       wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT);
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
@@ -107,7 +108,7 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
 
   public static void main(String[] args) {
     if (args.length == 0) {
-      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaInMemoryBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml [/path/to/storeDir]");
+      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaCVSFilesBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml [/path/to/storeDir]");
     }
 
     File wikipediaDump = new File(args[0]);
@@ -123,7 +124,7 @@ public class WikipediaInMemoryBatchImporter extends WikipediaAbstractBatchImport
     }
     
     try {
-      new WikipediaInMemoryBatchImporter().importDump(wikipediaDump, storeDir);
+      new WikipediaCVSFilesBatchImporter().importDump(wikipediaDump, storeDir);
     }
     catch (Exception e) {
       throw new RuntimeException("Import failed: " + ExceptionUtils.getStackTrace(e));

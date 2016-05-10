@@ -68,10 +68,8 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
 	  
     long pages = pageCount.incrementAndGet();
     
-    if (logger.isInfoEnabled()) {
-      if (pages % 500_000 == 0) {
-        logger.info(NumberFormat.getInstance(Locale.ITALY).format(pages) + " wikipedia pages parsed from dump so far...");
-      }
+    if (pages % 500_000 == 0) {
+      logger.info(NumberFormat.getInstance(Locale.ITALY).format(pages) + " wikipedia pages parsed from dump so far...");
     }
     
 	  if (StringUtils.isNotBlank(article.getTitle())) {
@@ -108,7 +106,7 @@ public abstract class WikipediaAbstractImporterListener implements WikipediaImpo
     
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.EMBEDDED_DATABASE);
 
-    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
+    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransaction()) {
       
       for (WikipediaElement wikipediaElement : this.wikipediaElementBuffer) {
         graphElementsCreated += persist(wikipediaElement);

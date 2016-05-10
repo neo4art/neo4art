@@ -58,7 +58,7 @@ public class WikipediaSearchRepositoryTest {
     String paulGauguin = "Paul Gauguin";
     String emileBernard = "Émile Bernard";
 
-    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransactionManager()) {
+    try (GraphDatabaseTransaction tx = graphDatabaseConnectionManager.getTransaction()) {
 
       graphDatabaseConnectionManager.executeCypherQuery("CREATE (:" + WikipediaLabel.Wikipedia + " {title: {title}})", MapUtil.map("title", vincentVanGogh));
       graphDatabaseConnectionManager.executeCypherQuery("CREATE (:" + WikipediaLabel.Wikipedia + " {title: {title}})", MapUtil.map("title", paulGauguin));

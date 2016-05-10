@@ -33,4 +33,6 @@ import org.xml.sax.SAXException;
 public interface WikipediaImporter {
 	
 	long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException;
+	
+	long importDump(File dumpFile, File storeDir) throws IOException, SAXException, ParserConfigurationException;
 }

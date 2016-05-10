@@ -34,7 +34,7 @@ public class Namespace implements INamespace {
      * @see Namespace#numberCodeToInt(int)
      * @see Namespace#intToNumberCode(int)
      */
-    protected final NamespaceValue[] INT_TO_NAMESPACE = new NamespaceValue[31];
+    protected final NamespaceValue[] INT_TO_NAMESPACE = new NamespaceValue[35];
 
     /**
      * The &quot;Media&quot; namespace for the current language.
@@ -137,6 +137,11 @@ public class Namespace implements INamespace {
     public final NamespaceValue TIMED_TEXT_TALK = new NamespaceValue(TIMED_TEXT_TALK_KEY, "TimedText_talk");
     public final NamespaceValue TOPIC = new NamespaceValue(TOPIC_KEY, "Topic");
     
+    public final NamespaceValue GADGET = new NamespaceValue(GADGET_KEY, "Gadget");
+    public final NamespaceValue GADGET_TALK = new NamespaceValue(GADGET_TALK_KEY, "Gadget_talk");
+    public final NamespaceValue GADGET_DEFINITION = new NamespaceValue(GADGET_DEFINITION_KEY, "Gadget_definition");
+    public final NamespaceValue GADGET_DEFINITION_TALK = new NamespaceValue(GADGET_DEFINITION_TALK_KEY, "Gadget_definition_talk");
+
     protected ResourceBundle fResourceBundle, fResourceBundleEn;
 
     public Namespace() {
@@ -213,8 +218,10 @@ public class Namespace implements INamespace {
         	return numberCode - 710 + 26;
         } else if (numberCode >= 828 && numberCode <= 829) {
             return numberCode - 828 + 28;
+        } else if (numberCode >= 2300 && numberCode <= 2303) {
+        	return numberCode - 2303 + 30;
         } else if (numberCode >= 2600 && numberCode <= 2600) {
-        	return numberCode - 2600 + 30;
+        	return numberCode - 2600 + 34;
         } else {
             throw new InvalidParameterException("unknown number code: "
                     + numberCode);
@@ -245,8 +252,10 @@ public class Namespace implements INamespace {
         	return numberCode - 710 - 26;
         } else if (numberCode >= 28 && numberCode <= 29) {
             return numberCode + 828 - 28;
-        } else if (numberCode >= 30 && numberCode <= 30) {
-        	return numberCode + 2600 - 30;
+        } else if (numberCode >= 30 && numberCode <= 33) {
+        	return numberCode + 2303 - 30;
+        } else if (numberCode >= 34 && numberCode <= 34) {
+        	return numberCode + 2600 - 34;
         } else {
             throw new InvalidParameterException("unknown number code: "
                     + numberCode);

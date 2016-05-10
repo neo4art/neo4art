@@ -16,6 +16,7 @@
 
 package deprecated;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,7 +112,11 @@ public class Neo4ArtBatchInserterSingleton extends Neo4ArtGraphDatabase
   {
     if (batchInserter == null)
     {
-      batchInserter = BatchInserters.inserter(NEO4J_STORE_DIR, config);
+    	try {
+        batchInserter = BatchInserters.inserter(new File(NEO4J_STORE_DIR), config);
+    	}
+    	catch (Exception e) {
+    	}
     }
 
     return batchInserter;

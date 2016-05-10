@@ -13,23 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.neo4art.importer.wikipedia.domain;
 
+import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
+import org.neo4j.graphdb.Label;
+
 /**
- * Different kind of Wikipedia Pages
- * 
  * @author Lorenzo Speranzoni
- * @since 25.02.2015
+ * @since 19 Mar 2015
  */
-public enum WikipediaType {
+public class WikipediaModule extends WikipediaAbstractElement implements WikipediaElement {
+  private static final Label[] LABELS = new Label[] { WikipediaLabel.Wikipedia, WikipediaLabel.WikipediaModule };
 
-  PAGE, CATEGORY, FILE, PROJECT, TEMPLATE, GENERIC, DISAMBIGUATION_PAGE, REDIRECT_PAGE, MODULE,
+  public WikipediaModule() {
+  }
 
-  ARTIST_PAGE, ARTWORK_PAGE, MUSEUM_PAGE, ART_MOVEMENT_PAGE, MONUMENT_PAGE, RELIGIOUS_BUILDING_PAGE,
+  @Override
+  public WikipediaType getType() {
+    return WikipediaType.MODULE;
+  }
 
-  SETTLEMENT_PAGE, COUNTRY_PAGE,
-
-  DOCUMENT_PAGE, BOOK_PAGE,
-
-  COLOUR_PAGE
+  @Override
+  public Label[] getLabels() {
+    return LABELS;
+  }
 }

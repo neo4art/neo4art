@@ -37,7 +37,11 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
     GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
 
     graphDatabaseConnectionManager.createNode(wikipediaElement);
-
+    
+    if (wikipediaElement.getTitle().contains("Category:Negara pulau")) {
+    	System.out.println("createNodes: " + wikipediaElement.getTitle());
+    }
+    
     switch (wikipediaElement.getType()) {
 
       case ARTIST_PAGE:
@@ -52,14 +56,14 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
       case DOCUMENT_PAGE:
       case COLOUR_PAGE:
       case PAGE:
-        addNodeToWikipediaIndex(wikipediaElement);
-        break;
-
       case CATEGORY:
       case FILE:
       case PROJECT:
       case TEMPLATE:
       case GENERIC:
+      case DISAMBIGUATION_PAGE:
+      default:
+      	addNodeToWikipediaIndex(wikipediaElement);
         break;
     }
 
@@ -96,7 +100,8 @@ public class WikipediaDefaultRepository implements WikipediaRepository {
 
     if (wikipediaElementFromId != null && wikipediaElementToId != null) {
       GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance();
-      return graphDatabaseConnectionManager.createRelationship(new Relationship(wikipediaElementFrom, wikipediaElementTo, wikipediaRelationship, null));
+      graphDatabaseConnectionManager.createRelationship(new Relationship(wikipediaElementFrom, wikipediaElementTo, wikipediaRelationship, null));
+      return 1;
     }
     else {
       return 0;

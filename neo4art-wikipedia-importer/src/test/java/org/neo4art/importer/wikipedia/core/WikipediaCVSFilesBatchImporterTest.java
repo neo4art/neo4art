@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.neo4art.graphdb.connection.GraphDatabaseConnectionManager;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -35,22 +34,18 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaInMemoryBatchImporterTest {
+public class WikipediaCVSFilesBatchImporterTest {
 
-  @Before
-  public void cleanDatabase() throws IOException {
-    
-    FileUtils.deleteDirectory(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
-  }
-  
 	@Test
 	public void shouldParseWikipediaDumpFile() throws IOException {
 	  
 		try {
 		  
+			FileUtils.deleteDirectory(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
+			
 		  File dumpFile = new File("src/test/resources", "enwiki-20150112-pages-articles-multistream-test.xml");
 			
-			long newNodesAndRelationships = new WikipediaInMemoryBatchImporter().importDump(dumpFile);
+			long newNodesAndRelationships = new WikipediaCVSFilesBatchImporter().importDump(dumpFile);
 
 			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(new File(GraphDatabaseConnectionManager.NEO4J_STORE_DIR));
 			
@@ -59,6 +54,8 @@ public class WikipediaInMemoryBatchImporterTest {
 			  Object newNodesAndRelationshipsOnDB = graphDatabaseService.execute("match (n) optional match (n)-[r]->(m) return count(n) + count(r) as tot").next().get("tot");
 			  
 			  Assert.assertEquals(newNodesAndRelationships, newNodesAndRelationshipsOnDB);
+			  
+			  tx.success();
 			}
 		}
 		catch (Exception e) {
@@ -74,15 +71,13 @@ public class WikipediaInMemoryBatchImporterTest {
 		
 		try {
 			
-			//File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/genesis/dumps/wikipedia", "enwiki-20150205-pages-articles-multistream-test-10000000.xml");
-			//File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/performance/wikipedia-import", "enwiki-20150112-pages-articles-multistream-test-3000000.xml");
-			//File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/genesis/dumps/wikipedia", "idwiki-20150220-pages-articles-multistream.xml");
+
 			File dumpFile = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/dump", "enwiki-20160501-pages-articles-multistream.xml");
 			File storeDir = new File("/Users/lorenzo/Progetti/Neo4j/projects/neo4art/application/database/neo4j-enterprise-3.0.1/data/databases/graph.db");
 			
 			FileUtils.deleteDirectory(storeDir);
 			
-			long newNodesAndRelationships = new WikipediaInMemoryBatchImporter().importDump(dumpFile, storeDir);
+			long newNodesAndRelationships = new WikipediaCVSFilesBatchImporter().importDump(dumpFile, storeDir);
 			
 			GraphDatabaseService graphDatabaseService = new GraphDatabaseFactory().newEmbeddedDatabase(storeDir);
 			

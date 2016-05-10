@@ -115,7 +115,7 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
 
     IndexDefinition indexDefinition;
 
-    try (GraphDatabaseTransaction tx = getTransactionManager()) {
+    try (GraphDatabaseTransaction tx = getTransaction()) {
 
       indexDefinition = graphDatabaseService.schema().indexFor(label).on(propertyKey).create();
 
@@ -142,10 +142,10 @@ class EmbeddedDatabaseConnectionManager implements GraphDatabaseConnectionManage
   }
 
   /**
-   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getTransactionManager()
+   * @see org.neo4art.graphdb.connection.GraphDatabaseConnectionManager#getTransaction()
    */
   @Override
-  public GraphDatabaseTransaction getTransactionManager() {
+  public GraphDatabaseTransaction getTransaction() {
 
     return new TransactionWrapper(graphDatabaseService);
   }

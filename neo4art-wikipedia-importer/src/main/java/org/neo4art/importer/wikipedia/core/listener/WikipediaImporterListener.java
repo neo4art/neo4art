@@ -29,6 +29,8 @@ public interface WikipediaImporterListener extends IArticleFilter {
 
   public static final int NO_BUFFER_LIMITS_FOR_FULL_IN_MEMORY_MANAGEMENT = -1;
   
+  public static final int BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 500_000;
+  
   void setBatchSize(long size);
   
 	long getPageCount();

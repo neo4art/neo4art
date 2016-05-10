@@ -124,6 +124,12 @@ public interface INamespace {
         EDUCATION_PROGRAM_TALK_KEY(447),
         TIMED_TEXT_KEY(710),
         TIMED_TEXT_TALK_KEY(711),
+        
+        GADGET_KEY(2300),
+        GADGET_TALK_KEY(2301),
+        GADGET_DEFINITION_KEY(2302),
+        GADGET_DEFINITION_TALK_KEY(2303),
+
         TOPIC_KEY(2600),
 
         /**

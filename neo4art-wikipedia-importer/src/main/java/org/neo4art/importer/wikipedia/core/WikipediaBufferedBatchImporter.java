@@ -15,8 +15,6 @@
  */
 package org.neo4art.importer.wikipedia.core;
 
-import info.bliki.wiki.dump.WikiXMLParser;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,22 +33,26 @@ import org.neo4art.graphdb.connection.GraphDatabaseConnectionManagerFactory.Grap
 import org.neo4art.importer.wikipedia.core.listener.WikipediaImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaNodesBatchImporterListener;
 import org.neo4art.importer.wikipedia.core.listener.WikipediaRelsBatchImporterListener;
-import org.neo4art.importer.wikipedia.graphdb.WikipediaLabel;
 import org.xml.sax.SAXException;
+
+import info.bliki.wiki.dump.WikiXMLParser;
 
 /**
  * 
  * @author Lorenzo Speranzoni
  * @since 25.02.2015
  */
-public class WikipediaBufferedBatchImporter implements WikipediaImporter {
+public class WikipediaBufferedBatchImporter extends WikipediaAbstractBatchImporter implements WikipediaImporter {
   
   private static Log logger     = LogFactory.getLog(WikipediaBufferedBatchImporter.class);
 
-  static final int   BATCH_SIZE = System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE") != null ? Integer.parseInt(System.getenv("WIKIPEDIA_IMPORT_BATCH_SIZE")) : 500_000;
-
   @Override
   public long importDump(File dumpFile) throws IOException, SAXException, ParserConfigurationException {
+  	return importDump(dumpFile, null);
+  }
+  
+  @Override
+  public long importDump(File dumpFile, File storeDir) throws IOException, SAXException, ParserConfigurationException {
     logger.info("Wikipedia dump file import started...");
 
     long dumpImportStartDate = Calendar.getInstance().getTimeInMillis();
@@ -58,18 +60,18 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
     long newNodes = 0;
     long newRelationships = 0;
 
-    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER);
+    GraphDatabaseConnectionManager graphDatabaseConnectionManager = GraphDatabaseConnectionManagerFactory.getInstance(GraphDatabaseConnectionType.BATCH_INSERTER, storeDir);
 
     logger.info("Configuration: ");
     logger.info("------------------------------------------------");
-    logger.info("Batch size " + NumberFormat.getInstance(Locale.ITALY).format(BATCH_SIZE));
+    logger.info("Batch size " + NumberFormat.getInstance(Locale.ITALY).format(WikipediaImporterListener.BATCH_SIZE));
     logger.info("Store directory is " + graphDatabaseConnectionManager.getStoreDir());
     logger.info("");
 
     {
       logger.info("Creation of Wikipedia nodes started...");
       WikipediaImporterListener wikipediaNodesImporterListener = new WikipediaNodesBatchImporterListener();
-      wikipediaNodesImporterListener.setBatchSize(BATCH_SIZE);
+      wikipediaNodesImporterListener.setBatchSize(WikipediaImporterListener.BATCH_SIZE);
       long parserForNodesStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForNodes = new WikiXMLParser(dumpFile, wikipediaNodesImporterListener);
       parserForNodes.parse();
@@ -82,7 +84,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
     {
       logger.info("Creation of Wikipedia relationships started...");
       WikipediaImporterListener wikipediaRelsImporterListener = new WikipediaRelsBatchImporterListener();
-      wikipediaRelsImporterListener.setBatchSize(BATCH_SIZE);
+      wikipediaRelsImporterListener.setBatchSize(WikipediaImporterListener.BATCH_SIZE);
       long parserForRelsStartDate = Calendar.getInstance().getTimeInMillis();
       WikiXMLParser parserForRels = new WikiXMLParser(dumpFile, wikipediaRelsImporterListener);
       parserForRels.parse();
@@ -95,22 +97,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
     {
       logger.info("Creation of Wikipedia indexes started...");
       long indexCreationStartDate = Calendar.getInstance().getTimeInMillis();
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.Wikipedia, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaArtistPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaArtMovementPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaArtworkPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaBookPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaColourPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaCountryPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaDocumentPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaMonumentPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaMuseumPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaReligiousBuildingPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaSettlementPage, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaFile, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaCategory, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaProject, "title");
-      graphDatabaseConnectionManager.createSchemaIndex(WikipediaLabel.WikipediaTemplate, "title");
+      createIndexes(graphDatabaseConnectionManager);
       long indexCreationEndDate = Calendar.getInstance().getTimeInMillis();
       logger.info("Done! Indexes created in " + (indexCreationEndDate - indexCreationStartDate)  + " ms.");
     }
@@ -130,7 +117,7 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
 
   public static void main(String[] args) {
     if (args.length != 1) {
-      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaBufferedBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml");
+      throw new IllegalArgumentException("java -cp neo4art-wikipedia-importer-<version>.jar " + WikipediaBufferedBatchImporter.class.getName() + " /path/to/wikipedia-dump.xml [/path/to/storeDir]");
     }
 
     File wikipediaDump = new File(args[0]);
@@ -138,9 +125,15 @@ public class WikipediaBufferedBatchImporter implements WikipediaImporter {
     if (!wikipediaDump.exists()) {
       throw new RuntimeException(new FileNotFoundException("File " + wikipediaDump.getAbsolutePath() + " not found."));
     }
-
+    
+    File storeDir = null;
+    
+    if (args.length == 2) {
+    	storeDir = new File(args[1]);
+    }
+    
     try {
-      new WikipediaBufferedBatchImporter().importDump(wikipediaDump);
+      new WikipediaInMemoryBatchImporter().importDump(wikipediaDump, storeDir);
     }
     catch (Exception e) {
       throw new RuntimeException("Import failed: " + ExceptionUtils.getStackTrace(e));

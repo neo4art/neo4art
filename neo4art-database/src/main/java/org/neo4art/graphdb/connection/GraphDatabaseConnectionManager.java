@@ -84,5 +84,5 @@ public interface GraphDatabaseConnectionManager
    * 
    * @return
    */
-  GraphDatabaseTransaction getTransactionManager();
+  GraphDatabaseTransaction getTransaction();
 }

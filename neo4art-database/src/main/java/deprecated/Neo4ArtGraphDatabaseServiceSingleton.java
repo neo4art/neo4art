@@ -16,6 +16,7 @@
 
 package deprecated;
 
+import java.io.File;
 import java.util.Map;
 
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -39,7 +40,7 @@ public class Neo4ArtGraphDatabaseServiceSingleton extends Neo4ArtGraphDatabase
   {
     if (graphDatabaseServiceInstance == null)
     {
-      graphDatabaseServiceInstance = new GraphDatabaseFactory().newEmbeddedDatabase(NEO4J_STORE_DIR);
+      graphDatabaseServiceInstance = new GraphDatabaseFactory().newEmbeddedDatabase(new File(NEO4J_STORE_DIR));
 
       registerShutdownHook(graphDatabaseServiceInstance);
     }
