@@ -179,7 +179,16 @@ public class WikipediaCVSImportBatchImporterListener extends WikipediaAbstractIm
 	 */
 	private String buildWikipediaNodesLine(WikipediaElement wikipediaElement) {
 
-		String line = wikipediaElement.getId() + "," + "\"" + wikipediaElement.getTitle().replaceAll("\"", "\\\"") + "\""
+		String title = wikipediaElement.getTitle();
+		
+		if (title.endsWith("\\"))
+			title = title + "\\";
+		
+		title = title.replace("\n", "");
+		title = title.replace("\r", "");
+		title = title.replace("\"", "\\\"");
+		
+		String line = wikipediaElement.getId() + "," + "\"" + title + "\""
 		    + "," + wikipediaElement.getRevision() + "," + wikipediaElement.getTimestamp();
 
 		for (int l = 0; l < wikipediaElement.getLabels().length; l++) {

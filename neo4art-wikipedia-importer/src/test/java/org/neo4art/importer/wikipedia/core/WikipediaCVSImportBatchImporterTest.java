@@ -64,4 +64,21 @@ public class WikipediaCVSImportBatchImporterTest {
 			Assert.fail(e.getMessage());
 		}
 	}
+	
+	@Test
+	public void shouldReplaceDoubleQuote() throws IOException {
+		
+		String title = "C:\n \r \\";
+		
+		System.out.println(title);
+		
+		if (title.endsWith("\\"))
+			title = title + "\\";
+		
+		title = title.replace("\n", "");
+		title = title.replace("\r", "");
+		title = title.replace("\"", "\\\"");
+
+		System.out.println(title);
+	}
 }

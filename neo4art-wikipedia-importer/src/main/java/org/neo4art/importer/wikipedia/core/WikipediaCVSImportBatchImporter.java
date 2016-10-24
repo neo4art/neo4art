@@ -83,7 +83,7 @@ public class WikipediaCVSImportBatchImporter extends WikipediaAbstractBatchImpor
       logger.info("Done! Wikipedia dump parsed in " + (parserEndDate - parserStartDate) + " ms.");
       wikipediaNodesImporterListener.flush();
       logger.info("wikipedia-rels.cvs creation created!");
-      logger.info("");      
+      logger.info("");
     }
     finally {
     }
